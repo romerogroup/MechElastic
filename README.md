@@ -42,7 +42,7 @@ NFREE     = 2
 
 Use the below line:
 
---PyElastic.py OUTCAR cubic
+--MechElastic.py OUTCAR cubic
 
 The script expects 'OUTCAR' file as the first argument and 'crystal type' as the second argument. If not provided by user, this script will read the crystal type from the OUTCAR file. Crystal type is needed only to perform the mechanical stability test. 
 
