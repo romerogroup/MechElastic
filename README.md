@@ -1,4 +1,4 @@
-# PyElastic
+# MechElastic
 This python scripts can be used to calculate some important physical properties such as elastic moduli, melting temperature, Debye temperature, elastic wave velocities, elastic anisotropy, etc. for all crystalline systems using the VASP output data from an elastic tensor calculation.
 
 It can also be used to test the mechanical stability of any bulk system. 
