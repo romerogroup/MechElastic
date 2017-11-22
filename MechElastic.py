@@ -5,7 +5,7 @@
 	  West Virginia University, Morgantown, USA
 
  To RUN:
- >> python elastic_const.py OUTCAR cubic '''
+ >> python MechElastic.py OUTCAR cubic '''
 
 import numpy as np
 import sys
