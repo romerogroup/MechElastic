@@ -5,7 +5,13 @@
 	  West Virginia University, Morgantown, USA
 
  To RUN:
- >> python MechElastic.py OUTCAR cubic '''
+ >> python MechElastic.py OUTCAR cubic 
+ 
+ 
+ If you use this software, please cite the corresponding paper Ref: PHYSICAL REVIEW B 97, 054108 (2018). 
+
+ 
+ '''
 
 import numpy as np
 import sys
