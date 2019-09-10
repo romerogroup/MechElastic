@@ -492,7 +492,7 @@ def stability_test(matrix, crystaltype):
    else:
       print "Condition (i) is NOT satisfied."
 
-   if(c[0][0]*c[1][1] < c[0][1]*(c[0][1])):
+   if(c[0][0]*c[1][1] > c[0][1]*(c[0][1])):
       print "Condition (ii) is satified."
    else:
       print "Condition (ii) is NOT satisfied."
