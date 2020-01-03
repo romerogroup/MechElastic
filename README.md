@@ -4,7 +4,7 @@ This python scripts can be used to calculate some important physical properties 
 The script reads the elastic matrix written in the OUTCAR file as input. 
 
 
-Please cite this paper if you use MechElastic code for your research: 
+Please cite this paper if you use MechElastic script for your research: 
      Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018). 
 
 
