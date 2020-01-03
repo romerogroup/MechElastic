@@ -5,8 +5,11 @@
    Email: smsingh@mix.wvu.edu, alromero@mail.wvu.edu
    (1) Rutgers University, Piscataway, NJ, USA
    (2) West Virginia University, Morgantown, WV, USA
-
 Version: 12.2019   #Dec. 2019
+
+Please cite the below paper if you use this code for your research: 
+     Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018).
+
 
 To RUN this code for a 3D system assuming you know the crystal type before hand: 
  >> python MechElastic.py -i OUTCAR-file -c hexagonal --dim 3D
