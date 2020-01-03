@@ -1,0 +1,79 @@
+  
+ 
+      /\/\   ___  ___| |__   /__\ | __ _ ___| |_(_) ___
+     /    \ / _ \/ __| '_ \ /_\ | |/ _` / __| __| |/ __|
+    / /\/\ \  __/ (__| | | //__ | | (_| \__ \ |_| | (__
+    \/    \/\___|\___|_| |_\__/ |_|\__,_|___/\__|_|\___| 
+Version: 12.2019 
+
+-----------------------------
+List of arguments entered:
+Input file name: OUTCAR-BN_mono
+Crystal type:  None
+Dimensions: 2D
+-----------------------------
+Lattice parameters (in Angs.): a =    2.51243      b =    2.51243     c =   15.00000
+Atomic numbers
+[5 7]
+Mass of atoms (in g/mol units): 
+[ 10.811  14.001]
+Number of atoms: 2
+Total mass (in g/mol):    24.8120 
+Volume of the cell (in Ang^3 units):    82.0000 
+
+ Density (in kg/m^3 units ):  502.45481
+Printing Cij matrix as read from OUTCAR
+
+ 1936.206   433.5344   1.1581   0.0181  -0.0069   0.0018 
+ 433.5344  1936.5926   1.3905   0.0157  -0.0093   0.0021 
+  1.1581     1.3905    2.7942   0.0268   0.0498  -0.0513 
+  0.0181     0.0157    0.0268   750.76  -0.0289   0.0009 
+ -0.0069    -0.0093    0.0498  -0.0289    0.88    0.0006 
+  0.0018     0.0021   -0.0513   0.0009   0.0006   1.065  
+
+ 
+ printing CNEW: Modified matrix in correct order (in GPa units)... 
+ For example- to generate input for the ELATE code [https://github.com/fxcoudert/elate] 
+
+ 193.6206   43.35344  0.11581   -0.00069  0.00018   0.00181  
+ 43.35344  193.65926  0.13905   -0.00093  0.00021   0.00157  
+ 0.11581    0.13905   0.27942   0.00498   -0.00513  0.00268  
+ -0.00069   -0.00093  0.00498    0.088     6e-05    -0.00289 
+ 0.00018    0.00021   -0.00513   6e-05     0.1065    9e-05   
+ 0.00181    0.00157   0.00268   -0.00289   9e-05     75.076  
+
+ Checking if the modified matrix CNEW is symmetric: i.e. Cij = Cji:        True
+
+ 
+ Elastic tensor for two-dimensional system in N/m units 
+
+  290.4309   65.03016   0.173715  -0.001035   0.00027    0.002715 
+  65.03016  290.48889   0.208575  -0.001395   0.000315   0.002355 
+  0.173715   0.208575   0.41913    0.00747   -0.007695   0.00402  
+ -0.001035  -0.001395   0.00747     0.132      9e-05    -0.004335 
+  0.00027    0.000315  -0.007695    9e-05     0.15975    0.000135 
+  0.002715   0.002355   0.00402   -0.004335   0.000135   112.614  
+
+ 
+ Elastic properties in two-dimensions 
+
+[Useful refs. Andrew et al.;  Phys. Rev. B 85, 125428 (2012), Peng et al., Acta Mechanica 223 (2012), 2591-2596; Comput. Mater. Sci. 68, 320 (2013);  Mech. Mater. 64, 135 (2013)  ]
+                   
+-------------------------------------------------------
+2D layer modulus (N/m)         :      177.745 
+2D Young's modulus Y[10] (N/m) :      275.873 
+2D Young's modulus Y[01] (N/m) :      275.928 
+2D Shear modulus G (N/m)       :      112.614 
+2D Poisson ratio v[10]         :        0.224 
+2D Poisson ratio v[01]         :        0.224 
+-------------------------------------------------------
+Note:  The elastic stabilty test for 2D systems is not yet implemented. 
+WARNING:      The conversion of elastic constants from GPa to N/m units was done 
+              by multiplying the Cij matrix elements by the thickness of the simulation cell,
+              i.e. by the out-of-plane 'c' lattice parameters. Of course, this assumes that 
+              vacuum is along the c-axis and this is a good approximation only for atomically 
+              thin monolayers. One needs to account for the thickness of the 2D system, if 
+              the system is considerably thick. 
+              I HOPE YOU UNDERSTAND WHAT YOU ARE DOING HERE. 
+
+  Thanks! See you later. 
