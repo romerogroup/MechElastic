@@ -664,12 +664,44 @@ def stability_test(matrix, crystaltype):
         print(" (xii)  2*[C15*C25*(C33*C12 - C13*C23) + C15*C35*(C22*C13 - C12*C23) + C25*C35*(C11*C23 - C12*C13)] - [C15*C15*(C22*C33 - C23^2) + C25*C25*(C11*C33 - C13^2) + C35*C35*(C11*C22 - C12^2)] + C55*g > 0  ")
         print("          where, g = [C11*C22*C33 - C11*C23*C23 - C22*C13*C13 - C33*C12*C12 + 2*C12*C13*C23 ] ")
 
-        
-        for i in range(0, 6):
-            if(c[i][i]  > 0.0):
-                print("Condition (%2d) is satified." % (i+1))
-            else:
-                print("Condition (%2d) is NOT satified." % (i+1))
+
+	if(c[0][0] > 0.0):
+            print("Condition (i) is satified.")
+        else:
+            print("Condition (i) is NOT satified.")
+
+
+        if(c[1][1] > 0.0):
+            print("Condition (ii) is satified.")
+        else:
+            print("Condition (ii) is NOT satified.")
+
+        if(c[2][2] > 0.0):
+            print("Condition (iii) is satified.")
+        else:
+            print("Condition (iii) is NOT satified.")
+
+        if(c[3][3] > 0.0):
+            print("Condition (iv) is satified.")
+        else:
+            print("Condition (iv) is NOT satified.")
+
+        if(c[4][4] > 0.0):
+            print("Condition (v) is satified.")
+        else:
+            print("Condition (v) is NOT satified.")
+
+        if(c[5][5] > 0.0):
+            print("Condition (vi) is satified.")
+        else:
+            print("Condition (vi) is NOT satified.")
+
+
+        #for i in range(0, 6):
+        #    if(c[i][i]  > 0.0):
+        #        print("Condition (%2d) is satified." % (i+1))
+        #    else:
+        #        print("Condition (%2d) is NOT satified." % (i+1))
 
 
         if(c[0][0] + c[1][1] + c[2][2] + 2*(c[0][1] + c[0][2] + c[1][2]) > 0 ):
@@ -692,7 +724,8 @@ def stability_test(matrix, crystaltype):
         else:
             print("Condition (x) is NOT satisfied.")
 
-        if(c[1][1]*(c[2][2]*c[2][4] - c[2][4]*c[2][4]) + 2*c[1][2]*c[1][4]*c[2][4] - c[1][4]*c[1][4]*c[2][2] > 0.0):
+
+	if(c[1][1]*(c[2][2]*c[4][4] - c[2][4]*c[2][4]) + 2*c[1][2]*c[1][4]*c[2][4] - c[1][2]*c[1][2]*c[4][4] - c[1][4]*c[1][4]*c[2][2] > 0.0):
             print("Condition (xi) is satified.")
         else:
             print("Condition (xi) is NOT satisfied.")
