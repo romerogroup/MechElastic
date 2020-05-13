@@ -33,32 +33,32 @@ NFREE     = 2
 ## Installation
 
 ```
-pip install mechelastic
+pip install MechElastic
 ```
 
-
+\* Packages in PyPI are not case sensitive. 
 
 ## Running
 
 **Note:** '-d' argument is used to provide the dimensionality of the system (2D or 3D), '-i' argument provides the name of the input OUTCAR_file, and '-c' can be used to provide information related to the crystal type. If crystal type is not provided by the user, this script will read the crystal type from the OUTCAR file. Crystal type is needed only to perform the mechanical stability test for bulk systems.  
 
-Some examples are available in the examples directory.
+Some examples are available in the **examples** directory.
 
 For bulk Si:
 ```
-MechElastic  -d=3D -i OUTCAR-Si_bulk > output_Si_bulk.log
+MechElastic -d=3D -i OUTCAR-Si_bulk > output_Si_bulk.log
 ```
 
 For 2D graphene:
 
 ```
-MechElastic  -d=2D -i OUTCAR-graphene > output_graphene.log
+MechElastic -d=2D -i OUTCAR-graphene > output_graphene.log
 ```
 
 For 2D BN:
 
 ```
-MechElastic  -d=2D -i OUTCAR-BN_mono > output_BN_monolayer.log
+MechElastic -d=2D -i OUTCAR-BN_mono > output_BN_monolayer.log
 ```
 
 
