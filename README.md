@@ -38,7 +38,15 @@ pip install MechElastic
 
 \* Packages in PyPI are not case sensitive. 
 
-## Running
+Once installed, use the ``-h`` flag to see a list of options.
+
+```
+MechElastic -h
+```
+
+
+
+## Usage
 
 **Note:** '-d' argument is used to provide the dimensionality of the system (2D or 3D), '-i' argument provides the name of the input OUTCAR_file, and '-c' can be used to provide information related to the crystal type. If crystal type is not provided by the user, this script will read the crystal type from the OUTCAR file. Crystal type is needed only to perform the mechanical stability test for bulk systems.  
 
