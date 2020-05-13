@@ -1,0 +1,9 @@
+README.md
+setup.cfg
+setup.py
+MechElastic.egg-info/PKG-INFO
+MechElastic.egg-info/SOURCES.txt
+MechElastic.egg-info/dependency_links.txt
+MechElastic.egg-info/requires.txt
+MechElastic.egg-info/top_level.txt
+scripts/MechElastic
