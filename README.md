@@ -1,14 +1,13 @@
 # MechElastic
-This Python scripts can be used to calculate some important physical properties such as elastic moduli, melting temperature, Debye temperature, elastic wave velocities, elastic anisotropy, etc. for all crystalline systems using the VASP output data from an elastic tensor calculation. It can also be used to test the mechanical stability of any bulk system. 
+This Python library can be used to calculate some important physical properties such as elastic moduli, melting temperature, Debye temperature, elastic wave velocities, elastic anisotropy, etc. for all crystalline systems using the VASP output data from an elastic tensor calculation. It can also be used to test the mechanical stability of any bulk system. 
 
-The script reads the elastic matrix written in the OUTCAR file as input. 
+MechElastic reads the elastic matrix written in the OUTCAR file as input. 
 
-Please cite this paper if you use MechElastic script for your research: 
+Please cite this paper if you use MechElastic for your research: 
 
 [Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018).](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.97.054108)
 
-
-NOTE: In order to evaluate accurate elastic properties and mechanical strength, one must well-converge the elastic constants by increasing the size of k-mesh and energy cutoff in the VASP calculation. 
+**NOTE:** In order to evaluate accurate elastic properties and mechanical strength, one must well-converge the elastic constants by increasing the size of k-mesh and energy cutoff in the VASP calculation. 
 
 An example input file (INCAR) for elastic constants calculations in VASP is given below: 
 
@@ -48,7 +47,7 @@ MechElastic -h
 
 ## Usage
 
-**Note:** '-d' argument is used to provide the dimensionality of the system (2D or 3D), '-i' argument provides the name of the input OUTCAR_file, and '-c' can be used to provide information related to the crystal type. If crystal type is not provided by the user, this script will read the crystal type from the OUTCAR file. Crystal type is needed only to perform the mechanical stability test for bulk systems.  
+**Note:** '-d' argument is used to provide the dimensionality of the system (2D or 3D), '-i' argument provides the name of the input OUTCAR_file, and '-c' can be used to provide information related to the crystal type. If crystal type is not provided by the user, MechElastic will read the crystal type from the OUTCAR file. Crystal type is needed only to perform the mechanical stability test for bulk systems.  
 
 Some examples are available in the **examples** directory.
 
