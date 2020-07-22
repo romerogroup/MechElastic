@@ -1,4 +1,4 @@
-[![PyPI version](https://badge.fury.io/py/mechelastic.svg)](https://badge.fury.io/py/mechelastic)
+[![PyPI version](https://badge.fury.io/py/MechElastic.svg)](https://badge.fury.io/py/MechElastic)
 [![HitCount](http://hits.dwyl.com/uthpalaherath/romerogroup/mechelastic.svg)](http://hits.dwyl.com/uthpalaherath/romerogroup/mechelastic)
 ![PyPI - Downloads](https://img.shields.io/pypi/dm/mechelastic)
 
