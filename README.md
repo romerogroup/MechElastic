@@ -37,15 +37,17 @@ pip install MechElastic
 
 \* Packages in PyPI are not case sensitive. 
 
-Once installed, use the ``-h`` flag to see a list of options.
+Once installed, use the ``-h`` flag to see a list of options for the stand-alone mode.
 
 ```
 MechElastic -h
 ```
 
-
-
 ## Usage
+
+MechElastic has two modes: stand-alone and library. </br>
+
+### stand-alone mode
 
 **Note:** '-d' argument is used to provide the dimensionality of the system (2D or 3D), '-i' argument provides the name of the input OUTCAR_file, and '-c' can be used to provide information related to the crystal type. If crystal type is not provided by the user, MechElastic will read the crystal type from the OUTCAR file. Crystal type is needed only to perform the mechanical stability test for bulk systems.  
 
@@ -53,20 +55,76 @@ Some examples are available in the **examples** directory.
 
 For bulk Si:
 ```
-MechElastic -d=3D -i OUTCAR-Si_bulk > output_Si_bulk.log
+MechElastic.py -d=3D -i OUTCAR-Si_bulk > output_Si_bulk.log
 ```
 
 For 2D graphene:
 
 ```
-MechElastic -d=2D -i OUTCAR-graphene > output_graphene.log
+MechElastic.py -d=2D -i OUTCAR-graphene > output_graphene.log
 ```
 
 For 2D BN:
 
 ```
-MechElastic -d=2D -i OUTCAR-BN_mono > output_BN_monolayer.log
+MechElastic.py -d=2D -i OUTCAR-BN_mono > output_BN_monolayer.log
 ```
+
+### library mode
+
+Similarly, the above examples can be performed with the library mode after importing MechElastic from Python.
+
+For bulk Si:
+```
+import mechelastic 
+mechelastic.calculateelastic(code="vasp", dim="3D", infile="OUTCAR-Si_bulk")
+```
+
+For 2D graphene:
+
+```
+import mechelastic 
+mechelastic.calculateelastic(code="vasp", dim="2D", infile="OUTCAR-graphene")
+```
+
+For 2D BN:
+
+```
+import mechelastic 
+mechelastic.calculateelastic(code="vasp", dim="2D", infile="OUTCAR-BN_mono")
+```
+
+To provide a crystal type (required for the stability test) manualy, the ``crystal`` flag can be used. If not provided, MechElatic will determind the crystal symmetry using spglib.
+The stability test is currently only required for 3D systems.
+
+```
+import mechelastic 
+mechelastic.calculateelastic(code="vasp", dim="3D", infile="OUTCAR-Si_bulk", crystal="cubic")
+```
+
+``mechelastic.calculateelastic()`` calculates the complete set of elastic properties. However, if one wishes to call particular methods that can be also done through the library mode. For example, given a matrix and a crystaltype, the stability can be determined:
+
+```
+import mechelastic
+
+parserclass = mechelastic.parsers.VASPParser()
+cnew = parserclass.cnew
+crystaltype = "cubic"
+mechelastic.tests.stability.stability_test(cnew, crystaltype)
+```
+
+To determine the crystal symmetry:
+
+```
+import mechelastic
+
+parserclass = mechelastic.parsers.VASPParser()
+cnew = parserclass.cnew
+cell = parserclass.cell
+mechelastic.utils.crystalutils.crystalselect(parserclass.cnew, parserclass.cell)
+```
+
+
 
 
 
