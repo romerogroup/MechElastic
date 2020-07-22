@@ -1,3 +1,6 @@
 numpy
 spglib
 prettytable
+pathlib
+json
+pyvista
