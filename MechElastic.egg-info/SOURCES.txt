@@ -1,6 +1,8 @@
 LICENSE.txt
+MANIFEST.in
 README.md
 setup.cfg
+setup.json
 setup.py
 MechElastic.egg-info/PKG-INFO
 MechElastic.egg-info/SOURCES.txt
