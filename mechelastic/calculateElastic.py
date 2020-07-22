@@ -43,4 +43,4 @@ def calculateelastic(infile="OUTCAR", dim="3D", crystal=None, code="vasp"):
             cnew, snew, crystal, cell, density, natoms, totalmass
         )
 
-    print("\n  Thanks! See you later. ")
+    print("\nThanks! See you later. ")
