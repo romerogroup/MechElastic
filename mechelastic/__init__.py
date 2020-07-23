@@ -32,6 +32,7 @@ import prettytable
 import spglib
 
 from mechelastic.parsers import VASPParser
+from mechelastic.parsers import AbinitParser
 from mechelastic.comms import printer
 from mechelastic.core import elastic_2D, elastic_bulk
 from mechelastic.tests import ductile, eigenvals, stability, symmetry
