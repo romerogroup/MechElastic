@@ -11,6 +11,25 @@ Please cite this paper if you use MechElastic for your research:
 
 [Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018).](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.97.054108)
 
+BibTeX:
+
+```
+@article{PhysRevB.97.054108,
+  title = {Elastic, mechanical, and thermodynamic properties of Bi-Sb binaries: Effect of spin-orbit coupling},
+  author = {Singh, Sobhit and Valencia-Jaime, Irais and Pavlic, Olivia and Romero, Aldo H.},
+  journal = {Phys. Rev. B},
+  volume = {97},
+  issue = {5},
+  pages = {054108},
+  numpages = {11},
+  year = {2018},
+  month = {Feb},
+  publisher = {American Physical Society},
+  doi = {10.1103/PhysRevB.97.054108},
+  url = {https://link.aps.org/doi/10.1103/PhysRevB.97.054108}
+}
+```
+
 **NOTE:** In order to evaluate accurate elastic properties and mechanical strength, one must well-converge the elastic constants by increasing the size of k-mesh and energy cutoff in the VASP calculation. 
 
 An example input file (INCAR) for elastic constants calculations in VASP is given below: 
