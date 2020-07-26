@@ -71,7 +71,7 @@ print("-----------------------------")
 
 # calculate elastic properties
 def main():
-    mechelastic.calculateelastic(
+    mechelastic.calculate_elastic(
         code=args.code, dim=args.dim, infile=args.input, crystal=args.crystal
     )
 

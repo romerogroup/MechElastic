@@ -18,7 +18,7 @@ def calculate_elastic(infile="OUTCAR", dim="3D", crystal=None, code="vasp"):
 
     # calling parser
     if code == "vasp":
-        output = VaspOutcar(infile=infile)
+        output = VaspOutcar(infile=infile, crystal_type=crystal)
         # parserclass = VASPParser(infile=infile)
         # cnew = parserclass.cnew
         # snew = parserclass.snew

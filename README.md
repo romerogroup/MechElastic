@@ -100,21 +100,21 @@ Similarly, the above examples can be performed with the library mode after impor
 For bulk Si:
 ```
 import mechelastic 
-mechelastic.calculateelastic(code="vasp", dim="3D", infile="OUTCAR-Si_bulk")
+mechelastic.calculate_elastic(code="vasp", dim="3D", infile="OUTCAR-Si_bulk")
 ```
 
 For 2D graphene:
 
 ```
 import mechelastic 
-mechelastic.calculateelastic(code="vasp", dim="2D", infile="OUTCAR-graphene")
+mechelastic.calculate_elastic(code="vasp", dim="2D", infile="OUTCAR-graphene")
 ```
 
 For 2D BN:
 
 ```
 import mechelastic 
-mechelastic.calculateelastic(code="vasp", dim="2D", infile="OUTCAR-BN_mono")
+mechelastic.calculate_elastic(code="vasp", dim="2D", infile="OUTCAR-BN_mono")
 ```
 
 To provide a crystal type (required for the stability test) manualy, the ``crystal`` flag can be used. If not provided, MechElatic will determind the crystal symmetry using spglib.
@@ -122,15 +122,15 @@ The stability test is currently only required for 3D systems.
 
 ```
 import mechelastic 
-mechelastic.calculateelastic(code="vasp", dim="3D", infile="OUTCAR-Si_bulk", crystal="cubic")
+mechelastic.calculate_elastic(code="vasp", dim="3D", infile="OUTCAR-Si_bulk", crystal="cubic")
 ```
 
-``mechelastic.calculateelastic()`` calculates the complete set of elastic properties. However, if one wishes to call particular methods that can be also done through the library mode. For example, given a matrix and a crystaltype, the stability can be determined:
+``mechelastic.calculate_elastic()`` calculates the complete set of elastic properties. However, if one wishes to call particular methods that can be also done through the library mode. For example, given a matrix and a crystaltype, the stability can be determined:
 
 ```
 import mechelastic
 
-parserclass = mechelastic.parsers.VASPParser()
+parserclass = mechelastic.parsers.VaspOutcar()
 cnew = parserclass.cnew
 crystaltype = "cubic"
 mechelastic.tests.stability.stability_test(cnew, crystaltype)
@@ -141,7 +141,7 @@ To determine the crystal symmetry:
 ```
 import mechelastic
 
-parserclass = mechelastic.parsers.VASPParser()
+parserclass = mechelastic.parsers.VaspOutcar()
 cnew = parserclass.cnew
 cell = parserclass.cell
 mechelastic.utils.crystalutils.crystalselect(parserclass.cnew, parserclass.cell)

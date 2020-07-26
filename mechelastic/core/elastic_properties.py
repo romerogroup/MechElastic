@@ -8,22 +8,24 @@ from ..utils.elements import ELEMENTS
 from ..utils.crystalutils import *
 from .structure import Structure
 
+
 class ElasticProperties:
-    def __init__(self,
-                 elastic_tensor,
-                 structure):
+    def __init__(self, elastic_tensor, structure, crystal_type):
         self.elastic_tensor = np.matrix(elastic_tensor)
         self.compaliance_tensor = self.elastic_tensor.I
         self.structure = structure
+        self.crystal_type = crystal_type
 
-        crystal_select(cnew=self.elastic_tensor, cell=self.structure.spglib_cell)
-
-
+        crystal_select(
+            cnew=self.elastic_tensor,
+            cell=self.structure.spglib_cell,
+            crystal_type=self.crystal_type,
+        )
 
     @property
     def K_v(self):
         """
-        
+
         Returns
         -------
         KV : float
@@ -31,16 +33,16 @@ class ElasticProperties:
 
         """
         cnew = self.elastic_tensor
-        K_v = (cnew[0,0] + cnew[1,1] + cnew[2,2]) + 2 * (
-            cnew[0,1] + cnew[1,2] + cnew[2,0]
-            )
+        K_v = (cnew[0, 0] + cnew[1, 1] + cnew[2, 2]) + 2 * (
+            cnew[0, 1] + cnew[1, 2] + cnew[2, 0]
+        )
         K_v = K_v / 9.0
         return K_v
-        
+
     @property
     def bulk_modulus_voigt(self):
         """
-        
+
 
         Returns
         -------
@@ -49,11 +51,11 @@ class ElasticProperties:
 
         """
         return self.K_v
-    
+
     @property
     def G_v(self):
         """
-        
+
 
         Returns
         -------
@@ -63,17 +65,18 @@ class ElasticProperties:
         """
         cnew = self.elastic_tensor
         ## Shear: Voigt
-        G_v = ((cnew[0,0] + cnew[1,1] + cnew[2,2])
-                - (cnew[0,1] + cnew[1,2] + cnew[2,0])
-                + 3 * (cnew[3,3] + cnew[4,4] + cnew[5,5])
-                )
+        G_v = (
+            (cnew[0, 0] + cnew[1, 1] + cnew[2, 2])
+            - (cnew[0, 1] + cnew[1, 2] + cnew[2, 0])
+            + 3 * (cnew[3, 3] + cnew[4, 4] + cnew[5, 5])
+        )
         G_v = G_v / 15.0
         return G_v
-    
+
     @property
     def shear_modulus_voight(self):
         """
-        
+
 
         Returns
         -------
@@ -82,12 +85,11 @@ class ElasticProperties:
 
         """
         return self.G_v
-    
-    
+
     @property
     def E_v(self):
         """
-        
+
 
         Returns
         -------
@@ -96,11 +98,11 @@ class ElasticProperties:
 
         """
         return (9 * self.K_v * self.G_v) / (3 * self.K_v + self.G_v)
-    
+
     @property
     def youngs_modulus_voigt(self):
         """
-        
+
 
         Returns
         -------
@@ -113,7 +115,7 @@ class ElasticProperties:
     @property
     def Nu_v(self):
         """
-        
+
 
         Returns
         -------
@@ -126,7 +128,7 @@ class ElasticProperties:
     @property
     def poissons_ratio_voigt(self):
         """
-        
+
 
         Returns
         -------
@@ -135,11 +137,11 @@ class ElasticProperties:
 
         """
         return self.Nu_v
-    
+
     @property
     def M_v(self):
         """
-        
+
 
         Returns
         -------
@@ -148,11 +150,11 @@ class ElasticProperties:
 
         """
         return self.K_v + (4 * self.G_v / 3.0)
-    
+
     @property
     def p_wave_modulus_voigt(self):
         """
-        
+
 
         Returns
         -------
@@ -165,7 +167,7 @@ class ElasticProperties:
     @property
     def K_r(self):
         """
-        
+
 
         Returns
         -------
@@ -174,15 +176,16 @@ class ElasticProperties:
 
         """
         snew = self.compaliance_tensor
-        K_r = (snew[0,0] + snew[1,1] + snew[2,2]) + 2 * (
-            snew[0,1] + snew[1,2] + snew[2,0])
+        K_r = (snew[0, 0] + snew[1, 1] + snew[2, 2]) + 2 * (
+            snew[0, 1] + snew[1, 2] + snew[2, 0]
+        )
         K_r = 1.0 / K_r
         return K_r
 
     @property
     def bulk_modulus_reuss(self):
         """
-        
+
 
         Returns
         -------
@@ -191,11 +194,11 @@ class ElasticProperties:
 
         """
         return self.K_r
-    
+
     @property
     def G_r(self):
         """
-        
+
 
         Returns
         -------
@@ -204,16 +207,18 @@ class ElasticProperties:
 
         """
         snew = self.compaliance_tensor
-        G_r = (4 * (snew[0,0] + snew[1,1] + snew[2,2])
-               - 4 * (snew[0,1] + snew[1,2] + snew[2,0])
-               + 3 * (snew[3,3] + snew[4,4] + snew[5,5]))
+        G_r = (
+            4 * (snew[0, 0] + snew[1, 1] + snew[2, 2])
+            - 4 * (snew[0, 1] + snew[1, 2] + snew[2, 0])
+            + 3 * (snew[3, 3] + snew[4, 4] + snew[5, 5])
+        )
         G_r = 15.0 / G_r
         return G_r
-    
+
     @property
     def shear_modulus_reuss(self):
         """
-        
+
 
         Returns
         -------
@@ -222,11 +227,11 @@ class ElasticProperties:
 
         """
         return self.G_r
-    
+
     @property
     def E_r(self):
         """
-        
+
 
         Returns
         -------
@@ -235,11 +240,11 @@ class ElasticProperties:
 
         """
         return (9 * self.K_r * self.G_r) / (3 * self.K_r + self.G_r)
-    
+
     @property
     def youngs_modulus_reuss(self):
         """
-        
+
 
         Returns
         -------
@@ -248,11 +253,11 @@ class ElasticProperties:
 
         """
         return self.E_r
-    
+
     @property
     def Nu_r(self):
         """
-        
+
 
         Returns
         -------
@@ -261,11 +266,11 @@ class ElasticProperties:
 
         """
         return (3 * self.K_r - self.E_r) / (6 * self.K_r)
-    
+
     @property
     def poissons_ratio_reuss(self):
         """
-        
+
 
         Returns
         -------
@@ -274,11 +279,11 @@ class ElasticProperties:
 
         """
         return self.Nu_r
-    
+
     @property
     def M_r(self):
         """
-        
+
 
         Returns
         -------
@@ -287,12 +292,11 @@ class ElasticProperties:
 
         """
         return self.K_r + (4 * self.G_r / 3.0)
-    
-    
+
     @property
     def p_wave_modulus_reuss(self):
         """
-        
+
 
         Returns
         -------
@@ -301,11 +305,11 @@ class ElasticProperties:
 
         """
         return self.M_r
-    
+
     @property
     def K_vrh(self):
         """
-        
+
 
         Returns
         -------
@@ -314,11 +318,11 @@ class ElasticProperties:
 
         """
         return (self.K_r + self.K_v) / 2
-    
+
     @property
     def bulk_modulus_voigt_reuss_hill(self):
         """
-        
+
 
         Returns
         -------
@@ -327,11 +331,11 @@ class ElasticProperties:
 
         """
         return self.K_vrh
-    
+
     @property
     def G_vrh(self):
         """
-        
+
 
         Returns
         -------
@@ -340,11 +344,11 @@ class ElasticProperties:
 
         """
         return (self.G_v + self.G_r) / 2
-    
+
     @property
     def shear_modulus_voight_reuss_hill(self):
         """
-        
+
 
         Returns
         -------
@@ -353,11 +357,11 @@ class ElasticProperties:
 
         """
         return self.G_vrh
-    
+
     @property
     def E_vrh(self):
         """
-        
+
 
         Returns
         -------
@@ -366,12 +370,11 @@ class ElasticProperties:
 
         """
         return (self.E_v + self.E_r) / 2
-    
-    
+
     @property
     def youngs_modulus_voigt_reuss_hill(self):
         """
-        
+
 
         Returns
         -------
@@ -380,11 +383,11 @@ class ElasticProperties:
 
         """
         return self.E_vrh
-    
+
     @property
     def Nu_vrh(self):
         """
-        
+
 
         Returns
         -------
@@ -393,11 +396,11 @@ class ElasticProperties:
 
         """
         return (self.Nu_v + self.Nu_r) / 2.0
-    
+
     @property
     def poissons_ratio_voigt_reuss_hill(self):
         """
-        
+
 
         Returns
         -------
@@ -406,11 +409,11 @@ class ElasticProperties:
 
         """
         return self.Nu_vrh
-    
+
     @property
     def M_vrh(self):
         """
-        
+
 
         Returns
         -------
@@ -419,12 +422,11 @@ class ElasticProperties:
 
         """
         return (self.M_v + self.M_r) / 2.0
-    
-        
+
     @property
     def p_wave_modulus_voigt_reuss_hill(self):
         """
-        
+
 
         Returns
         -------
@@ -433,11 +435,11 @@ class ElasticProperties:
 
         """
         return self.M_vrh
-    
+
     @property
     def KG_ratio_v(self):
         """
-        
+
 
         Returns
         -------
@@ -445,12 +447,12 @@ class ElasticProperties:
             Bulk/Shear ration voigt.
 
         """
-        return self.K_v/self.G_v
-    
+        return self.K_v / self.G_v
+
     @property
     def KG_ratio_r(self):
         """
-        
+
 
         Returns
         -------
@@ -458,12 +460,12 @@ class ElasticProperties:
             Bulk/Shear ration reuss.
 
         """
-        return self.K_r/self.G_r
-    
+        return self.K_r / self.G_r
+
     @property
     def KG_ratio_vrh(self):
         """
-        
+
 
         Returns
         -------
@@ -471,12 +473,12 @@ class ElasticProperties:
             Bulk/Shear ration voigt reuss hill.
 
         """
-        return self.K_vrh/self.G_vrh
-    
+        return self.K_vrh / self.G_vrh
+
     @property
     def A_z(self):
         """
-        
+
 
         Returns
         -------
@@ -486,12 +488,12 @@ class ElasticProperties:
         """
 
         cnew = self.elastic_tensor
-        return 2 * cnew[3,3] / (cnew[0,0] - cnew[0,1])
-    
+        return 2 * cnew[3, 3] / (cnew[0, 0] - cnew[0, 1])
+
     @property
     def anisotropy_zenner(self):
         """
-        
+
 
         Returns
         -------
@@ -500,45 +502,45 @@ class ElasticProperties:
 
         """
         return self.anisotropy_zenner
-    
+
     @property
     def A_u(self):
         """
-        
+
 
         Returns
         -------
         float
-            Ranganathan and Ostoja-Starzewski method: Phys. Rev. Lett. 101, 055504 (2008). 
+            Ranganathan and Ostoja-Starzewski method: Phys. Rev. Lett. 101, 055504 (2008).
             for any crystalline symmetry: Universal anisotropy index.
-            Note: AU is a relative measure of anisotropy with respect to a limiting value. 
-            For example, AU does not prove that a crystal having AU = 3 has double the anisotropy 
+            Note: AU is a relative measure of anisotropy with respect to a limiting value.
+            For example, AU does not prove that a crystal having AU = 3 has double the anisotropy
             of another crystal with AU = 1.5. I""'
 
         """
         return (self.K_v / self.K_r) + 5 * (self.G_v / self.G_r) - 6.0
-    
+
     @property
     def anisotropy_universal(self):
         """
-        
+
 
         Returns
         -------
         float
-            Ranganathan and Ostoja-Starzewski method: Phys. Rev. Lett. 101, 055504 (2008). 
+            Ranganathan and Ostoja-Starzewski method: Phys. Rev. Lett. 101, 055504 (2008).
             for any crystalline symmetry: Universal anisotropy index
-            Note: AU is a relative measure of anisotropy with respect to a limiting value. 
-            For example, AU does not prove that a crystal having AU = 3 has double the anisotropy 
+            Note: AU is a relative measure of anisotropy with respect to a limiting value.
+            For example, AU does not prove that a crystal having AU = 3 has double the anisotropy
             of another crystal with AU = 1.5. I""'
 
         """
         return self.A_u
-    
+
     @property
     def A_l(self):
         """
-        
+
 
         Returns
         -------
@@ -549,11 +551,11 @@ class ElasticProperties:
 
         """
         return np.sqrt(5) * 2.303 * np.log(1 + (self.A_u / 5))
-    
-    @property 
+
+    @property
     def ductility(self):
         """
-        
+
 
         Returns
         -------
@@ -562,11 +564,11 @@ class ElasticProperties:
 
         """
         return ductile.ductile_test(self.KG_ratio_vrh)
-    
+
     @property
     def anisotropy_log_euclidean(self):
         """
-        
+
 
         Returns
         -------
@@ -577,12 +579,11 @@ class ElasticProperties:
 
         """
         return self.A_l
-    
-    
+
     @property
     def velocity_transverse(self):
         """
-        
+
 
         Returns
         -------
@@ -592,11 +593,11 @@ class ElasticProperties:
         """
         G = self.G_vrh * 1.0e9
         return np.sqrt((G / self.structure.density))
-    
+
     @property
     def velocity_logitudinal(self):
         """
-        
+
 
         Returns
         -------
@@ -605,13 +606,13 @@ class ElasticProperties:
 
         """
         G = self.G_vrh * 1.0e9  # converting from GPa to Pascal units (kg/ms^2)
-        K = self.K_vrh * 1.0e9    
+        K = self.K_vrh * 1.0e9
         return np.sqrt(((3 * K + 4 * G) / (3.0 * self.structure.density)))
-    
+
     @property
     def velocity_average(self):
         """
-        
+
 
         Returns
         -------
@@ -621,13 +622,15 @@ class ElasticProperties:
         """
         vt = self.transverse_velocity
         vl = self.logitudinal_velocity
-        
-        return 1.0 / (np.cbrt((1.0 / 3.0) * (2.0 / (vt * vt * vt) + 1.0 / (vl * vl * vl))))
-    
+
+        return 1.0 / (
+            np.cbrt((1.0 / 3.0) * (2.0 / (vt * vt * vt) + 1.0 / (vl * vl * vl)))
+        )
+
     @property
     def debey_temperature(self):
         """
-        
+
 
         Returns
         -------
@@ -639,14 +642,17 @@ class ElasticProperties:
         q = self.structure.natoms
         density = self.structure.density
         total_mass = np.sum(self.structure.masses)
-        theta = ((h_Planck / kB) * self.average_velocity 
-                 * np.cbrt((3 * q * N_avogadro * density) / (4 * (np.pi) * total_mass)))
+        theta = (
+            (h_Planck / kB)
+            * self.average_velocity
+            * np.cbrt((3 * q * N_avogadro * density) / (4 * (np.pi) * total_mass))
+        )
         return theta
-        
+
     @property
     def melting_temperature(self):
         """
-        
+
 
         Returns
         -------
@@ -656,22 +662,37 @@ class ElasticProperties:
 
         """
         return 607 + 9.3 * self.K_vrh
-    
+
     def print_properties(self):
-        
+
         print("\n \n                         Voigt     Reuss    Average")
         print("-------------------------------------------------------")
-        print("Bulk modulus   (GPa)  %9.3f %9.3f %9.3f " % (self.K_v, self.K_r, self.K_vrh))
-        print("Shear modulus  (GPa)  %9.3f %9.3f %9.3f " % (self.G_v, self.G_r, self.G_vrh))
-        print("Young modulus  (GPa)  %9.3f %9.3f %9.3f " % (self.E_v, self.E_r, self.E_vrh))
-        print("Poisson ratio         %9.3f %9.3f %9.3f " % (self.Nu_v, self.Nu_r, self.Nu_vrh))
-        print("P-wave modulus  (GPa) %9.3f %9.3f %9.3f " % (self.M_v, self.M_r, self.M_vrh))
+        print(
+            "Bulk modulus   (GPa)  %9.3f %9.3f %9.3f "
+            % (self.K_v, self.K_r, self.K_vrh)
+        )
+        print(
+            "Shear modulus  (GPa)  %9.3f %9.3f %9.3f "
+            % (self.G_v, self.G_r, self.G_vrh)
+        )
+        print(
+            "Young modulus  (GPa)  %9.3f %9.3f %9.3f "
+            % (self.E_v, self.E_r, self.E_vrh)
+        )
+        print(
+            "Poisson ratio         %9.3f %9.3f %9.3f "
+            % (self.Nu_v, self.Nu_r, self.Nu_vrh)
+        )
+        print(
+            "P-wave modulus  (GPa) %9.3f %9.3f %9.3f "
+            % (self.M_v, self.M_r, self.M_vrh)
+        )
         print(
             "Bulk/Shear ratio      %9.3f %9.3f %9.3f (%s) "
             % (self.KG_ratio_v, self.KG_ratio_r, self.KG_ratio_vrh, self.ductility)
         )
         print("-------------------------------------------------------")
-    
+
         print(" \n \n \t \t Elastic Anisotropy \n ")
         print("Zener anisotropy (true for cubic crystals only) Az = %10.5f" % self.A_z)
         print(
@@ -683,7 +704,7 @@ class ElasticProperties:
             % self.A_l
         )
         print(
-        "\n \t \t  Elastic wave velocities calculated using Navier's equation  (in m/s units) \n"
+            "\n \t \t  Elastic wave velocities calculated using Navier's equation  (in m/s units) \n"
         )
         print("----------------------------------------------- ")
         print("Longitudinal wave velocity (vl) : %10.5f " % self.logitudinal_velocity)
@@ -699,11 +720,7 @@ class ElasticProperties:
         )
         print("Tm (in K)=  %10.5f (plus-minus 555 K) " % self.melting_temperature)
         print("----------------------------------------------- ")
-        
+
     @property
     def elastic_stability(self):
         return eigenvals.positive_evals(self.elastic_tensor)
-    
-    
-
-
