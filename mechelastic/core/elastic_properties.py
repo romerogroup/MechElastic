@@ -580,7 +580,7 @@ class ElasticProperties:
     
     
     @property
-    def transverse_velocity(self):
+    def velocity_transverse(self):
         """
         
 
@@ -594,7 +594,7 @@ class ElasticProperties:
         return np.sqrt((G / self.structure.density))
     
     @property
-    def logitudinal_velocity(self):
+    def velocity_logitudinal(self):
         """
         
 
@@ -609,7 +609,7 @@ class ElasticProperties:
         return np.sqrt(((3 * K + 4 * G) / (3.0 * self.structure.density)))
     
     @property
-    def average_velocity(self):
+    def velocity_average(self):
         """
         
 
