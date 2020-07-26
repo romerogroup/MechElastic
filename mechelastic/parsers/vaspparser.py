@@ -1,13 +1,15 @@
 import numpy as np
 import re
-from ..utils.constants import *
-from ..utils.elements import *
+from ..utils.constants import N_avogadro, h_Planck, kB, amu # importing the one by one to get rid of the warnings for now
+from ..utils.elements import ELEMENTS,elements_inversed
 
 from ..comms import printer
 from ..tests import symmetry
+from ..core import ElasticProperties
+from ..core import Structure
 
-
-class VASPParser:
+class VaspOutcar:
+    
     """
     This class contains methods to parse the OUTCAR file.
     """
@@ -15,14 +17,128 @@ class VASPParser:
     def __init__(self, infile="OUTCAR"):
 
         self.infile = infile
+        
+        self.elastic_tensor = None
+        self.compaliance_tensor = None
+        self.structure = None
+        self.text = None
 
-        self.cnew = np.zeros((6, 6))
-        self.snew = np.zeros((6, 6))
+        self._parse_outcar()
 
-        self._readOUTCAR()
+        
+        self.elastic_properties = ElasticProperties(self.elastic_tensor,self.structure)   
 
         return
 
+    def _parse_outcar(self):
+        """
+        This function reads outcar and initializes the class variables
+        
+        """
+        
+        rf = open(self.infile)
+        self.text = rf.read()
+        rf.close()
+        data = self.text
+        mass = np.array([float(x) for x in re.findall("POMASS\s*=\s*([0-9.]*);\s*ZVAL",data)])
+        volume = float(re.findall('volume of cell\s*:\s*([0-9.]*)',data)[-1])
+        nions = int(re.findall("NIONS\s*=\s*([0-9]*)",data)[0])
+        natoms = np.array([int(x) for x in re.findall("ions per type\s*=\s*([\s0-9]*)",data)[0].split()])
+        lattice_type = re.findall('LATTYP.*',data)[-1]
+        lattyp = lattice_type
+        lattice = np.array([x.split()[:3] for x in re.findall(
+                'direct lattice vectors.*\n([-+0-9.\s\n]*)length of vectors',data)[-1].split('\n')[:3]]).astype(float)
+        positions = np.array([x.split()[:3] for x in re.findall(
+                'position of ions in fractional coordinates.*\n([-+0-9.\s\n]*)',data)[-1].split('\n')[:nions]]).astype(float)
+        iontype = [int(x) for x in re.findall('ions per type\s*=\s*([0-9\s]*)',data)[0].split()]
+        species = re.findall('VRHFIN\s*=([a-zA-Z\s]*):',data)
+        lattice_constant = [float(x) for x in re.findall('length of vectors.*\n([0-9.\s]*)',data)[-1].split()[:3]]
+        
+        # cell parameters
+        A = float(lattice_constant[0])
+        B = float(lattice_constant[1])
+        C = float(lattice_constant[2])
+
+        print(
+            "Lattice parameters (in Angs.): a = %10.5f      b = %10.5f     c = %10.5f"
+            % (A, B, C)
+        )
+        
+        atomic_numbers = np.zeros(nions, dtype=np.int32)
+        k = 0
+        for i in range(len(iontype)):
+            for j in range(iontype[i]):
+                atomic_numbers[k] = ELEMENTS[species[i]]
+                k = k + 1
+
+        print("Atomic numbers")
+        print(atomic_numbers)
+        atomic_numbers = atomic_numbers
+        symbols = [elements_inversed[x] for x in atomic_numbers ]
+        cell = (lattice, positions, atomic_numbers)
+        
+        print("Mass of atoms (in g/mol units): ")
+        print((np.array(mass)))
+        print("Number of atoms: %d" % np.sum(natoms))
+        
+        total_mass = 0.0
+        for i in range(len(natoms)):
+            total_mass = total_mass + natoms[i] * mass[i]
+        print("Total mass (in g/mol): %10.4f " % total_mass)
+        print("Volume of the cell (in Ang^3 units): %10.4f " % volume)
+        
+        
+        # converting the units
+        volume *= 1.0e-30  # from Angstrom to meters
+        total_mass *= 1.0e-3  # from gram to kg
+        density = total_mass / (volume * N_avogadro)
+        
+        print("\nDensity (in kg/m^3 units ): %10.5f" % density)
+         
+        c = np.matrix([x.split()[1:] for x in re.findall(
+                'TOTAL ELASTIC MODULI \(kBar\).*\n.*\n.*\n([XYZ0-9.\s-]*)\n\s*-',data)[0].split('\n')]).astype(float)
+        
+        # compaliance_tensor = c.I
+        print(c)
+        self.elastic_tensor = c.copy()
+
+        # Question for Shobit ?
+        # for j in range(0, 6):
+        #     self.elastic_tensor[3,j] = c[4,j]
+        #     self.elastic_tensor[4,j] = c[5,j]
+        #     self.elastic_tensor[5,j] = c[3,j]
+
+        # ctemp = self.elastic_tensor.copy()
+
+        # for i in range(0, 6):
+        #     self.elastic_tensor[i,3] = self.elastic_tensor[i,4]
+        #     self.elastic_tensor[i,4] = self.elastic_tensor[i,5]
+        #     self.elastic_tensor[i,5] = ctemp[i,3]
+    
+        # Change the units of Cij from kBar to GPa
+        self.elastic_tensor[i,j] /= 10.0
+
+        self.compaliance_tensor = self.elastic_tensor.I
+        print(self.elastic_tensor)
+        print(
+            "\n \n printing CNEW: Modified matrix in correct order (in GPa units)... \n For example- to generate input for the ELATE code [https://github.com/fxcoudert/elate] \n"
+        )
+
+        np.set_printoptions(precision=3, suppress=True)
+
+        printer.printMatrix(self.elastic_tensor)
+
+        print(
+            (
+                "\n Checking if the modified matrix CNEW is symmetric: i.e. Cij = Cji:  %10s"
+                % symmetry.check_symmetric(self.elastic_tensor)
+            )
+        )
+        self.structure = Structure(symbols,positions,lattice)
+
+        return 
+    
+    
     def _readOUTCAR(self):
 
         # s is the complaiance matrix and c is the elastic constant matrix
@@ -161,22 +277,22 @@ class VASPParser:
         #     cnew[i][j]=c[i][j]
 
         for j in range(0, 6):
-            self.cnew[3][j] = c[4][j]
-            self.cnew[4][j] = c[5][j]
-            self.cnew[5][j] = c[3][j]
+            self.cnew[3,j] = c[4,j]
+            self.cnew[4,j] = c[5,j]
+            self.cnew[5,j] = c[3,j]
 
         ctemp = np.zeros((6, 6))
         ctemp = np.copy(self.cnew)
 
         for i in range(0, 6):
-            self.cnew[i][3] = self.cnew[i][4]
-            self.cnew[i][4] = self.cnew[i][5]
-            self.cnew[i][5] = ctemp[i][3]
+            self.cnew[i,3] = self.cnew[i,4]
+            self.cnew[i,4] = self.cnew[i,5]
+            self.cnew[i,5] = ctemp[i,3]
 
         # Change the units of Cij from kBar to GPa
         for i in range(0, 6):
             for j in range(0, 6):
-                self.cnew[i][j] = self.cnew[i][j] / 10.0
+                self.cnew[i,j] = self.cnew[i,j] / 10.0
 
         print(
             "\n \n printing CNEW: Modified matrix in correct order (in GPa units)... \n For example- to generate input for the ELATE code [https://github.com/fxcoudert/elate] \n"

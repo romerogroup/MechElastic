@@ -25,17 +25,17 @@ from .version import date as __date__
 
 import re
 import sys
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 import numpy as np
-import pyvista
+# import pyvista
 import prettytable
 import spglib
 
-from mechelastic.parsers import VASPParser
+from mechelastic.parsers import VaspOutcar
 from mechelastic.parsers import AbinitParser
 from mechelastic.comms import printer
 from mechelastic.core import elastic_2D, elastic_bulk
 from mechelastic.tests import ductile, eigenvals, stability, symmetry
 from mechelastic.utils import constants, elements, crystalutils
 
-from .calculateElastic import calculateelastic
+from .calculate_elastic import calculate_elastic

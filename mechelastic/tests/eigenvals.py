@@ -23,4 +23,4 @@ def positive_evals(cnew):
     if check == 0:
         print("All eigen values are positive indicating elastic stability.")
 
-    return
+    return not(bool(check))

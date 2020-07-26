@@ -17,7 +17,7 @@ crystallist = np.array(
 )
 
 
-def crystalselect(cnew=None, cell=None, crystaltype=None):
+def crystal_select(cnew=None, cell=None, crystaltype=None):
 
     """This method selects crystal types."""
 

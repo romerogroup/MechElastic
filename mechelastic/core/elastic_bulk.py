@@ -10,7 +10,7 @@ from ..comms import printer
 from ..tests import ductile
 from ..tests import eigenvals
 from ..utils.constants import *
-from ..utils.elements import *
+from ..utils.elements import ELEMENTS
 from ..utils.crystalutils import *
 
 
@@ -26,11 +26,7 @@ def elastic_const_bulk(
     KV = KV / 9.0
 
     ## Shear: Voigt
-    GV = (
-        (cnew[0][0] + cnew[1][1] + cnew[2][2])
-        - (cnew[0][1] + cnew[1][2] + cnew[2][0])
-        + 3 * (cnew[3][3] + cnew[4][4] + cnew[5][5])
-    )
+    GV = ((cnew[0][0] + cnew[1][1] + cnew[2][2])-(cnew[0][1] + cnew[1][2] + cnew[2][0])+ 3 * (cnew[3][3] + cnew[4][4] + cnew[5][5]))
     GV = GV / 15.0
 
     # Young's: Voigt
