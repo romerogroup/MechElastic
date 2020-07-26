@@ -620,8 +620,8 @@ class ElasticProperties:
             Average Sound velocity(m/s)
 
         """
-        vt = self.transverse_velocity
-        vl = self.logitudinal_velocity
+        vt = self.velocity_transverse
+        vl = self.velocity_logitudinal
 
         return 1.0 / (
             np.cbrt((1.0 / 3.0) * (2.0 / (vt * vt * vt) + 1.0 / (vl * vl * vl)))
@@ -644,7 +644,7 @@ class ElasticProperties:
         total_mass = np.sum(self.structure.masses)
         theta = (
             (h_Planck / kB)
-            * self.average_velocity
+            * self.velocity_average
             * np.cbrt((3 * q * N_avogadro * density) / (4 * (np.pi) * total_mass))
         )
         return theta
@@ -707,9 +707,9 @@ class ElasticProperties:
             "\n \t \t  Elastic wave velocities calculated using Navier's equation  (in m/s units) \n"
         )
         print("----------------------------------------------- ")
-        print("Longitudinal wave velocity (vl) : %10.5f " % self.logitudinal_velocity)
-        print("Transverse wave velocity (vt) : %10.5f " % self.transverse_velocity)
-        print("Average wave velocity (vm) : %10.5f " % self.average_velocity)
+        print("Longitudinal wave velocity (vl) : %10.5f " % self.velocity_logitudinal)
+        print("Transverse wave velocity (vt) : %10.5f " % self.velocity_transverse)
+        print("Average wave velocity (vm) : %10.5f " % self.velocity_average)
         print("Debye temperature  (in K) : %10.5f " % self.debey_temperature)
         print(
             "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass if your crystal has several species"

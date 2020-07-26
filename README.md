@@ -70,7 +70,7 @@ MechElastic -h
 
 MechElastic has two modes: stand-alone and library. </br>
 
-### stand-alone mode
+### Stand-alone Mode
 
 **Note:** '-d' argument is used to provide the dimensionality of the system (2D or 3D), '-i' argument provides the name of the input OUTCAR_file, and '-c' can be used to provide information related to the crystal type. If crystal type is not provided by the user, MechElastic will read the crystal type from the OUTCAR file. Crystal type is needed only to perform the mechanical stability test for bulk systems.  
 
@@ -93,7 +93,7 @@ For 2D BN:
 MechElastic.py -d=2D -i OUTCAR-BN_mono > output_BN_monolayer.log
 ```
 
-### library mode
+### Library Mode
 
 Similarly, the above examples can be performed with the library mode after importing MechElastic from Python.
 
@@ -131,9 +131,9 @@ mechelastic.calculate_elastic(code="vasp", dim="3D", infile="OUTCAR-Si_bulk", cr
 import mechelastic
 
 parserclass = mechelastic.parsers.VaspOutcar()
-cnew = parserclass.cnew
+elastic_tensor = parserclass.elastic_tensor
 crystaltype = "cubic"
-mechelastic.tests.stability.stability_test(cnew, crystaltype)
+mechelastic.tests.stability.stability_test(elastic_tensor, crystaltype)
 ```
 
 To determine the crystal symmetry:
@@ -142,9 +142,9 @@ To determine the crystal symmetry:
 import mechelastic
 
 parserclass = mechelastic.parsers.VaspOutcar()
-cnew = parserclass.cnew
-cell = parserclass.cell
-mechelastic.utils.crystalutils.crystalselect(parserclass.cnew, parserclass.cell)
+elastic_tensor = parserclass.elastic_tensor
+cell = parserclass.structure.spglib_cell
+mechelastic.utils.crystalutils.crystal_select(elastic_tensor, cell)
 ```
 
 

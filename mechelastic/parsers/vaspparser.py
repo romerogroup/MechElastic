@@ -137,7 +137,7 @@ class VaspOutcar:
                     "TOTAL ELASTIC MODULI \(kBar\).*\n.*\n.*\n([XYZ0-9.\s-]*)\n\s*-",
                     data,
                 )[0].split("\n")
-            ]
+            ][:6]
         ).astype(float)
 
         # compaliance_tensor = c.I
