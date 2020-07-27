@@ -3,13 +3,13 @@
 import numpy as np
 
 
-def stability_test(matrix, crystaltype):
+def stability_test(matrix, crystal_type):
 
     """This methods tests for the stability of a structure."""
 
     c = np.copy(matrix)
 
-    if crystaltype == "cubic":
+    if crystal_type == "cubic":
         print("Cubic crystal system \n")
         print(
             "Born stability criteria for the stability of cubic system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
@@ -32,7 +32,7 @@ def stability_test(matrix, crystaltype):
         else:
             print("Condition (iii) NOT satisfied.")
 
-    if crystaltype == "hexagonal":
+    if crystal_type == "hexagonal":
         print("Hexagonal crystal system \n")
         print(
             "Born stability criteria for the stability of hexagonal system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
@@ -57,7 +57,7 @@ def stability_test(matrix, crystaltype):
         else:
             print("Condition (iii) NOT satisfied.")
 
-    if crystaltype == "tetragonal":
+    if crystal_type == "tetragonal":
         print("Tetragonal crystal system \n")
         print(
             "Born stability criteria for the stability of Tetragonal system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
@@ -92,7 +92,7 @@ def stability_test(matrix, crystaltype):
         else:
             print("Condition (v) is NOT satisfied.")
 
-    if crystaltype == "rhombohedral-1":
+    if crystal_type == "rhombohedral-1":
         print(
             "Rhombohedral (class-1): i.e. structures with point group: 3m, -3m and 32 \n"
         )
@@ -123,7 +123,7 @@ def stability_test(matrix, crystaltype):
         else:
             print("Condition (iv) is NOT satisfied.")
 
-    if crystaltype == "rhombohedral-2":
+    if crystal_type == "rhombohedral-2":
         print("Rhombohedral (class-2): i.e structures with point group: 3, -3 \n")
         print(
             "Born stability criteria for the stability of Rhombohedral-1 class system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
@@ -152,7 +152,7 @@ def stability_test(matrix, crystaltype):
         else:
             print("Condition (iv) is NOT satisfied.")
 
-    if crystaltype == "orthorhombic":
+    if crystal_type == "orthorhombic":
         print("Orthorhombic crystal system.... \n")
         print(
             "Born stability criteria for the stability of Orthorhombic systems are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
@@ -199,7 +199,7 @@ def stability_test(matrix, crystaltype):
         else:
             print("Condition (iv) is NOT satisfied.")
 
-    if crystaltype == "monoclinic":
+    if crystal_type == "monoclinic":
         print("Monoclinic crystal system.... \n")
         print(
             "Born stability criteria for the stability of monoclinic systems are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014), and Wu et al. PRB 76, 054115 (2007)]  \n"

@@ -15,9 +15,8 @@ mechelastic/version.py
 mechelastic/comms/__init__.py
 mechelastic/comms/printer.py
 mechelastic/core/__init__.py
-mechelastic/core/elastic_2D.py
-mechelastic/core/elastic_bulk.py
 mechelastic/core/elastic_properties.py
+mechelastic/core/elastic_properties_2d.py
 mechelastic/core/structure.py
 mechelastic/parsers/__init__.py
 mechelastic/parsers/abinitparser.py
