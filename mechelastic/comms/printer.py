@@ -27,7 +27,9 @@ def print_mechelastic():
     print(
         "Please check the authenticity of your results before publishing. AUTHORS of this script do not guarantee the quality and/or accuracy of results generated using this script.\n"
     )
-    print("-------------------------------------------------------")
+    print(
+        "------------------------------------------------------------------------------------------"
+    )
 
     return
 

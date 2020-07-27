@@ -10,7 +10,8 @@ from ..utils.elements import ELEMENTS, elements_inversed
 
 from ..comms import printer
 from ..tests import symmetry
-from ..core import ElasticProperties
+
+# from ..core import ElasticProperties
 from ..core import Structure
 
 
@@ -20,10 +21,9 @@ class VaspOutcar:
     This class contains methods to parse the OUTCAR file.
     """
 
-    def __init__(self, infile="OUTCAR", crystal_type=None):
+    def __init__(self, infile="OUTCAR"):
 
         self.infile = infile
-        self.crystal_type = crystal_type
 
         self.elastic_tensor = None
         self.compaliance_tensor = None
@@ -32,9 +32,9 @@ class VaspOutcar:
 
         self._parse_outcar()
 
-        self.elastic_properties = ElasticProperties(
-            self.elastic_tensor, self.structure, self.crystal_type
-        )
+        # self.elastic_properties = ElasticProperties(
+        #     self.elastic_tensor, self.structure, self.crystal_type
+        # )
 
         return
 
@@ -59,8 +59,12 @@ class VaspOutcar:
                 for x in re.findall("ions per type\s*=\s*([\s0-9]*)", data)[0].split()
             ]
         )
-        lattice_type = re.findall("LATTYP.*", data)[-1]
-        lattyp = lattice_type
+
+        # Sometimes LATTYP is not present.
+        # Only parse if available.
+        lattice_type = re.findall("LATTYP.*", data)
+        if lattice_type:
+            lattyp = lattice_type[-1]
         lattice = np.array(
             [
                 x.split()[:3]
@@ -83,7 +87,7 @@ class VaspOutcar:
             for x in re.findall("ions per type\s*=\s*([0-9\s]*)", data)[0].split()
         ]
         species = re.findall("VRHFIN\s*=([a-zA-Z\s]*):", data)
-        lattice_constant = [
+        self.lattice_constant = [
             float(x)
             for x in re.findall("length of vectors.*\n([0-9.\s]*)", data)[-1].split()[
                 :3
@@ -91,9 +95,9 @@ class VaspOutcar:
         ]
 
         # cell parameters
-        A = float(lattice_constant[0])
-        B = float(lattice_constant[1])
-        C = float(lattice_constant[2])
+        A = float(self.lattice_constant[0])
+        B = float(self.lattice_constant[1])
+        C = float(self.lattice_constant[2])
 
         print(
             "Lattice parameters (in Angs.): a = %10.5f      b = %10.5f     c = %10.5f"
@@ -161,7 +165,7 @@ class VaspOutcar:
         self.elastic_tensor[i, j] /= 10.0
 
         self.compaliance_tensor = self.elastic_tensor.I
-        print(self.elastic_tensor)
+        # print(self.elastic_tensor)
         print(
             "\n \n printing CNEW: Modified matrix in correct order (in GPa units)... \n For example- to generate input for the ELATE code [https://github.com/fxcoudert/elate] \n"
         )
