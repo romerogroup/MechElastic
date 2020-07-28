@@ -10,15 +10,17 @@ from .structure import Structure
 
 
 class ElasticProperties:
-    def __init__(self, elastic_tensor, structure):#, crystal_type):
+    def __init__(self, elastic_tensor, structure, crystal_type):
         self.elastic_tensor = np.matrix(elastic_tensor)
         self.compaliance_tensor = self.elastic_tensor.I
         self.structure = structure
-        # self.crystal_type = crystal_type
+        self.crystal_type = crystal_type
 
         crystal_select(
             cnew=self.elastic_tensor,
-            cell=self.structure.spglib_cell)#crystal_type=self.crystal_type,)
+            cell=self.structure.spglib_cell,
+            crystal_type=self.crystal_type,
+        )
 
     @property
     def K_v(self):
@@ -718,24 +720,32 @@ class ElasticProperties:
         )
         print("Tm (in K)=  %10.5f (plus-minus 555 K) " % self.melting_temperature)
         print("------------------------------------------------------------------ ")
-        
 
-        print('Hardness analysis from 6 different semi-empirical relationships.')
+        print("Hardness analysis from 6 different semi-empirical relationships.")
         H1a, H1b, H2, H3, H4, H5 = self.hardness
         print("------------------------------------------------------------------ ")
-        print('Hardness (H1a) =', "{:.2f}".format(H1a), 'GPa', '  Ref.[1]')
-        print('Hardness (H1b) =', "{:.2f}".format(H1b), 'GPa', '  Ref.[1]')
-        print('Hardness (H2)  =', "{:.2f}".format(H2), 'GPa', '  Ref.[2]')
-        print('Hardness (H3)  =', "{:.2f}".format(H3), 'GPa', '  Ref.[3]')
-        print('Hardness (H4)  =', "{:.2f}".format(H4), 'GPa', '  Ref.[4]')
-        print('Hardness (H5)  =', "{:.2f}".format(H5), 'GPa', '  Ref.[5]')
-        print('References:')
-        print('[1] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).')
-        print('[2] Computational alchemy: the search for new superhard materials. Teter (1998).')
-        print('[3] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).')
-        print('[4] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).')
-        print('[5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).')
-
+        print("Hardness (H1a) =", "{:.2f}".format(H1a), "GPa", "  Ref.[1]")
+        print("Hardness (H1b) =", "{:.2f}".format(H1b), "GPa", "  Ref.[1]")
+        print("Hardness (H2)  =", "{:.2f}".format(H2), "GPa", "  Ref.[2]")
+        print("Hardness (H3)  =", "{:.2f}".format(H3), "GPa", "  Ref.[3]")
+        print("Hardness (H4)  =", "{:.2f}".format(H4), "GPa", "  Ref.[4]")
+        print("Hardness (H5)  =", "{:.2f}".format(H5), "GPa", "  Ref.[5]")
+        print("References:")
+        print(
+            "[1] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011)."
+        )
+        print(
+            "[2] Computational alchemy: the search for new superhard materials. Teter (1998)."
+        )
+        print(
+            "[3] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010)."
+        )
+        print(
+            "[4] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011)."
+        )
+        print(
+            "[5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011)."
+        )
 
     @property
     def elastic_stability(self):
@@ -758,11 +768,11 @@ class ElasticProperties:
         G = self.G_vrh
         Y = self.E_vrh
         v = self.Nu_vrh
-        k = G/B
-        H1a = (1/6.78)*G
-        H1b = (1/16.48)*Y
-        H2 = (0.1769*G)-2.899
-        H3 = (1/15.76)*Y
-        H4 = ((1-2*v)*B)/(6*(1+v))
-        H5 = 2*((k*k*G)**0.585)-3
+        k = G / B
+        H1a = (1 / 6.78) * G
+        H1b = (1 / 16.48) * Y
+        H2 = (0.1769 * G) - 2.899
+        H3 = (1 / 15.76) * Y
+        H4 = ((1 - 2 * v) * B) / (6 * (1 + v))
+        H5 = 2 * ((k * k * G) ** 0.585) - 3
         return H1a, H1b, H2, H3, H4, H5

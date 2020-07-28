@@ -27,8 +27,8 @@ class VaspOutcar:
 
         self._parse_outcar()
 
-        self.elastic_properties = ElasticProperties(
-            self.elastic_tensor, self.structure)#, self.crystal_type)
+        # self.elastic_properties = ElasticProperties(
+        #     self.elastic_tensor, self.structure)#, self.crystal_type)
 
         return
 
