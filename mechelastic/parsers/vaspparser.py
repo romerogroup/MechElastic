@@ -1,17 +1,12 @@
 import numpy as np
 import re
-from ..utils.constants import (
-    N_avogadro,
-    h_Planck,
-    kB,
-    amu,
-)  # importing the one by one to get rid of the warnings for now
+from ..utils.constants import *
 from ..utils.elements import ELEMENTS, elements_inversed
 
 from ..comms import printer
 from ..tests import symmetry
 
-# from ..core import ElasticProperties
+from ..core import ElasticProperties
 from ..core import Structure
 
 
@@ -32,9 +27,8 @@ class VaspOutcar:
 
         self._parse_outcar()
 
-        # self.elastic_properties = ElasticProperties(
-        #     self.elastic_tensor, self.structure, self.crystal_type
-        # )
+        self.elastic_properties = ElasticProperties(
+            self.elastic_tensor, self.structure)#, self.crystal_type)
 
         return
 
@@ -162,7 +156,7 @@ class VaspOutcar:
         #     self.elastic_tensor[i,5] = ctemp[i,3]
 
         # Change the units of Cij from kBar to GPa
-        self.elastic_tensor[i, j] /= 10.0
+        self.elastic_tensor /= 10.0
 
         self.compaliance_tensor = self.elastic_tensor.I
         # print(self.elastic_tensor)

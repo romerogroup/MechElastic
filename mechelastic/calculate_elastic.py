@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 from .comms import printer
-from .core import elastic_bulk
-from .core import elastic_2D
+#from .core import elastic_bulk
+#from .core import elastic_2D
 from .parsers import VaspOutcar
 from .core import ElasticProperties
 from .core import ElasticProperties2D
@@ -32,7 +32,7 @@ def calculate_elastic(infile="OUTCAR", dim="3D", crystal=None, code="vasp"):
 
     # elastic constants calculation for 3D materials
     if dim == "3D":
-        elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type)
+        elastic_properties = ElasticProperties(elastic_tensor, structure)#, crystal_type)
         elastic_properties.print_properties()
 
     # elastic constants calculation for 2D materials
