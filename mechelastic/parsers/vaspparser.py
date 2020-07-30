@@ -98,6 +98,12 @@ class VaspOutcar:
             % (A, B, C)
         )
 
+        # external pressure in kB -> GPa
+        self.pressure = float(
+            re.findall(r"external\s*pressure\s=\s*([-0-9.]*)\s*kB", data)[-1]
+        )
+        self.pressure = self.pressure / 10
+
         atomic_numbers = np.zeros(nions, dtype=np.int32)
         k = 0
         for i in range(len(iontype)):
@@ -127,6 +133,7 @@ class VaspOutcar:
         density = total_mass / (volume * N_avogadro)
 
         print("\nDensity (in kg/m^3 units ): %10.5f" % density)
+        print("External Pressure (in GPa units ): %10.5f" % self.pressure)
 
         c = np.matrix(
             [
@@ -139,6 +146,9 @@ class VaspOutcar:
         ).astype(float)
 
         # compaliance_tensor = c.I
+
+        print("\nPrinting Cij matrix as read from OUTCAR\n")
+        printer.printMatrix(c)
 
         self.elastic_tensor = c.copy()
 
