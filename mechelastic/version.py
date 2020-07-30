@@ -1,7 +1,7 @@
 
 # THIS FILE IS GENERATED FROM MECHELASTIC SETUP.PY.
 name = 'MechElastic'
-version = '1.1.9'
+version = '1.1.10'
 description = 'A Python library to calculate elastic properties of materials. '
 url = 'https://github.com/romerogroup/MechElastic'
 author = 'Sobhit Singh'

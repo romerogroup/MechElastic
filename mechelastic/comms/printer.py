@@ -60,7 +60,7 @@ def printMatrix(c):
     for i in range(row):
         for j in range(col):
             print("{:>10.4f} ".format(c[i, j]), end=" ")
-            if j == 5:
+            if j == (col - 1):
                 print(" ")
 
     return
