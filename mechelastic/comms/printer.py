@@ -47,10 +47,20 @@ def print_warning_2D():
     return
 
 
+# def printMatrix(c):
+#     p = PrettyTable()
+#     for row in c:
+#         p.add_row(row)
+#     print(p.get_string(header=False, border=False))
+
+
 def printMatrix(c):
-    p = PrettyTable()
-    for row in c:
-        p.add_row(row)
-    print(p.get_string(header=False, border=False))
+    row = c.shape[0]
+    col = c.shape[1]
+    for i in range(row):
+        for j in range(col):
+            print("{:>10.4f} ".format(c[i, j]), end=" ")
+            if j == 5:
+                print(" ")
 
     return
