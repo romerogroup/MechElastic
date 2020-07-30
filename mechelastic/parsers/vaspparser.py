@@ -148,6 +148,7 @@ class VaspOutcar:
         # compaliance_tensor = c.I
 
         print("\nPrinting Cij matrix as read from OUTCAR\n")
+        np.set_printoptions(precision=4, suppress=True)
         printer.printMatrix(c)
 
         self.elastic_tensor = c.copy()
