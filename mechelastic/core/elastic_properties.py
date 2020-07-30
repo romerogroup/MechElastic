@@ -628,7 +628,7 @@ class ElasticProperties:
         )
 
     @property
-    def debey_temperature(self):
+    def debye_temperature(self):
         """
 
 
@@ -710,11 +710,18 @@ class ElasticProperties:
         print("Longitudinal wave velocity (vl) : %10.5f " % self.velocity_logitudinal)
         print("Transverse wave velocity (vt) : %10.5f " % self.velocity_transverse)
         print("Average wave velocity (vm) : %10.5f " % self.velocity_average)
-        print("Debye temperature  (in K) : %10.5f " % self.debey_temperature)
+        print("Debye temperature  (in K) : %10.5f " % self.debye_temperature)
         print(
-            "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass if your crystal has several species"
+            "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass in case your crystal has several species."
         )
-        #    print "Atomic displacement at 150, 300 and 450 K  (in A^2) : %10.5f %10.5f %10.5f" %(u2FromDebye(mass,natoms,theta,150.),u2FromDebye(mass,natoms,theta,300.), u2FromDebye(mass,natoms,theta,450.))
+        # print(
+        #     "Atomic displacement at 150, 300 and 450 K  (in A^2) : %10.5f %10.5f %10.5f"
+        #     % (
+        #         u2FromDebye(mass, natoms, theta, 150.0),
+        #         u2FromDebye(mass, natoms, theta, 300.0),
+        #         u2FromDebye(mass, natoms, theta, 450.0),
+        #     )
+        # )
         print(
             "\nMelting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K)"
         )
