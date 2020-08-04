@@ -36,12 +36,9 @@ import spglib
 from mechelastic.parsers import VaspOutcar
 from mechelastic.parsers import AbinitParser
 from mechelastic.comms import printer
-from mechelastic.core import (
-    Structure,
-    ElasticProperties,
-    ElasticProperties2D,
-)
+from mechelastic.core import Structure, ElasticProperties, ElasticProperties2D, ELATE
 from mechelastic.tests import ductile, eigenvals, stability, symmetry
 from mechelastic.utils import constants, elements, crystalutils
 
+from .calculate_elastic_anisotropy import calculate_elastic_anisotropy
 from .calculate_elastic import calculate_elastic
