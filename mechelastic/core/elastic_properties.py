@@ -10,17 +10,18 @@ from .structure import Structure
 
 
 class ElasticProperties:
-    def __init__(self, elastic_tensor, structure, crystal_type):
+    def __init__(self, elastic_tensor, structure=None, crystal_type=None):
         self.elastic_tensor = np.matrix(elastic_tensor)
         self.compaliance_tensor = self.elastic_tensor.I
         self.structure = structure
         self.crystal_type = crystal_type
-
-        crystal_select(
-            cnew=self.elastic_tensor,
-            cell=self.structure.spglib_cell,
-            crystal_type=self.crystal_type,
-        )
+        
+        if crystal_type is not None or structure is not None:
+            crystal_select(
+                cnew=self.elastic_tensor,
+                cell=self.structure.spglib_cell,
+                crystal_type=self.crystal_type,
+            )
 
     @property
     def K_v(self):
@@ -591,6 +592,9 @@ class ElasticProperties:
             Transverse Sound Velocity(m/s) from Navier's equation using Voigt-Reuss-Hill Approximation
 
         """
+        if self.structure is None:
+            raise Exception("No structure was provided")
+            
         G = self.G_vrh * 1.0e9
         return np.sqrt((G / self.structure.density))
 
@@ -605,6 +609,8 @@ class ElasticProperties:
             longitudinal Sound velocity(m/s) from Navier's equation using Voigt-Reuss-Hill Approximation
 
         """
+        if self.structure is None:
+            raise Exception("No structure was provided")
         G = self.G_vrh * 1.0e9  # converting from GPa to Pascal units (kg/ms^2)
         K = self.K_vrh * 1.0e9
         return np.sqrt(((3 * K + 4 * G) / (3.0 * self.structure.density)))
@@ -639,6 +645,8 @@ class ElasticProperties:
             WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass if your crystal has several species
 
         """
+        if self.structure is None:
+            raise Exception("No structure was provided")
         q = self.structure.natoms
         density = self.structure.density
         total_mass = np.sum(self.structure.masses)

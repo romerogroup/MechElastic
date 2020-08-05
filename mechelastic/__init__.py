@@ -26,10 +26,10 @@ from .version import date as __date__
 import re
 import sys
 
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import numpy as np
 
-# import pyvista
+import pyvista
 import prettytable
 import spglib
 
