@@ -6,7 +6,7 @@ def calculate_elastic_anisotropy(infile="OUTCAR", code="vasp", plot = None,elast
  
     """
     This method calculates the elastic properties
-    of a material from a DFT calculation.
+    of a material from a DFT calculation. hi
     """
 
     # welcome message
