@@ -1,0 +1,158 @@
+# Abinit input TEMPLATE
+# -Uthpala Herath
+
+# Note:
+# 1 Ha = 27.211 eV
+# 1 Bohr = 5.29E-11 m
+
+#-------------------- PARALLELIZATION  --------------------
+
+autoparal 4
+
+#-------------------- UNIT CELL --------------------
+chkdilatmx 0 
+chkprim 0
+acell 3*5.43 Angstrom
+
+rprim
+0.5 0.5 0.0
+0.0 0.5 0.5
+0.5 0.0 0.5
+
+#-------------------- ATOMIC STRUCTURE --------------------
+
+ntypat 1           # Types of real atoms
+znucl 14      # E.g.- La Mn O
+
+# Alchemical pseudopotentials for VCA
+# npsp 4             # Total number of pseudopotentials (Including ghost atoms if using VCA)
+# znucl 25 8 57 38   # If using VCA place ghost atoms last, E.g.- Mn O La Sr
+# ntypalch 1         # Number of alchemical pseudopotentials
+# mixalch 0.7 0.3    # Mixing based on znucl order
+
+# Atomic positions
+natom 2 
+typat 1 1    # Order as in znucl
+xred
+0 0 0 
+0.25 0.25 0.25
+
+
+#-------------------- K-GRID --------------------
+
+kptopt 1           # K-point symmetry type
+ngkpt 8 8 8     # Monkhorst-Pack grid
+nshiftk 4 
+shiftk # 0.0 0.0 0.0 # Choice of origin
+0.5 0.5 0.5
+0.5 0.0 0.0
+0.0 0.5 0.0
+0.0 0.0 0.5
+
+#-------------------- PLANE WAVE BASIS SET --------------------
+
+ecut 10            # KE cutoff in Hartree
+ecutsm 0.5         # Smoothing energy for lattice parameter optimization
+#tsmear 0.001
+ixc 1             # XC functional
+#pawecutdg 20       # Energy cutoff for the fine FFT grid
+nband 12 
+#pawxcdev 0
+occopt 3 
+
+#-------------------- SCF CALCULATION --------------------
+
+diemac 9.0         # Model dielectric preconditioner
+nstep 200           # Maximum number of SCF iterations
+optforces 1        # Enforce calculation of forces at each SCF step
+
+tolvrs 1.0d-18     # Tolerance on residual of the SCF potential (rec: structural opt)
+# toldfe 1.0d-8     # Tolerance on difference of total energy (Ha)
+# toldff 1.0d-6      # Tolerance on difference of forces (Ha/Bohr)
+
+
+#-------------------- ATOMIC OPTIMIZATION --------------------
+# COMMENT OUT THIS SECTION IF DOING ATOMIC + CELL OPTIMIZATION.
+
+ # ionmov 2
+ # optcell 0
+ # ntime 10          # maximum number of ionic optimization steps
+ # tolmxf 1.0d-6     # tolerance on the maximal force (Ha/Bohr)
+
+# constraints
+# natfix 2          # Fix positions of these atoms
+# iatfix 2 2
+
+# -------------------- ATOMIC + CELL OPTIMIZATION --------------------
+
+ # Note: Cell optimization should be followed by atomic optimization
+
+ # Multi dataset mode
+ ndtset 5   # 5 for Elastic constants calculation
+ jdtset 1 2 3 4 5  
+
+ # First perform atomic optimization
+ ionmov1 2
+ optcell1 0
+ ntime1 20          # Maximum number of ionic optimization steps
+ tolmxf1 1.0d-6     # Tolerance on the maximal force (Ha/Bohr)
+
+ # Get previous datasets
+ getwfk2 1          # Start with wave functions from dataset1
+ getxred2 1         # Start with relaxed coordinates from dataset 1
+
+ # Now perform cell optimization
+ dilatmx2 1.15       # Maximum scaling allowed for lattice parameters
+ ionmov2  2
+ optcell2 2
+ ntime2  20 
+ tolmxf2 1.0d-6
+
+ strtarget2 3*-3.398928923d-5 3*0.0 # Set Pressure 1GPa
+
+ strfact2 100        # Scales the stresses to compare with same tolmxf convergence test
+                     # applied to the forces.
+
+#-------------------- ELASTIC CONSTANTS --------------------
+
+# Note: Use the datasets from ATOMIC + CELL OPTIMIZATION.
+#       Afterwards, perform a GS calculation with new xred and acell.
+#       Next, do DDK WF calculation followed by RF calculation.
+
+# GS calculation with new xred and acell (from dataset #2).
+
+getcell3 2
+getxred3 2
+
+kptopt3 1
+tolvrs3 1.0d-18
+
+# Calculate the ddk wf's - needed for piezoelectric tensor and
+# Born effective charges in the next dataset.
+
+  getcell4  2 
+  getxred4  2 
+  getwfk4   3
+    iscf4  -3        #this option is needed for ddk
+  kptopt4   2        #use time-reversal symmetry only for k points
+    nqpt4   1        #one wave vector will be specified
+     qpt4   0 0 0    #need to specify gamma point
+  rfelfd4   2        #set for ddk wf's only
+   rfdir4   1 1 1    #full set of directions needed
+  tolwfr4   1.0d-20  #only wf convergence can be monitored here
+
+
+# Response-function calculations for all needed perturbations
+
+  getcell5  2 
+  getxred5  2 
+  getddk5   4
+  getwfk5   3
+  kptopt5   2        #use time-reversal symmetry only for k points
+    nqpt5   1
+     qpt5   0 0 0
+  rfphon5   1        #do atomic displacement perturbation
+ rfatpol5   1 2      #do for all atoms
+  rfstrs5   3        #do strain perturbation
+   rfdir5   1 1 1    #the full set of directions is needed
+  tolvrs5   1.0d-10  #need reasonable convergence of 1st-order quantities

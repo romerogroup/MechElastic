@@ -1,194 +1,195 @@
 import numpy as np
 import re
+from itertools import groupby
 from ..utils.constants import *
-from ..utils.elements import *
+from ..utils.elements import ELEMENTS, elements_inversed
 
 from ..comms import printer
 from ..tests import symmetry
 
+from ..core import ElasticProperties
+from ..core import Structure
 
-class AbinitParser:
+
+class AbinitOutput:
+
     """
-    This class contains methods to parse the Abinit output file.
+    This class contains methods to parse the outputs from
+    Abinit. It requires the scf/RF output and the ddb analysis
+    output.
     """
 
-    def __init__(self, infile="abinit.out"):
+    def __init__(self, infile="abinit.out", ddbfile="abinit2.out"):
 
         self.infile = infile
+        self.ddbfile = ddbfile
 
-        self.cnew = np.zeros((6, 6))
-        self.snew = np.zeros((6, 6))
+        self.elastic_tensor = None
+        self.compaliance_tensor = None
+        self.structure = None
+        self.text = None
 
-        self._readOUTPUT()
+        self._parse_output()
+
+        # self.elastic_properties = ElasticProperties(
+        #     self.elastic_tensor, self.structure)#, self.crystal_type)
 
         return
 
-    def _readOUTPUT(self):
+    def _parse_ddb(self):
+        """
+        This funcion reads the elastic tensor from the abinit output file
+        after running anaddb.
+        """
 
-        # s is the complaiance matrix and c is the elastic constant matrix
-        s = np.zeros((6, 6))
-        c = np.zeros((6, 6))
+        rf = open(self.ddbfile, "r")
+        datamat = rf.read()
+        rf.close()
 
-        # parsing OUTCAR
+        ET = re.findall(
+            r"Elastic\s*Tensor\s*\(relaxed\s*ion\)\s*[\sA-Za-z:\d\^()]*\n([-\s0-9.]*)",
+            datamat,
+        )
+        ET2 = np.array([float(x) for x in ET[0].split()])
+        elastic_tensor = ET2.reshape(6, 6)
 
-        f = open(self.infile, "r")
-        lines = f.readlines()
-        f.close()
+        return np.matrix(elastic_tensor)
 
-        nions = -1
-        mass = []
-        foundcell = 0
-        icell = -1
-        iatom = -1
-        lattice = []
-        positions = []
-        atomic_numbers = []
-        symbols = []
-        for i in lines:
-            word = i.split()
-            if "TOTAL ELASTIC MODULI (kBar)" in i:
-                ii = lines.index(i)
-            if "POMASS" in i and "ZVAL" in i:
-                m = i.split()[2]
-                mass.append(float(m[:-1]))
-            if "volume of cell" in i:
-                vol = float(i.split()[4])
-            if "NIONS =" in i:
-                nions = int(i.split()[11])
-            if "ions per type =" in i:
-                self.natoms = list(map(int, i.split()[4:]))
-            if "LATTYP" in i:
-                lattyp = i
-            if icell > -1 and not foundcell:
-                lattice.append(list(map(float, i.split()))[:3])
-                icell = icell + 1
-                if icell == 3:
-                    foundcell = 1
-            if not foundcell and "direct lattice vectors" in i:
-                icell = icell + 1
-            if nions > 0 and iatom > -1:
-                positions.append(list(map(float, word)))
-                iatom = iatom + 1
-                if iatom == nions:
-                    iatom = -1
-            if nions > 0 and "position of ions in fractional coordinates" in i:
-                iatom = iatom + 1
-            if "ions per type = " in i:
-                iontype = list(map(int, word[4:]))
-            if "VRHFIN" in i:
-                # symbols.append(i.split()[1][1:-1])
-                # Modified by Uthpala to detect symbols in OUTCAR when there is a space between
-                # the element symbol and ':'. E.g.- La : instead of La:
-                symbols.append(re.findall(r"=([a-zA-Z\s]*):", i)[0].split()[0])
-            if "length of vectors" in i:
-                n = lines.index(i)
-                l = lines[n + 1]
-                self.lattconst = l.split()
+    def _parse_output(self):
+        """
+        This function reads the abinit output for scf and RF calculations
+        and initializes the class variables.
+
+        """
+
+        rf = open(self.infile)
+        self.text = rf.read()
+        rf.close()
+        data = self.text
+        mass = np.array(
+            [float(x) for x in re.findall(r"amu\s*([E+=0-9.\s]*)\n", data)[0].split()]
+        )
+        volume = float(
+            re.findall("Unit\s*cell\s*volume\s*ucvol\s*=\s*([-+0-9.E\s]*)", data)[-1]
+        )
+        # converting from Bohr^3 to Angstrom^3
+        volume = volume * (0.529177249) ** 3
+
+        nions = int(re.findall(r"\bnatom\b\s*([0-9]*)", data)[-1])
+
+        # counting the number of atoms per type
+        typat = [int(x) for x in re.findall(r"\btypat\b\s*([0-9\s]*)", data)[0].split()]
+        species_grouped = [i[0] for i in groupby(typat)]
+        iontype = [typat.count(i) for i in species_grouped]
+        natoms = np.array([typat.count(i) for i in species_grouped])
+
+        # Sometimes LATTYP is not present.
+        # Only parse if available.
+        lattice_type = re.findall("LATTYP.*", data)
+        if lattice_type:
+            lattyp = lattice_type[-1]
+
+        full_latt = re.findall(r"\(Bohr,Bohr\^-1\):*\n([-+0-9.RG=\(\)\s\n]*)\n", data)[
+            -1
+        ].split()
+        r1 = [float(x) for x in full_latt[1:4]]
+        r2 = [float(x) for x in full_latt[9:12]]
+        r3 = [float(x) for x in full_latt[17:20]]
+        lattice = np.array((r1, r2, r3), dtype="float64")
+        # converting from Bohr to Angstroms
+        lattice = 0.529177249 * lattice
+
+        positions = np.array(
+            [
+                float(x)
+                for x in re.findall(r"\bxred\b\s*([0-9-+.\sE]*)\n", data)[-1].split()
+            ]
+        )
+        positions = positions.reshape(nions, 3)
+
+        self.lattice_constant = [
+            0.529177249 * float(x)
+            for x in re.findall(r"acell\d\s*([-+0-9.E\s]*)Bohr", data)[0].split()
+        ]
 
         # cell parameters
-        A = float(self.lattconst[0])
-        B = float(self.lattconst[1])
-        C = float(self.lattconst[2])
+        A = float(self.lattice_constant[0])
+        B = float(self.lattice_constant[1])
+        C = float(self.lattice_constant[2])
 
         print(
             "Lattice parameters (in Angs.): a = %10.5f      b = %10.5f     c = %10.5f"
             % (A, B, C)
         )
 
+        # external pressure in GPa
+        self.pressure = float(re.findall(r"Pressure=\s*([0-9-+.E\s]*)\s*GPa", data)[-1])
+
+        # atomic numbers
+        znucl = [
+            int(float(x)) for x in re.findall(r"znucl\s*([0-9.\s]*)\n", data)[0].split()
+        ]
+
+        species = [elements_inversed[x] for x in znucl]
+
         atomic_numbers = np.zeros(nions, dtype=np.int32)
         k = 0
         for i in range(len(iontype)):
             for j in range(iontype[i]):
-                atomic_numbers[k] = ELEMENTS[symbols[i]]
+                atomic_numbers[k] = ELEMENTS[species[i]]
                 k = k + 1
 
         print("Atomic numbers")
         print(atomic_numbers)
-        lattice = np.array(lattice)
-        positions = np.array(positions)
-        self.cell = (lattice, positions, atomic_numbers)
+        atomic_numbers = atomic_numbers
+        symbols = [elements_inversed[x] for x in atomic_numbers]
+        cell = (lattice, positions, atomic_numbers)
 
-        mass = np.array(mass)
         print("Mass of atoms (in g/mol units): ")
         print((np.array(mass)))
-        print("Number of atoms: %d" % np.sum(self.natoms))
+        print("Number of atoms: %d" % np.sum(natoms))
 
-        self.totalmass = 0.0
-        for i in range(len(self.natoms)):
-            self.totalmass = self.totalmass + self.natoms[i] * mass[i]
-        print("Total mass (in g/mol): %10.4f " % self.totalmass)
-        print("Volume of the cell (in Ang^3 units): %10.4f " % vol)
+        total_mass = 0.0
+        for i in range(len(natoms)):
+            total_mass = total_mass + natoms[i] * mass[i]
+        print("Total mass (in g/mol): %10.4f " % total_mass)
+        print("Volume of the cell (in Ang^3 units): %10.4f " % volume)
 
         # converting the units
-        vol = vol * 1.0e-30  # from Angstrom to meters
-        self.totalmass = self.totalmass * 1.0e-3  # from gram to kg
-        self.density = self.totalmass / (vol * N_avogadro)
+        volume *= 1.0e-30  # from Angstrom to meters
+        total_mass *= 1.0e-3  # from gram to kg
+        density = total_mass / (volume * N_avogadro)
 
-        print("\nDensity (in kg/m^3 units ): %10.5f" % self.density)
+        print("\nDensity (in kg/m^3 units ): %10.5f" % density)
+        print("External Pressure (in GPa units ): %10.5f" % self.pressure)
 
-        for i in range(0, 6):
-            l = lines[ii + 3 + i]
-            word = l.split()
-            s[i][:] = word[1:7]
-            c[i] = list(map(float, s[i][:]))
+        c = self._parse_ddb()
 
-        # print c
-        mc = np.matrix(c)
-        mci = mc.I
-
-        for i in range(0, 6):
-            for j in range(0, 6):
-                s[i][j] = mci[i, j]
-
-        print("Printing Cij matrix as read from OUTCAR\n")
+        print("\nPrinting Cij matrix as read from Abinit DDB output.\n")
+        np.set_printoptions(precision=4, suppress=True)
         printer.printMatrix(c)
 
-        # Redefining the Cij matrix into the correct Voigt notation since VASP's OUTCAR has a different order
-        # In VASP: Columns and rows are listed as: 1, 2, 3, 6, 4, 5
-        # In this format OUTCAR's C44 values would be actually C66, C55 would be C44, and C66 would be C55.
-        # OUTCAR follows the below order:
-        # [C11 C12 C13 C16 C14 C15]
-        # [C21 C22 C23 C26 C24 C25]
-        # [C31 C32 C33 C36 C34 C35]
-        # [C61 C62 C63 C66 C64 C65]
-        # [C41 C42 C43 C46 C44 C45]
-        # [C51 C52 C53 C56 C54 C55]
+        self.elastic_tensor = c.copy()
 
-        self.cnew = np.copy(c)
-
-        # for i in range(0,3):
-        #   for j in range(0,6):
-        #     cnew[i][j]=c[i][j]
-
-        for j in range(0, 6):
-            self.cnew[3][j] = c[4][j]
-            self.cnew[4][j] = c[5][j]
-            self.cnew[5][j] = c[3][j]
-
-        ctemp = np.zeros((6, 6))
-        ctemp = np.copy(self.cnew)
-
-        for i in range(0, 6):
-            self.cnew[i][3] = self.cnew[i][4]
-            self.cnew[i][4] = self.cnew[i][5]
-            self.cnew[i][5] = ctemp[i][3]
-
-        # Change the units of Cij from kBar to GPa
-        for i in range(0, 6):
-            for j in range(0, 6):
-                self.cnew[i][j] = self.cnew[i][j] / 10.0
-
+        self.compaliance_tensor = self.elastic_tensor.I
+        # print(self.elastic_tensor)
         print(
             "\n \n printing CNEW: Modified matrix in correct order (in GPa units)... \n For example- to generate input for the ELATE code [https://github.com/fxcoudert/elate] \n"
         )
 
+        # in GPa
+        self.elastic_tensor = self.elastic_tensor * 100
+
         np.set_printoptions(precision=3, suppress=True)
 
-        printer.printMatrix(self.cnew)
+        printer.printMatrix(self.elastic_tensor)
 
         print(
             (
                 "\n Checking if the modified matrix CNEW is symmetric: i.e. Cij = Cji:  %10s"
-                % symmetry.check_symmetric(self.cnew)
+                % symmetry.check_symmetric(self.elastic_tensor)
             )
         )
+        self.structure = Structure(symbols, positions, lattice)
+
+        return

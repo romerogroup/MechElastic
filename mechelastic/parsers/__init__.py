@@ -1,2 +1,2 @@
 from .vaspparser import VaspOutcar
-from .abinitparser import AbinitParser
+from .abinitparser import AbinitOutput

@@ -2,11 +2,14 @@
 
 from .comms import printer
 from .parsers import VaspOutcar
+from .parsers import AbinitOutput
 from .core import ElasticProperties
 from .core import ElasticProperties2D
 
 
-def calculate_elastic(infile="OUTCAR", dim="3D", crystal=None, code="vasp"):
+def calculate_elastic(
+    infile="OUTCAR", dim="3D", crystal=None, code="vasp", ddbfile=None
+):
 
     """
     This method calculates the elastic properties
@@ -24,6 +27,12 @@ def calculate_elastic(infile="OUTCAR", dim="3D", crystal=None, code="vasp"):
     # calling parser
     if code == "vasp":
         output = VaspOutcar(infile=infile)
+        elastic_tensor = output.elastic_tensor
+        structure = output.structure
+        lattice_constant = output.lattice_constant
+
+    elif code == "abinit":
+        output = AbinitOutput(infile=infile, ddbfile=ddbfile)
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant

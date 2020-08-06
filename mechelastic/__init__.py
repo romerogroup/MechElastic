@@ -34,7 +34,7 @@ import prettytable
 import spglib
 
 from mechelastic.parsers import VaspOutcar
-from mechelastic.parsers import AbinitParser
+from mechelastic.parsers import AbinitOutput
 from mechelastic.comms import printer
 from mechelastic.core import Structure, ElasticProperties, ElasticProperties2D, ELATE
 from mechelastic.tests import ductile, eigenvals, stability, symmetry

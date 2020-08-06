@@ -1,0 +1,5 @@
+!the input file for the anaddb code
+
+elaflag  3  !the flag for the elastic constant
+piezoflag  3  !the flag for the piezoelectric constant
+instrflag  1  !the flag for the internal strain tensor

@@ -39,8 +39,17 @@ import mechelastic
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "-i", "--input", type=str, help="input the OUTCAR", default="OUTCAR"
+    "-i",
+    "--input",
+    type=str,
+    help="input the OUTCAR or Abinit input file.",
+    default="OUTCAR",
 )
+parser.add_argument(
+    "-ddb", "--ddbfile", type=str, help="input the Abinit DDB file", default=None
+)
+
+
 parser.add_argument(
     "-c",
     "--crystal",
@@ -56,7 +65,12 @@ parser.add_argument(
     default="3D",
 )
 parser.add_argument(
-    "-co", "--code", type=str, help="DFT code", default="vasp", choices=["vasp"]
+    "-co",
+    "--code",
+    type=str,
+    help="DFT code",
+    default="vasp",
+    choices=["vasp", "abinit"],
 )
 args = parser.parse_args()
 
@@ -72,7 +86,11 @@ print("-----------------------------")
 # calculate elastic properties
 def main():
     mechelastic.calculate_elastic(
-        code=args.code, dim=args.dim, infile=args.input, crystal=args.crystal
+        code=args.code,
+        dim=args.dim,
+        infile=args.input,
+        crystal=args.crystal,
+        ddbfile=args.ddbfile,
     )
 
 
