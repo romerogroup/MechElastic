@@ -31,7 +31,7 @@ def calculate_elastic_anisotropy(
         for i in range(row):
             columnsList = []
             for j in range(col):
-                columnsList.append(elastic_tensor[i, j])
+                columnsList.append(round(elastic_tensor[i, j],3))
             rowsList.append(columnsList)
 
     elif code == "abinit":
@@ -44,9 +44,9 @@ def calculate_elastic_anisotropy(
         for i in range(row):
             columnsList = []
             for j in range(col):
-                columnsList.append(elastic_tensor[i, j])
+                columnsList.append(round(elastic_tensor[i, j],3))
             rowsList.append(columnsList)
-
+    print(rowsList)
     elastic_tensor = ELATE.ELATE(rowsList)
 
     if plot == "2D":
