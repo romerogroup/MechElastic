@@ -15,7 +15,7 @@ class ElasticProperties:
         self.compaliance_tensor = self.elastic_tensor.I
         self.structure = structure
         self.crystal_type = crystal_type
-        
+
         if crystal_type is not None or structure is not None:
             crystal_select(
                 cnew=self.elastic_tensor,
@@ -594,7 +594,7 @@ class ElasticProperties:
         """
         if self.structure is None:
             raise Exception("No structure was provided")
-            
+
         G = self.G_vrh * 1.0e9
         return np.sqrt((G / self.structure.density))
 
@@ -715,9 +715,11 @@ class ElasticProperties:
             "\n \t \t  Elastic wave velocities calculated using Navier's equation  (in m/s units) \n"
         )
         print("----------------------------------------------- ")
-        print("Longitudinal wave velocity (vl) : %10.5f " % self.velocity_logitudinal)
-        print("Transverse wave velocity (vt) : %10.5f " % self.velocity_transverse)
-        print("Average wave velocity (vm) : %10.5f " % self.velocity_average)
+        print(
+            "Longitudinal wave velocity (vl) : %10.5f m/s " % self.velocity_logitudinal
+        )
+        print("Transverse wave velocity (vt) : %10.5f m/s" % self.velocity_transverse)
+        print("Average wave velocity (vm) : %10.5f m/s" % self.velocity_average)
         print("Debye temperature  (in K) : %10.5f " % self.debye_temperature)
         print(
             "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass in case your crystal has several species."
