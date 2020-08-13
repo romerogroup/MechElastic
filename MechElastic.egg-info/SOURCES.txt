@@ -11,9 +11,11 @@ MechElastic.egg-info/requires.txt
 MechElastic.egg-info/top_level.txt
 mechelastic/__init__.py
 mechelastic/calculate_elastic.py
+mechelastic/calculate_elastic_anisotropy.py
 mechelastic/version.py
 mechelastic/comms/__init__.py
 mechelastic/comms/printer.py
+mechelastic/core/ELATE.py
 mechelastic/core/__init__.py
 mechelastic/core/elastic_properties.py
 mechelastic/core/elastic_properties_2d.py
