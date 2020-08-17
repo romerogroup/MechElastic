@@ -3,13 +3,13 @@
 from .comms import printer
 from .parsers import VaspOutcar
 from .parsers import AbinitOutput
+from .parsers import QEParser
 from .core import ElasticProperties
 from .core import ElasticProperties2D
 
 
 def calculate_elastic(
-    infile="OUTCAR", dim="3D", crystal=None, code="vasp", ddbfile=None
-):
+    infile="OUTCAR", dim="3D", crystal=None, code="vasp", ddbfile=None, scfFile = None):
 
     """
     This method calculates the elastic properties
@@ -36,7 +36,11 @@ def calculate_elastic(
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant
-
+    elif code == "qe_ElaStic":
+        output = QEParser(outfile = infile, scfFile = scfFile )
+        elastic_tensor = output.elastic_tensor
+        structure = output.structure
+        lattice_constant = output.lattice_constant
     # elastic constants calculation for 3D materials
     if dim == "3D":
         elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type)
