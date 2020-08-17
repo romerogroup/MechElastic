@@ -5,22 +5,20 @@ Created on Mon Aug 17 00:02:30 2020
 @author: lllan
 """
 
-#import numpy as np
-#import re
-#import math
-#from elements import ELEMENTS, elements_inversed
-#from constants import N_avogadro
-#import symmetry
+
 import numpy as np
 import re
+import math
 from ..utils.constants import *
 from ..utils.elements import ELEMENTS, elements_inversed
-
 from ..comms import printer
 from ..tests import symmetry
-
 from ..core import ElasticProperties
 from ..core import Structure
+
+def mag(v):
+    return (v[0]*v[0]+v[1]*v[1]+v[2]*v[2])**0.5
+    
 
 class QEParser:
 
@@ -44,11 +42,8 @@ class QEParser:
         self.scfText = None
         self.infoElaSticText = None
         
-        self.test = None
         self._parse_files()
 
-        # self.elastic_properties = ElasticProperties(
-        #     self.elastic_tensor, self.structure)#, self.crystal_type)
 
         return
 
@@ -111,20 +106,6 @@ class QEParser:
                 
         volume = float(re.findall("Volume of equilibrium unit cell\s*=\s*([0-9.]*)[\s\S]*", dataInfo)[-1])
         
-        
-        
-#
-#        # Sometimes LATTYP is not present.
-#        # Only parse if available.
-#        lattice_type = re.findall("LATTYP.*", data)
-#        if lattice_type:
-#            lattyp = lattice_type[-1]
-#        cell_parameters = np.array(
-#            [
-#                x.strip().split()
-#                for x in re.findall("CELL_PARAMETERS \(alat\)\n" + 3 * "(.*)\n", data)[0]
-#            ]
-#        ).astype(float)
       
         positions = np.array(
             [
@@ -155,21 +136,26 @@ class QEParser:
             celldm2 = 1.
             
             if(ibrav == 1):
-                a = celldm1
-                b = celldm1
-                c = celldm1
-                lattice = np.array([[celldm1,0,0],[0,celldm1,0],[0,0,celldm1]])
+                lattice = np.array([[celldm1,0,0],
+                                    [0,celldm1,0],
+                                    [0,0,celldm1]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
             elif(ibrav == 2):
-                a = celldm1*(2**0.5)/2
-                b = celldm1*(2**0.5)/2
-                c = celldm1*(2**0.5)/2
-                lattice = np.array([[-celldm1/2,0,celldm1/2],[0,celldm1/2,celldm1/2],[-celldm1/2,celldm1/2,0]])
+                lattice = np.array([[-celldm1/2,0,celldm1/2],
+                                    [0,celldm1/2,celldm1/2],
+                                    [-celldm1/2,celldm1/2,0]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
             elif(ibrav == 3):
-                a = celldm1*(3**0.5)/2
-                b = celldm1*(3**0.5)/2
-                c = celldm1*(3**0.5)/2
-                lattice = np.array([[celldm1/2,0,celldm1/2],[-celldm1/2,celldm1/2,celldm1/2],[-celldm1/2,-celldm1/2,celldm1/2]])
-            
+                lattice = np.array([[celldm1/2,0,celldm1/2],
+                                    [-celldm1/2,celldm1/2,celldm1/2],
+                                    [-celldm1/2,-celldm1/2,celldm1/2]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
         if (ibrav == 4):
             "Hexagonal system's must have celldm(1) and celldm(3)"
             celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",data)[0])
@@ -179,10 +165,12 @@ class QEParser:
             celldm5 = 0.
             celldm6 =-.5
             
-            
-            a = celldm1
-            b = celldm1
-            c = a*celldm3
+            lattice = np.array([[celldm1,0,0],
+                                [-celldm1/2,celldm1*sqrt(3)/2,0],
+                                [0,0,celldm1*celldm3]])
+            a = mag(lattice[0,:])
+            b = mag(lattice[1,:])
+            c = mag(lattice[2,:])
             
         if (ibrav == 5):
             "Trigonal or Rhombohedragonal structures must have celldm(1) and celldm(4)"
@@ -195,9 +183,16 @@ class QEParser:
             celldm5 = celldm4 
             celldm6 = celldm4
             
-            a = celldm1
-            b = celldm1*((2+celldm4)/3)**0.5
-            c = celldm1 
+            tx = ((1-celldm4)/2)**0.5
+            ty = ((1-celldm4)/6)**0.5
+            tz = ((1+2*celldm4)/3)**0.5
+            
+            lattice = np.array([[celldm1*tx,-celldm1*ty,celldm*tz],
+                                [0,2*celldm1*ty,tz],
+                                [-celldm1*tx,-celldm1*ty,celldm1*tz]])
+            a = mag(lattice[0,:])
+            b = mag(lattice[1,:])
+            c = mag(lattice[2,:])
             
             
             
@@ -211,13 +206,20 @@ class QEParser:
             celldm6 = .0
             
             if(ibrav == 6):
-                a = celldm1
-                b = celldm1
-                c = a*celldm3
+                lattice = np.array([[celldm1,0,0],
+                                    [0,celldm1,0],
+                                    [0,0,celldm1*celldm3]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
+
             elif(ibrav == 7):
-                a = (2*(celldm1/2)**2 + (celldm1*celldm3/2)**2)**0.5 
-                b = (2*(celldm1/2)**2 + (celldm1*celldm3/2)**2)**0.5 
-                c = (2*(celldm1/2)**2 + (celldm1*celldm3/2)**2)**0.5 
+                lattice = np.array([[celldm1/2,-celldm1/2,celldm1*celldm3/2],
+                                    [celldm1/2,celldm1/2,celldm1*celldm3/2],
+                                    [-celldm1/2,-celldm1/2,celldm1*celldm3/2]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
         
         if (ibrav == 8 or ibrav == 9 or ibrav == 10 or ibrav == 11):
             "Orthorhombic structures must have celldm(1), celldm(2), and celldm(3)"
@@ -229,24 +231,38 @@ class QEParser:
             celldm6 = .0
             
             if(ibrav == 8):
-                a = celldm1
-                b = a*celldm2
-                c = a*celldm3
+                lattice = np.array([[celldm1,0,0],
+                                    [0,celldm1*celldm2,0],
+                                    [0,0,celldm1*celldm3]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
             elif(ibrav == 9):
-                a = ((celldm1**2+(celldm1*celldm2)**2)**0.5)/2
-                b = ((celldm1**2+(celldm1*celldm2)**2)**0.5)/2
-                c = celldm1*celldm3
+                lattice = np.array([[celldm1/2,celldm1*celldm2/2,0],
+                                    [-celldm1/2,celldm1*celldm2/2,0],
+                                    [0,0,celldm1*celldm3]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
             elif(ibrav == 10):
-                a = ((celldm1**2+(celldm1*celldm3)**2)**0.5)/2
-                b = ((celldm1**2+(celldm1*celldm2)**2)**0.5)/2
-                c = (((celldm1*celldm2)**2+(celldm1*celldm3)**2)**0.5)/2
-            elif(ibrav == 10):
-                a = ((celldm1**2 + (celldm1*celldm2)**2 + (celldm1*celldm3)**2 )**0.5 )/2
-                b = ((celldm1**2 + (celldm1*celldm2)**2 + (celldm1*celldm3)**2 )**0.5 )/2
-                c = ((celldm1**2 + (celldm1*celldm2)**2 + (celldm1*celldm3)**2 )**0.5 )/2
+                lattice = np.array([[celldm1/2,0,celldm1*celldm3/2],
+                                    [celldm1/2,celldm1*celldm2/2,0],
+                                    [0,celldm1*celldm2/2,celldm1*celldm3/2]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
+            elif(ibrav == 11):
+                lattice = np.array([[celldm1/2,celldm1*celldm2/2,celldm1*celldm3/2],
+                                    [-celldm1/2,celldm1*celldm2/2,celldm1*celldm3/2],
+                                    [-celldm1/2,-celldm1*celldm2/2,celldm1*celldm3/2]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
             
         if (ibrav == 12 or ibrav == 13):
             "Monoclinic structures must have celldm(1), celldm(2), and celldm(3),celldm(4)"
+            
+            
             celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",data)[0])
             celldm2 = float(re.findall("\s*celldm\(2\)\s*=\s*([\.\d]*)",data)[0])
             celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",data)[0])
@@ -254,15 +270,20 @@ class QEParser:
             celldm5 = .0
             celldm6 = .0
             
-            
             if(ibrav == 12):
-                a = celldm1
-                b = celldm1 * celldm2
-                c = celldm1 * celldm3
+                lattice = np.array([[celldm1/2,0,0],
+                                    [celldm1*celldm2*celldm4,celldm1*celldm2*celldm4,0],
+                                    [0,0,celldm1*celldm3]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
             elif(ibrav == 13):
-                a = ((celldm1**2+(celldm1*celldm3)**2)**0.5)/2
-                b = celldm1 * celldm2
-                c = ((celldm1**2+(celldm1*celldm3)**2)**0.5)/2
+                lattice = np.array([[celldm1/2,0,-celldm1*celldm3/2],
+                                    [celldm1*celldm2*celldm4,celldm1*celldm2*celldm4,0],
+                                    [celldm1/2,0,celldm1*celldm3/2]])
+                a = mag(lattice[0,:])
+                b = mag(lattice[1,:])
+                c = mag(lattice[2,:])
 
         if (ibrav == 14):
             "Triclinic structure must have celldm(1), celldm(2), and celldm(3),celldm(4),celldm(5), and celldm(6)"
@@ -276,17 +297,22 @@ class QEParser:
             alpha = math.acos(celldm4)
             beta  = math.acos(celldm5)
             gamma = math.acos(celldm6)
-            a = celldm1
-            b = celldm1*celldm2
-            c = celldm3*celldm1*((math.cos(beta))**2+ ((1/math.sin(gamma)) * (math.cos(alpha)-math.cos(beta)*math.cos(gamma)))**2 + ((1/math.sin(gamma)**2)*(1+ 2*math.cos(alpha)*math.cos(beta)*math.cos(gamma)-math.cos(alpha)**2-math.cos(beta)**2-math.cos(gamma)**2)))**0.5
-
-            lattice = np.array([[a,0,0],[b*math.cos(gamma), b*math.sin(gamma), 0],[c*math.cos(beta),  c*(math.cos(alpha)-math.cos(beta)*math.cos(gamma))/math.sin(gamma),
-            c*sqrt( 1 + 2*math.cos(alpha)*math.cos(beta)*math.cos(gamma)
+           
+            lattice = np.array([[celldm1,0,0],
+                                [celldm1*celldm2*math.cos(gamma), celldm1*celldm2*math.sin(gamma), 0],
+                                [celldm1*celldm3*math.cos(beta),  celldm1*celldm3*(math.cos(alpha)-math.cos(beta)*math.cos(gamma))/math.sin(gamma),
+            celldm1*celldm3*math.sqrt( 1 + 2*math.cos(alpha)*math.cos(beta)*math.cos(gamma)
                      - math.cos(alpha)**2-math.cos(beta)**2-math.cos(gamma)**2 )/math.sin(gamma)]])
             
-        self.lattice_constant = [a,b,c]            
-        self.test = lattice 
-#
+            a = mag(lattice[0,:])
+            b = mag(lattice[1,:])
+            c = mag(lattice[2,:])
+      
+        # Convert to a.u. (bohr) to Angtroms
+        lattice = lattice*(0.529177249)   
+        self.lattice_constant = [a*0.529177249  ,b*0.529177249  ,c*0.529177249  ]         
+
+
         # cell parameters
         A = float(self.lattice_constant[0])
         B = float(self.lattice_constant[1])
@@ -309,7 +335,7 @@ class QEParser:
             for j in range(iontype[i]):
                 atomic_numbers[k] = ELEMENTS[species[i]]
                 k = k + 1
-        self.test = atomic_numbers
+        
 
         print("Atomic numbers")
         print(atomic_numbers)
@@ -329,7 +355,7 @@ class QEParser:
         print("Volume of the cell (in Ang^3 units): %10.4f " % volAng)
 
         # converting the units
-        volume *= (5.29177249**-11)**3  # from Angstrom to meters
+        volume *= (5.29177249**-11)**3  # from atomic units (bohr)  to meters
         total_mass *= 1.0e-3  # from gram to kg
         density = total_mass / (volume * N_avogadro)
 
