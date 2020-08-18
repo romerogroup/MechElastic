@@ -1,0 +1,1730 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mechelastic.core package &mdash; MechElastic  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="mechelastic.parsers package" href="mechelastic.parsers.html" />
+    <link rel="prev" title="mechelastic.comms package" href="mechelastic.comms.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">MechElastic API</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="mechelastic.html">mechelastic package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="mechelastic.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="mechelastic.comms.html">mechelastic.comms package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">mechelastic.core package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mechelastic.parsers.html">mechelastic.parsers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mechelastic.tests.html">mechelastic.tests package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="mechelastic.utils.html">mechelastic.utils package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic.calculate_elastic">mechelastic.calculate_elastic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic.calculate_elastic_anisotropy">mechelastic.calculate_elastic_anisotropy module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic.version">mechelastic.version module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MechElastic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">MechElastic API</a> &raquo;</li>
+        
+          <li><a href="mechelastic.html">mechelastic package</a> &raquo;</li>
+        
+      <li>mechelastic.core package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/mechelastic.core.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mechelastic-core-package">
+<h1>mechelastic.core package<a class="headerlink" href="#mechelastic-core-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-mechelastic.core.ELATE">
+<span id="mechelastic-core-elate-module"></span><h2>mechelastic.core.ELATE module<a class="headerlink" href="#module-mechelastic.core.ELATE" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mechelastic.core.ELATE.ELATE">
+<em class="property">class </em><code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">ELATE</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#mechelastic.core.ELATE.ELATE.plot_3D" title="mechelastic.core.ELATE.ELATE.plot_3D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_3D</span></code></a>(self[, elastic_calc])</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 67%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>LC2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>LC3D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>POISSON2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>POISSON3D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>SHEAR2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>SHEAR3D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>YOUNG2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>YOUNG3D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>plot_2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>print_properties</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.LC2D">
+<code class="sig-name descname">LC2D</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.LC2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.LC2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.LC3D">
+<code class="sig-name descname">LC3D</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.LC3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.LC3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.POISSON2D">
+<code class="sig-name descname">POISSON2D</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.POISSON2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.POISSON2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.POISSON3D">
+<code class="sig-name descname">POISSON3D</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.POISSON3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.POISSON3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.SHEAR2D">
+<code class="sig-name descname">SHEAR2D</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.SHEAR2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.SHEAR2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.SHEAR3D">
+<code class="sig-name descname">SHEAR3D</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.SHEAR3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.SHEAR3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.YOUNG2D">
+<code class="sig-name descname">YOUNG2D</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.YOUNG2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.YOUNG2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.YOUNG3D">
+<code class="sig-name descname">YOUNG3D</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.YOUNG3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.YOUNG3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.plot_2D">
+<code class="sig-name descname">plot_2D</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">elastic_calc=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.plot_2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.plot_2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.plot_3D">
+<code class="sig-name descname">plot_3D</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">elastic_calc=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.plot_3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.plot_3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ELATE.print_properties">
+<code class="sig-name descname">print_properties</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ELATE.print_properties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ELATE.print_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mechelastic.core.ELATE.Elastic">
+<em class="property">class </em><code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">Elastic</code><span class="sig-paren">(</span><em class="sig-param">s</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>An elastic tensor, along with methods to access it</p>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>LC</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>LC_2</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Poisson</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Poisson2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Young</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Young_2</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>averages</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>isCubic</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>isOrthorhombic</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>poisson3D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>shear</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>shear2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>shear3D</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Initialize the elastic tensor from a string</p>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>LC</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>LC_2</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Poisson</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Poisson2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Young</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Young_2</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>averages</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>isCubic</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>isOrthorhombic</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>poisson3D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>shear</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>shear2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>shear3D</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.LC">
+<code class="sig-name descname">LC</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.LC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.LC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.LC_2">
+<code class="sig-name descname">LC_2</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.LC_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.LC_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.Poisson">
+<code class="sig-name descname">Poisson</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.Poisson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.Poisson" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.Poisson2D">
+<code class="sig-name descname">Poisson2D</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.Poisson2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.Poisson2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.Young">
+<code class="sig-name descname">Young</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.Young"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.Young" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.Young_2">
+<code class="sig-name descname">Young_2</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.Young_2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.Young_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.averages">
+<code class="sig-name descname">averages</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.averages"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.averages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.isCubic">
+<code class="sig-name descname">isCubic</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.isCubic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.isCubic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.isOrthorhombic">
+<code class="sig-name descname">isOrthorhombic</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.isOrthorhombic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.isOrthorhombic" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.poisson3D">
+<code class="sig-name descname">poisson3D</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">guess1=1.5707963267948966</em>, <em class="sig-param">guess2=1.5707963267948966</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.poisson3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.poisson3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.shear">
+<code class="sig-name descname">shear</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.shear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.shear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.shear2D">
+<code class="sig-name descname">shear2D</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.shear2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.shear2D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.Elastic.shear3D">
+<code class="sig-name descname">shear3D</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">guess1=1.5707963267948966</em>, <em class="sig-param">guess2=1.5707963267948966</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#Elastic.shear3D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.Elastic.shear3D" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="mechelastic.core.ELATE.ElasticOrtho">
+<em class="property">class </em><code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">ElasticOrtho</code><span class="sig-paren">(</span><em class="sig-param">arg</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ElasticOrtho"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ElasticOrtho" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#mechelastic.core.ELATE.Elastic" title="mechelastic.core.ELATE.Elastic"><code class="xref py py-class docutils literal notranslate"><span class="pre">mechelastic.core.ELATE.Elastic</span></code></a></p>
+<p>An elastic tensor, for the specific case of an orthorhombic system</p>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>LC</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>LC_2</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Poisson</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Poisson2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Young</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Young_2</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>averages</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>isCubic</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>isOrthorhombic</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>poisson3D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>shear</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>shear2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>shear3D</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Initialize from a matrix, or from an Elastic object</p>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 64%" />
+<col style="width: 36%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>LC</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>LC_2</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Poisson</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Poisson2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>Young</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>Young_2</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>averages</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>isCubic</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>isOrthorhombic</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>poisson3D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>shear</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>shear2D</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>shear3D</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ElasticOrtho.LC">
+<code class="sig-name descname">LC</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ElasticOrtho.LC"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ElasticOrtho.LC" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ElasticOrtho.Poisson">
+<code class="sig-name descname">Poisson</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ElasticOrtho.Poisson"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ElasticOrtho.Poisson" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ElasticOrtho.Young">
+<code class="sig-name descname">Young</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ElasticOrtho.Young"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ElasticOrtho.Young" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.ELATE.ElasticOrtho.shear">
+<code class="sig-name descname">shear</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#ElasticOrtho.shear"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.ElasticOrtho.shear" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.dirVec">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">dirVec</code><span class="sig-paren">(</span><em class="sig-param">theta</em>, <em class="sig-param">phi</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#dirVec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.dirVec" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.dirVec1">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">dirVec1</code><span class="sig-paren">(</span><em class="sig-param">theta</em>, <em class="sig-param">phi</em>, <em class="sig-param">chi</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#dirVec1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.dirVec1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.dirVec2">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">dirVec2</code><span class="sig-paren">(</span><em class="sig-param">theta</em>, <em class="sig-param">phi</em>, <em class="sig-param">chi</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#dirVec2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.dirVec2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.make3DPlot">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">make3DPlot</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">legend=''</em>, <em class="sig-param">npoints=200</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#make3DPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.make3DPlot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.make3DPlot2">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">make3DPlot2</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">legend=''</em>, <em class="sig-param">npoints=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#make3DPlot2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.make3DPlot2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.make3DPlot3">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">make3DPlot3</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">legend=''</em>, <em class="sig-param">width=600</em>, <em class="sig-param">height=600</em>, <em class="sig-param">npoints=50</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#make3DPlot3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.make3DPlot3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.make3DPlotPosNeg">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">make3DPlotPosNeg</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">legend=''</em>, <em class="sig-param">npoints=200</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#make3DPlotPosNeg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.make3DPlotPosNeg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.makePolarPlot">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">makePolarPlot</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">legend=''</em>, <em class="sig-param">p='xy'</em>, <em class="sig-param">npoints=90</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#makePolarPlot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.makePolarPlot" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.makePolarPlot2">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">makePolarPlot2</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">legend=''</em>, <em class="sig-param">p='xy'</em>, <em class="sig-param">npoints=61</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#makePolarPlot2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.makePolarPlot2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.makePolarPlot3">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">makePolarPlot3</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">legend=''</em>, <em class="sig-param">p='xy'</em>, <em class="sig-param">npoints=61</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#makePolarPlot3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.makePolarPlot3" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.makePolarPlotPosNeg">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">makePolarPlotPosNeg</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">legend=''</em>, <em class="sig-param">p='xy'</em>, <em class="sig-param">npoints=90</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#makePolarPlotPosNeg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.makePolarPlotPosNeg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.maximize">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">maximize</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">dim</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#maximize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.maximize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="mechelastic.core.ELATE.minimize">
+<code class="sig-prename descclassname">mechelastic.core.ELATE.</code><code class="sig-name descname">minimize</code><span class="sig-paren">(</span><em class="sig-param">func</em>, <em class="sig-param">dim</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/ELATE.html#minimize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.ELATE.minimize" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-mechelastic.core.elastic_properties">
+<span id="mechelastic-core-elastic-properties-module"></span><h2>mechelastic.core.elastic_properties module<a class="headerlink" href="#module-mechelastic.core.elastic_properties" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties">
+<em class="property">class </em><code class="sig-prename descclassname">mechelastic.core.elastic_properties.</code><code class="sig-name descname">ElasticProperties</code><span class="sig-paren">(</span><em class="sig-param">elastic_tensor</em>, <em class="sig-param">structure=None</em>, <em class="sig-param">crystal_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/elastic_properties.html#ElasticProperties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.A_l" title="mechelastic.core.elastic_properties.ElasticProperties.A_l"><code class="xref py py-obj docutils literal notranslate"><span class="pre">A_l</span></code></a></dt><dd><p>Returns ——- float log-Euclidean anisotropy parameter by Christopher M.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.A_u" title="mechelastic.core.elastic_properties.ElasticProperties.A_u"><code class="xref py py-obj docutils literal notranslate"><span class="pre">A_u</span></code></a></dt><dd><p>Returns ——- float Ranganathan and Ostoja-Starzewski method: Phys.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.A_z" title="mechelastic.core.elastic_properties.ElasticProperties.A_z"><code class="xref py py-obj docutils literal notranslate"><span class="pre">A_z</span></code></a></dt><dd><p>Returns ——- float Zenner Anisotropy only for Cubic Crystals.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.E_r" title="mechelastic.core.elastic_properties.ElasticProperties.E_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">E_r</span></code></a></dt><dd><p>Returns ——- float Young’s Modulus Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.E_v" title="mechelastic.core.elastic_properties.ElasticProperties.E_v"><code class="xref py py-obj docutils literal notranslate"><span class="pre">E_v</span></code></a></dt><dd><p>Returns ——- float Young’s Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.E_vrh" title="mechelastic.core.elastic_properties.ElasticProperties.E_vrh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">E_vrh</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation Young’s Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.G_r" title="mechelastic.core.elastic_properties.ElasticProperties.G_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">G_r</span></code></a></dt><dd><p>Returns ——- G_r : float Shear Modulus Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.G_v" title="mechelastic.core.elastic_properties.ElasticProperties.G_v"><code class="xref py py-obj docutils literal notranslate"><span class="pre">G_v</span></code></a></dt><dd><p>Returns ——- G_v : float Shear Modulus Voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.G_vrh" title="mechelastic.core.elastic_properties.ElasticProperties.G_vrh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">G_vrh</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation Shear Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_r" title="mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KG_ratio_r</span></code></a></dt><dd><p>Returns ——- float Bulk/Shear ration reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_v" title="mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_v"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KG_ratio_v</span></code></a></dt><dd><p>Returns ——- float Bulk/Shear ration voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_vrh" title="mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_vrh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">KG_ratio_vrh</span></code></a></dt><dd><p>Returns ——- float Bulk/Shear ration voigt reuss hill.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.K_r" title="mechelastic.core.elastic_properties.ElasticProperties.K_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">K_r</span></code></a></dt><dd><p>Returns ——- K_r : float Bulk Modulus Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.K_v" title="mechelastic.core.elastic_properties.ElasticProperties.K_v"><code class="xref py py-obj docutils literal notranslate"><span class="pre">K_v</span></code></a></dt><dd><p>Returns ——- KV : float Bulk Modulus Voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.K_vrh" title="mechelastic.core.elastic_properties.ElasticProperties.K_vrh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">K_vrh</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation Bulk Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.M_r" title="mechelastic.core.elastic_properties.ElasticProperties.M_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">M_r</span></code></a></dt><dd><p>Returns ——- float P-Wave Modulus Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.M_v" title="mechelastic.core.elastic_properties.ElasticProperties.M_v"><code class="xref py py-obj docutils literal notranslate"><span class="pre">M_v</span></code></a></dt><dd><p>Returns ——- float P-wave modulus voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.M_vrh" title="mechelastic.core.elastic_properties.ElasticProperties.M_vrh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">M_vrh</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation P-wave Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.Nu_r" title="mechelastic.core.elastic_properties.ElasticProperties.Nu_r"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Nu_r</span></code></a></dt><dd><p>Returns ——- float Poisson’s Ration Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.Nu_v" title="mechelastic.core.elastic_properties.ElasticProperties.Nu_v"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Nu_v</span></code></a></dt><dd><p>Returns ——- float Poisson’s Ratio Voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.Nu_vrh" title="mechelastic.core.elastic_properties.ElasticProperties.Nu_vrh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Nu_vrh</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation Poisson’s Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_log_euclidean" title="mechelastic.core.elastic_properties.ElasticProperties.anisotropy_log_euclidean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anisotropy_log_euclidean</span></code></a></dt><dd><p>Returns ——- float log-Euclidean anisotropy parameter by Christopher M.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_universal" title="mechelastic.core.elastic_properties.ElasticProperties.anisotropy_universal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anisotropy_universal</span></code></a></dt><dd><p>Returns ——- float Ranganathan and Ostoja-Starzewski method: Phys.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_zenner" title="mechelastic.core.elastic_properties.ElasticProperties.anisotropy_zenner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anisotropy_zenner</span></code></a></dt><dd><p>Returns ——- float Zenner Anisotropy only for Cubic Crystals.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss" title="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bulk_modulus_reuss</span></code></a></dt><dd><p>Returns ——- float Bulk Modulus Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt" title="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bulk_modulus_voigt</span></code></a></dt><dd><p>Returns ——- float Bulk Modulus Voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt_reuss_hill" title="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt_reuss_hill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bulk_modulus_voigt_reuss_hill</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation Bulk Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.debye_temperature" title="mechelastic.core.elastic_properties.ElasticProperties.debye_temperature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">debye_temperature</span></code></a></dt><dd><p>Returns ——- theta : float Debye temperature calculated using Orson Anderson’s proposal [Ref- J.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.ductility" title="mechelastic.core.elastic_properties.ElasticProperties.ductility"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ductility</span></code></a></dt><dd><p>Returns</p>
+</dd>
+<dt><strong>elastic_stability</strong></dt><dd></dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.hardness" title="mechelastic.core.elastic_properties.ElasticProperties.hardness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hardness</span></code></a></dt><dd><p>Returns ——- float The hardness calculated by 6 different methods: [H1a and H1b] Correlation between hardness and elastic moduli of the covalent crystals.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.melting_temperature" title="mechelastic.core.elastic_properties.ElasticProperties.melting_temperature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">melting_temperature</span></code></a></dt><dd><p>Returns</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_reuss" title="mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_reuss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">p_wave_modulus_reuss</span></code></a></dt><dd><p>Returns ——- float P-Wave Modulus Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt" title="mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">p_wave_modulus_voigt</span></code></a></dt><dd><p>Returns ——- float P-wave modulus voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt_reuss_hill" title="mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt_reuss_hill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">p_wave_modulus_voigt_reuss_hill</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation P-wave Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_reuss" title="mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_reuss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">poissons_ratio_reuss</span></code></a></dt><dd><p>Returns ——- float Poisson’s Ration Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt" title="mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">poissons_ratio_voigt</span></code></a></dt><dd><p>Returns ——- float Poisson’s Ratio Voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt_reuss_hill" title="mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt_reuss_hill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">poissons_ratio_voigt_reuss_hill</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation Poisson’s Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_reuss" title="mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_reuss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shear_modulus_reuss</span></code></a></dt><dd><p>Returns ——- G_r : float Shear Modulus Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_voight" title="mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_voight"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shear_modulus_voight</span></code></a></dt><dd><p>Returns ——- float Shear Modulus Voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_voight_reuss_hill" title="mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_voight_reuss_hill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shear_modulus_voight_reuss_hill</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation Shear Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.velocity_average" title="mechelastic.core.elastic_properties.ElasticProperties.velocity_average"><code class="xref py py-obj docutils literal notranslate"><span class="pre">velocity_average</span></code></a></dt><dd><p>Returns</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.velocity_logitudinal" title="mechelastic.core.elastic_properties.ElasticProperties.velocity_logitudinal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">velocity_logitudinal</span></code></a></dt><dd><p>Returns</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.velocity_transverse" title="mechelastic.core.elastic_properties.ElasticProperties.velocity_transverse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">velocity_transverse</span></code></a></dt><dd><p>Returns</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_reuss" title="mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_reuss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">youngs_modulus_reuss</span></code></a></dt><dd><p>Returns ——- float Young’s modulus Reuss.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_voigt" title="mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_voigt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">youngs_modulus_voigt</span></code></a></dt><dd><p>Returns ——- float Young’s Modulus Voigt.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_voigt_reuss_hill" title="mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_voigt_reuss_hill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">youngs_modulus_voigt_reuss_hill</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation Young’s Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 67%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>print_properties</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.A_l">
+<em class="property">property </em><code class="sig-name descname">A_l</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.A_l" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>log-Euclidean anisotropy parameter by Christopher M. Kube, AIP Advances 6, 095209 (2016)
+AL  CV , CR   is based on the distance between the averaged stiffnesses CV and
+CR , which is more appropriate. Clearly, AL  CV , CR   is zero when the crystallite is isotropic.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.A_u">
+<em class="property">property </em><code class="sig-name descname">A_u</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.A_u" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Ranganathan and Ostoja-Starzewski method: Phys. Rev. Lett. 101, 055504 (2008).
+for any crystalline symmetry: Universal anisotropy index.
+Note: AU is a relative measure of anisotropy with respect to a limiting value.
+For example, AU does not prove that a crystal having AU = 3 has double the anisotropy
+of another crystal with AU = 1.5. I””’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.A_z">
+<em class="property">property </em><code class="sig-name descname">A_z</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.A_z" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Zenner Anisotropy only for Cubic Crystals.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.E_r">
+<em class="property">property </em><code class="sig-name descname">E_r</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.E_r" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Young’s Modulus Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.E_v">
+<em class="property">property </em><code class="sig-name descname">E_v</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.E_v" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Young’s Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.E_vrh">
+<em class="property">property </em><code class="sig-name descname">E_vrh</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.E_vrh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation Young’s Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.G_r">
+<em class="property">property </em><code class="sig-name descname">G_r</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.G_r" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>G_r</strong><span class="classifier">float</span></dt><dd><p>Shear Modulus Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.G_v">
+<em class="property">property </em><code class="sig-name descname">G_v</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.G_v" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>G_v</strong><span class="classifier">float</span></dt><dd><p>Shear Modulus Voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.G_vrh">
+<em class="property">property </em><code class="sig-name descname">G_vrh</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.G_vrh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation Shear Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_r">
+<em class="property">property </em><code class="sig-name descname">KG_ratio_r</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_r" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Bulk/Shear ration reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_v">
+<em class="property">property </em><code class="sig-name descname">KG_ratio_v</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_v" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Bulk/Shear ration voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_vrh">
+<em class="property">property </em><code class="sig-name descname">KG_ratio_vrh</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_vrh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Bulk/Shear ration voigt reuss hill.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.K_r">
+<em class="property">property </em><code class="sig-name descname">K_r</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.K_r" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>K_r</strong><span class="classifier">float</span></dt><dd><p>Bulk Modulus Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.K_v">
+<em class="property">property </em><code class="sig-name descname">K_v</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.K_v" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>KV</strong><span class="classifier">float</span></dt><dd><p>Bulk Modulus Voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.K_vrh">
+<em class="property">property </em><code class="sig-name descname">K_vrh</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.K_vrh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation Bulk Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.M_r">
+<em class="property">property </em><code class="sig-name descname">M_r</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.M_r" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>P-Wave Modulus Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.M_v">
+<em class="property">property </em><code class="sig-name descname">M_v</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.M_v" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>P-wave modulus voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.M_vrh">
+<em class="property">property </em><code class="sig-name descname">M_vrh</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.M_vrh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation P-wave Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.Nu_r">
+<em class="property">property </em><code class="sig-name descname">Nu_r</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.Nu_r" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Poisson’s Ration Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.Nu_v">
+<em class="property">property </em><code class="sig-name descname">Nu_v</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.Nu_v" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Poisson’s Ratio Voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.Nu_vrh">
+<em class="property">property </em><code class="sig-name descname">Nu_vrh</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.Nu_vrh" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation Poisson’s Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.anisotropy_log_euclidean">
+<em class="property">property </em><code class="sig-name descname">anisotropy_log_euclidean</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_log_euclidean" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>log-Euclidean anisotropy parameter by Christopher M. Kube, AIP Advances 6, 095209 (2016)
+AL  CV , CR   is based on the distance between the averaged stiffnesses CV and
+CR , which is more appropriate. Clearly, AL  CV , CR   is zero when the crystallite is isotropic.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.anisotropy_universal">
+<em class="property">property </em><code class="sig-name descname">anisotropy_universal</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_universal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Ranganathan and Ostoja-Starzewski method: Phys. Rev. Lett. 101, 055504 (2008).
+for any crystalline symmetry: Universal anisotropy index
+Note: AU is a relative measure of anisotropy with respect to a limiting value.
+For example, AU does not prove that a crystal having AU = 3 has double the anisotropy
+of another crystal with AU = 1.5. I””’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.anisotropy_zenner">
+<em class="property">property </em><code class="sig-name descname">anisotropy_zenner</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_zenner" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Zenner Anisotropy only for Cubic Crystals.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss">
+<em class="property">property </em><code class="sig-name descname">bulk_modulus_reuss</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Bulk Modulus Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt">
+<em class="property">property </em><code class="sig-name descname">bulk_modulus_voigt</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Bulk Modulus Voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt_reuss_hill">
+<em class="property">property </em><code class="sig-name descname">bulk_modulus_voigt_reuss_hill</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt_reuss_hill" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation Bulk Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.debye_temperature">
+<em class="property">property </em><code class="sig-name descname">debye_temperature</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.debye_temperature" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>theta</strong><span class="classifier">float</span></dt><dd><p>Debye temperature calculated using  Orson Anderson’s proposal [Ref- J. Phys. Chem. Solids (1963) 24, 909-917].
+WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass if your crystal has several species</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.ductility">
+<em class="property">property </em><code class="sig-name descname">ductility</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.ductility" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>string</dt><dd><p>The ductility of the material</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.elastic_stability">
+<em class="property">property </em><code class="sig-name descname">elastic_stability</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.elastic_stability" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.hardness">
+<em class="property">property </em><code class="sig-name descname">hardness</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.hardness" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>The hardness calculated by 6 different methods:
+[H1a and H1b] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).
+[H2] Computational alchemy: the search for new superhard materials. Teter (1998).
+[H3] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).
+[H4] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).
+[H5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.melting_temperature">
+<em class="property">property </em><code class="sig-name descname">melting_temperature</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.melting_temperature" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Melting temperature estimated using empirical relation from Ref: Johnston I, Keeler G, Rollins R and Spicklemire S 1996
+Solid State Physics Simulations, The Consortium for Upper-Level Physics Software (New York: Wiley)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_reuss">
+<em class="property">property </em><code class="sig-name descname">p_wave_modulus_reuss</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_reuss" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>P-Wave Modulus Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt">
+<em class="property">property </em><code class="sig-name descname">p_wave_modulus_voigt</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>P-wave modulus voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt_reuss_hill">
+<em class="property">property </em><code class="sig-name descname">p_wave_modulus_voigt_reuss_hill</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt_reuss_hill" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation P-wave Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_reuss">
+<em class="property">property </em><code class="sig-name descname">poissons_ratio_reuss</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_reuss" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Poisson’s Ration Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt">
+<em class="property">property </em><code class="sig-name descname">poissons_ratio_voigt</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Poisson’s Ratio Voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt_reuss_hill">
+<em class="property">property </em><code class="sig-name descname">poissons_ratio_voigt_reuss_hill</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt_reuss_hill" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation Poisson’s Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.print_properties">
+<code class="sig-name descname">print_properties</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/elastic_properties.html#ElasticProperties.print_properties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.print_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_reuss">
+<em class="property">property </em><code class="sig-name descname">shear_modulus_reuss</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_reuss" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>G_r</strong><span class="classifier">float</span></dt><dd><p>Shear Modulus Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_voight">
+<em class="property">property </em><code class="sig-name descname">shear_modulus_voight</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_voight" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Shear Modulus Voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_voight_reuss_hill">
+<em class="property">property </em><code class="sig-name descname">shear_modulus_voight_reuss_hill</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.shear_modulus_voight_reuss_hill" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation Shear Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.velocity_average">
+<em class="property">property </em><code class="sig-name descname">velocity_average</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.velocity_average" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Average Sound velocity(m/s)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.velocity_logitudinal">
+<em class="property">property </em><code class="sig-name descname">velocity_logitudinal</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.velocity_logitudinal" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>longitudinal Sound velocity(m/s) from Navier’s equation using Voigt-Reuss-Hill Approximation</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.velocity_transverse">
+<em class="property">property </em><code class="sig-name descname">velocity_transverse</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.velocity_transverse" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Transverse Sound Velocity(m/s) from Navier’s equation using Voigt-Reuss-Hill Approximation</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_reuss">
+<em class="property">property </em><code class="sig-name descname">youngs_modulus_reuss</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_reuss" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Young’s modulus Reuss.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_voigt">
+<em class="property">property </em><code class="sig-name descname">youngs_modulus_voigt</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_voigt" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Young’s Modulus Voigt.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_voigt_reuss_hill">
+<em class="property">property </em><code class="sig-name descname">youngs_modulus_voigt_reuss_hill</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.youngs_modulus_voigt_reuss_hill" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>float</dt><dd><p>Voigt-Reuss-Hill Approximation Young’s Modulus.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mechelastic.core.elastic_properties_2d">
+<span id="mechelastic-core-elastic-properties-2d-module"></span><h2>mechelastic.core.elastic_properties_2d module<a class="headerlink" href="#module-mechelastic.core.elastic_properties_2d" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D">
+<em class="property">class </em><code class="sig-prename descclassname">mechelastic.core.elastic_properties_2d.</code><code class="sig-name descname">ElasticProperties2D</code><span class="sig-paren">(</span><em class="sig-param">elastic_tensor</em>, <em class="sig-param">lattice_constant</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/elastic_properties_2d.html#ElasticProperties2D"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Convert the units from GPa or N/m2 to N/m for two-dimensional systems
+1 GPa = 10^9 N/m2</p>
+<p>Here, we use second Piola-Kirchhoff stress method to express the 2D forces per unit length in N/m units.
+Ref: [Peng et al., Acta Mechanica 223 (2012), 2591-2596; Comput. Mater. Sci. 68, 320 (2013);  Mech. Mater. 64, 135 (2013). ]
+[Singh et al., Phys. Rev. B 95, 165444 (2017)]</p>
+<p>We multiply elastic tensor by the thickness of the simulation cell to consider the vacuum thickness.
+In 2D:  Cij = bulk_Cij * C_latticevector (final units N/m)</p>
+<dl class="simple">
+<dt>For example: if bulk_Cij = 15 GPa and out-of-plane cell parameter c = 10 Angs.</dt><dd><p>Then  2D_Cij = [15*10^9 N/m2] * [10*10^(-10) m] ; i.e 15*(0.1*c) N/m</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.G2d" title="mechelastic.core.elastic_properties_2d.ElasticProperties2D.G2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">G2d</span></code></a></dt><dd><p>2D shear modulus; G2d = C66</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.Lm" title="mechelastic.core.elastic_properties_2d.ElasticProperties2D.Lm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Lm</span></code></a></dt><dd><p>Layer modulus: represents the resistance of a 2D sheet to stretching; Lm = (1/4)*[c11 + c22 + 2*c12] [Ref: Andrew et al.; Phys.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.Y01" title="mechelastic.core.elastic_properties_2d.ElasticProperties2D.Y01"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Y01</span></code></a></dt><dd><p>2D Young’s modulus or in-plane stiffness: Y[01] = [c11c22 - c12^2]/[c11]</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.Y10" title="mechelastic.core.elastic_properties_2d.ElasticProperties2D.Y10"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Y10</span></code></a></dt><dd><p>2D Young’s modulus or in-plane stiffness: Y[10] = [c11c22 - c12^2]/[c22]</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.layer_modulus" title="mechelastic.core.elastic_properties_2d.ElasticProperties2D.layer_modulus"><code class="xref py py-obj docutils literal notranslate"><span class="pre">layer_modulus</span></code></a></dt><dd><p>Returns</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.nu01" title="mechelastic.core.elastic_properties_2d.ElasticProperties2D.nu01"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nu01</span></code></a></dt><dd><p>2D Poisson’s ratio; nu01 = c12/c11</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.nu10" title="mechelastic.core.elastic_properties_2d.ElasticProperties2D.nu10"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nu10</span></code></a></dt><dd><p>2D Poisson’s ratio;  nu10 = c12/c22</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.shear_modulus_2d" title="mechelastic.core.elastic_properties_2d.ElasticProperties2D.shear_modulus_2d"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shear_modulus_2d</span></code></a></dt><dd><p>2D shear modulus; G2d = C66</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 67%" />
+<col style="width: 33%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>print_properties</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D.G2d">
+<em class="property">property </em><code class="sig-name descname">G2d</code><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.G2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>2D shear modulus; G2d = C66</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>G2d</strong><span class="classifier">float</span></dt><dd><p>2D shear modulus</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D.Lm">
+<em class="property">property </em><code class="sig-name descname">Lm</code><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.Lm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Layer modulus: represents the resistance of a 2D sheet to stretching; Lm = (1/4)*[c11 + c22 + 2*c12]  [Ref: Andrew et al.;  Phys. Rev. B 85, 125428 (2012)]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>Lm</strong><span class="classifier">float</span></dt><dd><p>Layer modulus</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D.Y01">
+<em class="property">property </em><code class="sig-name descname">Y01</code><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.Y01" title="Permalink to this definition">¶</a></dt>
+<dd><p>2D Young’s modulus or in-plane stiffness: Y[01] = [c11c22 - c12^2]/[c11]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>Y01</strong><span class="classifier">float</span></dt><dd><p>2D Young’s modulus (in-plane stiffness)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D.Y10">
+<em class="property">property </em><code class="sig-name descname">Y10</code><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.Y10" title="Permalink to this definition">¶</a></dt>
+<dd><p>2D Young’s modulus or in-plane stiffness: Y[10] = [c11c22 - c12^2]/[c22]</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>Y10</strong><span class="classifier">float</span></dt><dd><p>2D Young’s modulus (in-plane stiffness)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D.layer_modulus">
+<em class="property">property </em><code class="sig-name descname">layer_modulus</code><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.layer_modulus" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>layer_modulus</strong><span class="classifier">float</span></dt><dd><p>Layer modulus</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D.nu01">
+<em class="property">property </em><code class="sig-name descname">nu01</code><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.nu01" title="Permalink to this definition">¶</a></dt>
+<dd><p>2D Poisson’s ratio; nu01 = c12/c11</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>nu01</strong><span class="classifier">float</span></dt><dd><p>2D Poisson’s ratio</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D.nu10">
+<em class="property">property </em><code class="sig-name descname">nu10</code><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.nu10" title="Permalink to this definition">¶</a></dt>
+<dd><p>2D Poisson’s ratio;  nu10 = c12/c22</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>nu10</strong><span class="classifier">float</span></dt><dd><p>2D Poisson’s ratio</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D.print_properties">
+<code class="sig-name descname">print_properties</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/elastic_properties_2d.html#ElasticProperties2D.print_properties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.print_properties" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties_2d.ElasticProperties2D.shear_modulus_2d">
+<em class="property">property </em><code class="sig-name descname">shear_modulus_2d</code><a class="headerlink" href="#mechelastic.core.elastic_properties_2d.ElasticProperties2D.shear_modulus_2d" title="Permalink to this definition">¶</a></dt>
+<dd><p>2D shear modulus; G2d = C66</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>G2d</strong><span class="classifier">float</span></dt><dd><p>2D shear modulus</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mechelastic.core.structure">
+<span id="mechelastic-core-structure-module"></span><h2>mechelastic.core.structure module<a class="headerlink" href="#module-mechelastic.core.structure" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="mechelastic.core.structure.Structure">
+<em class="property">class </em><code class="sig-prename descclassname">mechelastic.core.structure.</code><code class="sig-name descname">Structure</code><span class="sig-paren">(</span><em class="sig-param">atoms</em>, <em class="sig-param">fractional_coordinates</em>, <em class="sig-param">lattice</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/structure.html#Structure"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.structure.Structure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>atomic_numbers</strong></dt><dd></dd>
+<dt><strong>density</strong></dt><dd></dd>
+<dt><strong>masses</strong></dt><dd></dd>
+<dt><strong>natoms</strong></dt><dd></dd>
+<dt><strong>nspecies</strong></dt><dd></dd>
+<dt><strong>species</strong></dt><dd></dd>
+<dt><strong>spglib_cell</strong></dt><dd></dd>
+<dt><strong>volume</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 77%" />
+<col style="width: 23%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>get_space_group_international</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>get_space_group_number</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>get_wyckoff_positions</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.atomic_numbers">
+<em class="property">property </em><code class="sig-name descname">atomic_numbers</code><a class="headerlink" href="#mechelastic.core.structure.Structure.atomic_numbers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.density">
+<em class="property">property </em><code class="sig-name descname">density</code><a class="headerlink" href="#mechelastic.core.structure.Structure.density" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.get_space_group_international">
+<code class="sig-name descname">get_space_group_international</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">symprec=1e-05</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/structure.html#Structure.get_space_group_international"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.structure.Structure.get_space_group_international" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.get_space_group_number">
+<code class="sig-name descname">get_space_group_number</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">symprec=1e-05</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/structure.html#Structure.get_space_group_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.structure.Structure.get_space_group_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.get_wyckoff_positions">
+<code class="sig-name descname">get_wyckoff_positions</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">symprec=1e-05</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/structure.html#Structure.get_wyckoff_positions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.structure.Structure.get_wyckoff_positions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.masses">
+<em class="property">property </em><code class="sig-name descname">masses</code><a class="headerlink" href="#mechelastic.core.structure.Structure.masses" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.natoms">
+<em class="property">property </em><code class="sig-name descname">natoms</code><a class="headerlink" href="#mechelastic.core.structure.Structure.natoms" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.nspecies">
+<em class="property">property </em><code class="sig-name descname">nspecies</code><a class="headerlink" href="#mechelastic.core.structure.Structure.nspecies" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.species">
+<em class="property">property </em><code class="sig-name descname">species</code><a class="headerlink" href="#mechelastic.core.structure.Structure.species" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.spglib_cell">
+<em class="property">property </em><code class="sig-name descname">spglib_cell</code><a class="headerlink" href="#mechelastic.core.structure.Structure.spglib_cell" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.structure.Structure.volume">
+<em class="property">property </em><code class="sig-name descname">volume</code><a class="headerlink" href="#mechelastic.core.structure.Structure.volume" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-mechelastic.core">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mechelastic.core" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="mechelastic.parsers.html" class="btn btn-neutral float-right" title="mechelastic.parsers package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="mechelastic.comms.html" class="btn btn-neutral float-left" title="mechelastic.comms package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Sobhit Singh
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,996 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>mechelastic.core.elastic_properties &mdash; MechElastic  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">MechElastic API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MechElastic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>mechelastic.core.elastic_properties</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for mechelastic.core.elastic_properties</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">..comms</span> <span class="kn">import</span> <span class="n">printer</span>
+<span class="kn">from</span> <span class="nn">..tests</span> <span class="kn">import</span> <span class="n">ductile</span>
+<span class="kn">from</span> <span class="nn">..tests</span> <span class="kn">import</span> <span class="n">eigenvals</span>
+<span class="kn">from</span> <span class="nn">..utils.constants</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">..utils.elements</span> <span class="kn">import</span> <span class="n">ELEMENTS</span>
+<span class="kn">from</span> <span class="nn">..utils.crystalutils</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">.structure</span> <span class="kn">import</span> <span class="n">Structure</span>
+
+
+<div class="viewcode-block" id="ElasticProperties"><a class="viewcode-back" href="../../../mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties">[docs]</a><span class="k">class</span> <span class="nc">ElasticProperties</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elastic_tensor</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crystal_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">elastic_tensor</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compaliance_tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="o">.</span><span class="n">I</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">structure</span> <span class="o">=</span> <span class="n">structure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">crystal_type</span> <span class="o">=</span> <span class="n">crystal_type</span>
+
+        <span class="k">if</span> <span class="n">crystal_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">structure</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">crystal_select</span><span class="p">(</span>
+                <span class="n">cnew</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">,</span>
+                <span class="n">cell</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">spglib_cell</span><span class="p">,</span>
+                <span class="n">crystal_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">crystal_type</span><span class="p">,</span>
+            <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">K_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        KV : float</span>
+<span class="sd">            Bulk Modulus Voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cnew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span>
+        <span class="n">K_v</span> <span class="o">=</span> <span class="p">(</span><span class="n">cnew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="n">cnew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">K_v</span> <span class="o">=</span> <span class="n">K_v</span> <span class="o">/</span> <span class="mf">9.0</span>
+        <span class="k">return</span> <span class="n">K_v</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bulk_modulus_voigt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Bulk Modulus Voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_v</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">G_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        G_v : float</span>
+<span class="sd">            Shear Modulus Voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cnew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span>
+        <span class="c1">## Shear: Voigt</span>
+        <span class="n">G_v</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">cnew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="o">-</span> <span class="p">(</span><span class="n">cnew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">cnew</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">G_v</span> <span class="o">=</span> <span class="n">G_v</span> <span class="o">/</span> <span class="mf">15.0</span>
+        <span class="k">return</span> <span class="n">G_v</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shear_modulus_voight</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Shear Modulus Voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_v</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">E_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Young&#39;s Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">9</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_v</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_v</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_v</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_v</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">youngs_modulus_voigt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Young&#39;s Modulus Voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_v</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">Nu_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Poisson&#39;s Ratio Voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_v</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_v</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_v</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">poissons_ratio_voigt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Poisson&#39;s Ratio Voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_v</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">M_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            P-wave modulus voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_v</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_v</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">p_wave_modulus_voigt</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            P-wave modulus voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">M_v</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">K_r</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        K_r : float</span>
+<span class="sd">            Bulk Modulus Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">snew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compaliance_tensor</span>
+        <span class="n">K_r</span> <span class="o">=</span> <span class="p">(</span><span class="n">snew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span>
+            <span class="n">snew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">K_r</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">K_r</span>
+        <span class="k">return</span> <span class="n">K_r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bulk_modulus_reuss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Bulk Modulus Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">G_r</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        G_r : float</span>
+<span class="sd">            Shear Modulus Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">snew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compaliance_tensor</span>
+        <span class="n">G_r</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">snew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+            <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">snew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+            <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="p">(</span><span class="n">snew</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="o">+</span> <span class="n">snew</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="n">G_r</span> <span class="o">=</span> <span class="mf">15.0</span> <span class="o">/</span> <span class="n">G_r</span>
+        <span class="k">return</span> <span class="n">G_r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shear_modulus_reuss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        G_r : float</span>
+<span class="sd">            Shear Modulus Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">E_r</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Young&#39;s Modulus Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">9</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_r</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_r</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">youngs_modulus_reuss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Young&#39;s modulus Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">Nu_r</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Poisson&#39;s Ration Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_r</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_r</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_r</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">poissons_ratio_reuss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Poisson&#39;s Ration Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">M_r</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            P-Wave Modulus Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_r</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">p_wave_modulus_reuss</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            P-Wave Modulus Reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">M_r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">K_vrh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation Bulk Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K_r</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_v</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">bulk_modulus_voigt_reuss_hill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation Bulk Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_vrh</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">G_vrh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation Shear Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">G_v</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shear_modulus_voight_reuss_hill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation Shear Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_vrh</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">E_vrh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation Young&#39;s Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E_v</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_r</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">youngs_modulus_voigt_reuss_hill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation Young&#39;s Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">Nu_vrh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation Poisson&#39;s Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nu_v</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_r</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">poissons_ratio_voigt_reuss_hill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation Poisson&#39;s Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">M_vrh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation P-wave Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M_v</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">M_r</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">p_wave_modulus_voigt_reuss_hill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Voigt-Reuss-Hill Approximation P-wave Modulus.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">M_vrh</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">KG_ratio_v</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Bulk/Shear ration voigt.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_v</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_v</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">KG_ratio_r</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Bulk/Shear ration reuss.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_r</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">KG_ratio_vrh</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Bulk/Shear ration voigt reuss hill.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_vrh</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_vrh</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">A_z</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Zenner Anisotropy only for Cubic Crystals.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">cnew</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span>
+        <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span><span class="n">cnew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">cnew</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">anisotropy_zenner</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Zenner Anisotropy only for Cubic Crystals.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">anisotropy_zenner</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">A_u</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Ranganathan and Ostoja-Starzewski method: Phys. Rev. Lett. 101, 055504 (2008).</span>
+<span class="sd">            for any crystalline symmetry: Universal anisotropy index.</span>
+<span class="sd">            Note: AU is a relative measure of anisotropy with respect to a limiting value.</span>
+<span class="sd">            For example, AU does not prove that a crystal having AU = 3 has double the anisotropy</span>
+<span class="sd">            of another crystal with AU = 1.5. I&quot;&quot;&#39;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K_v</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_r</span><span class="p">)</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">G_v</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span><span class="p">)</span> <span class="o">-</span> <span class="mf">6.0</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">anisotropy_universal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Ranganathan and Ostoja-Starzewski method: Phys. Rev. Lett. 101, 055504 (2008).</span>
+<span class="sd">            for any crystalline symmetry: Universal anisotropy index</span>
+<span class="sd">            Note: AU is a relative measure of anisotropy with respect to a limiting value.</span>
+<span class="sd">            For example, AU does not prove that a crystal having AU = 3 has double the anisotropy</span>
+<span class="sd">            of another crystal with AU = 1.5. I&quot;&quot;&#39;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_u</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">A_l</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">               log-Euclidean anisotropy parameter by Christopher M. Kube, AIP Advances 6, 095209 (2016)</span>
+<span class="sd">               AL  CV , CR   is based on the distance between the averaged stiffnesses CV and</span>
+<span class="sd">               CR , which is more appropriate. Clearly, AL  CV , CR   is zero when the crystallite is isotropic.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.303</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A_u</span> <span class="o">/</span> <span class="mi">5</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ductility</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        string</span>
+<span class="sd">            The ductility of the material</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">ductile</span><span class="o">.</span><span class="n">ductile_test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">KG_ratio_vrh</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">anisotropy_log_euclidean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">               log-Euclidean anisotropy parameter by Christopher M. Kube, AIP Advances 6, 095209 (2016)</span>
+<span class="sd">               AL  CV , CR   is based on the distance between the averaged stiffnesses CV and</span>
+<span class="sd">               CR , which is more appropriate. Clearly, AL  CV , CR   is zero when the crystallite is isotropic.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_l</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">velocity_transverse</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Transverse Sound Velocity(m/s) from Navier&#39;s equation using Voigt-Reuss-Hill Approximation</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No structure was provided&quot;</span><span class="p">)</span>
+
+        <span class="n">G</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_vrh</span> <span class="o">*</span> <span class="mf">1.0e9</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">G</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">density</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">velocity_logitudinal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            longitudinal Sound velocity(m/s) from Navier&#39;s equation using Voigt-Reuss-Hill Approximation</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No structure was provided&quot;</span><span class="p">)</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_vrh</span> <span class="o">*</span> <span class="mf">1.0e9</span>  <span class="c1"># converting from GPa to Pascal units (kg/ms^2)</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_vrh</span> <span class="o">*</span> <span class="mf">1.0e9</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(((</span><span class="mi">3</span> <span class="o">*</span> <span class="n">K</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">G</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">density</span><span class="p">)))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">velocity_average</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Average Sound velocity(m/s)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vt</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_transverse</span>
+        <span class="n">vl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_logitudinal</span>
+
+        <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">cbrt</span><span class="p">((</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">vt</span> <span class="o">*</span> <span class="n">vt</span> <span class="o">*</span> <span class="n">vt</span><span class="p">)</span> <span class="o">+</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="n">vl</span> <span class="o">*</span> <span class="n">vl</span> <span class="o">*</span> <span class="n">vl</span><span class="p">)))</span>
+        <span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">debye_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        theta : float</span>
+<span class="sd">            Debye temperature calculated using  Orson Anderson&#39;s proposal [Ref- J. Phys. Chem. Solids (1963) 24, 909-917].</span>
+<span class="sd">            WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass if your crystal has several species</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No structure was provided&quot;</span><span class="p">)</span>
+        <span class="n">q</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">natoms</span>
+        <span class="n">density</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">density</span>
+        <span class="n">total_mass</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">masses</span><span class="p">)</span>
+        <span class="n">theta</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">h_Planck</span> <span class="o">/</span> <span class="n">kB</span><span class="p">)</span>
+            <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_average</span>
+            <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cbrt</span><span class="p">((</span><span class="mi">3</span> <span class="o">*</span> <span class="n">q</span> <span class="o">*</span> <span class="n">N_avogadro</span> <span class="o">*</span> <span class="n">density</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span> <span class="o">*</span> <span class="n">total_mass</span><span class="p">))</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">theta</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">melting_temperature</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">                Melting temperature estimated using empirical relation from Ref: Johnston I, Keeler G, Rollins R and Spicklemire S 1996</span>
+<span class="sd">                Solid State Physics Simulations, The Consortium for Upper-Level Physics Software (New York: Wiley)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">607</span> <span class="o">+</span> <span class="mf">9.3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_vrh</span>
+
+<div class="viewcode-block" id="ElasticProperties.print_properties"><a class="viewcode-back" href="../../../mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.print_properties">[docs]</a>    <span class="k">def</span> <span class="nf">print_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> </span><span class="se">\n</span><span class="s2">                         Voigt     Reuss    Average&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Bulk modulus   (GPa)  </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">K_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_vrh</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Shear modulus  (GPa)  </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">G_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_vrh</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Young modulus  (GPa)  </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Poisson ratio         </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nu_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;P-wave modulus  (GPa) </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">M_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">M_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">M_vrh</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Bulk/Shear ratio      </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">) &quot;</span>
+            <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">KG_ratio_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KG_ratio_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KG_ratio_vrh</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ductility</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------------------&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\n</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> Elastic Anisotropy </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Zener anisotropy (true for cubic crystals only) Az = </span><span class="si">%10.5f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_z</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Universal anisotropy index (Ranganathan and Ostoja-Starzewski method; PRL 101, 055504 (2008)) Au = </span><span class="si">%10.5f</span><span class="s2">&quot;</span>
+            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_u</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Log-Euclidean anisotropy parameter by Christopher M. Kube, AIP Advances 6, 095209 (2016) AL = </span><span class="si">%10.5f</span><span class="s2"> &quot;</span>
+            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_l</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="se">\t</span><span class="s2">  Elastic wave velocities calculated using Navier&#39;s equation  (in m/s units) </span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------------------- &quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Longitudinal wave velocity (vl) : </span><span class="si">%10.5f</span><span class="s2"> m/s &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_logitudinal</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transverse wave velocity (vt) : </span><span class="si">%10.5f</span><span class="s2"> m/s&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_transverse</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Average wave velocity (vm) : </span><span class="si">%10.5f</span><span class="s2"> m/s&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_average</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Debye temperature  (in K) : </span><span class="si">%10.5f</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">debye_temperature</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass in case your crystal has several species.&quot;</span>
+        <span class="p">)</span>
+        <span class="c1"># print(</span>
+        <span class="c1">#     &quot;Atomic displacement at 150, 300 and 450 K  (in A^2) : %10.5f %10.5f %10.5f&quot;</span>
+        <span class="c1">#     % (</span>
+        <span class="c1">#         u2FromDebye(mass, natoms, theta, 150.0),</span>
+        <span class="c1">#         u2FromDebye(mass, natoms, theta, 300.0),</span>
+        <span class="c1">#         u2FromDebye(mass, natoms, theta, 450.0),</span>
+        <span class="c1">#     )</span>
+        <span class="c1"># )</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Melting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K)&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tm (in K)=  </span><span class="si">%10.5f</span><span class="s2"> (plus-minus 555 K) &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">melting_temperature</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------ &quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness analysis from 6 different semi-empirical relationships.&quot;</span><span class="p">)</span>
+        <span class="n">H1a</span><span class="p">,</span> <span class="n">H1b</span><span class="p">,</span> <span class="n">H2</span><span class="p">,</span> <span class="n">H3</span><span class="p">,</span> <span class="n">H4</span><span class="p">,</span> <span class="n">H5</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hardness</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------ &quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H1a) =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H1a</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[1]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H1b) =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H1b</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[1]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H2)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H2</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[2]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H3)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H3</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[3]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H4)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H4</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[4]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H5)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H5</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[5]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;References:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[1] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[2] Computational alchemy: the search for new superhard materials. Teter (1998).&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[3] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[4] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).&quot;</span>
+        <span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">elastic_stability</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">eigenvals</span><span class="o">.</span><span class="n">positive_evals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hardness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            The hardness calculated by 6 different methods:</span>
+<span class="sd">            [H1a and H1b] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).</span>
+<span class="sd">            [H2] Computational alchemy: the search for new superhard materials. Teter (1998).</span>
+<span class="sd">            [H3] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).</span>
+<span class="sd">            [H4] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).</span>
+<span class="sd">            [H5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_vrh</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_vrh</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="n">G</span> <span class="o">/</span> <span class="n">B</span>
+        <span class="n">H1a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">6.78</span><span class="p">)</span> <span class="o">*</span> <span class="n">G</span>
+        <span class="n">H1b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">16.48</span><span class="p">)</span> <span class="o">*</span> <span class="n">Y</span>
+        <span class="n">H2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.1769</span> <span class="o">*</span> <span class="n">G</span><span class="p">)</span> <span class="o">-</span> <span class="mf">2.899</span>
+        <span class="n">H3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">15.76</span><span class="p">)</span> <span class="o">*</span> <span class="n">Y</span>
+        <span class="n">H4</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">v</span><span class="p">))</span>
+        <span class="n">H5</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">((</span><span class="n">k</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">G</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.585</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span>
+        <span class="k">return</span> <span class="n">H1a</span><span class="p">,</span> <span class="n">H1b</span><span class="p">,</span> <span class="n">H2</span><span class="p">,</span> <span class="n">H3</span><span class="p">,</span> <span class="n">H4</span><span class="p">,</span> <span class="n">H5</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Sobhit Singh
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
