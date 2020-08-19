@@ -18,20 +18,19 @@ from ..core import Structure
 
 def mag(v):
     return (v[0]*v[0]+v[1]*v[1]+v[2]*v[2])**0.5
-    
+def vol(a,b,c):
+    return a[0]*(b[1]*c[2] - b[2]*c[1]) - a[1]*(b[0]*c[2] - b[2]*c[0]) + a[2]*(b[0]*c[1] - b[1]*c[0])
 
-class QEParser:
+class QE_ElaStic_Parser:
 
     """
     This class contains methods to parse the OUTCAR file.
     """
 
-    def __init__(self, outfile = 'ElaStic_2nd.out',scfFile = 'scf.in'):
+    def __init__(self, outfile = 'ElaStic_2nd.out', infile  = 'scf.in'):
 
-        self.infile = "ElaStic_PW.in"
+        self.infile = infile
         self.outfile = outfile
-        self.scfFile = scfFile
-        self.infoElaStic = 'INFO_ElaStic'
         
         self.elastic_tensor = None
         self.compaliance_tensor = None
@@ -39,8 +38,7 @@ class QEParser:
         
         self.outText = None
         self.inText = None
-        self.scfText = None
-        self.infoElaSticText = None
+
         
         self._parse_files()
 
@@ -62,30 +60,19 @@ class QEParser:
         rf = open(self.infile)
         self.inText = rf.read()
         rf.close()
-        data = self.inText
+        dataIn = self.inText
+
         
-        rf = open(self.scfFile)
-        self.scfText = rf.read()
-        rf.close()
-        dataScf = self.scfText
+        nspecies = int(re.findall("\s*ntyp\s*=\s*(\d)",dataIn)[0])
+
         
-        rf = open(self.infoElaStic)
-        self.infoElaSticText = rf.read()
-        rf.close()
-        dataInfo = self.infoElaSticText
-        
-        nspecies = int(re.findall("\s*ntyp\s*=\s*(\d)",data)[0])
-#        mass = np.array(
-#            [float(x) for x in re.findall("ATOMIC_SPECIES\n"+ nspecies *"\s*\w*\s*([\.\d]*).*\n", data)]
-#        )
-        
-        nions = int(re.findall("\s*nat\s*=\s*(\d)",data)[0])
-        raw_ions = re.findall("ATOMIC_POSITIONS.*\n" + nions * "(.*)\n",data)[0]
+        nions = int(re.findall("\s*nat\s*=\s*(\d)",dataIn)[0])
+        raw_ions = re.findall("ATOMIC_POSITIONS.*\n" + nions * "(.*)\n",dataIn)[0]
         
         composition = {}
         species_list = []
         mass = []
-        raw_species = re.findall("ATOMIC_SPECIES.*\n" + nspecies * "(.*).*\n",data)[0]
+        raw_species = re.findall("ATOMIC_SPECIES.*\n" + nspecies * "(.*).*\n",dataIn)[0]
         
         if(nspecies == 1):
             composition[raw_species.split()[0]] = {'numAtom':0, 'mass':raw_species.split()[1]}
@@ -104,7 +91,6 @@ class QEParser:
                     if(raw_ions[ions].split()[0] == species_list[species]):
                         composition[raw_ions[ions].split()[0]]['numAtom'] += 1
                 
-        volume = float(re.findall("Volume of equilibrium unit cell\s*=\s*([0-9.]*)[\s\S]*", dataInfo)[-1])
         
       
         positions = np.array(
@@ -122,12 +108,20 @@ class QEParser:
         
         species = list(composition.keys())
         
-        ibrav = int(re.findall("\s*ibrav\s*=\s*(\d*)",dataScf)[0])
+        ibrav = int(re.findall("\s*ibrav\s*=\s*(\d*)",dataIn)[0])
         
-        
+        if (ibrav == 0):
+            num_latticeVectors = 3
+            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",dataIn)[0])
+            raw_cell = re.findall("CELL_PARAMETERS.*\n" + num_latticeVectors * "(.*)\n",dataIn)[0]
+            lattice = np.array([[float(component) for component in row.split()] for row in raw_cell])
+            lattice = lattice*celldm1
+            a = mag(lattice[0,:])
+            b = mag(lattice[1,:])
+            c = mag(lattice[2,:])
         if (ibrav == 1 or ibrav == 2 or ibrav == 3):
             "cubic systems"
-            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",data)[0])
+            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",dataIn)[0])
             celldm2 = 1. 
             celldm3 = 1. 
             celldm4 = 0.
@@ -158,9 +152,9 @@ class QEParser:
                 c = mag(lattice[2,:])
         if (ibrav == 4):
             "Hexagonal system's must have celldm(1) and celldm(3)"
-            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",data)[0])
+            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",dataIn)[0])
             celldm2 = 1. 
-            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",data)[0])
+            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",dataIn)[0])
             celldm4 = 0.
             celldm5 = 0.
             celldm6 =-.5
@@ -174,10 +168,10 @@ class QEParser:
             
         if (ibrav == 5):
             "Trigonal or Rhombohedragonal structures must have celldm(1) and celldm(4)"
-            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",data)[0])
+            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",dataIn)[0])
             celldm2 = 1. 
             celldm3 = 1.
-            celldm4 = float(re.findall("\s*celldm\(4\)\s*=\s*([\.\d]*)",data)[0])
+            celldm4 = float(re.findall("\s*celldm\(4\)\s*=\s*([\.\d]*)",dataIn)[0])
             if (celldm4 < -1 or celldm4 > 1.):
                 sys.exit('\n.... Oops ERROR: "celldm(4)" is WRONG !?!?!?    \n')
             celldm5 = celldm4 
@@ -198,9 +192,9 @@ class QEParser:
             
         if (ibrav == 6 or ibrav == 7):
             "Tetragonal structures must have celldm(1) and celldm(3)"
-            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",data)[0])
+            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",dataIn)[0])
             celldm2 = 1.
-            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",data)[0])
+            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",dataIn)[0])
             celldm4 = .0 
             celldm5 = .0
             celldm6 = .0
@@ -223,9 +217,9 @@ class QEParser:
         
         if (ibrav == 8 or ibrav == 9 or ibrav == 10 or ibrav == 11):
             "Orthorhombic structures must have celldm(1), celldm(2), and celldm(3)"
-            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",data)[0])
-            celldm2 = float(re.findall("\s*celldm\(2\)\s*=\s*([\.\d]*)",data)[0])
-            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",data)[0])
+            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm2 = float(re.findall("\s*celldm\(2\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",dataIn)[0])
             celldm4 = .0
             celldm5 = .0
             celldm6 = .0
@@ -263,10 +257,10 @@ class QEParser:
             "Monoclinic structures must have celldm(1), celldm(2), and celldm(3),celldm(4)"
             
             
-            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",data)[0])
-            celldm2 = float(re.findall("\s*celldm\(2\)\s*=\s*([\.\d]*)",data)[0])
-            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",data)[0])
-            celldm4 = float(re.findall("\s*celldm\(4\)\s*=\s*([\.\d]*)",data)[0])
+            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm2 = float(re.findall("\s*celldm\(2\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm4 = float(re.findall("\s*celldm\(4\)\s*=\s*([\.\d]*)",dataIn)[0])
             celldm5 = .0
             celldm6 = .0
             
@@ -287,12 +281,12 @@ class QEParser:
 
         if (ibrav == 14):
             "Triclinic structure must have celldm(1), celldm(2), and celldm(3),celldm(4),celldm(5), and celldm(6)"
-            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",data)[0])
-            celldm2 = float(re.findall("\s*celldm\(2\)\s*=\s*([\.\d]*)",data)[0])
-            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",data)[0])
-            celldm4 = float(re.findall("\s*celldm\(4\)\s*=\s*([\.\d]*)",data)[0])
-            celldm5 = float(re.findall("\s*celldm\(5\)\s*=\s*([\.\d]*)",data)[0])
-            celldm6 = float(re.findall("\s*celldm\(6\)\s*=\s*([\.\d]*)",data)[0])
+            celldm1 = float(re.findall("\s*celldm\(1\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm2 = float(re.findall("\s*celldm\(2\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm3 = float(re.findall("\s*celldm\(3\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm4 = float(re.findall("\s*celldm\(4\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm5 = float(re.findall("\s*celldm\(5\)\s*=\s*([\.\d]*)",dataIn)[0])
+            celldm6 = float(re.findall("\s*celldm\(6\)\s*=\s*([\.\d]*)",dataIn)[0])
             
             alpha = math.acos(celldm4)
             beta  = math.acos(celldm5)
@@ -307,7 +301,9 @@ class QEParser:
             a = mag(lattice[0,:])
             b = mag(lattice[1,:])
             c = mag(lattice[2,:])
-      
+        
+        volume = vol(lattice[0,:],lattice[1,:],lattice[2,:])
+        
         # Convert to a.u. (bohr) to Angtroms
         lattice = lattice*(0.529177249)   
         self.lattice_constant = [a*0.529177249  ,b*0.529177249  ,c*0.529177249  ]         
@@ -323,11 +319,6 @@ class QEParser:
             % (A, B, C)
         )
 
-#        # external pressure in kB -> GPa
-#        self.pressure = float(
-#            re.findall(r"external\s*pressure\s=\s*([-0-9.]*)\s*kB", data)[-1]
-#        )
-#        self.pressure = self.pressure / 10
 
         atomic_numbers = np.zeros(nions, dtype=np.int32)
         k = 0
@@ -360,7 +351,7 @@ class QEParser:
         density = total_mass / (volume * N_avogadro)
 
         print("\nDensity (in kg/m^3 units ): %10.5f" % density)
-#        print("External Pressure (in GPa units ): %10.5f" % self.pressure)
+
 
 
         raw_stiffness = re.findall("(?<=Elastic constant \(stiffness\) matrix in GPa\:)([\s\S]*?)(?=Elastic compliance)",dataOut)[0].strip().split()

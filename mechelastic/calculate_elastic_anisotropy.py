@@ -1,11 +1,14 @@
 from .comms import printer
 from .parsers import VaspOutcar
 from .parsers import AbinitOutput
+from .parsers import QE_ElaStic_Parser
+from .parsers import QE_thermo_pw_Parser
+
 from .core import ELATE
 
 
 def calculate_elastic_anisotropy(
-    infile="OUTCAR", code="vasp", plot=None, elastic_calc=None, ddbfile=None
+    infile="OUTCAR", code="vasp", plot=None, elastic_calc=None, ddbfile=None, outfile = None
 ):
 
     """
@@ -37,7 +40,7 @@ def calculate_elastic_anisotropy(
     elif code == "abinit":
         output = AbinitOutput(infile=infile, ddbfile=ddbfile)
         elastic_tensor = output.elastic_tensor
-        elastic_tensor = output.elastic_tensor
+    
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
@@ -46,6 +49,37 @@ def calculate_elastic_anisotropy(
             for j in range(col):
                 columnsList.append(round(elastic_tensor[i, j],3))
             rowsList.append(columnsList)
+            
+    elif code == "qe_ElaStic":
+        output = QE_ElaStic_Parser(outfile = outfile, infile = infile )
+        elastic_tensor = output.elastic_tensor
+        
+        row = elastic_tensor.shape[0]
+        col = elastic_tensor.shape[1]
+        rowsList = []
+        for i in range(row):
+            columnsList = []
+            for j in range(col):
+                columnsList.append(round(elastic_tensor[i, j],3))
+            rowsList.append(columnsList)
+        
+    elif code == "qe_thermo_pw":
+        output = QE_thermo_pw_Parser(outfile = outfile, infile = infile )
+        elastic_tensor = output.elastic_tensor
+        
+        row = elastic_tensor.shape[0]
+        col = elastic_tensor.shape[1]
+        rowsList = []
+        for i in range(row):
+            columnsList = []
+            for j in range(col):
+                columnsList.append(round(elastic_tensor[i, j],3))
+            rowsList.append(columnsList)
+        
+            
+            
+            
+            
     print(rowsList)
     elastic_tensor = ELATE.ELATE(rowsList)
 

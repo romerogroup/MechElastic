@@ -1,0 +1,38 @@
+&control
+    calculation= 'scf',
+    prefix = 'diamond',
+    pseudo_dir='/home/lllang/ElaStic/test_elastic/pseudo'
+    outdir = '.', 
+    verbosity='low',
+    tprnfor=.true.,
+    tstress=.true.,
+
+ /
+ &system    
+    ibrav= 2,  
+    nat=  2, 
+    celldm(1) = 6.60,
+    ntyp= 1,
+    ecutrho = 300.0,
+    ecutwfc = 75.0, 
+    occupations='smearing',
+    smearing='mv',
+    degauss=0.005d0,
+ /
+ &electrons
+  conv_thr=1d-08,
+  mixing_beta=0.7d0,
+ /
+
+
+ATOMIC_SPECIES
+ C 12.011 C.pbe-n-kjpaw_psl.1.0.0.UPF
+
+ATOMIC_POSITIONS {crystal}
+C   0.250000000000000   0.250000000000000   0.250000000000000 
+C   0.000000000000000   0.000000000000000   0.000000000000000 
+
+K_POINTS {automatic}
+ 7 7 7 0 0 0
+
+
