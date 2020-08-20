@@ -6,5 +6,5 @@ save_non_project_files = False
 
 [main]
 version = 0.2.0
-recent_files = ['parsers\\vaspparser.py', '..\\..\\..\\..\\..\\..\\..\\Projects\\MechElastic\\test.py', 'core\\dft_output.py', 'core\\elastic_bulk.py', 'core\\structure.py', 'utils\\crystalutils.py', 'calculateElastic.py']
+recent_files = []
 

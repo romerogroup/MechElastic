@@ -11,6 +11,23 @@ from .structure import Structure
 
 class ElasticProperties:
     def __init__(self, elastic_tensor, structure=None, crystal_type=None):
+        """
+        
+
+        Parameters
+        ----------
+        elastic_tensor : TYPE
+            DESCRIPTION.
+        structure : TYPE, optional
+            DESCRIPTION. The default is None.
+        crystal_type : TYPE, optional
+            DESCRIPTION. The default is None.
+
+        Returns
+        -------
+        None.
+
+        """
         self.elastic_tensor = np.matrix(elastic_tensor)
         self.compaliance_tensor = self.elastic_tensor.I
         self.structure = structure
@@ -771,6 +788,7 @@ class ElasticProperties:
     @property
     def hardness(self):
         """
+        
         Returns
         -------
         float
@@ -793,3 +811,64 @@ class ElasticProperties:
         H4 = ((1 - 2 * v) * B) / (6 * (1 + v))
         H5 = 2 * ((k * k * G) ** 0.585) - 3
         return H1a, H1b, H2, H3, H4, H5
+
+    @property
+    def cauchy_pressure(self):
+        """
+        This parameter desceibes the nature of bonding
+        CP > 0 (+ve) indicates that ionic bonding dominates 
+        CP < 0 (-ve) indicates that covalent bonding dominates
+        Returns
+        -------
+        None.
+
+        """
+        return self.elastic_tensor[0,1]-self.elastic_tensor[3,3]
+    
+    @property 
+    def bonding_type(self):
+        """
+        This parameter desceibes the nature of bonding
+        CP > 0 (+ve) indicates that ionic bonding dominates 
+        CP < 0 (-ve) indicates that covalent bonding dominates
+
+        Returns
+        -------
+        str
+            DESCRIPTION.
+
+        """
+        cauchy_pressure = self.cauchy_pressure
+        if cauchy_pressure > 0 :
+            return "Ionic"
+        elif cauchy_pressure < 0 :
+            return "Covalent"
+        
+    @property 
+    def kleinman_parameter(self):
+        c = self.elastic_tensor
+        return (c[0,0]+8*c[0,1])/(7*c[0,0]-2*c[0,1])
+    
+    @property 
+    def bond_bending_vs_streching(self):
+        return
+    
+    
+    @property
+    def lambda_lame_coefficient(self):
+        """
+        
+
+        Returns
+        -------
+        TYPE
+            DESCRIPTION.
+
+        """
+        return self.E_vrh/((1+self.Nu_vrh)*(1-2*self.Nu_vrh))
+    
+    @property
+    def mu_lame_coefficient(self):
+        return self.E_vrh/(2*(1+self.Nu_vrh))
+
+    
