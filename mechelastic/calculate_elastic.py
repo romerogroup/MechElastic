@@ -10,7 +10,14 @@ from .core import ElasticProperties2D
 
 
 def calculate_elastic(
-    infile="OUTCAR", dim="3D", crystal=None, code="vasp", ddbfile=None, outfile = None):
+    infile="OUTCAR",
+    dim="3D",
+    crystal=None,
+    code="vasp",
+    ddbfile=None,
+    outfile=None,
+    adjust_pressure=True,
+):
 
     """
     This method calculates the elastic properties
@@ -27,7 +34,7 @@ def calculate_elastic(
 
     # calling parser
     if code == "vasp":
-        output = VaspOutcar(infile=infile)
+        output = VaspOutcar(infile=infile, adjust_pressure=adjust_pressure)
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant
@@ -37,19 +44,19 @@ def calculate_elastic(
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant
-        
+
     elif code == "qe_ElaStic":
-        output = QE_ElaStic_Parser(outfile = outfile, infile = infile )
+        output = QE_ElaStic_Parser(outfile=outfile, infile=infile)
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant
-        
+
     elif code == "qe_thermo_pw":
-        output = QE_thermo_pw_Parser(outfile = outfile, infile = infile )
+        output = QE_thermo_pw_Parser(outfile=outfile, infile=infile)
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant
-        
+
     # elastic constants calculation for 3D materials
     if dim == "3D":
         elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type)

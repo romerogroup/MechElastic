@@ -72,6 +72,14 @@ parser.add_argument(
     default="vasp",
     choices=["vasp", "abinit"],
 )
+parser.add_argument(
+    "-ap",
+    "--adjust_pressure",
+    default=1,
+    type=int,
+    help="Flag to adjust pressure in Elastic Tensor (VASP). Default: 1 (True)",
+    choices=[1, 0],
+)
 args = parser.parse_args()
 
 print("-----------------------------")
@@ -85,12 +93,19 @@ print("-----------------------------")
 
 # calculate elastic properties
 def main():
+
+    if args.adjust_pressure == 1:
+        args.adjust_pressure = True
+    else:
+        args.adjust_pressure = False
+
     mechelastic.calculate_elastic(
         code=args.code,
         dim=args.dim,
         infile=args.input,
         crystal=args.crystal,
         ddbfile=args.ddbfile,
+        adjust_pressure=args.adjust_pressure,
     )
 
 

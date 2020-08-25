@@ -8,7 +8,13 @@ from .core import ELATE
 
 
 def calculate_elastic_anisotropy(
-    infile="OUTCAR", code="vasp", plot=None, elastic_calc=None, ddbfile=None, outfile = None
+    infile="OUTCAR",
+    code="vasp",
+    plot=None,
+    elastic_calc=None,
+    ddbfile=None,
+    outfile=None,
+    adjust_pressure=True,
 ):
 
     """
@@ -25,7 +31,7 @@ def calculate_elastic_anisotropy(
     # calling parser
     if code == "vasp":
 
-        output = VaspOutcar(infile=infile)
+        output = VaspOutcar(infile=infile, adjust_pressure=adjust_pressure)
         elastic_tensor = output.elastic_tensor
         elastic_tensor = output.elastic_tensor
         row = elastic_tensor.shape[0]
@@ -34,52 +40,48 @@ def calculate_elastic_anisotropy(
         for i in range(row):
             columnsList = []
             for j in range(col):
-                columnsList.append(round(elastic_tensor[i, j],3))
+                columnsList.append(round(elastic_tensor[i, j], 3))
             rowsList.append(columnsList)
 
     elif code == "abinit":
         output = AbinitOutput(infile=infile, ddbfile=ddbfile)
         elastic_tensor = output.elastic_tensor
-    
+
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
         for i in range(row):
             columnsList = []
             for j in range(col):
-                columnsList.append(round(elastic_tensor[i, j],3))
+                columnsList.append(round(elastic_tensor[i, j], 3))
             rowsList.append(columnsList)
-            
+
     elif code == "qe_ElaStic":
-        output = QE_ElaStic_Parser(outfile = outfile, infile = infile )
+        output = QE_ElaStic_Parser(outfile=outfile, infile=infile)
         elastic_tensor = output.elastic_tensor
-        
+
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
         for i in range(row):
             columnsList = []
             for j in range(col):
-                columnsList.append(round(elastic_tensor[i, j],3))
+                columnsList.append(round(elastic_tensor[i, j], 3))
             rowsList.append(columnsList)
-        
+
     elif code == "qe_thermo_pw":
-        output = QE_thermo_pw_Parser(outfile = outfile, infile = infile )
+        output = QE_thermo_pw_Parser(outfile=outfile, infile=infile)
         elastic_tensor = output.elastic_tensor
-        
+
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
         for i in range(row):
             columnsList = []
             for j in range(col):
-                columnsList.append(round(elastic_tensor[i, j],3))
+                columnsList.append(round(elastic_tensor[i, j], 3))
             rowsList.append(columnsList)
-        
-            
-            
-            
-            
+
     print(rowsList)
     elastic_tensor = ELATE.ELATE(rowsList)
 

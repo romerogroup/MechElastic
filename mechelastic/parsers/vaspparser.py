@@ -16,9 +16,10 @@ class VaspOutcar:
     This class contains methods to parse the OUTCAR file.
     """
 
-    def __init__(self, infile="OUTCAR"):
+    def __init__(self, infile="OUTCAR", adjust_pressure=True):
 
         self.infile = infile
+        self.adjust_pressure = adjust_pressure
 
         self.elastic_tensor = None
         self.compaliance_tensor = None
@@ -147,7 +148,7 @@ class VaspOutcar:
 
         # compaliance_tensor = c.I
 
-        print("\nPrinting Cij matrix as read from OUTCAR\n")
+        print("\nPrinting Elastic Tensor, Cij as read from OUTCAR\n")
         np.set_printoptions(precision=4, suppress=True)
         printer.printMatrix(c)
 
@@ -179,31 +180,41 @@ class VaspOutcar:
         # Change the units of Cij from kBar to GPa
         self.elastic_tensor /= 10.0
 
-        # In VASP the pressure needs to be adjusted in the elastic tensor.
-        # Subtract P in the diagonal and add P in C12, C21, C13, C31, C23, C32.
+        # Print elastic tensor in GPa units
+        print(
+            "\n \n printing Elastic Tensor: corrected order (in GPa units)... \n For example- to generate input for the ELATE code [https://github.com/fxcoudert/elate] \n \n"
+        )
+        np.set_printoptions(precision=3, suppress=True)
+        printer.printMatrix(self.elastic_tensor)
 
-        for i in range(0, 6):
-            self.elastic_tensor[i, i] = self.elastic_tensor[i, i] - self.pressure
-        self.elastic_tensor[0, 1] = self.elastic_tensor[0, 1] + self.pressure
-        self.elastic_tensor[1, 0] = self.elastic_tensor[1, 0] + self.pressure
-        self.elastic_tensor[0, 2] = self.elastic_tensor[0, 2] + self.pressure
-        self.elastic_tensor[2, 0] = self.elastic_tensor[2, 0] + self.pressure
-        self.elastic_tensor[1, 2] = self.elastic_tensor[1, 2] + self.pressure
-        self.elastic_tensor[2, 1] = self.elastic_tensor[2, 1] + self.pressure
+        if self.adjust_pressure and self.pressure != 0.0:
+            # In VASP the pressure needs to be adjusted in the elastic tensor.
+            # Subtract P in the diagonal and add P in C12, C21, C13, C31, C23, C32.
+
+            print("\nAdjusted for pressure since non-zero hydrostatic pressure exists.")
+            print("External Pressure : %10.5f GPa" % self.pressure)
+            print(
+                "Set flag adjust_pressure=False to disable. -ap 0 in stand-alone mode."
+            )
+
+            for i in range(0, 6):
+                self.elastic_tensor[i, i] = self.elastic_tensor[i, i] - self.pressure
+            self.elastic_tensor[0, 1] = self.elastic_tensor[0, 1] + self.pressure
+            self.elastic_tensor[1, 0] = self.elastic_tensor[1, 0] + self.pressure
+            self.elastic_tensor[0, 2] = self.elastic_tensor[0, 2] + self.pressure
+            self.elastic_tensor[2, 0] = self.elastic_tensor[2, 0] + self.pressure
+            self.elastic_tensor[1, 2] = self.elastic_tensor[1, 2] + self.pressure
+            self.elastic_tensor[2, 1] = self.elastic_tensor[2, 1] + self.pressure
+
+            print("\nPressure adjusted Elastic Tensor in GPa units:\n")
+            np.set_printoptions(precision=3, suppress=True)
+            printer.printMatrix(self.elastic_tensor)
 
         self.compaliance_tensor = self.elastic_tensor.I
-        # print(self.elastic_tensor)
-        print(
-            "\n \n printing CNEW: Modified matrix in correct order (in GPa units)... \n For example- to generate input for the ELATE code [https://github.com/fxcoudert/elate] \n Adjusted for pressure if non-zero hydrostatic pressure exists.\n"
-        )
-
-        np.set_printoptions(precision=3, suppress=True)
-
-        printer.printMatrix(self.elastic_tensor)
 
         print(
             (
-                "\n Checking if the modified matrix CNEW is symmetric: i.e. Cij = Cji:  %10s"
+                "\n Checking if the modified Elastic Tensor is symmetric: i.e. Cij = Cji:  %10s"
                 % symmetry.check_symmetric(self.elastic_tensor)
             )
         )
