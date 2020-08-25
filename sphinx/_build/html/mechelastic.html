@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,18 +12,12 @@
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
   
   
   
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="mechelastic.comms package" href="mechelastic.comms.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+            <a href="index.html" class="icon icon-home"> MechElastic
           
 
           
@@ -74,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -112,7 +110,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -151,7 +148,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
           <li><a href="modules.html">MechElastic API</a> &raquo;</li>
         
@@ -198,7 +195,7 @@
 <li class="toctree-l1"><a class="reference internal" href="mechelastic.parsers.html">mechelastic.parsers package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#submodules">Submodules</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#module-mechelastic.parsers.abinitparser">mechelastic.parsers.abinitparser module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#module-mechelastic.parsers.qeparser">mechelastic.parsers.qeparser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#mechelastic-parsers-qeparser-module">mechelastic.parsers.qeparser module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#module-mechelastic.parsers.vaspparser">mechelastic.parsers.vaspparser module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#module-mechelastic.parsers">Module contents</a></li>
 </ul>
@@ -230,7 +227,7 @@
 <span id="mechelastic-calculate-elastic-module"></span><h2>mechelastic.calculate_elastic module<a class="headerlink" href="#module-mechelastic.calculate_elastic" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mechelastic.calculate_elastic.calculate_elastic">
-<code class="sig-prename descclassname">mechelastic.calculate_elastic.</code><code class="sig-name descname">calculate_elastic</code><span class="sig-paren">(</span><em class="sig-param">infile='OUTCAR'</em>, <em class="sig-param">dim='3D'</em>, <em class="sig-param">crystal=None</em>, <em class="sig-param">code='vasp'</em>, <em class="sig-param">ddbfile=None</em>, <em class="sig-param">scfFile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic.html#calculate_elastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.calculate_elastic.calculate_elastic" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mechelastic.calculate_elastic.</code><code class="sig-name descname">calculate_elastic</code><span class="sig-paren">(</span><em class="sig-param">infile='OUTCAR'</em>, <em class="sig-param">dim='3D'</em>, <em class="sig-param">crystal=None</em>, <em class="sig-param">code='vasp'</em>, <em class="sig-param">ddbfile=None</em>, <em class="sig-param">outfile=None</em>, <em class="sig-param">adjust_pressure=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic.html#calculate_elastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.calculate_elastic.calculate_elastic" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method calculates the elastic properties
 of a material from a DFT calculation.</p>
 </dd></dl>
@@ -240,7 +237,7 @@ of a material from a DFT calculation.</p>
 <span id="mechelastic-calculate-elastic-anisotropy-module"></span><h2>mechelastic.calculate_elastic_anisotropy module<a class="headerlink" href="#module-mechelastic.calculate_elastic_anisotropy" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="mechelastic.calculate_elastic_anisotropy.calculate_elastic_anisotropy">
-<code class="sig-prename descclassname">mechelastic.calculate_elastic_anisotropy.</code><code class="sig-name descname">calculate_elastic_anisotropy</code><span class="sig-paren">(</span><em class="sig-param">infile='OUTCAR'</em>, <em class="sig-param">code='vasp'</em>, <em class="sig-param">plot=None</em>, <em class="sig-param">elastic_calc=None</em>, <em class="sig-param">ddbfile=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic_anisotropy.html#calculate_elastic_anisotropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.calculate_elastic_anisotropy.calculate_elastic_anisotropy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">mechelastic.calculate_elastic_anisotropy.</code><code class="sig-name descname">calculate_elastic_anisotropy</code><span class="sig-paren">(</span><em class="sig-param">infile='OUTCAR'</em>, <em class="sig-param">code='vasp'</em>, <em class="sig-param">plot=None</em>, <em class="sig-param">elastic_calc=None</em>, <em class="sig-param">ddbfile=None</em>, <em class="sig-param">outfile=None</em>, <em class="sig-param">adjust_pressure=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic_anisotropy.html#calculate_elastic_anisotropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.calculate_elastic_anisotropy.calculate_elastic_anisotropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method calculates the elastic properties
 of a material from a DFT calculation. hi</p>
 </dd></dl>
@@ -274,19 +271,11 @@ of a material from a DFT calculation. hi</p>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2020, Sobhit Singh
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -297,6 +286,7 @@ of a material from a DFT calculation. hi</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

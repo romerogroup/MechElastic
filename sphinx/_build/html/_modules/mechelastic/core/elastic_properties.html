@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,18 +12,12 @@
   
 
   
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-
-  
   
   
   
 
   
-  <!--[if lt IE 9]>
-    <script src="../../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -49,7 +48,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+            <a href="../../../index.html" class="icon icon-home"> MechElastic
           
 
           
@@ -72,7 +71,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -91,7 +89,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -130,7 +127,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="../../../index.html">Docs</a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -163,6 +160,23 @@
 
 <div class="viewcode-block" id="ElasticProperties"><a class="viewcode-back" href="../../../mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties">[docs]</a><span class="k">class</span> <span class="nc">ElasticProperties</span><span class="p">:</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elastic_tensor</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crystal_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        elastic_tensor : TYPE</span>
+<span class="sd">            DESCRIPTION.</span>
+<span class="sd">        structure : TYPE, optional</span>
+<span class="sd">            DESCRIPTION. The default is None.</span>
+<span class="sd">        crystal_type : TYPE, optional</span>
+<span class="sd">            DESCRIPTION. The default is None.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matrix</span><span class="p">(</span><span class="n">elastic_tensor</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">compaliance_tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="o">.</span><span class="n">I</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">structure</span> <span class="o">=</span> <span class="n">structure</span>
@@ -923,6 +937,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">hardness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
@@ -944,7 +959,68 @@
         <span class="n">H3</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mf">15.76</span><span class="p">)</span> <span class="o">*</span> <span class="n">Y</span>
         <span class="n">H4</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">v</span><span class="p">)</span> <span class="o">*</span> <span class="n">B</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">6</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">v</span><span class="p">))</span>
         <span class="n">H5</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">((</span><span class="n">k</span> <span class="o">*</span> <span class="n">k</span> <span class="o">*</span> <span class="n">G</span><span class="p">)</span> <span class="o">**</span> <span class="mf">0.585</span><span class="p">)</span> <span class="o">-</span> <span class="mi">3</span>
-        <span class="k">return</span> <span class="n">H1a</span><span class="p">,</span> <span class="n">H1b</span><span class="p">,</span> <span class="n">H2</span><span class="p">,</span> <span class="n">H3</span><span class="p">,</span> <span class="n">H4</span><span class="p">,</span> <span class="n">H5</span></div>
+        <span class="k">return</span> <span class="n">H1a</span><span class="p">,</span> <span class="n">H1b</span><span class="p">,</span> <span class="n">H2</span><span class="p">,</span> <span class="n">H3</span><span class="p">,</span> <span class="n">H4</span><span class="p">,</span> <span class="n">H5</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">cauchy_pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This parameter desceibes the nature of bonding</span>
+<span class="sd">        CP &gt; 0 (+ve) indicates that ionic bonding dominates </span>
+<span class="sd">        CP &lt; 0 (-ve) indicates that covalent bonding dominates</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
+    
+    <span class="nd">@property</span> 
+    <span class="k">def</span> <span class="nf">bonding_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This parameter desceibes the nature of bonding</span>
+<span class="sd">        CP &gt; 0 (+ve) indicates that ionic bonding dominates </span>
+<span class="sd">        CP &lt; 0 (-ve) indicates that covalent bonding dominates</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            DESCRIPTION.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cauchy_pressure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cauchy_pressure</span>
+        <span class="k">if</span> <span class="n">cauchy_pressure</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Ionic&quot;</span>
+        <span class="k">elif</span> <span class="n">cauchy_pressure</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Covalent&quot;</span>
+        
+    <span class="nd">@property</span> 
+    <span class="k">def</span> <span class="nf">kleinman_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+    
+    <span class="nd">@property</span> 
+    <span class="k">def</span> <span class="nf">bond_bending_vs_streching</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span>
+    
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">lambda_lame_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        </span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        TYPE</span>
+<span class="sd">            DESCRIPTION.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span><span class="o">/</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">))</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">mu_lame_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">))</span></div>
+
+    
 </pre></div>
 
            </div>
@@ -957,19 +1033,11 @@
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2020, Sobhit Singh
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -980,6 +1048,7 @@
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

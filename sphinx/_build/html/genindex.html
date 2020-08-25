@@ -2,7 +2,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -12,18 +13,12 @@
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
   
   
   
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -35,6 +30,10 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
@@ -50,7 +49,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+            <a href="index.html" class="icon icon-home"> MechElastic
           
 
           
@@ -73,7 +72,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -92,7 +90,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -131,7 +128,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
       <li>Index</li>
     
@@ -167,7 +164,6 @@
  | <a href="#M"><strong>M</strong></a>
  | <a href="#N"><strong>N</strong></a>
  | <a href="#P"><strong>P</strong></a>
- | <a href="#Q"><strong>Q</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#Y"><strong>Y</strong></a>
@@ -206,10 +202,14 @@
 <h2 id="B">B</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss">bulk_modulus_reuss() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.bond_bending_vs_streching">bond_bending_vs_streching() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+</li>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.bonding_type">bonding_type() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss">bulk_modulus_reuss() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+</li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt">bulk_modulus_voigt() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt_reuss_hill">bulk_modulus_voigt_reuss_hill() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
@@ -226,6 +226,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.cauchy_pressure">cauchy_pressure() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+</li>
       <li><a href="mechelastic.tests.html#mechelastic.tests.symmetry.check_symmetric">check_symmetric() (in module mechelastic.tests.symmetry)</a>
 </li>
       <li><a href="mechelastic.utils.html#mechelastic.utils.crystalutils.crystal_select">crystal_select() (in module mechelastic.utils.crystalutils)</a>
@@ -340,12 +342,16 @@
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.KG_ratio_vrh">KG_ratio_vrh() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.kleinman_parameter">kleinman_parameter() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.lambda_lame_coefficient">lambda_lame_coefficient() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+</li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties_2d.ElasticProperties2D.layer_modulus">layer_modulus() (mechelastic.core.elastic_properties_2d.ElasticProperties2D property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.Elastic.LC">LC() (mechelastic.core.ELATE.Elastic method)</a>
@@ -375,8 +381,6 @@
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.M_v">M_v() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.M_vrh">M_vrh() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
-</li>
-      <li><a href="mechelastic.parsers.html#mechelastic.parsers.qeparser.mag">mag() (in module mechelastic.parsers.qeparser)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.make3DPlot">make3DPlot() (in module mechelastic.core.ELATE)</a>
 </li>
@@ -424,8 +428,6 @@
 </li>
       <li><a href="mechelastic.parsers.html#module-mechelastic.parsers.abinitparser">mechelastic.parsers.abinitparser (module)</a>
 </li>
-      <li><a href="mechelastic.parsers.html#module-mechelastic.parsers.qeparser">mechelastic.parsers.qeparser (module)</a>
-</li>
       <li><a href="mechelastic.parsers.html#module-mechelastic.parsers.vaspparser">mechelastic.parsers.vaspparser (module)</a>
 </li>
       <li><a href="mechelastic.tests.html#module-mechelastic.tests">mechelastic.tests (module)</a>
@@ -451,6 +453,8 @@
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.melting_temperature">melting_temperature() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.minimize">minimize() (in module mechelastic.core.ELATE)</a>
+</li>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.mu_lame_coefficient">mu_lame_coefficient() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -527,14 +531,6 @@
       <li><a href="mechelastic.comms.html#mechelastic.comms.printer.print_warning_2D">print_warning_2D() (in module mechelastic.comms.printer)</a>
 </li>
       <li><a href="mechelastic.comms.html#mechelastic.comms.printer.printMatrix">printMatrix() (in module mechelastic.comms.printer)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="Q">Q</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mechelastic.parsers.html#mechelastic.parsers.qeparser.QEParser">QEParser (class in mechelastic.parsers.qeparser)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -637,19 +633,11 @@
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2020, Sobhit Singh
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -660,6 +648,7 @@
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {

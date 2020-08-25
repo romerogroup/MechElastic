@@ -1,7 +1,8 @@
 
 
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   
@@ -11,18 +12,12 @@
   
 
   
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-
-  
   
   
   
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -34,6 +29,10 @@
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="mechelastic.parsers package" href="mechelastic.parsers.html" />
@@ -51,7 +50,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+            <a href="index.html" class="icon icon-home"> MechElastic
           
 
           
@@ -74,7 +73,6 @@
           
         </div>
 
-        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -112,7 +110,6 @@
             
           
         </div>
-        
       </div>
     </nav>
 
@@ -151,7 +148,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li><a href="index.html">Docs</a> &raquo;</li>
         
           <li><a href="modules.html">MechElastic API</a> &raquo;</li>
         
@@ -660,6 +657,21 @@
 <em class="property">class </em><code class="sig-prename descclassname">mechelastic.core.elastic_properties.</code><code class="sig-name descname">ElasticProperties</code><span class="sig-paren">(</span><em class="sig-param">elastic_tensor</em>, <em class="sig-param">structure=None</em>, <em class="sig-param">crystal_type=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/core/elastic_properties.html#ElasticProperties"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>elastic_tensor</strong><span class="classifier">TYPE</span></dt><dd><p>DESCRIPTION.</p>
+</dd>
+<dt><strong>structure</strong><span class="classifier">TYPE, optional</span></dt><dd><p>DESCRIPTION. The default is None.</p>
+</dd>
+<dt><strong>crystal_type</strong><span class="classifier">TYPE, optional</span></dt><dd><p>DESCRIPTION. The default is None.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>None.</dt><dd></dd>
+</dl>
+</dd>
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.A_l" title="mechelastic.core.elastic_properties.ElasticProperties.A_l"><code class="xref py py-obj docutils literal notranslate"><span class="pre">A_l</span></code></a></dt><dd><p>Returns ——- float log-Euclidean anisotropy parameter by Christopher M.</p>
@@ -710,11 +722,16 @@
 </dd>
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_zenner" title="mechelastic.core.elastic_properties.ElasticProperties.anisotropy_zenner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">anisotropy_zenner</span></code></a></dt><dd><p>Returns ——- float Zenner Anisotropy only for Cubic Crystals.</p>
 </dd>
+<dt><strong>bond_bending_vs_streching</strong></dt><dd></dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.bonding_type" title="mechelastic.core.elastic_properties.ElasticProperties.bonding_type"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bonding_type</span></code></a></dt><dd><p>This parameter desceibes the nature of bonding</p>
+</dd>
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss" title="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bulk_modulus_reuss</span></code></a></dt><dd><p>Returns ——- float Bulk Modulus Reuss.</p>
 </dd>
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt" title="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bulk_modulus_voigt</span></code></a></dt><dd><p>Returns ——- float Bulk Modulus Voigt.</p>
 </dd>
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt_reuss_hill" title="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_voigt_reuss_hill"><code class="xref py py-obj docutils literal notranslate"><span class="pre">bulk_modulus_voigt_reuss_hill</span></code></a></dt><dd><p>Returns ——- float Voigt-Reuss-Hill Approximation Bulk Modulus.</p>
+</dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.cauchy_pressure" title="mechelastic.core.elastic_properties.ElasticProperties.cauchy_pressure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">cauchy_pressure</span></code></a></dt><dd><p>This parameter desceibes the nature of bonding CP &gt; 0 (+ve) indicates that ionic bonding dominates CP &lt; 0 (-ve) indicates that covalent bonding dominates Returns ——- None.</p>
 </dd>
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.debye_temperature" title="mechelastic.core.elastic_properties.ElasticProperties.debye_temperature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">debye_temperature</span></code></a></dt><dd><p>Returns ——- theta : float Debye temperature calculated using Orson Anderson’s proposal [Ref- J.</p>
 </dd>
@@ -723,8 +740,12 @@
 <dt><strong>elastic_stability</strong></dt><dd></dd>
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.hardness" title="mechelastic.core.elastic_properties.ElasticProperties.hardness"><code class="xref py py-obj docutils literal notranslate"><span class="pre">hardness</span></code></a></dt><dd><p>Returns ——- float The hardness calculated by 6 different methods: [H1a and H1b] Correlation between hardness and elastic moduli of the covalent crystals.</p>
 </dd>
+<dt><strong>kleinman_parameter</strong></dt><dd></dd>
+<dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.lambda_lame_coefficient" title="mechelastic.core.elastic_properties.ElasticProperties.lambda_lame_coefficient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lambda_lame_coefficient</span></code></a></dt><dd><p>Returns ——- TYPE DESCRIPTION.</p>
+</dd>
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.melting_temperature" title="mechelastic.core.elastic_properties.ElasticProperties.melting_temperature"><code class="xref py py-obj docutils literal notranslate"><span class="pre">melting_temperature</span></code></a></dt><dd><p>Returns</p>
 </dd>
+<dt><strong>mu_lame_coefficient</strong></dt><dd></dd>
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_reuss" title="mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_reuss"><code class="xref py py-obj docutils literal notranslate"><span class="pre">p_wave_modulus_reuss</span></code></a></dt><dd><p>Returns ——- float P-Wave Modulus Reuss.</p>
 </dd>
 <dt><a class="reference internal" href="#mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt" title="mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_voigt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">p_wave_modulus_voigt</span></code></a></dt><dd><p>Returns ——- float P-wave modulus voigt.</p>
@@ -1095,6 +1116,27 @@ of another crystal with AU = 1.5. I””’</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.bond_bending_vs_streching">
+<em class="property">property </em><code class="sig-name descname">bond_bending_vs_streching</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.bond_bending_vs_streching" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.bonding_type">
+<em class="property">property </em><code class="sig-name descname">bonding_type</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.bonding_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>This parameter desceibes the nature of bonding
+CP &gt; 0 (+ve) indicates that ionic bonding dominates 
+CP &lt; 0 (-ve) indicates that covalent bonding dominates</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>str</dt><dd><p>DESCRIPTION.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss">
 <em class="property">property </em><code class="sig-name descname">bulk_modulus_reuss</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.bulk_modulus_reuss" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -1131,6 +1173,17 @@ of another crystal with AU = 1.5. I””’</p>
 </dl>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.cauchy_pressure">
+<em class="property">property </em><code class="sig-name descname">cauchy_pressure</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.cauchy_pressure" title="Permalink to this definition">¶</a></dt>
+<dd><p>This parameter desceibes the nature of bonding
+CP &gt; 0 (+ve) indicates that ionic bonding dominates 
+CP &lt; 0 (-ve) indicates that covalent bonding dominates
+Returns
+——-
+None.</p>
 </dd></dl>
 
 <dl class="method">
@@ -1184,6 +1237,24 @@ WARNING: Debye model for the atomic displacement is based on a monoatomic crysta
 </dd></dl>
 
 <dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.kleinman_parameter">
+<em class="property">property </em><code class="sig-name descname">kleinman_parameter</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.kleinman_parameter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.lambda_lame_coefficient">
+<em class="property">property </em><code class="sig-name descname">lambda_lame_coefficient</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.lambda_lame_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt>TYPE</dt><dd><p>DESCRIPTION.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
 <dt id="mechelastic.core.elastic_properties.ElasticProperties.melting_temperature">
 <em class="property">property </em><code class="sig-name descname">melting_temperature</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.melting_temperature" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
@@ -1196,6 +1267,11 @@ Solid State Physics Simulations, The Consortium for Upper-Level Physics Software
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="method">
+<dt id="mechelastic.core.elastic_properties.ElasticProperties.mu_lame_coefficient">
+<em class="property">property </em><code class="sig-name descname">mu_lame_coefficient</code><a class="headerlink" href="#mechelastic.core.elastic_properties.ElasticProperties.mu_lame_coefficient" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="method">
 <dt id="mechelastic.core.elastic_properties.ElasticProperties.p_wave_modulus_reuss">
@@ -1691,19 +1767,11 @@ In 2D:  Cij = bulk_Cij * C_latticevector (final units N/m)</p>
 
   <div role="contentinfo">
     <p>
-        
         &copy; Copyright 2020, Sobhit Singh
 
     </p>
   </div>
-    
-    
-    
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
-    
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1714,6 +1782,7 @@ In 2D:  Cij = bulk_Cij * C_latticevector (final units N/m)</p>
 
   </div>
   
+
 
   <script type="text/javascript">
       jQuery(function () {
