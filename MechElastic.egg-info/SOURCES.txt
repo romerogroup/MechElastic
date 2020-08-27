@@ -20,8 +20,12 @@ mechelastic/core/__init__.py
 mechelastic/core/elastic_properties.py
 mechelastic/core/elastic_properties_2d.py
 mechelastic/core/structure.py
+mechelastic/eos/__init__.py
+mechelastic/eos/eos.py
 mechelastic/parsers/__init__.py
 mechelastic/parsers/abinitparser.py
+mechelastic/parsers/qe_ElaStic_parser.py
+mechelastic/parsers/qe_thermo_pw_parser.py
 mechelastic/parsers/vaspparser.py
 mechelastic/tests/__init__.py
 mechelastic/tests/ductile.py

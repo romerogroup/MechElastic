@@ -109,7 +109,7 @@ class AbinitOutput:
 
         self.lattice_constant = [
             0.529177249 * float(x)
-            for x in re.findall(r"acell\d\s*([-+0-9.E\s]*)Bohr", data)[0].split()
+            for x in re.findall(r"acell\d\s*([-+0-9.E\s]*)Bohr", data)[-1].split()
         ]
 
         # cell parameters
