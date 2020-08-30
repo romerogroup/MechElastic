@@ -39,6 +39,7 @@ def make3DPlot(func, legend="", npoints=200):
     count = 0
     for cu in range(len(u)):
         for cv in range(len(v)):
+           
             r_tmp = func(u[cu], v[cv])
             z = r_tmp * np.cos(u[cu])
             x = r_tmp * np.sin(u[cu]) * np.cos(v[cv])
@@ -58,7 +59,7 @@ def make3DPlot(func, legend="", npoints=200):
                 + "\u00B0'"
             )
             count = count + 1
-    return (dataX, dataY, dataZ, dataR)
+    return ((dataX, dataY, dataZ, dataR))
 
 
 def make3DPlotPosNeg(func, legend="", npoints=200):
@@ -129,7 +130,7 @@ def make3DPlotPosNeg(func, legend="", npoints=200):
     return ((dataX1, dataY1, dataZ1, dataR1), (dataX2, dataY2, dataZ2, dataR2))
 
 
-def make3DPlot2(func, legend="", npoints=50):
+def make3DPlot2(func, legend="", npoints=200):
 
     u = np.linspace(0, np.pi, npoints)
     v = np.linspace(0, np.pi, npoints)
@@ -205,7 +206,7 @@ def make3DPlot2(func, legend="", npoints=50):
     return ((dataX1, dataY1, dataZ1, dataR1), (dataX2, dataY2, dataZ2, dataR2))
 
 
-def make3DPlot3(func, legend="", width=600, height=600, npoints=50):
+def make3DPlot3(func, legend="", width=600, height=600, npoints=200):
 
     str1 = legend.split("'")[0]
     str2 = legend.split("'")[1]
@@ -301,7 +302,7 @@ def make3DPlot3(func, legend="", width=600, height=600, npoints=50):
 ################################################################################################
 
 
-def makePolarPlot(func, legend="", p="xy", npoints=90):
+def makePolarPlot(func, legend="", p="xy", npoints=200):
     u = np.linspace(0, 2 * np.pi, npoints)
     r = list(map(func, u))
     if p == "xy":
@@ -314,7 +315,7 @@ def makePolarPlot(func, legend="", p="xy", npoints=90):
     return (x, y)
 
 
-def makePolarPlotPosNeg(func, legend="", p="xy", npoints=90):
+def makePolarPlotPosNeg(func, legend="", p="xy", npoints=200):
 
     u = np.linspace(0, 2 * np.pi, npoints)
     r = list(map(lambda x: max(0, func(x)), u))
@@ -335,7 +336,7 @@ def makePolarPlotPosNeg(func, legend="", p="xy", npoints=90):
     return ((x1, y1), (x2, y2))
 
 
-def makePolarPlot2(func, legend="", p="xy", npoints=61):
+def makePolarPlot2(func, legend="", p="xy", npoints=200):
 
     u = np.linspace(0, 2 * np.pi, npoints)
     r = list(map(func, u))
@@ -354,7 +355,7 @@ def makePolarPlot2(func, legend="", p="xy", npoints=61):
     return ((x1, y1), (x2, y2))
 
 
-def makePolarPlot3(func, legend="", p="xy", npoints=61):
+def makePolarPlot3(func, legend="", p="xy", npoints=200):
 
     u = np.linspace(0, 2 * np.pi, npoints)
     r = list(map(func, u))
@@ -505,7 +506,7 @@ class ELATE:
             self.elas = ElasticOrtho(self.elas)
 
         data = make3DPlot(lambda x, y: self.elas.Young_2(x, y), "Young's modulus")
-
+        
         return data
 
     def LC2D(self):
@@ -658,11 +659,12 @@ class ELATE:
             func = self.YOUNG3D()
             colors = ["green"]
             for ix, icolor in zip(range(len(func)), colors):
-                x = np.array(func[ix][0])
-                y = np.array(func[ix][1])
-                z = np.array(func[ix][2])
-                r = np.array(func[ix][3])
-                if np.all((func[ix][0] == 0)):
+
+                x = np.array(func[0])
+                y = np.array(func[1])
+                z = np.array(func[2])
+                r = np.array(func[3])
+                if np.all((func[0] == 0)):
                     continue
                 else:
                     grid = pv.StructuredGrid(x, y, z)
