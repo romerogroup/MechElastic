@@ -12,7 +12,7 @@ def calculate_elastic_anisotropy(
     code="vasp",
     plot=None,
     elastic_calc=None,
-    ddbfile=None,
+    anaddbfile=None,
     outfile=None,
     adjust_pressure=True,
 ):
@@ -44,7 +44,7 @@ def calculate_elastic_anisotropy(
             rowsList.append(columnsList)
 
     elif code == "abinit":
-        output = AbinitOutput(infile=infile, ddbfile=ddbfile)
+        output = AbinitOutput(infile=infile, anaddbfile=anaddbfile)
         elastic_tensor = output.elastic_tensor
 
         row = elastic_tensor.shape[0]
