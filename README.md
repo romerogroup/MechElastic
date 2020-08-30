@@ -93,6 +93,18 @@ For 2D BN:
 MechElastic.py -d=2D -i OUTCAR-BN_mono > output_BN_monolayer.log
 ```
 
+MechElastic currently supports VASP and Abinit.
+To run the calculation for Abinit, two inputs are required.
+
+1. The output from a SCF calculation (abinit.out)
+2. The output from the anaddb calculation to retrieve elastic tensors (abinit2.out)
+
+The following command will run MechElastic for an Abinit calculation:
+
+```
+MechElastic.py –i abinit.out –ddb abinit2.out –co abinit
+```
+
 ### Library Mode
 
 Similarly, the above examples can be performed with the library mode after importing MechElastic from Python.
@@ -124,6 +136,13 @@ The stability test is currently only required for 3D systems.
 import mechelastic 
 mechelastic.calculate_elastic(code="vasp", dim="3D", infile="OUTCAR-Si_bulk", crystal="cubic")
 ```
+
+To run for Abinit:
+
+```
+mechelastic.calculate_elastic(code="abinit", infile="abinit.out", anaddbfile="abinit2.out")
+```
+
 
 ``mechelastic.calculate_elastic()`` calculates the complete set of elastic properties. However, if one wishes to call particular methods that can be also done through the library mode. For example, given a matrix and a crystaltype, the stability can be determined:
 

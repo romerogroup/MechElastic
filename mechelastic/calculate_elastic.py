@@ -14,7 +14,7 @@ def calculate_elastic(
     dim="3D",
     crystal=None,
     code="vasp",
-    ddbfile=None,
+    anaddbfile=None,
     outfile=None,
     adjust_pressure=True,
 ):
@@ -40,7 +40,7 @@ def calculate_elastic(
         lattice_constant = output.lattice_constant
 
     elif code == "abinit":
-        output = AbinitOutput(infile=infile, ddbfile=ddbfile)
+        output = AbinitOutput(infile=infile, anaddbfile=anaddbfile)
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant

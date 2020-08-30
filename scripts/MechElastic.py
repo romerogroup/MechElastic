@@ -42,11 +42,15 @@ parser.add_argument(
     "-i",
     "--input",
     type=str,
-    help="input the OUTCAR or Abinit input file.",
+    help="Output file of the DFT calculation.",
     default="OUTCAR",
 )
 parser.add_argument(
-    "-ddb", "--ddbfile", type=str, help="input the Abinit DDB file", default=None
+    "-anaddb",
+    "--anaddbfile",
+    type=str,
+    help="Output of the Abinit anaddb calculation.",
+    default=None,
 )
 
 
@@ -55,7 +59,7 @@ parser.add_argument(
     "--crystal",
     type=str,
     default=None,
-    help="Provide the crystal type. Otherwise it would be determined from OUTCAR",
+    help="Provide the crystal type. Otherwise it would be determined from the DFT output.",
 )
 parser.add_argument(
     "-d",
@@ -104,7 +108,7 @@ def main():
         dim=args.dim,
         infile=args.input,
         crystal=args.crystal,
-        ddbfile=args.ddbfile,
+        anaddbfile=args.anaddbfile,
         adjust_pressure=args.adjust_pressure,
     )
 

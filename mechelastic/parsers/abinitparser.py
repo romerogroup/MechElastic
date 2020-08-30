@@ -19,10 +19,10 @@ class AbinitOutput:
     output.
     """
 
-    def __init__(self, infile="abinit.out", ddbfile="abinit2.out"):
+    def __init__(self, infile="abinit.out", anaddbfile="abinit2.out"):
 
         self.infile = infile
-        self.ddbfile = ddbfile
+        self.anaddbfile = anaddbfile
 
         self.elastic_tensor = None
         self.compaliance_tensor = None
@@ -42,7 +42,7 @@ class AbinitOutput:
         after running anaddb.
         """
 
-        rf = open(self.ddbfile, "r")
+        rf = open(self.anaddbfile, "r")
         datamat = rf.read()
         rf.close()
 
