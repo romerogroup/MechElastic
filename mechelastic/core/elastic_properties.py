@@ -519,7 +519,35 @@ class ElasticProperties:
             Zenner Anisotropy only for Cubic Crystals.
 
         """
-        return self.anisotropy_zenner
+        return self.A_z
+    
+    @property
+    def A_cb(self):
+        """
+
+
+        Returns
+        -------
+        float
+            Chung-Buessem only for Cubic Crystals.
+
+        """
+
+        a_cb = (self.G_v-self.G_r)/(self.G_v + self.G_r)
+        return a_cb
+
+    @property
+    def anisotropy_Chung_Buessem(self):
+        """
+
+
+        Returns
+        -------
+        float
+            Chung-Buessem  only for Cubic Crystals.
+
+        """
+        return self.A_cb
 
     @property
     def A_u(self):
@@ -569,6 +597,22 @@ class ElasticProperties:
 
         """
         return np.sqrt(5) * 2.303 * np.log(1 + (self.A_u / 5))
+    
+    
+    @property
+    def anisotropy_log_euclidean(self):
+        """
+
+
+        Returns
+        -------
+        float
+               log-Euclidean anisotropy parameter by Christopher M. Kube, AIP Advances 6, 095209 (2016)
+               AL  CV , CR   is based on the distance between the averaged stiffnesses CV and
+               CR , which is more appropriate. Clearly, AL  CV , CR   is zero when the crystallite is isotropic.
+
+        """
+        return self.A_l
 
     @property
     def ductility(self):

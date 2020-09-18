@@ -22,7 +22,7 @@ __version__ = "2019.01.09"
 __license__ = "MIT"
 
 
-def make3DPlot(func, legend="", npoints=200):
+def make3DPlot(func, legend="", npoints=100):
 
     str1 = legend.split("'")[0]
     str2 = legend.split("'")[1]
@@ -62,7 +62,7 @@ def make3DPlot(func, legend="", npoints=200):
     return ((dataX, dataY, dataZ, dataR))
 
 
-def make3DPlotPosNeg(func, legend="", npoints=200):
+def make3DPlotPosNeg(func, legend="", npoints=100):
 
     u = np.linspace(0, np.pi, npoints)
     v = np.linspace(0, 2 * np.pi, 2 * npoints)
@@ -206,7 +206,7 @@ def make3DPlot2(func, legend="", npoints=200):
     return ((dataX1, dataY1, dataZ1, dataR1), (dataX2, dataY2, dataZ2, dataR2))
 
 
-def make3DPlot3(func, legend="", width=600, height=600, npoints=200):
+def make3DPlot3(func, legend="", width=600, height=600, npoints=100):
 
     str1 = legend.split("'")[0]
     str2 = legend.split("'")[1]
@@ -598,7 +598,8 @@ class ELATE:
         from pyvistaqt import BackgroundPlotter
 
         plotter = BackgroundPlotter()
-
+        
+        plotter.set_background(color="white")
         x = None
         y = None
         z = None
@@ -674,7 +675,7 @@ class ELATE:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
 
         plotter.add_axes()
-        plotter.show_grid()
+        plotter.show_grid(color = "black")
 
     def plot_2D(self, elastic_calc=""):
         import matplotlib.pyplot as plt
