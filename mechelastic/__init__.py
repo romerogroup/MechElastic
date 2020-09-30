@@ -37,9 +37,11 @@ from mechelastic.parsers import VaspOutcar
 from mechelastic.parsers import AbinitOutput
 from mechelastic.eos import EOS
 from mechelastic.comms import printer
-from mechelastic.core import Structure, ElasticProperties, ElasticProperties2D, ELATE
+from mechelastic.core import Structure, ElasticProperties, ElasticProperties2D, ELATE, Surface, Isosurface, BrillouinZone
 from mechelastic.tests import ductile, eigenvals, stability, symmetry
 from mechelastic.utils import constants, elements, crystalutils
+from mechelastic.soundsurface3d import SoundSurface3D
 
 from .calculate_elastic_anisotropy import calculate_elastic_anisotropy
 from .calculate_elastic import calculate_elastic
+from .script_soundSpeedSurface3D import soundSurface3D
