@@ -824,6 +824,19 @@ class ElasticProperties:
         print(
             "[5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011)."
         )
+        print(
+            """ Hardness recommendation model:
+        ********************************************************************
+                     Cubic  Hexagonal  Orthorhombic  Rhombohedral  General
+        ********************************************************************
+        Insulator      H2      H1b          H2            H2          H2
+        Semiconductor  H5    H1b, H3                      H2          H5
+        Metal          H1a     H4           H4            H4          H4
+        ********************************************************************
+        Insulator: bandgap > 2eV
+        Semiconductor: bandgap < 2eV
+        Metal: bandgap = 0 """
+        )
 
     @property
     def elastic_stability(self):
