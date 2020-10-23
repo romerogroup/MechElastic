@@ -674,8 +674,8 @@ class ELATE:
                     else:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
 
-        plotter.add_axes()
-        plotter.show_grid(color = "black")
+        #plotter.add_axes()
+        #plotter.show_grid(color = "black")
 
     def plot_2D(self, elastic_calc=""):
         import matplotlib.pyplot as plt

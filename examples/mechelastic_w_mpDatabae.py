@@ -10,15 +10,15 @@ from mechelastic.core import ELATE, ElasticProperties, Structure
 import numpy as np
 
 "Get the unique apiKey on materials project website"
-apiKey = "xxxxxxxxxxxxxxxx"
-a = MPRester("apiKey")
+apiKey = "--------------"
+a = MPRester(apiKey)
 
 "Trigonal LiNbO3"
-#mat_info = a.query(criteria={"task_id": "mp-3731"}, properties=["structure","elasticity"])[0]
+mat_info = a.query(criteria={"task_id": "mp-3731"}, properties=["structure","elasticity"])[0]
 "Tetragonal SiO2"
 #mat_info = a.query(criteria={"task_id": "mp-6945"}, properties=["structure","elasticity"])[0]
 "Trigonal SiO2"
-mat_info = a.query(criteria={"task_id": "mp-6930"}, properties=["structure","elasticity"])[0]
+# mat_info = a.query(criteria={"task_id": "mp-6930"}, properties=["structure","elasticity"])[0]
 
 s1 = mat_info['structure']
 lattice = s1.lattice.matrix
@@ -28,26 +28,29 @@ structure = Structure(atoms = species, fractional_coordinates = frac_coords, lat
 
 elastic_tensor = np.array(mat_info['elasticity']['elastic_tensor'])
 
-elastic_properties = ElasticProperties(elastic_tensor, structure,crystal_type = 'rhombohedral-2')
-elastic_properties.print_properties()
+
+"The following uncommented section produces the MechElastic summary and shows how to access properties directly"
+elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type = 'rhombohedral-2')
 gV = elastic_properties.G_v
 stability = elastic_properties.elastic_stability
 elastic_properties.print_properties()
-
-elastic_tensor = np.array(mat_info['elasticity']['elastic_tensor'])
-row = elastic_tensor.shape[0]
-col = elastic_tensor.shape[1]
-rowsList = []
-for i in range(row):
-    columnsList = []
-    for j in range(col):
-        columnsList.append(round(elastic_tensor[i, j],3))
-    rowsList.append(columnsList)
+###############################################################################################
 
 
+"The following uncommented section produces the MechElastic-ELATE summary, shows how to access properties directly, and produces the plots of ELATE "
+# row = elastic_tensor.shape[0]
+# col = elastic_tensor.shape[1]
+# rowsList = []
+# for i in range(row):
+#     columnsList = []
+#     for j in range(col):
+#         columnsList.append(round(elastic_tensor[i, j],3))
+#     rowsList.append(columnsList)
 
-elas_tensor = ELATE.ELATE(rowsList)
-elas_tensor.plot_2D(elastic_calc="POISSON")
+# elate_tensor = ELATE.ELATE(rowsList)
 
-elastic_tensor.print_properties()
-elas_tensor.plot_3D(elastic_calc="YOUNG")
+# elate_tensor.print_properties()
+# """Properties  to plot elastic_calc = "POISSON" , "SHEAR", "YOUNG" , "LC"
+#  """
+# elate_tensor.plot_2D(elastic_calc="POISSON")
+# elate_tensor.plot_3D(elastic_calc="POISSON")

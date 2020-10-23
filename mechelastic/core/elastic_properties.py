@@ -761,9 +761,27 @@ class ElasticProperties:
             % (self.KG_ratio_v, self.KG_ratio_r, self.KG_ratio_vrh, self.ductility)
         )
         print("-------------------------------------------------------")
-
+        print("Elastic parameters")
+        print("")
+        print("Lame's first and second parameter Ref. [1]")
+        print("Lambda  =  %10.5f  " % self.lambda_lame_coefficient)
+        print("Mu  =  %10.5f  " % self.mu_lame_coefficient)
+        print("")
+        print("Kleinman’s parameter Ref. [2,3]")
+        print("K = 0 (1) bending (stretching) would dominate")
+        print("K =  %10.5f  " % self.kleinman_parameter)
+        
+        
+        print(
+            "[1] G. Mavko, T. Mukerji, J. Dvorkin, The rock physics handbook, Cam-bridge university press, 2020 (2020)"
+            )
+        print("[2] L. Kleinman, Deformation potentials in silicon. i. uniaxial strain, Phys.Rev. 128 (1962) https://doi.org/10.1103/PhysRev.128.2614")
+        print("[3] W. A. Harrison, Electronic structure and the properties of solids:  thephysics of the chemical bond, Courier Corporation, 2012 (2012)")
+        print("------------------------------------------------------------------ ")
+        
         print(" \n \n \t \t Elastic Anisotropy \n ")
-        print("Zener anisotropy (true for cubic crystals only) Az = %10.5f" % self.A_z)
+        print("Zener anisotropy (true for cubic crystals only; C.  Zener , Elasticity and Anelasticity of Metals. The Journal of Physical Chemistry) Az = %10.5f" % self.A_z)
+        print("Chung-Buessem anisotropy (true for cubic crystals only; D. H. Chung and W. R. Buessem, https://doi.org/10.1063/1.1709819) Acb = %10.5f" % self.A_cb)
         print(
             "Universal anisotropy index (Ranganathan and Ostoja-Starzewski method; PRL 101, 055504 (2008)) Au = %10.5f"
             % self.A_u
@@ -777,11 +795,12 @@ class ElasticProperties:
         )
         print("----------------------------------------------- ")
         print(
-            "Longitudinal wave velocity (vl) : %10.5f m/s " % self.velocity_logitudinal
+            "Longitudinal wave velocity (vl) : %10.5f m/s  Ref.[1]" % self.velocity_logitudinal
         )
-        print("Transverse wave velocity (vt) : %10.5f m/s" % self.velocity_transverse)
-        print("Average wave velocity (vm) : %10.5f m/s" % self.velocity_average)
-        print("Debye temperature  (in K) : %10.5f " % self.debye_temperature)
+        print("Transverse wave velocity (vt) : %10.5f m/s  Ref.[1]" % self.velocity_transverse)
+        print("Average wave velocity (vm) : %10.5f m/s Ref.[1]" % self.velocity_average)
+        print("Debye temperature  (in K) : %10.5f Ref.[1]" % self.debye_temperature)
+
         print(
             "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass in case your crystal has several species."
         )
@@ -794,10 +813,30 @@ class ElasticProperties:
         #     )
         # )
         print(
-            "\nMelting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K)"
+            "\nMelting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K) Ref.[2]"
         )
         print("Tm (in K)=  %10.5f (plus-minus 555 K) " % self.melting_temperature)
+        print("")
+        print(
+            "[1] A simplified method for calculating the debye temperature from elastic constants, https://doi.org/10.1016/0022-3697(63)90067-2."
+        )
+        print(
+            "[2] Elastic constants versus melting temperature in metals, https://doi.org/10.1016/0036-9748(84)90267-9"
+        )
         print("------------------------------------------------------------------ ")
+        print("Bonding information")
+        
+        print("")
+        print("Cauchy Pressure calculated from the relation : CP = C_12 - C_44")
+        print("     CP > 0 (+ve) indicates that ionic bonding dominates")
+        print("     CP < 0 (-ve) indicates that covalent bonding dominates")
+        
+        print("CP (GPa) =  %10.5f  " % self.cauchy_pressure)
+        print("Bonding is mainly " + self.bonding_type)
+        
+        
+        print("------------------------------------------------------------------ ")
+        
 
         print("Hardness analysis from 6 different semi-empirical relationships.")
         H1a, H1b, H2, H3, H4, H5 = self.hardness
