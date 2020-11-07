@@ -11,6 +11,7 @@ import numpy as np
 
 "Get the unique apiKey on materials project website"
 apiKey = "--------------"
+apiKey = 'A45OsEslmcbF4UiwL'
 a = MPRester(apiKey)
 
 "Trigonal LiNbO3"
@@ -32,7 +33,7 @@ elastic_tensor = np.array(mat_info['elasticity']['elastic_tensor'])
 "The following uncommented section produces the MechElastic summary and shows how to access properties directly"
 elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type = 'rhombohedral-2')
 gV = elastic_properties.G_v
-stability = elastic_properties.elastic_stability
+#stability = elastic_properties.elastic_stability
 elastic_properties.print_properties()
 ###############################################################################################
 

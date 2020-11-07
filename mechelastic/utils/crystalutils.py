@@ -16,6 +16,16 @@ crystallist = np.array(
     ]
 )
 
+latticelist = np.array(
+    [
+        "hexagonal",
+        "square",
+        "rectangular",
+        "rectangular-center",
+        "oblique",
+
+    ]
+)
 
 def crystal_select(cnew=None, cell=None, crystal_type=None):
 
@@ -55,3 +65,21 @@ def crystal_select(cnew=None, cell=None, crystal_type=None):
 
         print("From OUTCAR the crystal type is = ", crystal_type)
         stability.stability_test(cnew, crystal_type)
+        
+def lattice_select(cnew=None, cell=None, lattice_type=None):
+
+    """This method selects crystal types."""
+
+    if lattice_type is not None:
+        print("\n \t \t Mechanical Stability Test \n")
+        stability.stability_test_2d(cnew, lattice_type)
+
+    else:
+        print("\n")
+        print(
+            "WARNING: crystal symmetry class  was not provided by user"
+        )
+        print(
+            "One of the following was expected as the second argument: \n 'hexagonal', 'square', 'rectangular', 'rectangular-center', 'oblique'"
+        )
+

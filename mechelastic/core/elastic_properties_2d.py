@@ -7,7 +7,7 @@ from ..utils.constants import *
 from ..utils.elements import ELEMENTS
 from ..utils.crystalutils import *
 from .structure import Structure
-
+from ..tests import stability
 
 class ElasticProperties2D:
     """Convert the units from GPa or N/m2 to N/m for two-dimensional systems
@@ -23,12 +23,21 @@ class ElasticProperties2D:
         For example: if bulk_Cij = 15 GPa and out-of-plane cell parameter c = 10 Angs.
                   Then  2D_Cij = [15*10^9 N/m2] * [10*10^(-10) m] ; i.e 15*(0.1*c) N/m """
 
-    def __init__(self, elastic_tensor, lattice_constant):
+    def __init__(self, elastic_tensor, lattice_constant, structure = None , lattice_type = None):
         self.elastic_tensor = elastic_tensor
         self.lattice_constant = lattice_constant
         self.c2d = np.zeros((6, 6))
-
+        
+        self.structure = structure 
+        self.lattice_type = lattice_type
         self._c2d()
+        
+        if self.structure is not None or self.lattice_type is not None:
+            lattice_select(
+                cnew=self.c2d,
+                cell=self.structure.spglib_cell,
+                lattice_type=self.lattice_type,
+            )
 
     def _c2d(self):
         for i in range(0, 6):
@@ -172,6 +181,10 @@ class ElasticProperties2D:
         """
 
         return self.G2d
+    
+    @property
+    def elastic_stability(self):
+        return stability.stability_test_2d(self.c2d, self.lattice_type)
 
     def print_properties(self):
 
