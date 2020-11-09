@@ -35,7 +35,7 @@ class ElasticProperties2D:
         if self.structure is not None or self.lattice_type is not None:
             lattice_select(
                 cnew=self.c2d,
-                cell=self.structure.spglib_cell,
+                cell=None,
                 lattice_type=self.lattice_type,
             )
 
@@ -203,8 +203,8 @@ class ElasticProperties2D:
         print("2D Poisson ratio v[10]         :   %10.3f " % self.nu10)
         print("2D Poisson ratio v[01]         :   %10.3f " % self.nu01)
         print("-------------------------------------------------------")
-        print(
-            "Note:  The elastic stabilty test for 2D systems is not yet implemented. "
-        )
+        #print(
+        #    "Note:  The elastic stabilty test for 2D systems is not yet implemented. "
+        #)
 
-        printer.print_warning_2D()
+        #printer.print_warning_2D()

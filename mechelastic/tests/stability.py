@@ -442,7 +442,7 @@ def stability_test_2d(matrix, lattice_type):
     if lattice_type == "hexagonal":
         print("Hexagonal lattice \n")
         print(
-            "Stability criteria for the stability of cubic system are: \n"
+            "Stability criteria for the stability of hexagonal system are: \n"
         )
         print("(i) C11 + C12 > 0;    (ii) C11 - C12 > 0;  \n ")
         
@@ -472,7 +472,7 @@ def stability_test_2d(matrix, lattice_type):
     if lattice_type == "square":
         print("Square lattice \n")
         print(
-            "Stability criteria for the stability of cubic system are: \n"
+            "Stability criteria for the stability of square system are: \n"
         )
         print("(i) C11 + C12 > 0;    (ii) C11 - C12 > 0;  (iii) C33 > 0     \n ")
         
@@ -490,7 +490,7 @@ def stability_test_2d(matrix, lattice_type):
             print("Condition (ii) NOT satisfied.")
             condition2 = False
         
-        if c[2][2] > 0.0:
+        if c[2][5] > 0.0:
             print("Condition (iii) satified.")
             condition3 = True
         else:
@@ -508,25 +508,25 @@ def stability_test_2d(matrix, lattice_type):
     if lattice_type == "rectangular" or lattice_type =='rectangular-center':
         print("Rectangular lattice or Rectangular Center lattice \n")
         print(
-            "Stability criteria for the stability of cubic system are: \n"
+            "Stability criteria for the stability of rectangular lattice or rectangular Center lattic are: \n"
         )
         print("(i) 1/2*(C11 + C22 + (4(C12)**2 - (C11 -C22))**0.5)> 0;    (ii) 1/2*(C11 + C22 - (4(C12)**2 - (C11 -C22))**0.5)> 0 ;  (iii) C33 > 0     \n ")
         
-        if 0.5*(c[0][0] + c[1][1] + (4*(c[1][2])**2 + (c[1][1] - c[2][2])**2 )**0.5 ) > 0.0:
+        if 0.5*(c[0][0] + c[1][1] + (4*(c[0][1])**2 + (c[0][0] - c[1][1])**2 )**0.5 ) > 0.0:
             print("Condition (i) satified.")
             condition1 = True
         else:
             print("Condition (i) NOT satisfied.")
             condition1 = False
 
-        if 0.5*(c[0][0] + c[1][1] - (4*(c[1][2])**2 + (c[1][1] - c[2][2])**2 )**0.5 ) > 0.0:
+        if 0.5*(c[0][0] + c[1][1] - (4*(c[0][1])**2 + (c[0][0] - c[1][1])**2 )**0.5 ) > 0.0:
             print("Condition (ii) satified.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
             condition2 = False
         
-        if c[2][2] > 0.0:
+        if c[2][5] > 0.0:
             print("Condition (iii) satified.")
             condition3 = True
         else:
@@ -544,7 +544,7 @@ def stability_test_2d(matrix, lattice_type):
     if lattice_type == "oblique":
         print("Oblique lattice \n")
         print(
-            "Stability criteria for the stability of cubic system are: \n"
+            "Stability criteria for the stability of oblique lattice are: \n"
         )
         print("(i) C11 > 0 ;    (ii) C11 *C22 > (C12)*2 ;  (iii) det(Cij) > 0     \n ")
         

@@ -13,6 +13,7 @@ def calculate_elastic(
     infile="OUTCAR",
     dim="3D",
     crystal=None,
+    lattice_type = None,
     code="vasp",
     anaddbfile=None,
     outfile=None,
@@ -64,7 +65,7 @@ def calculate_elastic(
 
     # elastic constants calculation for 2D materials
     elif dim == "2D":
-        elastic_properties = ElasticProperties2D(elastic_tensor, lattice_constant)
+        elastic_properties = ElasticProperties2D(elastic_tensor, lattice_constant, lattice_type = lattice_type)
         elastic_properties.print_properties()
 
     # other
