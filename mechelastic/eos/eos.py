@@ -229,7 +229,7 @@ class EOS:
             residuals_vinet, self.coeffs0, args=(self.energy, self.volume)
         )
         print("Vinet : %s" % self.eos_vinet_fitted.x)
-        print("Vinet Cost (MSE) : %s\n" % self.eos_vinet_fitted.cost)
+        print("Vinet (MSE) : %s\n" % np.mean(self.eos_vinet_fitted.fun ** 2))
 
         # Birch
         def residuals_birch(coeffs, y, x):
@@ -239,7 +239,7 @@ class EOS:
             residuals_birch, self.coeffs0, args=(self.energy, self.volume)
         )
         print("Birch : %s" % self.eos_birch_fitted.x)
-        print("Birch Cost (MSE) : %s\n" % self.eos_birch_fitted.cost)
+        print("Birch (MSE) : %s\n" % np.mean(self.eos_birch_fitted.fun ** 2))
 
         # Murnaghan
         def residuals_murnaghan(coeffs, y, x):
@@ -250,7 +250,7 @@ class EOS:
         )
 
         print("Murnaghan : %s" % self.eos_murnaghan_fitted.x)
-        print("Murnaghan Cost (MSE) : %s\n" % self.eos_murnaghan_fitted.cost)
+        print("Murnaghan (MSE) : %s\n" % np.mean(self.eos_murnaghan_fitted.fun ** 2))
 
         # Birch-Murnaghan
         def residuals_birch_murnaghan(coeffs, y, x):
@@ -261,14 +261,15 @@ class EOS:
         )
         print("Birch-Murnaghan : %s" % self.eos_birch_murnaghan_fitted.x)
         print(
-            "Birch-Murnaghan Cost (MSE) : %s\n" % self.eos_birch_murnaghan_fitted.cost
+            "Birch-Murnaghan (MSE) : %s\n"
+            % np.mean(self.eos_birch_murnaghan_fitted.fun ** 2)
         )
 
         cost_array = [
-            self.eos_vinet_fitted.cost,
-            self.eos_birch_fitted.cost,
-            self.eos_murnaghan_fitted.cost,
-            self.eos_birch_murnaghan_fitted.cost,
+            np.mean(self.eos_vinet_fitted.fun ** 2),
+            np.mean(self.eos_birch_fitted.fun ** 2),
+            np.mean(self.eos_murnaghan_fitted.fun ** 2),
+            np.mean(self.eos_birch_murnaghan_fitted.fun ** 2),
         ]
         eos_name = ["Vinet", "Birch", "Murnaghan", "Birch-Murnaghan"]
 
