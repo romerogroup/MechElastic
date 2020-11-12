@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-from ..comms import printer
+from ..comms import printer 
 from ..tests import ductile
 from ..tests import eigenvals
 from ..utils.constants import *
 from ..utils.elements import ELEMENTS
 from ..utils.crystalutils import *
 from .structure import Structure
+from numpy import linalg as LA
 
 
 class ElasticProperties:
-    def __init__(self, elastic_tensor, structure=None, crystal_type=None):
+    def __init__(self, elastic_tensor, structure=None, crystal_type=None, code = None):
         """
         
 
@@ -32,8 +33,25 @@ class ElasticProperties:
         self.compaliance_tensor = self.elastic_tensor.I
         self.structure = structure
         self.crystal_type = crystal_type
+        print("\n------------------------------------------------------------------")
+        print("Elastic Moduli")
+        print("------------------------------------------------------------------\n")
+        
+        printMatrix(self.elastic_tensor)
+        if code != None:
+            print("\nThis matrix was computed from " + code)
+        print("Note: For VASP users this is the pressure corrected matrix")
 
+        print("\n------------------------------------------------------------------")
+        print("Elastic Tensor Eigen Values (GPa units)")
+        print("------------------------------------------------------------------\n")
+        
+        positive_evals(self.elastic_tensor)
+        
         if crystal_type is not None or structure is not None:
+            print("\n------------------------------------------------------------------")
+            print("Mechanical Stability Test")
+            print("------------------------------------------------------------------\n")
             crystal_select(
                 cnew=self.elastic_tensor,
                 cell=self.structure.spglib_cell,
@@ -733,8 +751,11 @@ class ElasticProperties:
         return 607 + 9.3 * self.K_vrh
 
     def print_properties(self):
-
-        print("\n \n                         Voigt     Reuss    Average")
+        print("\n------------------------------------------------------------------")
+        print("Elastic Moduli")
+        print("------------------------------------------------------------------\n")
+        
+        print("                          Voigt     Reuss    Average")
         print("-------------------------------------------------------")
         print(
             "Bulk modulus   (GPa)  %9.3f %9.3f %9.3f "
@@ -760,72 +781,22 @@ class ElasticProperties:
             "Bulk/Shear ratio      %9.3f %9.3f %9.3f (%s) "
             % (self.KG_ratio_v, self.KG_ratio_r, self.KG_ratio_vrh, self.ductility)
         )
-        print("-------------------------------------------------------")
+        
+        print("\n------------------------------------------------------------------")
         print("Elastic parameters")
-        print("")
-        print("Lame's first and second parameter Ref. [1]")
+        print("------------------------------------------------------------------\n")
+        
+        print("Lame's first and second parameter Ref.[3]")
         print("Lambda  =  %10.5f  " % self.lambda_lame_coefficient)
         print("Mu  =  %10.5f  " % self.mu_lame_coefficient)
-        print("")
-        print("Kleinman’s parameter Ref. [2,3]")
+     
+        print("\n------------------------------------------------------------------")
+        print("Bonding information")
+        print("------------------------------------------------------------------\n ")
+        
+        print("Kleinman’s parameter Ref.[4,5]")
         print("K = 0 (1) bending (stretching) would dominate")
         print("K =  %10.5f  " % self.kleinman_parameter)
-        
-        
-        print(
-            "[1] G. Mavko, T. Mukerji, J. Dvorkin, The rock physics handbook, Cam-bridge university press, 2020 (2020)"
-            )
-        print("[2] L. Kleinman, Deformation potentials in silicon. i. uniaxial strain, Phys.Rev. 128 (1962) https://doi.org/10.1103/PhysRev.128.2614")
-        print("[3] W. A. Harrison, Electronic structure and the properties of solids:  thephysics of the chemical bond, Courier Corporation, 2012 (2012)")
-        print("------------------------------------------------------------------ ")
-        
-        print(" \n \n \t \t Elastic Anisotropy \n ")
-        print("Zener anisotropy (true for cubic crystals only; C.  Zener , Elasticity and Anelasticity of Metals. The Journal of Physical Chemistry) Az = %10.5f" % self.A_z)
-        print("Chung-Buessem anisotropy (true for cubic crystals only; D. H. Chung and W. R. Buessem, https://doi.org/10.1063/1.1709819) Acb = %10.5f" % self.A_cb)
-        print(
-            "Universal anisotropy index (Ranganathan and Ostoja-Starzewski method; PRL 101, 055504 (2008)) Au = %10.5f"
-            % self.A_u
-        )
-        print(
-            "Log-Euclidean anisotropy parameter by Christopher M. Kube, AIP Advances 6, 095209 (2016) AL = %10.5f "
-            % self.A_l
-        )
-        print(
-            "\n \t \t  Elastic wave velocities calculated using Navier's equation  (in m/s units) \n"
-        )
-        print("----------------------------------------------- ")
-        print(
-            "Longitudinal wave velocity (vl) : %10.5f m/s  Ref.[1]" % self.velocity_logitudinal
-        )
-        print("Transverse wave velocity (vt) : %10.5f m/s  Ref.[1]" % self.velocity_transverse)
-        print("Average wave velocity (vm) : %10.5f m/s Ref.[1]" % self.velocity_average)
-        print("Debye temperature  (in K) : %10.5f Ref.[1]" % self.debye_temperature)
-
-        print(
-            "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass in case your crystal has several species."
-        )
-        # print(
-        #     "Atomic displacement at 150, 300 and 450 K  (in A^2) : %10.5f %10.5f %10.5f"
-        #     % (
-        #         u2FromDebye(mass, natoms, theta, 150.0),
-        #         u2FromDebye(mass, natoms, theta, 300.0),
-        #         u2FromDebye(mass, natoms, theta, 450.0),
-        #     )
-        # )
-        print(
-            "\nMelting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K) Ref.[2]"
-        )
-        print("Tm (in K)=  %10.5f (plus-minus 555 K) " % self.melting_temperature)
-        print("")
-        print(
-            "[1] A simplified method for calculating the debye temperature from elastic constants, https://doi.org/10.1016/0022-3697(63)90067-2."
-        )
-        print(
-            "[2] Elastic constants versus melting temperature in metals, https://doi.org/10.1016/0036-9748(84)90267-9"
-        )
-        print("------------------------------------------------------------------ ")
-        print("Bonding information")
-        
         print("")
         print("Cauchy Pressure calculated from the relation : CP = C_12 - C_44")
         print("     CP > 0 (+ve) indicates that ionic bonding dominates")
@@ -834,37 +805,57 @@ class ElasticProperties:
         print("CP (GPa) =  %10.5f  " % self.cauchy_pressure)
         print("Bonding is mainly " + self.bonding_type)
         
-        
-        print("------------------------------------------------------------------ ")
-        
+        print("\n------------------------------------------------------------------")
+        print("Elastic Anisotropy")
+        print("------------------------------------------------------------------\n")
 
-        print("Hardness analysis from 6 different semi-empirical relationships.")
+        print("Zener anisotropy (true for cubic crystals only); Az = %10.5f" % self.A_z, "; Ref.[6]")
+        print("Chung-Buessem anisotropy (true for cubic crystals only); Acb = %10.5f" % self.A_cb, "; Ref.[7]" )
+        print("Universal anisotropy index; Au = %10.5f" % self.A_u,  "; Ref.[8]")
+        print("Log-Euclidean anisotropy; AL = %10.5f " % self.A_l,  "; Ref.[9]")
+        
+        print("\n------------------------------------------------------------------")
+        print("Elastic Wave Velocities and Debye Temperature")
+        print("------------------------------------------------------------------\n")
+        
+        print("Longitudinal wave velocity (vl) : %10.5f m/s " % self.velocity_logitudinal, "; Ref.[10]")
+        print("Transverse wave velocity (vt) : %10.5f m/s " % self.velocity_transverse, "; Ref.[10]")
+        print("Average wave velocity (vm) : %10.5f m/s " % self.velocity_average, "; Ref.[10]")
+        print("Debye temperature  (in K) : %10.5f " % self.debye_temperature, "; Ref.[10]")
+        print("")
+        print(
+            "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass in case your crystal has several species."
+        )
+        
+        # print(
+        #     "Atomic displacement at 150, 300 and 450 K  (in A^2) : %10.5f %10.5f %10.5f"
+        #     % (
+        #         u2FromDebye(mass, natoms, theta, 150.0),
+        #         u2FromDebye(mass, natoms, theta, 300.0),
+        #         u2FromDebye(mass, natoms, theta, 450.0),
+        #     )
+        # )
+        print("\n------------------------------------------------------------------")
+        print("Melting Temperature")
+        print("------------------------------------------------------------------\n")
+        
+        print("Melting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K) Ref.[11]")
+        print("Tm =  %10.5f K (plus-minus 555 K) " % self.melting_temperature)
+        
+        print("\n------------------------------------------------------------------")
+        print("Hardness Analysis")
+        print("------------------------------------------------------------------\n")
+        
         H1a, H1b, H2, H3, H4, H5 = self.hardness
-        print("------------------------------------------------------------------ ")
-        print("Hardness (H1a) =", "{:.2f}".format(H1a), "GPa", "  Ref.[1]")
-        print("Hardness (H1b) =", "{:.2f}".format(H1b), "GPa", "  Ref.[1]")
-        print("Hardness (H2)  =", "{:.2f}".format(H2), "GPa", "  Ref.[2]")
-        print("Hardness (H3)  =", "{:.2f}".format(H3), "GPa", "  Ref.[3]")
-        print("Hardness (H4)  =", "{:.2f}".format(H4), "GPa", "  Ref.[4]")
-        print("Hardness (H5)  =", "{:.2f}".format(H5), "GPa", "  Ref.[5]")
-        print("References:")
+        print("Hardness (H1a) =", "{:.2f}".format(H1a), "GPa", "  Ref.[12]")
+        print("Hardness (H1b) =", "{:.2f}".format(H1b), "GPa", "  Ref.[12]")
+        print("Hardness (H2)  =", "{:.2f}".format(H2), "GPa", "  Ref.[13]")
+        print("Hardness (H3)  =", "{:.2f}".format(H3), "GPa", "  Ref.[14]")
+        print("Hardness (H4)  =", "{:.2f}".format(H4), "GPa", "  Ref.[15]")
+        print("Hardness (H5)  =", "{:.2f}".format(H5), "GPa", "  Ref.[16]")
+        print("")
         print(
-            "[1] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011)."
-        )
-        print(
-            "[2] Computational alchemy: the search for new superhard materials. Teter (1998)."
-        )
-        print(
-            "[3] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010)."
-        )
-        print(
-            "[4] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011)."
-        )
-        print(
-            "[5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011)."
-        )
-        print(
-            """ Hardness recommendation model:
+            """Hardness recommendation model:
         ********************************************************************
                      Cubic  Hexagonal  Orthorhombic  Rhombohedral  General
         ********************************************************************
@@ -875,6 +866,59 @@ class ElasticProperties:
         Insulator: bandgap > 2eV
         Semiconductor: bandgap < 2eV
         Metal: bandgap = 0 """
+        )
+            
+            
+        print("\n------------------------------------------------------------------")
+        print("References")
+        print("------------------------------------------------------------------\n")
+        print(
+            "[1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. Félix Mouhat and François-Xavier Coudert. Phys. Rev. B (2014)"
+        )
+        print(
+            "[2] Crystal Structures and Elastic Properties of Superhard IrN2 and IrN3 from First Principles. Zhi-jian Wu et al. Phys. Rev. B (2007)"
+        )
+        print(
+            "[3]  The rock physics handbook, Cam-bridge university press. G. Mavko, T. Mukerji, J. Dvorkin. Cambridge University Press. (2020)"
+            )
+        print(
+            "[4]  Deformation potentials in silicon. i. uniaxial strain. Leonard Kleinman. Phys.Rev. 128. (1962)"
+              )
+        print(
+            "[5] Electronic Structure and the Properties of Solids: The Physics of the Chemical Bond. Walter A. Harrison.  (2012)"
+            )
+        print(
+            "[6] Elasticity and Anelasticity of Metals. Clarence M. Zener et al. The Journal of Physical Chemistry. (1949)"
+            )
+        print(
+            "[7] The Elastic Anisotropy of Crystals. D. H. Chung and W. R. Buessem. Journal of Applied Physics (1967)"
+            )
+        print(
+            "[8] Universal Elastic Anisotropy Index. Shivakumar I. Ranganathan et al. Phys. Rev. Lett. (2008)"
+            )
+        print(
+            "[9] Elastic Anisotropy of Crystals. Christopher M. Kube. AIP Advances. (2016)"
+            )
+        print(
+            "[10] A Simplified Method for Calculating the Debye Temperature from Elastic Constants. Orson L.Anderson. Journal of Physics and Chemistry of Solids. (1963)"
+        )
+        print(
+            "[11] Elastic constants versus melting temperature in metals. M.E.Fine et al. Scripta Metallurgica. (1984)"
+        )
+        print(
+            "[12] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011)."
+        )
+        print(
+            "[13] Computational alchemy: the search for new superhard materials. Teter (1998)."
+        )
+        print(
+            "[14] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010)."
+        )
+        print(
+            "[15] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011)."
+        )
+        print(
+            "[16] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011)."
         )
 
     @property
@@ -966,5 +1010,37 @@ class ElasticProperties:
     @property
     def mu_lame_coefficient(self):
         return self.E_vrh/(2*(1+self.Nu_vrh))
+    
+def positive_evals(cnew):
+    """This method checks the postivity of the eigenvalues
+    of a matrix."""
 
+    print("Eigen Values of the matrix:")
+    evals = LA.eigvals(cnew)
+    print(evals)
+    check = 0
+    for i in range(len(evals)):
+        if evals[i] > 0.0:
+            pass
+        else:
+            check = 1
+    # if check == 1:
+    #     print(
+    #         "ATTENTION: One or more eigen values are negative indicating elastic instability."
+    #     )
+    # if check == 0:
+    #     print("All eigen values are positive indicating elastic stability.")
+
+    return not(bool(check))
+
+def printMatrix(c):
+    row = c.shape[0]
+    col = c.shape[1]
+    for i in range(row):
+        for j in range(col):
+            print("{:>10.4f} ".format(c[i, j]), end=" ")
+            if j == (col - 1):
+                print(" ")
+
+    return
     

@@ -30,7 +30,7 @@ elastic_tensor = np.array(mat_info['elasticity']['elastic_tensor'])
 
 
 "The following uncommented section produces the MechElastic summary and shows how to access properties directly"
-elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type = 'rhombohedral-2')
+elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type = 'rhombohedral-2', code = "Directly")
 gV = elastic_properties.G_v
 #stability = elastic_properties.elastic_stability
 elastic_properties.print_properties()

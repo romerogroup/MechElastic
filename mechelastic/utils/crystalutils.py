@@ -32,11 +32,11 @@ def crystal_select(cnew=None, cell=None, crystal_type=None):
     """This method selects crystal types."""
 
     if crystal_type is not None:
-        print("\n \t \t Mechanical Stability Test \n")
+        #print("\n \t \t Mechanical Stability Test \n")
         stability.stability_test(cnew, crystal_type)
 
     else:
-        print("\n")
+        #print("\n")
         print(
             "WARNING: crystal symmetry class  was not provided by user, it will be taken from the OUTCAR"
         )

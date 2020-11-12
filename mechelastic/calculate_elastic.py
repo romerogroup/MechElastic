@@ -60,7 +60,7 @@ def calculate_elastic(
 
     # elastic constants calculation for 3D materials
     if dim == "3D":
-        elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type)
+        elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type, code = code)
         elastic_properties.print_properties()
 
     # elastic constants calculation for 2D materials

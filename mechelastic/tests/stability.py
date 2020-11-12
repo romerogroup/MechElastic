@@ -4,14 +4,19 @@ import numpy as np
 
 def stability_test(matrix, crystal_type):
 
-    """This methods tests for the stability of a structure, then returns a boolean if ther structure is stable."""
-
+    """This methods tests for the stability of a structure, then returns a boolean if ther structure is stable.
+    
+        References
+        [1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. Félix Mouhat and François-Xavier Coudert. Phys. Rev. B (2014)
+        [2] Crystal Structures and Elastic Properties of Superhard IrN2 and IrN3 from First Principles. Zhi-jian Wu et al. Phys. Rev. B (2007)
+    """
+    
     c = np.copy(matrix)
     stable = True
     if crystal_type == "cubic":
         print("Cubic crystal system \n")
         print(
-            "Born stability criteria for the stability of cubic system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
+            "Born stability criteria for the stability of cubic system are: Ref.[1]  \n"
         )
         print("(i) C11 - C12 > 0;    (ii) C11 + 2C12 > 0;   (iii) C44 > 0 \n ")
 
@@ -48,7 +53,7 @@ def stability_test(matrix, crystal_type):
     if crystal_type == "hexagonal":
         print("Hexagonal crystal system \n")
         print(
-            "Born stability criteria for the stability of hexagonal system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
+            "Born stability criteria for the stability of hexagonal system are: Ref.[1]  \n"
         )
         print(
             "(i) C11 - C12 > 0;    (ii) 2*C13^2 < C33(C11 + C12);   (iii) C44 > 0 \n "
@@ -84,7 +89,7 @@ def stability_test(matrix, crystal_type):
     if crystal_type == "tetragonal":
         print("Tetragonal crystal system \n")
         print(
-            "Born stability criteria for the stability of Tetragonal system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
+            "Born stability criteria for the stability of Tetragonal system are: Ref.[1]  \n"
         )
         print(
             "(i) C11 - C12 > 0;    (ii) 2*C13^2 < C33(C11 + C12);   (iii) C44 > 0;   (iv) C66 > 0;    (v) 2C16^2 < C66*(C11-C12) \n "
@@ -138,7 +143,7 @@ def stability_test(matrix, crystal_type):
             "Rhombohedral (class-1): i.e. structures with point group: 3m, -3m and 32 \n"
         )
         print(
-            "Born stability criteria for the stability of Rhombohedral-1 class system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
+            "Born stability criteria for the stability of Rhombohedral-1 class system are: Ref.[1]  \n"
         )
         print(
             "(i) C11 - C12 > 0;    (ii) C13^2 < (1/2)*C33(C11 + C12);   (iii) C14^2 < (1/2)*C44*(C11-C12) = C44*C66;   (iv)  C44 > 0; \n "
@@ -181,7 +186,7 @@ def stability_test(matrix, crystal_type):
     if crystal_type == "rhombohedral-2":
         print("Rhombohedral (class-2): i.e structures with point group: 3, -3 \n")
         print(
-            "Born stability criteria for the stability of Rhombohedral-1 class system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
+            "Born stability criteria for the stability of Rhombohedral-1 class system are: Ref.[1]  \n"
         )
         print(
             "(i) C11 - C12 > 0;    (ii) C13^2 < (1/2)*C33(C11 + C12);   (iii) C14^2 + C15^2 < (1/2)*C44*(C11-C12) = C44*C66;   (iv)  C44 > 0;  Note: C15 is added.. \n "
@@ -224,7 +229,7 @@ def stability_test(matrix, crystal_type):
     if crystal_type == "orthorhombic":
         print("Orthorhombic crystal system.... \n")
         print(
-            "Born stability criteria for the stability of Orthorhombic systems are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]  \n"
+            "Born stability criteria for the stability of Orthorhombic systems are: Ref.[1]  \n"
         )
         print(
             "(i) C11 > 0;   (ii) C11*C22 > C12^2;   (iii) C11*C22*C33 + 2C12*C13*C23 - C11*C23^2 - C22*C13^2 - C33*C12^2 > 0;   (iv)  C44 > 0;   (v)  C55 > 0 ;   (vi)  C66 > 0 \n"
@@ -289,7 +294,7 @@ def stability_test(matrix, crystal_type):
     if crystal_type == "monoclinic":
         print("Monoclinic crystal system.... \n")
         print(
-            "Born stability criteria for the stability of monoclinic systems are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014), and Wu et al. PRB 76, 054115 (2007)]  \n"
+            "Born stability criteria for the stability of monoclinic systems are: Ref.[1,2]  \n"
         )
         print(
             "(i) C11 > 0;  (ii)  C22 > 0; (iii)  C33 > 0; (iv)  C44 > 0;   (v)  C55 > 0 ;   (vi)  C66 > 0  "

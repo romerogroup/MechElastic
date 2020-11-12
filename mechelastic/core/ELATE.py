@@ -815,16 +815,32 @@ class ELATE:
         # print(type((minE,maxE,minLC,maxLC,minG,maxG,minNu,maxNu)))
         # print("%9.3f GPa  %9.3f GPa  %9.3f TPa^-1   %9.3f TPa^-1    %9.3f GPa  %9.3f GPa  %9.3f  %9.3f" % (minE[1],maxE[1],minLC[1],maxLC[1],minG[1],maxG[1],minNu[1],maxNu[1]))
 
-        anisE = "%8.4f" % (maxE[1] / minE[1])
-        anisLC = ("%8.4f" % (maxLC[1] / minLC[1])) if minLC[1] > 0 else "&infin;"
-        anisG = "%8.4f" % (maxG[1] / minG[1])
+        anisE = "%8.3f" % (maxE[1] / minE[1])
+        anisLC = ("%8.3f" % (maxLC[1] / minLC[1])) if minLC[1] > 0 else "&infin;"
+        anisG = "%8.3f" % (maxG[1] / minG[1])
         anisNu = (
-            ("%8.4f" % (maxNu[1] / minNu[1])) if minNu[1] * maxNu[1] > 0 else "&infin;"
+            ("%8.3f" % (maxNu[1] / minNu[1])) if minNu[1] * maxNu[1] > 0 else "&infin;"
         )
 
         # print("       %s                     %s                                %s                         %s" % (anisE,anisLC,anisG,anisNu))
         # print(dirVec1(*minG[0]))
 
+        
+        minEaxis = list(np.around(np.array(dirVec(*minE[0])),3))
+        maxEaxis = list(np.around(np.array(dirVec(*maxE[0])),3))
+        minLCaxis = list(np.around(np.array(dirVec(*minLC[0])),3))
+        maxLCaxis = list(np.around(np.array(dirVec(*maxLC[0])),3))
+        
+        minGaxis = list(np.around(np.array(dirVec1(*minG[0])),3))
+        maxGaxis = list(np.around(np.array(dirVec1(*maxG[0])),3))
+        minG2ndaxis = list(np.around(np.array(dirVec2(*minG[0])),3))
+        maxG2ndaxis = list(np.around(np.array(dirVec2(*maxG[0])),3))
+        
+        minNUaxis = list(np.around(np.array(dirVec1(*minNu[0])),3))
+        maxNUaxis = list(np.around(np.array(dirVec1(*maxNu[0])),3))
+        minNU2ndaxis = list(np.around(np.array(dirVec2(*minNu[0])),3))
+        maxNU2ndaxis = list(np.around(np.array(dirVec2(*maxNu[0])),3))
+        
         print("\n \n                                  Min       Max   ||   Anisotropy")
         print(
             "----------------------------------------------------------------------------------------"
@@ -835,8 +851,12 @@ class ELATE:
         )
         print(
             "         Min Axis:    %s      \n         Max Axis:    %s "
-            % (str(tuple(dirVec(*minE[0]))), str(tuple(dirVec(*maxE[0]))))
+            % (str(tuple(minEaxis)), str(tuple(maxEaxis)))
         )
+        # print(
+        #     "         Min Axis:    %s      \n         Max Axis:    %s "
+        #     % (str(tuple(dirVec(*minE[0]))), str(tuple(dirVec(*maxE[0]))))
+        # )
         print(
             "----------------------------------------------------------------------------------------"
         )
@@ -846,7 +866,7 @@ class ELATE:
         )
         print(
             "         Min Axis:    %s      \n         Max Axis:    %s "
-            % (str(tuple(dirVec(*minLC[0]))), str(tuple(dirVec(*maxLC[0]))))
+            % (str(tuple(minLCaxis)), str(tuple(maxLCaxis)))
         )
         print(
             "----------------------------------------------------------------------------------------"
@@ -857,11 +877,11 @@ class ELATE:
         )
         print(
             "         Min Axis:    %s      \n         Max Axis:    %s "
-            % (str(tuple(dirVec1(*minG[0]))), str(tuple(dirVec1(*maxG[0]))))
+            % (str(tuple(minGaxis)), str(tuple(maxGaxis)))
         )
         print(
             "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
-            % (str(tuple(dirVec2(*minG[0]))), str(tuple(dirVec2(*maxG[0]))))
+            % (str(tuple(minG2ndaxis)), str(tuple(minG2ndaxis)))
         )
         print(
             "----------------------------------------------------------------------------------------"
@@ -872,11 +892,11 @@ class ELATE:
         )
         print(
             "         Min Axis:    %s      \n         Max Axis:    %s "
-            % (str(tuple(dirVec1(*minNu[0]))), str(tuple(dirVec1(*maxNu[0]))))
+            % (str(tuple(minNUaxis)), str(tuple(maxNUaxis)))
         )
         print(
             "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
-            % (str(tuple(dirVec2(*minNu[0]))), str(tuple(dirVec2(*maxNu[0]))))
+            % (str(tuple(minNU2ndaxis)), str(tuple(maxNU2ndaxis)))
         )
 
 
