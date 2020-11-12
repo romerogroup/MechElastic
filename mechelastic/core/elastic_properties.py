@@ -34,7 +34,7 @@ class ElasticProperties:
         self.structure = structure
         self.crystal_type = crystal_type
         print("\n------------------------------------------------------------------")
-        print("Elastic Moduli")
+        print("Elastic Tensor")
         print("------------------------------------------------------------------\n")
         
         printMatrix(self.elastic_tensor)
@@ -787,8 +787,8 @@ class ElasticProperties:
         print("------------------------------------------------------------------\n")
         
         print("Lame's first and second parameter Ref.[3]")
-        print("Lambda  =  %10.5f  " % self.lambda_lame_coefficient)
-        print("Mu  =  %10.5f  " % self.mu_lame_coefficient)
+        print("Lambda  =  %10.3f  " % self.lambda_lame_coefficient)
+        print("Mu  =  %10.3f  " % self.mu_lame_coefficient)
      
         print("\n------------------------------------------------------------------")
         print("Bonding information")
@@ -802,26 +802,26 @@ class ElasticProperties:
         print("     CP > 0 (+ve) indicates that ionic bonding dominates")
         print("     CP < 0 (-ve) indicates that covalent bonding dominates")
         
-        print("CP (GPa) =  %10.5f  " % self.cauchy_pressure)
+        print("CP (GPa) =  %10.3f  " % self.cauchy_pressure)
         print("Bonding is mainly " + self.bonding_type)
         
         print("\n------------------------------------------------------------------")
         print("Elastic Anisotropy")
         print("------------------------------------------------------------------\n")
 
-        print("Zener anisotropy (true for cubic crystals only); Az = %10.5f" % self.A_z, "; Ref.[6]")
-        print("Chung-Buessem anisotropy (true for cubic crystals only); Acb = %10.5f" % self.A_cb, "; Ref.[7]" )
-        print("Universal anisotropy index; Au = %10.5f" % self.A_u,  "; Ref.[8]")
-        print("Log-Euclidean anisotropy; AL = %10.5f " % self.A_l,  "; Ref.[9]")
+        print("Zener anisotropy (true for cubic crystals only); Az = %10.3f" % self.A_z, "; Ref.[6]")
+        print("Chung-Buessem anisotropy (true for cubic crystals only); Acb = %10.3f" % self.A_cb, "; Ref.[7]" )
+        print("Universal anisotropy index; Au = %10.3f" % self.A_u,  "; Ref.[8]")
+        print("Log-Euclidean anisotropy; AL = %10.3f " % self.A_l,  "; Ref.[9]")
         
         print("\n------------------------------------------------------------------")
         print("Elastic Wave Velocities and Debye Temperature")
         print("------------------------------------------------------------------\n")
         
-        print("Longitudinal wave velocity (vl) : %10.5f m/s " % self.velocity_logitudinal, "; Ref.[10]")
-        print("Transverse wave velocity (vt) : %10.5f m/s " % self.velocity_transverse, "; Ref.[10]")
-        print("Average wave velocity (vm) : %10.5f m/s " % self.velocity_average, "; Ref.[10]")
-        print("Debye temperature  (in K) : %10.5f " % self.debye_temperature, "; Ref.[10]")
+        print("Longitudinal wave velocity (vl) : %10.3f m/s " % self.velocity_logitudinal, "; Ref.[10]")
+        print("Transverse wave velocity (vt) : %10.3f m/s " % self.velocity_transverse, "; Ref.[10]")
+        print("Average wave velocity (vm) : %10.3f m/s " % self.velocity_average, "; Ref.[10]")
+        print("Debye temperature  (in K) : %10.3f " % self.debye_temperature, "; Ref.[10]")
         print("")
         print(
             "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass in case your crystal has several species."
@@ -840,7 +840,7 @@ class ElasticProperties:
         print("------------------------------------------------------------------\n")
         
         print("Melting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K) Ref.[11]")
-        print("Tm =  %10.5f K (plus-minus 555 K) " % self.melting_temperature)
+        print("Tm =  %10.3f K (plus-minus 555 K) " % self.melting_temperature)
         
         print("\n------------------------------------------------------------------")
         print("Hardness Analysis")
@@ -1016,8 +1016,9 @@ def positive_evals(cnew):
     of a matrix."""
 
     print("Eigen Values of the matrix:")
-    evals = LA.eigvals(cnew)
-    print(evals)
+    evals = list(LA.eigvals(cnew))
+    evalsPrint = list(np.around(np.array(evals),3))
+    print("%s" % evalsPrint)
     check = 0
     for i in range(len(evals)):
         if evals[i] > 0.0:
@@ -1038,7 +1039,7 @@ def printMatrix(c):
     col = c.shape[1]
     for i in range(row):
         for j in range(col):
-            print("{:>10.4f} ".format(c[i, j]), end=" ")
+            print("{:>10.3f} ".format(c[i, j]), end=" ")
             if j == (col - 1):
                 print(" ")
 
