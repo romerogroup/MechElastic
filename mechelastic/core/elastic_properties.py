@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 import numpy as np
-from ..comms import printer 
+from ..comms import printer
 from ..tests import ductile
 from ..tests import eigenvals
 from ..utils.constants import *
@@ -11,9 +11,9 @@ from numpy import linalg as LA
 
 
 class ElasticProperties:
-    def __init__(self, elastic_tensor, structure=None, crystal_type=None, code = None):
+    def __init__(self, elastic_tensor, structure=None, crystal_type=None, code=None):
         """
-        
+
 
         Parameters
         ----------
@@ -36,7 +36,7 @@ class ElasticProperties:
         print("\n------------------------------------------------------------------")
         print("Elastic Tensor")
         print("------------------------------------------------------------------\n")
-        
+
         printMatrix(self.elastic_tensor)
         if code != None:
             print("\nThis matrix was computed from " + code)
@@ -45,13 +45,17 @@ class ElasticProperties:
         print("\n------------------------------------------------------------------")
         print("Elastic Tensor Eigen Values (GPa units)")
         print("------------------------------------------------------------------\n")
-        
+
         positive_evals(self.elastic_tensor)
-        
+
         if crystal_type is not None or structure is not None:
-            print("\n------------------------------------------------------------------")
+            print(
+                "\n------------------------------------------------------------------"
+            )
             print("Mechanical Stability Test")
-            print("------------------------------------------------------------------\n")
+            print(
+                "------------------------------------------------------------------\n"
+            )
             crystal_select(
                 cnew=self.elastic_tensor,
                 cell=self.structure.spglib_cell,
@@ -538,7 +542,7 @@ class ElasticProperties:
 
         """
         return self.A_z
-    
+
     @property
     def A_cb(self):
         """
@@ -551,7 +555,7 @@ class ElasticProperties:
 
         """
 
-        a_cb = (self.G_v-self.G_r)/(self.G_v + self.G_r)
+        a_cb = (self.G_v - self.G_r) / (self.G_v + self.G_r)
         return a_cb
 
     @property
@@ -615,8 +619,7 @@ class ElasticProperties:
 
         """
         return np.sqrt(5) * 2.303 * np.log(1 + (self.A_u / 5))
-    
-    
+
     @property
     def anisotropy_log_euclidean(self):
         """
@@ -754,7 +757,7 @@ class ElasticProperties:
         print("\n------------------------------------------------------------------")
         print("Elastic Moduli")
         print("------------------------------------------------------------------\n")
-        
+
         print("                          Voigt     Reuss    Average")
         print("-------------------------------------------------------")
         print(
@@ -781,19 +784,19 @@ class ElasticProperties:
             "Bulk/Shear ratio      %9.3f %9.3f %9.3f (%s) "
             % (self.KG_ratio_v, self.KG_ratio_r, self.KG_ratio_vrh, self.ductility)
         )
-        
+
         print("\n------------------------------------------------------------------")
         print("Elastic parameters")
         print("------------------------------------------------------------------\n")
-        
+
         print("Lame's first and second parameter Ref.[3]")
         print("Lambda  =  %10.3f  " % self.lambda_lame_coefficient)
         print("Mu  =  %10.3f  " % self.mu_lame_coefficient)
-     
+
         print("\n------------------------------------------------------------------")
         print("Bonding information")
         print("------------------------------------------------------------------\n ")
-        
+
         print("Kleinman’s parameter Ref.[4,5]")
         print("K = 0 (1) bending (stretching) would dominate")
         print("K =  %10.5f  " % self.kleinman_parameter)
@@ -801,32 +804,50 @@ class ElasticProperties:
         print("Cauchy Pressure calculated from the relation : CP = C_12 - C_44")
         print("     CP > 0 (+ve) indicates that ionic bonding dominates")
         print("     CP < 0 (-ve) indicates that covalent bonding dominates")
-        
+
         print("CP (GPa) =  %10.3f  " % self.cauchy_pressure)
         print("Bonding is mainly " + self.bonding_type)
-        
+
         print("\n------------------------------------------------------------------")
         print("Elastic Anisotropy")
         print("------------------------------------------------------------------\n")
 
-        print("Zener anisotropy (true for cubic crystals only); Az = %10.3f" % self.A_z, "; Ref.[6]")
-        print("Chung-Buessem anisotropy (true for cubic crystals only); Acb = %10.3f" % self.A_cb, "; Ref.[7]" )
-        print("Universal anisotropy index; Au = %10.3f" % self.A_u,  "; Ref.[8]")
-        print("Log-Euclidean anisotropy; AL = %10.3f " % self.A_l,  "; Ref.[9]")
-        
+        print(
+            "Zener anisotropy (true for cubic crystals only); Az = %10.3f" % self.A_z,
+            "; Ref.[6]",
+        )
+        print(
+            "Chung-Buessem anisotropy (true for cubic crystals only); Acb = %10.3f"
+            % self.A_cb,
+            "; Ref.[7]",
+        )
+        print("Universal anisotropy index; Au = %10.3f" % self.A_u, "; Ref.[8]")
+        print("Log-Euclidean anisotropy; AL = %10.3f " % self.A_l, "; Ref.[9]")
+
         print("\n------------------------------------------------------------------")
         print("Elastic Wave Velocities and Debye Temperature")
         print("------------------------------------------------------------------\n")
-        
-        print("Longitudinal wave velocity (vl) : %10.3f m/s " % self.velocity_logitudinal, "; Ref.[10]")
-        print("Transverse wave velocity (vt) : %10.3f m/s " % self.velocity_transverse, "; Ref.[10]")
-        print("Average wave velocity (vm) : %10.3f m/s " % self.velocity_average, "; Ref.[10]")
-        print("Debye temperature  (in K) : %10.3f " % self.debye_temperature, "; Ref.[10]")
+
+        print(
+            "Longitudinal wave velocity (vl) : %10.3f m/s " % self.velocity_logitudinal,
+            "; Ref.[10]",
+        )
+        print(
+            "Transverse wave velocity (vt) : %10.3f m/s " % self.velocity_transverse,
+            "; Ref.[10]",
+        )
+        print(
+            "Average wave velocity (vm) : %10.3f m/s " % self.velocity_average,
+            "; Ref.[10]",
+        )
+        print(
+            "Debye temperature  (in K) : %10.3f " % self.debye_temperature, "; Ref.[10]"
+        )
         print("")
         print(
-            "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass in case your crystal has several species."
+            "WARNING: Debye model for the atomic displacement is based on a monoatomic crystal,\n here we consider an average mass in case your crystal has several species."
         )
-        
+
         # print(
         #     "Atomic displacement at 150, 300 and 450 K  (in A^2) : %10.5f %10.5f %10.5f"
         #     % (
@@ -838,14 +859,16 @@ class ElasticProperties:
         print("\n------------------------------------------------------------------")
         print("Melting Temperature")
         print("------------------------------------------------------------------\n")
-        
-        print("Melting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K) Ref.[11]")
+
+        print(
+            "Melting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K) Ref.[11]"
+        )
         print("Tm =  %10.3f K (plus-minus 555 K) " % self.melting_temperature)
-        
+
         print("\n------------------------------------------------------------------")
         print("Hardness Analysis")
         print("------------------------------------------------------------------\n")
-        
+
         H1a, H1b, H2, H3, H4, H5 = self.hardness
         print("Hardness (H1a) =", "{:.2f}".format(H1a), "GPa", "  Ref.[12]")
         print("Hardness (H1b) =", "{:.2f}".format(H1b), "GPa", "  Ref.[12]")
@@ -867,8 +890,7 @@ class ElasticProperties:
         Semiconductor: bandgap < 2eV
         Metal: bandgap = 0 """
         )
-            
-            
+
         print("\n------------------------------------------------------------------")
         print("References")
         print("------------------------------------------------------------------\n")
@@ -880,25 +902,25 @@ class ElasticProperties:
         )
         print(
             "[3]  The rock physics handbook, Cam-bridge university press. G. Mavko, T. Mukerji, J. Dvorkin. Cambridge University Press. (2020)"
-            )
+        )
         print(
             "[4]  Deformation potentials in silicon. i. uniaxial strain. Leonard Kleinman. Phys.Rev. 128. (1962)"
-              )
+        )
         print(
             "[5] Electronic Structure and the Properties of Solids: The Physics of the Chemical Bond. Walter A. Harrison.  (2012)"
-            )
+        )
         print(
             "[6] Elasticity and Anelasticity of Metals. Clarence M. Zener et al. The Journal of Physical Chemistry. (1949)"
-            )
+        )
         print(
             "[7] The Elastic Anisotropy of Crystals. D. H. Chung and W. R. Buessem. Journal of Applied Physics (1967)"
-            )
+        )
         print(
             "[8] Universal Elastic Anisotropy Index. Shivakumar I. Ranganathan et al. Phys. Rev. Lett. (2008)"
-            )
+        )
         print(
             "[9] Elastic Anisotropy of Crystals. Christopher M. Kube. AIP Advances. (2016)"
-            )
+        )
         print(
             "[10] A Simplified Method for Calculating the Debye Temperature from Elastic Constants. Orson L.Anderson. Journal of Physics and Chemistry of Solids. (1963)"
         )
@@ -928,7 +950,7 @@ class ElasticProperties:
     @property
     def hardness(self):
         """
-        
+
         Returns
         -------
         float
@@ -956,20 +978,20 @@ class ElasticProperties:
     def cauchy_pressure(self):
         """
         This parameter desceibes the nature of bonding
-        CP > 0 (+ve) indicates that ionic bonding dominates 
+        CP > 0 (+ve) indicates that ionic bonding dominates
         CP < 0 (-ve) indicates that covalent bonding dominates
         Returns
         -------
         None.
 
         """
-        return self.elastic_tensor[0,1]-self.elastic_tensor[3,3]
-    
-    @property 
+        return self.elastic_tensor[0, 1] - self.elastic_tensor[3, 3]
+
+    @property
     def bonding_type(self):
         """
         This parameter desceibes the nature of bonding
-        CP > 0 (+ve) indicates that ionic bonding dominates 
+        CP > 0 (+ve) indicates that ionic bonding dominates
         CP < 0 (-ve) indicates that covalent bonding dominates
 
         Returns
@@ -979,25 +1001,24 @@ class ElasticProperties:
 
         """
         cauchy_pressure = self.cauchy_pressure
-        if cauchy_pressure > 0 :
+        if cauchy_pressure > 0:
             return "Ionic"
-        elif cauchy_pressure < 0 :
+        elif cauchy_pressure < 0:
             return "Covalent"
-        
-    @property 
+
+    @property
     def kleinman_parameter(self):
         c = self.elastic_tensor
-        return (c[0,0]+8*c[0,1])/(7*c[0,0]-2*c[0,1])
-    
-    @property 
+        return (c[0, 0] + 8 * c[0, 1]) / (7 * c[0, 0] - 2 * c[0, 1])
+
+    @property
     def bond_bending_vs_streching(self):
         return
-    
-    
+
     @property
     def lambda_lame_coefficient(self):
         """
-        
+
 
         Returns
         -------
@@ -1005,19 +1026,20 @@ class ElasticProperties:
             DESCRIPTION.
 
         """
-        return self.E_vrh/((1+self.Nu_vrh)*(1-2*self.Nu_vrh))
-    
+        return self.E_vrh / ((1 + self.Nu_vrh) * (1 - 2 * self.Nu_vrh))
+
     @property
     def mu_lame_coefficient(self):
-        return self.E_vrh/(2*(1+self.Nu_vrh))
-    
+        return self.E_vrh / (2 * (1 + self.Nu_vrh))
+
+
 def positive_evals(cnew):
     """This method checks the postivity of the eigenvalues
     of a matrix."""
 
     print("Eigen Values of the matrix:")
     evals = list(LA.eigvals(cnew))
-    evalsPrint = list(np.around(np.array(evals),3))
+    evalsPrint = list(np.around(np.array(evals), 3))
     print("%s" % evalsPrint)
     check = 0
     for i in range(len(evals)):
@@ -1032,7 +1054,8 @@ def positive_evals(cnew):
     # if check == 0:
     #     print("All eigen values are positive indicating elastic stability.")
 
-    return not(bool(check))
+    return not (bool(check))
+
 
 def printMatrix(c):
     row = c.shape[0]
@@ -1044,4 +1067,3 @@ def printMatrix(c):
                 print(" ")
 
     return
-    

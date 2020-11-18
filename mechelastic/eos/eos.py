@@ -220,6 +220,7 @@ class EOS:
         """
 
         print("Fitting coefficients : [E0,B0,Bp,V0]\n")
+        np.set_printoptions(formatter={"float": "{: 0.3f}".format})
 
         # Vinet
         def residuals_vinet(coeffs, y, x):
@@ -229,7 +230,7 @@ class EOS:
             residuals_vinet, self.coeffs0, args=(self.energy, self.volume)
         )
         print("Vinet : %s" % self.eos_vinet_fitted.x)
-        print("Vinet (MSE) : %s\n" % np.mean(self.eos_vinet_fitted.fun ** 2))
+        print("Vinet (MSE) : {:.3e}\n".format(np.mean(self.eos_vinet_fitted.fun ** 2)))
 
         # Birch
         def residuals_birch(coeffs, y, x):
@@ -239,7 +240,7 @@ class EOS:
             residuals_birch, self.coeffs0, args=(self.energy, self.volume)
         )
         print("Birch : %s" % self.eos_birch_fitted.x)
-        print("Birch (MSE) : %s\n" % np.mean(self.eos_birch_fitted.fun ** 2))
+        print("Birch (MSE) : {:.3e}\n".format(np.mean(self.eos_birch_fitted.fun ** 2)))
 
         # Murnaghan
         def residuals_murnaghan(coeffs, y, x):
@@ -250,7 +251,11 @@ class EOS:
         )
 
         print("Murnaghan : %s" % self.eos_murnaghan_fitted.x)
-        print("Murnaghan (MSE) : %s\n" % np.mean(self.eos_murnaghan_fitted.fun ** 2))
+        print(
+            "Murnaghan (MSE) : {:.3e}\n".format(
+                np.mean(self.eos_murnaghan_fitted.fun ** 2)
+            )
+        )
 
         # Birch-Murnaghan
         def residuals_birch_murnaghan(coeffs, y, x):
@@ -261,8 +266,9 @@ class EOS:
         )
         print("Birch-Murnaghan : %s" % self.eos_birch_murnaghan_fitted.x)
         print(
-            "Birch-Murnaghan (MSE) : %s\n"
-            % np.mean(self.eos_birch_murnaghan_fitted.fun ** 2)
+            "Birch-Murnaghan (MSE) : {:.3e}\n".format(
+                np.mean(self.eos_birch_murnaghan_fitted.fun ** 2)
+            )
         )
 
         cost_array = [
@@ -304,8 +310,8 @@ class EOS:
     # Birch equation of state
     def eos_birch(self, coeffs, vol):
         """
-        Ref: Intermetallic compounds: Principles and Practice, Vol. I: Princples
-        Chapter 9 pages 195-210 by M. Mehl. B. Klein, D. Papaconstantopoulos
+        Ref: Michael J. Mehl; Barry M. Klein; Dimitris A. Papaconstantopoulos. First-Principles Calculation of Elastic Properties. In Intermetallic Compounds; John Wiley & Sons Ltd, 1994; Vol. 1.
+
         """
         E0, B0, Bp, V0 = coeffs
         E = (
