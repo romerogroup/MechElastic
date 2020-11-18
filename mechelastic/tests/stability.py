@@ -2,15 +2,16 @@
 
 import numpy as np
 
+
 def stability_test(matrix, crystal_type):
 
     """This methods tests for the stability of a structure, then returns a boolean if ther structure is stable.
-    
+
         References
         [1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. Félix Mouhat and François-Xavier Coudert. Phys. Rev. B (2014)
         [2] Crystal Structures and Elastic Properties of Superhard IrN2 and IrN3 from First Principles. Zhi-jian Wu et al. Phys. Rev. B (2007)
     """
-    
+
     c = np.copy(matrix)
     stable = True
     if crystal_type == "cubic":
@@ -41,13 +42,13 @@ def stability_test(matrix, crystal_type):
         else:
             print("Condition (iii) NOT satisfied.")
             condition3 = False
-            
-        conditions = (condition1,condition2,condition3)
-        
+
+        conditions = (condition1, condition2, condition3)
+
         for condition in conditions:
             if condition == False:
                 stable == False
-                
+
         return stable
 
     if crystal_type == "hexagonal":
@@ -80,19 +81,19 @@ def stability_test(matrix, crystal_type):
         else:
             print("Condition (iii) NOT satisfied.")
             condition3 = False
-        conditions = (condition1,condition2,condition3)
-        
+        conditions = (condition1, condition2, condition3)
+
         for condition in conditions:
             if condition == False:
                 stable == False
-                
+
     if crystal_type == "tetragonal":
         print("Tetragonal crystal system \n")
         print(
             "Born stability criteria for the stability of Tetragonal system are: Ref.[1]  \n"
         )
         print(
-            "(i) C11 - C12 > 0;    (ii) 2*C13^2 < C33(C11 + C12);   (iii) C44 > 0;   (iv) C66 > 0;    (v) 2C16^2 < C66*(C11-C12) \n "
+            "(i) C11 - C12 > 0;    (ii) 2*C13^2 < C33(C11 + C12);   (iii) C44 > 0; \n(iv) C66 > 0;    (v) 2C16^2 < C66*(C11-C12) \n "
         )
 
         # check (i)   keep in mind list starts with 0, so c11 is stored as c00
@@ -130,23 +131,18 @@ def stability_test(matrix, crystal_type):
         else:
             print("Condition (v) is NOT satisfied.")
             condition5 = False
-            
-        conditions = (condition1,condition2,condition3,condition4,condition5)
-        
+
+        conditions = (condition1, condition2, condition3, condition4, condition5)
+
         for condition in conditions:
             if condition == False:
                 stable == False
-                
-                
+
     if crystal_type == "rhombohedral-1":
+        print("Rhombohedral (class-1): point group: 3m, -3m and 32 \n")
+        print("Born stability criteria for this class are: Ref.[1]  \n")
         print(
-            "Rhombohedral (class-1): i.e. structures with point group: 3m, -3m and 32 \n"
-        )
-        print(
-            "Born stability criteria for the stability of Rhombohedral-1 class system are: Ref.[1]  \n"
-        )
-        print(
-            "(i) C11 - C12 > 0;    (ii) C13^2 < (1/2)*C33(C11 + C12);   (iii) C14^2 < (1/2)*C44*(C11-C12) = C44*C66;   (iv)  C44 > 0; \n "
+            "(i) C11 - C12 > 0;    (ii) C13^2 < (1/2)*C33(C11 + C12);   (iii) C14^2 < (1/2)*C44*(C11-C12) = C44*C66; \n(iv)  C44 > 0; \n "
         )
 
         if c[0][0] - c[0][1] > 0.0:
@@ -176,9 +172,9 @@ def stability_test(matrix, crystal_type):
         else:
             print("Condition (iv) is NOT satisfied.")
             condition4 = False
-            
-        conditions = (condition1,condition2,condition3,condition4)
-        
+
+        conditions = (condition1, condition2, condition3, condition4)
+
         for condition in conditions:
             if condition == False:
                 stable == False
@@ -189,7 +185,7 @@ def stability_test(matrix, crystal_type):
             "Born stability criteria for the stability of Rhombohedral-1 class system are: Ref.[1]  \n"
         )
         print(
-            "(i) C11 - C12 > 0;    (ii) C13^2 < (1/2)*C33(C11 + C12);   (iii) C14^2 + C15^2 < (1/2)*C44*(C11-C12) = C44*C66;   (iv)  C44 > 0;  Note: C15 is added.. \n "
+            "(i) C11 - C12 > 0;    (ii) C13^2 < (1/2)*C33(C11 + C12);   (iii) C14^2 + C15^2 < (1/2)*C44*(C11-C12) = C44*C66; \n(iv)  C44 > 0;  Note: C15 is added.. \n "
         )
 
         if c[0][0] - c[0][1] > 0.0:
@@ -218,10 +214,10 @@ def stability_test(matrix, crystal_type):
             condition4 = True
         else:
             print("Condition (iv) is NOT satisfied.")
-            condition4 = False 
-            
-        conditions = (condition1,condition2,condition3,condition4)
-        
+            condition4 = False
+
+        conditions = (condition1, condition2, condition3, condition4)
+
         for condition in conditions:
             if condition == False:
                 stable == False
@@ -232,7 +228,7 @@ def stability_test(matrix, crystal_type):
             "Born stability criteria for the stability of Orthorhombic systems are: Ref.[1]  \n"
         )
         print(
-            "(i) C11 > 0;   (ii) C11*C22 > C12^2;   (iii) C11*C22*C33 + 2C12*C13*C23 - C11*C23^2 - C22*C13^2 - C33*C12^2 > 0;   (iv)  C44 > 0;   (v)  C55 > 0 ;   (vi)  C66 > 0 \n"
+            "(i) C11 > 0;   (ii) C11*C22 > C12^2;   (iii) C11*C22*C33 + 2C12*C13*C23 - C11*C23^2 - C22*C13^2 - C33*C12^2 > 0; \n(iv)  C44 > 0;   (v)  C55 > 0 ;   (vi)  C66 > 0 \n"
         )
 
         # check (i)   keep in mind list starts with 0, so c11 is stored as c00
@@ -266,7 +262,7 @@ def stability_test(matrix, crystal_type):
 
         if c[3][3] > 0.0:
             print("Condition (iv) is satified.")
-            condition4 =True
+            condition4 = True
         else:
             print("Condition (iv) is NOT satisfied.")
             condition4 = False
@@ -276,7 +272,7 @@ def stability_test(matrix, crystal_type):
             condition5 = True
         else:
             print("Condition (v) is NOT satisfied.")
-            condition5 = False 
+            condition5 = False
 
         if c[5][5] > 0.0:
             print("Condition (vi) is satified.")
@@ -284,9 +280,16 @@ def stability_test(matrix, crystal_type):
         else:
             print("Condition (vi) is NOT satisfied.")
             condition6 = False
-            
-        conditions = (condition1,condition2,condition3,condition4,condition5,condition6)
-        
+
+        conditions = (
+            condition1,
+            condition2,
+            condition3,
+            condition4,
+            condition5,
+            condition6,
+        )
+
         for condition in conditions:
             if condition == False:
                 stable == False
@@ -297,10 +300,10 @@ def stability_test(matrix, crystal_type):
             "Born stability criteria for the stability of monoclinic systems are: Ref.[1,2]  \n"
         )
         print(
-            "(i) C11 > 0;  (ii)  C22 > 0; (iii)  C33 > 0; (iv)  C44 > 0;   (v)  C55 > 0 ;   (vi)  C66 > 0  "
+            "(i) C11 > 0;  (ii)  C22 > 0; (iii)  C33 > 0; \n(iv)  C44 > 0;   (v)  C55 > 0 ;   (vi)  C66 > 0  "
         )
         print(
-            " (vii) [C11 + C22 + C33 + 2*(C12 + C13 + C23)] > 0;    (viii)  C33*C55 - C35^2 > 0;   (ix)  C44*C66 - C46^2 > 0;   (x) C22 + C33 - 2*C23  > 0 "
+            " (vii) [C11 + C22 + C33 + 2*(C12 + C13 + C23)] > 0;    (viii)  C33*C55 - C35^2 > 0; \n(ix)  C44*C66 - C46^2 > 0;   (x) C22 + C33 - 2*C23  > 0 "
         )
         print(
             " (xi) C22*(C33*C55 - C35^2) + 2*C23*C25*C35 - (C23^2)*C55 - (C25^2)*C33   > 0  "
@@ -334,7 +337,7 @@ def stability_test(matrix, crystal_type):
             condition3 = False
 
         if c[3][3] > 0.0:
-            print("Condition (iv) is satified.") 
+            print("Condition (iv) is satified.")
             condition4 = True
         else:
             print("Condition (iv) is NOT satified.")
@@ -432,8 +435,21 @@ def stability_test(matrix, crystal_type):
         else:
             print("Condition (xii) is NOT satisfied.")
             condition12 = False
-        conditions = (condition1,condition2,condition3,condition4,condition5,condition6,condition7,condition8,condition9,condition10,condition11,condition12)
-        
+        conditions = (
+            condition1,
+            condition2,
+            condition3,
+            condition4,
+            condition5,
+            condition6,
+            condition7,
+            condition8,
+            condition9,
+            condition10,
+            condition11,
+            condition12,
+        )
+
         for condition in conditions:
             if condition == False:
                 stable == False
@@ -446,11 +462,9 @@ def stability_test_2d(matrix, lattice_type):
     stable = True
     if lattice_type == "hexagonal":
         print("Hexagonal lattice \n")
-        print(
-            "Stability criteria for the stability of hexagonal system are: \n"
-        )
+        print("Stability criteria for the stability of hexagonal system are: \n")
         print("(i) C11 + C12 > 0;    (ii) C11 - C12 > 0;  \n ")
-        
+
         if c[0][0] - c[0][1] > 0.0:
             print("Condition (i) satified.")
             condition1 = True
@@ -458,29 +472,26 @@ def stability_test_2d(matrix, lattice_type):
             print("Condition (i) NOT satisfied.")
             condition1 = False
 
-        if c[0][0] -  c[0][1] > 0.0:
+        if c[0][0] - c[0][1] > 0.0:
             print("Condition (ii) satified.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
             condition2 = False
-            
-        conditions = (condition1,condition2)
-        
+
+        conditions = (condition1, condition2)
+
         for condition in conditions:
             if condition == False:
                 stable == False
-                
+
         return stable
-    
-    
+
     if lattice_type == "square":
         print("Square lattice \n")
-        print(
-            "Stability criteria for the stability of square system are: \n"
-        )
+        print("Stability criteria for the stability of square system are: \n")
         print("(i) C11 + C12 > 0;    (ii) C11 - C12 > 0;  (iii) C33 > 0     \n ")
-        
+
         if c[0][0] - c[0][1] > 0.0:
             print("Condition (i) satified.")
             condition1 = True
@@ -488,71 +499,87 @@ def stability_test_2d(matrix, lattice_type):
             print("Condition (i) NOT satisfied.")
             condition1 = False
 
-        if c[0][0] -  c[0][1] > 0.0:
+        if c[0][0] - c[0][1] > 0.0:
             print("Condition (ii) satified.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
             condition2 = False
-        
+
         if c[2][5] > 0.0:
             print("Condition (iii) satified.")
             condition3 = True
         else:
             print("Condition (iii) NOT satisfied.")
             condition3 = False
-            
-        conditions = (condition1,condition2,condition3)
-        
+
+        conditions = (condition1, condition2, condition3)
+
         for condition in conditions:
             if condition == False:
                 stable == False
-                
+
         return stable
-    
-    if lattice_type == "rectangular" or lattice_type =='rectangular-center':
+
+    if lattice_type == "rectangular" or lattice_type == "rectangular-center":
         print("Rectangular lattice or Rectangular Center lattice \n")
         print(
             "Stability criteria for the stability of rectangular lattice or rectangular Center lattic are: \n"
         )
-        print("(i) 1/2*(C11 + C22 + (4(C12)**2 - (C11 -C22))**0.5)> 0;    (ii) 1/2*(C11 + C22 - (4(C12)**2 - (C11 -C22))**0.5)> 0 ;  (iii) C33 > 0     \n ")
-        
-        if 0.5*(c[0][0] + c[1][1] + (4*(c[0][1])**2 + (c[0][0] - c[1][1])**2 )**0.5 ) > 0.0:
+        print(
+            "(i) 1/2*(C11 + C22 + (4(C12)**2 - (C11 -C22))**0.5)> 0;    (ii) 1/2*(C11 + C22 - (4(C12)**2 - (C11 -C22))**0.5)> 0 ;  (iii) C33 > 0     \n "
+        )
+
+        if (
+            0.5
+            * (
+                c[0][0]
+                + c[1][1]
+                + (4 * (c[0][1]) ** 2 + (c[0][0] - c[1][1]) ** 2) ** 0.5
+            )
+            > 0.0
+        ):
             print("Condition (i) satified.")
             condition1 = True
         else:
             print("Condition (i) NOT satisfied.")
             condition1 = False
 
-        if 0.5*(c[0][0] + c[1][1] - (4*(c[0][1])**2 + (c[0][0] - c[1][1])**2 )**0.5 ) > 0.0:
+        if (
+            0.5
+            * (
+                c[0][0]
+                + c[1][1]
+                - (4 * (c[0][1]) ** 2 + (c[0][0] - c[1][1]) ** 2) ** 0.5
+            )
+            > 0.0
+        ):
             print("Condition (ii) satified.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
             condition2 = False
-        
+
         if c[2][5] > 0.0:
             print("Condition (iii) satified.")
             condition3 = True
         else:
             print("Condition (iii) NOT satisfied.")
             condition3 = False
-            
-        conditions = (condition1,condition2,condition3)
-        
+
+        conditions = (condition1, condition2, condition3)
+
         for condition in conditions:
             if condition == False:
                 stable == False
-                
+
         return stable
-    
+
     if lattice_type == "oblique":
         print("Oblique lattice \n")
-        print(
-            "Stability criteria for the stability of oblique lattice are: \n"
-        )
+        print("Stability criteria for the stability of oblique lattice are: \n")
         print("(i) C11 > 0 ;    (ii) C11 *C22 > (C12)*2 ;  (iii) det(Cij) > 0     \n ")
-        
+
         if c[0][0] > 0.0:
             print("Condition (i) satified.")
             condition1 = True
@@ -560,27 +587,24 @@ def stability_test_2d(matrix, lattice_type):
             print("Condition (i) NOT satisfied.")
             condition1 = False
 
-        if c[0][0] * c[1][1] > (c[0][1])**2:
+        if c[0][0] * c[1][1] > (c[0][1]) ** 2:
             print("Condition (ii) satified.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
             condition2 = False
-        
+
         if np.linalg.det(c) > 0.0:
             print("Condition (iii) satified.")
             condition3 = True
         else:
             print("Condition (iii) NOT satisfied.")
             condition3 = False
-            
-        conditions = (condition1,condition2,condition3)
-        
+
+        conditions = (condition1, condition2, condition3)
+
         for condition in conditions:
             if condition == False:
                 stable == False
-                
+
         return stable
-
-
-

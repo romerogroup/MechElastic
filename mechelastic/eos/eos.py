@@ -219,7 +219,9 @@ class EOS:
 
         """
 
-        print("Fitting coefficients : [E0,B0,Bp,V0]\n")
+        print(
+            "Fitting coefficients [E0 (eV), B0 (GPa), Bp (GPa), V0 (Anstroms^3)]\nalong with Mean Squared Error (MSE)\n"
+        )
         np.set_printoptions(formatter={"float": "{: 0.3f}".format})
 
         # Vinet

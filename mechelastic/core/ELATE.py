@@ -39,7 +39,7 @@ def make3DPlot(func, legend="", npoints=100):
     count = 0
     for cu in range(len(u)):
         for cv in range(len(v)):
-           
+
             r_tmp = func(u[cu], v[cv])
             z = r_tmp * np.cos(u[cu])
             x = r_tmp * np.sin(u[cu]) * np.cos(v[cv])
@@ -59,7 +59,7 @@ def make3DPlot(func, legend="", npoints=100):
                 + "\u00B0'"
             )
             count = count + 1
-    return ((dataX, dataY, dataZ, dataR))
+    return (dataX, dataY, dataZ, dataR)
 
 
 def make3DPlotPosNeg(func, legend="", npoints=100):
@@ -506,7 +506,7 @@ class ELATE:
             self.elas = ElasticOrtho(self.elas)
 
         data = make3DPlot(lambda x, y: self.elas.Young_2(x, y), "Young's modulus")
-        
+
         return data
 
     def LC2D(self):
@@ -598,7 +598,7 @@ class ELATE:
         from pyvistaqt import BackgroundPlotter
 
         plotter = BackgroundPlotter()
-        
+
         plotter.set_background(color="white")
         x = None
         y = None
@@ -674,8 +674,8 @@ class ELATE:
                     else:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
 
-        #plotter.add_axes()
-        #plotter.show_grid(color = "black")
+        # plotter.add_axes()
+        # plotter.show_grid(color = "black")
 
     def plot_2D(self, elastic_calc=""):
         import matplotlib.pyplot as plt
@@ -770,7 +770,7 @@ class ELATE:
             )
         )
         print(
-            "Young modulus  (GPa)  %9.3f %9.3f %9.3f "
+            "Young's modulus  (GPa)  %9.3f %9.3f %9.3f "
             % (
                 self.elas.averages()[0][2],
                 self.elas.averages()[1][2],
@@ -778,7 +778,7 @@ class ELATE:
             )
         )
         print(
-            "Poisson ratio         %9.3f %9.3f %9.3f "
+            "Poisson's ratio         %9.3f %9.3f %9.3f "
             % (
                 self.elas.averages()[0][3],
                 self.elas.averages()[1][3],
@@ -825,22 +825,21 @@ class ELATE:
         # print("       %s                     %s                                %s                         %s" % (anisE,anisLC,anisG,anisNu))
         # print(dirVec1(*minG[0]))
 
-        
-        minEaxis = list(np.around(np.array(dirVec(*minE[0])),3))
-        maxEaxis = list(np.around(np.array(dirVec(*maxE[0])),3))
-        minLCaxis = list(np.around(np.array(dirVec(*minLC[0])),3))
-        maxLCaxis = list(np.around(np.array(dirVec(*maxLC[0])),3))
-        
-        minGaxis = list(np.around(np.array(dirVec1(*minG[0])),3))
-        maxGaxis = list(np.around(np.array(dirVec1(*maxG[0])),3))
-        minG2ndaxis = list(np.around(np.array(dirVec2(*minG[0])),3))
-        maxG2ndaxis = list(np.around(np.array(dirVec2(*maxG[0])),3))
-        
-        minNUaxis = list(np.around(np.array(dirVec1(*minNu[0])),3))
-        maxNUaxis = list(np.around(np.array(dirVec1(*maxNu[0])),3))
-        minNU2ndaxis = list(np.around(np.array(dirVec2(*minNu[0])),3))
-        maxNU2ndaxis = list(np.around(np.array(dirVec2(*maxNu[0])),3))
-        
+        minEaxis = list(np.around(np.array(dirVec(*minE[0])), 3))
+        maxEaxis = list(np.around(np.array(dirVec(*maxE[0])), 3))
+        minLCaxis = list(np.around(np.array(dirVec(*minLC[0])), 3))
+        maxLCaxis = list(np.around(np.array(dirVec(*maxLC[0])), 3))
+
+        minGaxis = list(np.around(np.array(dirVec1(*minG[0])), 3))
+        maxGaxis = list(np.around(np.array(dirVec1(*maxG[0])), 3))
+        minG2ndaxis = list(np.around(np.array(dirVec2(*minG[0])), 3))
+        maxG2ndaxis = list(np.around(np.array(dirVec2(*maxG[0])), 3))
+
+        minNUaxis = list(np.around(np.array(dirVec1(*minNu[0])), 3))
+        maxNUaxis = list(np.around(np.array(dirVec1(*maxNu[0])), 3))
+        minNU2ndaxis = list(np.around(np.array(dirVec2(*minNu[0])), 3))
+        maxNU2ndaxis = list(np.around(np.array(dirVec2(*maxNu[0])), 3))
+
         print("\n \n                                  Min       Max   ||   Anisotropy")
         print(
             "----------------------------------------------------------------------------------------"
@@ -887,7 +886,7 @@ class ELATE:
             "----------------------------------------------------------------------------------------"
         )
         print(
-            "Poisson Ratio                 %9.3f %9.3f || %s "
+            "Poisson's Ratio                 %9.3f %9.3f || %s "
             % (minE[1], maxE[1], anisNu)
         )
         print(
