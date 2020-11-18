@@ -813,15 +813,15 @@ class ElasticProperties:
         print("------------------------------------------------------------------\n")
 
         print(
-            "Zener's anisotropy (true for cubic crystals only); Az = %10.3f; Ref.[6]"
+            "Zener's anisotropy (true for cubic crystals only); Az = %6.3f; Ref.[6]"
             % self.A_z
         )
         print(
-            "Chung-Buessem's anisotropy (true for cubic crystals only); Acb = %10.3f; Ref.[7]"
+            "Chung-Buessem's anisotropy (true for cubic crystals only); Acb = %6.3f; Ref.[7]"
             % self.A_cb
         )
-        print("Universal anisotropy index; Au = %10.3f; Ref.[8]" % self.A_u)
-        print("Log-Euclidean's anisotropy; AL = %10.3f; Ref.[9]" % self.A_l)
+        print("Universal anisotropy index; Au = %6.3f; Ref.[8]" % self.A_u)
+        print("Log-Euclidean's anisotropy; AL = %6.3f; Ref.[9]" % self.A_l)
 
         print("\n------------------------------------------------------------------")
         print("Elastic Wave Velocities and Debye Temperature")
