@@ -458,14 +458,27 @@ def stability_test(matrix, crystal_type):
 
 
 def stability_test_2d(matrix, lattice_type):
-    c = np.copy(matrix)
+    c = np.zeroz(shape = (3,3))
+    
+    c[0,0] = matrix[0,0]
+    c[0,1] = matrix[0,1]
+    c[0,2] = matrix[0,6]
+    
+    c[1,0] = matrix[1,0]
+    c[1,1] = matrix[1,1]
+    c[1,2] = matrix[1,6]
+    
+    c[2,0] = matrix[6,0]
+    c[2,1] = matrix[6,1]
+    c[2,2] = matrix[6,6]
+    
     stable = True
     if lattice_type == "hexagonal":
         print("Hexagonal lattice \n")
         print("Stability criteria for the stability of hexagonal system are: \n")
         print("(i) C11 + C12 > 0;    (ii) C11 - C12 > 0;  \n ")
 
-        if c[0][0] - c[0][1] > 0.0:
+        if c[0][0] + c[0][1] > 0.0:
             print("Condition (i) satified.")
             condition1 = True
         else:
@@ -492,7 +505,7 @@ def stability_test_2d(matrix, lattice_type):
         print("Stability criteria for the stability of square system are: \n")
         print("(i) C11 + C12 > 0;    (ii) C11 - C12 > 0;  (iii) C33 > 0     \n ")
 
-        if c[0][0] - c[0][1] > 0.0:
+        if c[0][0] + c[0][1] > 0.0:
             print("Condition (i) satified.")
             condition1 = True
         else:
@@ -506,7 +519,7 @@ def stability_test_2d(matrix, lattice_type):
             print("Condition (ii) NOT satisfied.")
             condition2 = False
 
-        if c[2][5] > 0.0:
+        if c[2][2] > 0.0:
             print("Condition (iii) satified.")
             condition3 = True
         else:
