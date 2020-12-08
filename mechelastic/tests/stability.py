@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import numpy as np
-
+from numpy import linalg as LA
 
 def stability_test(matrix, crystal_type):
 
@@ -47,7 +47,7 @@ def stability_test(matrix, crystal_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
         return stable
 
@@ -85,7 +85,7 @@ def stability_test(matrix, crystal_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
     if crystal_type == "tetragonal":
         print("Tetragonal crystal system \n")
@@ -136,7 +136,7 @@ def stability_test(matrix, crystal_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
     if crystal_type == "rhombohedral-1":
         print("Rhombohedral (class-1): point group: 3m, -3m and 32 \n")
@@ -177,7 +177,7 @@ def stability_test(matrix, crystal_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
     if crystal_type == "rhombohedral-2":
         print("Rhombohedral (class-2): i.e structures with point group: 3, -3 \n")
@@ -220,7 +220,7 @@ def stability_test(matrix, crystal_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
     if crystal_type == "orthorhombic":
         print("Orthorhombic crystal system.... \n")
@@ -292,7 +292,7 @@ def stability_test(matrix, crystal_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
     if crystal_type == "monoclinic":
         print("Monoclinic crystal system.... \n")
@@ -452,9 +452,36 @@ def stability_test(matrix, crystal_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
+
+
+
+    if crystal_type == "triclinic":
+        print("Triclinic crystal system.... \n")
+        print(
+            "Triclinic systems only criteria for stability are positive eigen values of the elastic tensor  \n"
+        )
+        evals = list(LA.eigvals(c))
+        evalsPrint = list(np.around(np.array(evals), 3))
+        print("%s" % evalsPrint)
+        check = 0
+        for i in range(len(evals)):
+            if evals[i] > 0.0:
+                stable = True
+                pass
+            else:
+                check = 1
+                stable = False
+
+
+
 
     return stable
+
+
+
+
+
 
 
 def stability_test_2d(matrix, lattice_type):
@@ -496,7 +523,7 @@ def stability_test_2d(matrix, lattice_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
         return stable
 
@@ -530,7 +557,7 @@ def stability_test_2d(matrix, lattice_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
         return stable
 
@@ -584,7 +611,7 @@ def stability_test_2d(matrix, lattice_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
         return stable
 
@@ -618,6 +645,6 @@ def stability_test_2d(matrix, lattice_type):
 
         for condition in conditions:
             if condition == False:
-                stable == False
+                stable = False
 
         return stable
