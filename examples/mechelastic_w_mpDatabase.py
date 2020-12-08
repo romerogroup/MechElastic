@@ -11,7 +11,6 @@ import numpy as np
 
 "Get the unique apiKey on materials project website"
 apiKey = "--------------"
-apiKey = "A45OsEslmcbF4UiwL"
 a = MPRester(apiKey)
 
 "Trigonal LiNbO3"

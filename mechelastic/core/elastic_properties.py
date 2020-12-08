@@ -618,8 +618,7 @@ class ElasticProperties:
                CR , which is more appropriate. Clearly, AL  CV , CR   is zero when the crystallite is isotropic.
 
         """
-        return np.sqrt(5) * 2.303 * np.log(1 + (self.A_u / 5))
-
+        return np.sqrt( ( np.log(self.K_v/self.K_r) )**2 + 5 * ( np.log(self.G_v/self.G_r) )**2  )
     @property
     def anisotropy_log_euclidean(self):
         """
