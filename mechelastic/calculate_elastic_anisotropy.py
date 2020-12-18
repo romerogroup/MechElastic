@@ -15,6 +15,7 @@ def calculate_elastic_anisotropy(
     anaddbfile=None,
     outfile=None,
     adjust_pressure=True,
+    npoints = 100
 ):
 
     """
@@ -86,9 +87,9 @@ def calculate_elastic_anisotropy(
     elastic_tensor = ELATE.ELATE(rowsList)
 
     if plot == "2D":
-        elastic_tensor.plot_2D(elastic_calc=elastic_calc)
+        elastic_tensor.plot_2D(elastic_calc=elastic_calc, npoints = npoints)
     elif plot == "3D":
-        elastic_tensor.plot_3D(elastic_calc=elastic_calc)
+        elastic_tensor.plot_3D(elastic_calc=elastic_calc, npoints = npoints)
 
     elastic_tensor.print_properties()
 
