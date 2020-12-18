@@ -484,63 +484,70 @@ class ELATE:
         else:
             self.anix_Poisson = "&infin;"
 
-    def YOUNG2D(self):
+    def YOUNG2D(self, npoints):
         data1 = makePolarPlot(
             lambda x: self.elas.Young([np.pi / 2, x]),
             "Young's modulus in (xy) plane",
             "xy",
+            npoints = npoints
         )
         data2 = makePolarPlot(
-            lambda x: self.elas.Young([x, 0]), "Young's modulus in (xz) plane", "xz"
+            lambda x: self.elas.Young([x, 0]), "Young's modulus in (xz) plane", "xz",npoints = npoints
         )
         data3 = makePolarPlot(
             lambda x: self.elas.Young([x, np.pi / 2]),
             "Young's modulus in (yz) plane",
             "yz",
+            npoints = npoints
         )
         return (data1, data2, data3)
 
-    def YOUNG3D(self):
+    def YOUNG3D(self, npoints):
 
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
 
-        data = make3DPlot(lambda x, y: self.elas.Young_2(x, y), "Young's modulus")
+        data = make3DPlot(lambda x, y: self.elas.Young_2(x, y), "Young's modulus",npoints = npoints)
 
         return data
 
-    def LC2D(self):
+    def LC2D(self, npoints):
         data1 = makePolarPlotPosNeg(
             lambda x: self.elas.LC([np.pi / 2, x]),
             "linear compressibility in (xy) plane",
             "xy",
+            npoints = npoints
         )
         data2 = makePolarPlotPosNeg(
-            lambda x: self.elas.LC([x, 0]), "linear compressibility in (xz) plane", "xz"
+            lambda x: self.elas.LC([x, 0]), "linear compressibility in (xz) plane", "xz",
+            npoints = npoints
         )
         data3 = makePolarPlotPosNeg(
             lambda x: self.elas.LC([x, np.pi / 2]),
             "linear compressibility in (yz) plane",
             "yz",
+            npoints = npoints
         )
         return (data1, data2, data3)
 
-    def LC3D(self):
+    def LC3D(self, npoints):
 
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
 
         data = make3DPlotPosNeg(
-            lambda x, y: self.elas.LC_2(x, y), "Linear compressiblity"
+            lambda x, y: self.elas.LC_2(x, y), "Linear compressiblity",
+            npoints = npoints
         )
 
         return data
 
-    def SHEAR2D(self):
+    def SHEAR2D(self, npoints):
         data1 = makePolarPlot2(
             lambda x: self.elas.shear2D([np.pi / 2, x]),
             "Shear modulus in (xy) plane",
             "xy",
+            npoints = npoints
         )
         data2 = makePolarPlot2(
             lambda x: self.elas.shear2D([x, 0]), "Shear modulus in (xz) plane", "xz"
@@ -549,43 +556,49 @@ class ELATE:
             lambda x: self.elas.shear2D([x, np.pi / 2]),
             "Shear modulus in (yz) plane",
             "yz",
+            npoints = npoints
         )
         return (data1, data2, data3)
 
-    def SHEAR3D(self):
+    def SHEAR3D(self, npoints):
 
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
 
         data = make3DPlot2(
-            lambda x, y, g1, g2: self.elas.shear3D(x, y, g1, g2), "Shear modulus"
+            lambda x, y, g1, g2: self.elas.shear3D(x, y, g1, g2), "Shear modulus",
+            npoints = npoints
         )
 
         return data
 
-    def POISSON2D(self):
+    def POISSON2D(self, npoints):
         data1 = makePolarPlot3(
             lambda x: self.elas.Poisson2D([np.pi / 2, x]),
             "Poisson's ratio in (xy) plane",
             "xy",
+            npoints = npoints
         )
         data2 = makePolarPlot3(
-            lambda x: self.elas.Poisson2D([x, 0]), "Poisson's ratio in (xz) plane", "xz"
+            lambda x: self.elas.Poisson2D([x, 0]), "Poisson's ratio in (xz) plane", "xz",
+            npoints = npoints
         )
         data3 = makePolarPlot3(
             lambda x: self.elas.Poisson2D([x, np.pi / 2]),
             "Poisson's ratio in (yz) plane",
             "yz",
+            npoints = npoints
         )
         return (data1, data2, data3)
 
-    def POISSON3D(self):
+    def POISSON3D(self, npoints):
 
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
 
         data = make3DPlot3(
-            lambda x, y, g1, g2: self.elas.poisson3D(x, y, g1, g2), "Poisson's ratio"
+            lambda x, y, g1, g2: self.elas.poisson3D(x, y, g1, g2), "Poisson's ratio",
+            npoints = npoints
         )
 
         return data
@@ -593,7 +606,7 @@ class ELATE:
     ##############################################################################
     # Plotting functions
     #############################################################################
-    def plot_3D(self, elastic_calc=""):
+    def plot_3D(self, elastic_calc="", npoints = 100):
         import pyvista as pv
         from pyvistaqt import BackgroundPlotter
 
@@ -606,7 +619,7 @@ class ELATE:
         r = None
 
         if elastic_calc == "POISSON":
-            func = self.POISSON3D()
+            func = self.POISSON3D(npoints = 100)
             colors = ["red", "green", "blue"]
             for ix, icolor in zip(range(len(func)), colors):
                 x = np.array(func[ix][0])
@@ -623,7 +636,7 @@ class ELATE:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
 
         elif elastic_calc == "SHEAR":
-            func = self.SHEAR3D()
+            func = self.SHEAR3D( npoints = 100)
             colors = ["green", "blue"]
             for ix, icolor in zip(range(len(func)), colors):
                 x = np.array(func[ix][0])
@@ -640,7 +653,7 @@ class ELATE:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
 
         elif elastic_calc == "LC":
-            func = self.LC3D()
+            func = self.LC3D( npoints = 100)
             colors = ["green", "red"]
             for ix, icolor in zip(range(len(func)), colors):
                 x = np.array(func[ix][0])
@@ -657,7 +670,7 @@ class ELATE:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
 
         elif elastic_calc == "YOUNG":
-            func = self.YOUNG3D()
+            func = self.YOUNG3D( npoints = 100)
             colors = ["green"]
             for ix, icolor in zip(range(len(func)), colors):
 
@@ -677,14 +690,14 @@ class ELATE:
         # plotter.add_axes()
         # plotter.show_grid(color = "black")
 
-    def plot_2D(self, elastic_calc=""):
+    def plot_2D(self, elastic_calc="", npoints = 100):
         import matplotlib.pyplot as plt
 
         fig = plt.figure()
         subTitles = ["XY", "XZ", "YZ"]
 
         if elastic_calc == "POISSON":
-            func = self.POISSON2D()
+            func = self.POISSON2D( npoints = npoints)
             colors = ["red", "green", "blue"]
             labels = ["Poisson - Neg", "Poisson - Pos", "Poisson - Max"]
             fig.suptitle("Poisson's ratio")
@@ -699,7 +712,7 @@ class ELATE:
                     )
 
         elif elastic_calc == "SHEAR":
-            func = self.SHEAR2D()
+            func = self.SHEAR2D( npoints = npoints)
             colors = ["green", "blue"]
             labels = ["Shear - Max", "Shear -"]
             fig.suptitle("Shear modulus")
@@ -714,7 +727,7 @@ class ELATE:
                     )
 
         elif elastic_calc == "LC":
-            func = self.LC2D()
+            func = self.LC2D( npoints = npoints)
             colors = ["green", "red"]
             labels = ["LC-positive", "LC-negative"]
             fig.suptitle("Linear Compression")
@@ -732,7 +745,7 @@ class ELATE:
                     )
 
         elif elastic_calc == "YOUNG":
-            func = self.YOUNG2D()
+            func = self.YOUNG2D( npoints = npoints)
             color = "green"
             label = "YOUNG"
             fig.suptitle("Young's Modulus")

@@ -9,39 +9,46 @@ from pymatgen import Structure, MPRester
 from mechelastic.core import ELATE, ElasticProperties, Structure
 import numpy as np
 
-"Get the unique apiKey on materials project website"
-apiKey = "--------------"
-a = MPRester(apiKey)
+# "Get the unique apiKey on materials project website"
+# apiKey = "--------------"
+# a = MPRester(apiKey)
 
-"Trigonal LiNbO3"
-mat_info = a.query(
-    criteria={"task_id": "mp-3731"}, properties=["structure", "elasticity"]
-)[0]
-"Tetragonal SiO2"
-# mat_info = a.query(criteria={"task_id": "mp-6945"}, properties=["structure","elasticity"])[0]
-"Trigonal SiO2"
-# mat_info = a.query(criteria={"task_id": "mp-6930"}, properties=["structure","elasticity"])[0]
+# "Trigonal LiNbO3"
+# mat_info = a.query(
+#     criteria={"task_id": "mp-3731"}, properties=["structure", "elasticity"]
+# )[0]
+# "Tetragonal SiO2"
+# # mat_info = a.query(criteria={"task_id": "mp-6945"}, properties=["structure","elasticity"])[0]
+# "Trigonal SiO2"
+# # mat_info = a.query(criteria={"task_id": "mp-6930"}, properties=["structure","elasticity"])[0]
 
-s1 = mat_info["structure"]
-lattice = s1.lattice.matrix
-species = [specie.symbol for specie in s1.species]
-frac_coords = s1.frac_coords
-structure = Structure(
-    atoms=species, fractional_coordinates=frac_coords, lattice=lattice
-)
+# s1 = mat_info["structure"]
+# lattice = s1.lattice.matrix
+# species = [specie.symbol for specie in s1.species]
+# frac_coords = s1.frac_coords
+# structure = Structure(
+#     atoms=species, fractional_coordinates=frac_coords, lattice=lattice
+# )
 
-elastic_tensor = np.array(mat_info["elasticity"]["elastic_tensor"])
+# elastic_tensor = np.array(mat_info["elasticity"]["elastic_tensor"])
 
 
-"The following uncommented section produces the MechElastic summary and shows how to access properties directly"
-elastic_properties = ElasticProperties(
-    elastic_tensor, structure, crystal_type="rhombohedral-2", code="Directly"
-)
-gV = elastic_properties.G_v
-# stability = elastic_properties.elastic_stability
-elastic_properties.print_properties()
+# "The following uncommented section produces the MechElastic summary and shows how to access properties directly"
+# elastic_properties = ElasticProperties(
+#     elastic_tensor, structure, crystal_type="rhombohedral-2", code="Directly"
+# )
+# gV = elastic_properties.G_v
+# # stability = elastic_properties.elastic_stability
+# elastic_properties.print_properties()
 ###############################################################################################
-
+elastic_tensor = np.array([
+                    [603, 125, 146, 0, 14, 0],
+                    [125, 603, 146, 0, -14, 0],
+                    [146, 146, 648, 0, 0, 0],
+                    [0, 0, 0, 239, 0, 14],
+                    [14, -14, 0, 0, 229, 0,],
+                    [0, 0, 0, 14, 0, 229]
+                 ])
 
 "The following uncommented section produces the MechElastic-ELATE summary, shows how to access properties directly, and produces the plots of ELATE "
 row = elastic_tensor.shape[0]
@@ -58,5 +65,5 @@ elate_tensor = ELATE.ELATE(rowsList)
 elate_tensor.print_properties()
 """Properties  to plot elastic_calc = "POISSON" , "SHEAR", "YOUNG" , "LC"
  """
-elate_tensor.plot_2D(elastic_calc="POISSON")
-elate_tensor.plot_3D(elastic_calc="POISSON")
+elate_tensor.plot_2D(elastic_calc="POISSON",npoints = 201)
+# elate_tensor.plot_3D(elastic_calc="POISSON")
