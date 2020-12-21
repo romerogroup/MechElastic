@@ -50,7 +50,8 @@ MechElastic.py -d=3D -i OUTCAR-Si_bulk
 
 For more information please refer to the documentation. 
 
-
+Citing information
+------------------
 
 Please cite the following articles if you use MechElastic for your research: 
 
