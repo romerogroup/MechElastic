@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,27 +11,32 @@
   
 
   
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/copybutton.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
         <script src="../../../_static/underscore.js"></script>
         <script src="../../../_static/doctools.js"></script>
-        <script src="../../../_static/language_data.js"></script>
+        <script src="../../../_static/clipboard.min.js"></script>
+        <script src="../../../_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
@@ -48,7 +52,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home"> MechElastic
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
           
 
           
@@ -71,6 +75,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -82,6 +87,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../cite.html">How to cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../dftprep.html">DFT Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../modules.html">MechElastic API</a></li>
 </ul>
@@ -89,6 +96,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -127,7 +135,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../../index.html">Module code</a> &raquo;</li>
         
@@ -156,12 +164,13 @@
 <span class="kn">from</span> <span class="nn">..utils.elements</span> <span class="kn">import</span> <span class="n">ELEMENTS</span>
 <span class="kn">from</span> <span class="nn">..utils.crystalutils</span> <span class="kn">import</span> <span class="o">*</span>
 <span class="kn">from</span> <span class="nn">.structure</span> <span class="kn">import</span> <span class="n">Structure</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
 
 
 <div class="viewcode-block" id="ElasticProperties"><a class="viewcode-back" href="../../../mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties">[docs]</a><span class="k">class</span> <span class="nc">ElasticProperties</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elastic_tensor</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crystal_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">elastic_tensor</span><span class="p">,</span> <span class="n">structure</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">crystal_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        </span>
+
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -181,8 +190,29 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">compaliance_tensor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="o">.</span><span class="n">I</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">structure</span> <span class="o">=</span> <span class="n">structure</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">crystal_type</span> <span class="o">=</span> <span class="n">crystal_type</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elastic Tensor (GPa units)&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">printMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">code</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">This matrix was computed from &quot;</span> <span class="o">+</span> <span class="n">code</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Note: For VASP users this is the pressure-corrected matrix&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elastic Tensor Eigen Values (GPa units)&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">positive_evals</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">crystal_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">structure</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span>
+            <span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mechanical Stability Tests&quot;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
             <span class="n">crystal_select</span><span class="p">(</span>
                 <span class="n">cnew</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">,</span>
                 <span class="n">cell</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">spglib_cell</span><span class="p">,</span>
@@ -668,7 +698,35 @@
 <span class="sd">            Zenner Anisotropy only for Cubic Crystals.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">anisotropy_zenner</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_z</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">A_cb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Chung-Buessem only for Cubic Crystals.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">a_cb</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">G_v</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">G_v</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">a_cb</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">anisotropy_Chung_Buessem</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">            Chung-Buessem  only for Cubic Crystals.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_cb</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">A_u</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -718,6 +776,21 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">*</span> <span class="mf">2.303</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">A_u</span> <span class="o">/</span> <span class="mi">5</span><span class="p">))</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">anisotropy_log_euclidean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        float</span>
+<span class="sd">               log-Euclidean anisotropy parameter by Christopher M. Kube, AIP Advances 6, 095209 (2016)</span>
+<span class="sd">               AL  CV , CR   is based on the distance between the averaged stiffnesses CV and</span>
+<span class="sd">               CR , which is more appropriate. Clearly, AL  CV , CR   is zero when the crystallite is isotropic.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_l</span>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">ductility</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -838,8 +911,11 @@
         <span class="k">return</span> <span class="mi">607</span> <span class="o">+</span> <span class="mf">9.3</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">K_vrh</span>
 
 <div class="viewcode-block" id="ElasticProperties.print_properties"><a class="viewcode-back" href="../../../mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.print_properties">[docs]</a>    <span class="k">def</span> <span class="nf">print_properties</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elastic Moduli&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> </span><span class="se">\n</span><span class="s2">                         Voigt     Reuss    Average&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                          Voigt     Reuss    Average&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------------------&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
             <span class="s2">&quot;Bulk modulus   (GPa)  </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
@@ -850,11 +926,11 @@
             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">G_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">G_vrh</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;Young modulus  (GPa)  </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
+            <span class="s2">&quot;Young&#39;s modulus  (GPa)  </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">E_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;Poisson ratio         </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
+            <span class="s2">&quot;Poisson&#39;s ratio         </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> &quot;</span>
             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Nu_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">)</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
@@ -865,31 +941,66 @@
             <span class="s2">&quot;Bulk/Shear ratio      </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> </span><span class="si">%9.3f</span><span class="s2"> (</span><span class="si">%s</span><span class="s2">) &quot;</span>
             <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">KG_ratio_v</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KG_ratio_r</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">KG_ratio_vrh</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ductility</span><span class="p">)</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------------------&quot;</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; </span><span class="se">\n</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> Elastic Anisotropy </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Zener anisotropy (true for cubic crystals only) Az = </span><span class="si">%10.5f</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_z</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elastic parameters&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lame&#39;s first and second parameter; Ref.[3]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Lambda (GPa)  =  </span><span class="si">%10.3f</span><span class="s2">  &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">lambda_lame_coefficient</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mu (GPa)  =  </span><span class="si">%10.3f</span><span class="s2">  &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu_lame_coefficient</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bonding information&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Kleinman’s parameter; Ref.[4,5]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;NOTE: K = 0 (1) bending (stretching) would dominate&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;K =  </span><span class="si">%10.5f</span><span class="s2">  &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">kleinman_parameter</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cauchy&#39;s Pressure calculated from the relation : CP = C_12 - C_44&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     CP &gt; 0 (+ve) indicates that ionic bonding dominates&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     CP &lt; 0 (-ve) indicates that covalent bonding dominates&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CP (GPa) =  </span><span class="si">%10.3f</span><span class="s2">  &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">cauchy_pressure</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Bonding is mainly &quot;</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">bonding_type</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elastic Anisotropy&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;Universal anisotropy index (Ranganathan and Ostoja-Starzewski method; PRL 101, 055504 (2008)) Au = </span><span class="si">%10.5f</span><span class="s2">&quot;</span>
-            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_u</span>
+            <span class="s2">&quot;Zener&#39;s anisotropy (true for cubic crystals only); Az = </span><span class="si">%6.3f</span><span class="s2">; Ref.[6]&quot;</span>
+            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_z</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;Log-Euclidean anisotropy parameter by Christopher M. Kube, AIP Advances 6, 095209 (2016) AL = </span><span class="si">%10.5f</span><span class="s2"> &quot;</span>
-            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_l</span>
+            <span class="s2">&quot;Chung-Buessem&#39;s anisotropy (true for cubic crystals only); Acb = </span><span class="si">%6.3f</span><span class="s2">; Ref.[7]&quot;</span>
+            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_cb</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Universal anisotropy index; Au = </span><span class="si">%6.3f</span><span class="s2">; Ref.[8]&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_u</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Log-Euclidean&#39;s anisotropy; AL = </span><span class="si">%6.3f</span><span class="s2">; Ref.[9]&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">A_l</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Elastic Wave Velocities and Debye Temperature&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Longitudinal wave velocity (vl) : </span><span class="si">%10.3f</span><span class="s2"> m/s; Ref.[10]&quot;</span>
+            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_logitudinal</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> </span><span class="se">\t</span><span class="s2"> </span><span class="se">\t</span><span class="s2">  Elastic wave velocities calculated using Navier&#39;s equation  (in m/s units) </span><span class="se">\n</span><span class="s2">&quot;</span>
+            <span class="s2">&quot;Transverse wave velocity (vt) : </span><span class="si">%10.3f</span><span class="s2"> m/s; Ref.[10]&quot;</span>
+            <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_transverse</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;----------------------------------------------- &quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;Longitudinal wave velocity (vl) : </span><span class="si">%10.5f</span><span class="s2"> m/s &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_logitudinal</span>
+            <span class="s2">&quot;Average wave velocity (vm) : </span><span class="si">%10.3f</span><span class="s2"> m/s; Ref.[10]&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_average</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Transverse wave velocity (vt) : </span><span class="si">%10.5f</span><span class="s2"> m/s&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_transverse</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Average wave velocity (vm) : </span><span class="si">%10.5f</span><span class="s2"> m/s&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">velocity_average</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Debye temperature  (in K) : </span><span class="si">%10.5f</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">debye_temperature</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Debye temperature  : </span><span class="si">%10.3f</span><span class="s2"> K; Ref.[10]&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">debye_temperature</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;WARNING: Debye model for the atomic displacement is based on a monoatomic crystal, here we consider an average mass in case your crystal has several species.&quot;</span>
+            <span class="s2">&quot;WARNING: The  Debye model for the atomic displacement is based on a monoatomic crystal approximation.</span><span class="se">\n</span><span class="s2"> Here we consider an averaged mass, in case your crystal has several species.&quot;</span>
         <span class="p">)</span>
+
         <span class="c1"># print(</span>
         <span class="c1">#     &quot;Atomic displacement at 150, 300 and 450 K  (in A^2) : %10.5f %10.5f %10.5f&quot;</span>
         <span class="c1">#     % (</span>
@@ -898,36 +1009,95 @@
         <span class="c1">#         u2FromDebye(mass, natoms, theta, 450.0),</span>
         <span class="c1">#     )</span>
         <span class="c1"># )</span>
-        <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Melting temperature calculated from empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K)&quot;</span>
-        <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tm (in K)=  </span><span class="si">%10.5f</span><span class="s2"> (plus-minus 555 K) &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">melting_temperature</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------ &quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Melting Temperature&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
 
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness analysis from 6 different semi-empirical relationships.&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;Melting temperature calculated from the empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K); Ref.[11]&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tm =  </span><span class="si">%10.3f</span><span class="s2"> K (plus-minus 555 K) &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">melting_temperature</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;WARNING: This is a crude approximation and its validity needs to be checked! &quot;</span>
+        <span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness Analysis&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
         <span class="n">H1a</span><span class="p">,</span> <span class="n">H1b</span><span class="p">,</span> <span class="n">H2</span><span class="p">,</span> <span class="n">H3</span><span class="p">,</span> <span class="n">H4</span><span class="p">,</span> <span class="n">H5</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hardness</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------ &quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H1a) =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H1a</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[1]&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H1b) =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H1b</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[1]&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H2)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H2</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[2]&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H3)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H3</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[3]&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H4)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H4</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[4]&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H5)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H5</span><span class="p">),</span> <span class="s2">&quot;GPa&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[5]&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;References:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H1a) =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H1a</span><span class="p">),</span> <span class="s2">&quot;GPa;&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[12]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H1b) =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H1b</span><span class="p">),</span> <span class="s2">&quot;GPa;&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[12]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H2)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H2</span><span class="p">),</span> <span class="s2">&quot;GPa;&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[13]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H3)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H3</span><span class="p">),</span> <span class="s2">&quot;GPa;&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[14]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H4)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H4</span><span class="p">),</span> <span class="s2">&quot;GPa;&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[15]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hardness (H5)  =&quot;</span><span class="p">,</span> <span class="s2">&quot;</span><span class="si">{:.2f}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">H5</span><span class="p">),</span> <span class="s2">&quot;GPa;&quot;</span><span class="p">,</span> <span class="s2">&quot;  Ref.[16]&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;[1] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).&quot;</span>
+            <span class="sd">&quot;&quot;&quot;Hardness recommendation model:</span>
+<span class="sd">        ********************************************************************</span>
+<span class="sd">                     Cubic  Hexagonal  Orthorhombic  Rhombohedral  General</span>
+<span class="sd">        ********************************************************************</span>
+<span class="sd">        Insulator      H2      H1b          H2            H2          H2</span>
+<span class="sd">        Semiconductor  H5    H1b, H3                      H2          H5</span>
+<span class="sd">        Metal          H1a     H4           H4            H4          H4</span>
+<span class="sd">        ********************************************************************</span>
+<span class="sd">        Insulator     : bandgap &gt; 2 eV</span>
+<span class="sd">        Semiconductor : bandgap &lt; 2 eV</span>
+<span class="sd">        Metal         : bandgap = 0 &quot;&quot;&quot;</span>
+        <span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">------------------------------------------------------------------&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;References&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;------------------------------------------------------------------</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. Félix Mouhat and François-Xavier Coudert. Phys. Rev. B (2014)&quot;</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;[2] Computational alchemy: the search for new superhard materials. Teter (1998).&quot;</span>
+            <span class="s2">&quot;[2] Crystal Structures and Elastic Properties of Superhard IrN2 and IrN3 from First Principles. Zhi-jian Wu et al. Phys. Rev. B (2007)&quot;</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;[3] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).&quot;</span>
+            <span class="s2">&quot;[3]  The rock physics handbook, Cam-bridge university press. G. Mavko, T. Mukerji, J. Dvorkin. Cambridge University Press. (2020)&quot;</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;[4] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).&quot;</span>
+            <span class="s2">&quot;[4]  Deformation potentials in silicon. i. uniaxial strain. Leonard Kleinman. Phys.Rev. 128. (1962)&quot;</span>
         <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span>
-            <span class="s2">&quot;[5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).&quot;</span>
+            <span class="s2">&quot;[5] Electronic Structure and the Properties of Solids: The Physics of the Chemical Bond. Walter A. Harrison.  (2012)&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[6] Elasticity and Anelasticity of Metals. Clarence M. Zener et al. The Journal of Physical Chemistry. (1949)&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[7] The Elastic Anisotropy of Crystals. D. H. Chung and W. R. Buessem. Journal of Applied Physics (1967)&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[8] Universal Elastic Anisotropy Index. Shivakumar I. Ranganathan et al. Phys. Rev. Lett. (2008)&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[9] Elastic Anisotropy of Crystals. Christopher M. Kube. AIP Advances. (2016)&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[10] A Simplified Method for Calculating the Debye Temperature from Elastic Constants. Orson L.Anderson. Journal of Physics and Chemistry of Solids. (1963)&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[11] Elastic constants versus melting temperature in metals. M.E.Fine et al. Scripta Metallurgica. (1984)&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[12] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[13] Computational alchemy: the search for new superhard materials. Teter (1998).&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[14] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[15] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).&quot;</span>
+        <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="s2">&quot;[16] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).&quot;</span>
         <span class="p">)</span></div>
 
     <span class="nd">@property</span>
@@ -937,7 +1107,7 @@
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">hardness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        </span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        float</span>
@@ -965,20 +1135,20 @@
     <span class="k">def</span> <span class="nf">cauchy_pressure</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This parameter desceibes the nature of bonding</span>
-<span class="sd">        CP &gt; 0 (+ve) indicates that ionic bonding dominates </span>
+<span class="sd">        CP &gt; 0 (+ve) indicates that ionic bonding dominates</span>
 <span class="sd">        CP &lt; 0 (-ve) indicates that covalent bonding dominates</span>
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        None.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">]</span>
-    
-    <span class="nd">@property</span> 
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">bonding_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        This parameter desceibes the nature of bonding</span>
-<span class="sd">        CP &gt; 0 (+ve) indicates that ionic bonding dominates </span>
+<span class="sd">        CP &gt; 0 (+ve) indicates that ionic bonding dominates</span>
 <span class="sd">        CP &lt; 0 (-ve) indicates that covalent bonding dominates</span>
 
 <span class="sd">        Returns</span>
@@ -988,25 +1158,24 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">cauchy_pressure</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cauchy_pressure</span>
-        <span class="k">if</span> <span class="n">cauchy_pressure</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Ionic&quot;</span>
-        <span class="k">elif</span> <span class="n">cauchy_pressure</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Covalent&quot;</span>
-        
-    <span class="nd">@property</span> 
+        <span class="k">if</span> <span class="n">cauchy_pressure</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;ionic&quot;</span>
+        <span class="k">elif</span> <span class="n">cauchy_pressure</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;covalent&quot;</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">kleinman_parameter</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">c</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">elastic_tensor</span>
-        <span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">8</span><span class="o">*</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span><span class="o">/</span><span class="p">(</span><span class="mi">7</span><span class="o">*</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
-    
-    <span class="nd">@property</span> 
+        <span class="k">return</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="mi">7</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+    <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">bond_bending_vs_streching</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span>
-    
-    
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">lambda_lame_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        </span>
+
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -1014,13 +1183,47 @@
 <span class="sd">            DESCRIPTION.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span><span class="o">/</span><span class="p">((</span><span class="mi">1</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">2</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">))</span>
-    
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">))</span>
+
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">mu_lame_coefficient</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">))</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">E_vrh</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">Nu_vrh</span><span class="p">))</span></div>
 
-    
+
+<div class="viewcode-block" id="positive_evals"><a class="viewcode-back" href="../../../mechelastic.core.html#mechelastic.core.elastic_properties.positive_evals">[docs]</a><span class="k">def</span> <span class="nf">positive_evals</span><span class="p">(</span><span class="n">cnew</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This method checks the postivity of the eigenvalues</span>
+<span class="sd">    of a matrix.&quot;&quot;&quot;</span>
+
+    <span class="c1"># print(&quot;Eigen Values of the matrix:&quot;)</span>
+    <span class="n">evals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">LA</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">cnew</span><span class="p">))</span>
+    <span class="n">evalsPrint</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">evals</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">evalsPrint</span><span class="p">)</span>
+    <span class="n">check</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">evals</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">evals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">check</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1"># if check == 1:</span>
+    <span class="c1">#     print(</span>
+    <span class="c1">#         &quot;ATTENTION: One or more eigen values are negative indicating elastic instability.&quot;</span>
+    <span class="c1">#     )</span>
+    <span class="c1"># if check == 0:</span>
+    <span class="c1">#     print(&quot;All eigen values are positive indicating elastic stability.&quot;)</span>
+
+    <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">bool</span><span class="p">(</span><span class="n">check</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="printMatrix"><a class="viewcode-back" href="../../../mechelastic.core.html#mechelastic.core.elastic_properties.printMatrix">[docs]</a><span class="k">def</span> <span class="nf">printMatrix</span><span class="p">(</span><span class="n">c</span><span class="p">):</span>
+    <span class="n">row</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{:&gt;10.3f}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]),</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">j</span> <span class="o">==</span> <span class="p">(</span><span class="n">col</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+
+    <span class="k">return</span></div>
 </pre></div>
 
            </div>
@@ -1033,11 +1236,19 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Sobhit Singh
+        
+        &copy; Copyright 2020, Sobhit Singh, Romero Group
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1048,7 +1259,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

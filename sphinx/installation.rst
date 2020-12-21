@@ -8,19 +8,18 @@ Installing using pip
 
     pip install mechelastic
 
-Installing using conda
-----------------------
 
-
-Installing using githutb
+Installing using github
 ------------------------
 
+Clone the repository to your local disk and run::
+
+    python setup.py install
 
 Dependencies
 ------------
 
 - numpy
 - spglib
-- prettytable
 - pathlib
 - pyvista

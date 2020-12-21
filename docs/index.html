@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,27 +11,32 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Installation" href="installation.html" /> 
@@ -49,7 +53,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> MechElastic
+            <a href="#" class="icon icon-home" alt="Documentation Home"> MechElastic
           
 
           
@@ -72,6 +76,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -83,6 +88,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">How to cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dftprep.html">DFT Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">MechElastic API</a></li>
 </ul>
@@ -90,6 +97,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -128,7 +136,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
       <li>Welcome to MechElastic’s documentation!</li>
     
@@ -151,18 +159,35 @@
             
   <div class="section" id="welcome-to-mechelastic-s-documentation">
 <h1>Welcome to MechElastic’s documentation!<a class="headerlink" href="#welcome-to-mechelastic-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The MechElastic Python package evaluates the mechanical and elastic properties of bulk and 2D materials using the elastic coefficient matrix (<span class="math notranslate nohighlight">\(C_{ij}\)</span>) obtained from any ab-initio density-functional theory (DFT) code. The current version of this package reads the output of VASP, ABINIT and Quantum Espresso codes (but it can be easily generalized to any other DFT code) and performs the appropriate post-processing of elastic constants as per the requirement of the user. This program can also detect the input structure’s crystal symmetry and test the mechanical stability of all crystal classes using the Born-Huang criteria. Various useful material-specific properties such as elastic moduli, longitudinal and transverse elastic wave velocities, Debye temperature, elastic anisotropy, 2D layer modulus, hardness, Pugh’s ratio, Cauchy’s pressure, Kleinman’s parameter, and Lame’s coefficients, can be estimated using this program. Another existing feature of this program is to employ the <a class="reference external" href="https://iopscience.iop.org/article/10.1088/0953-8984/28/27/275201/meta">ELATE package</a> and plot the spatial variation of several elastic properties such as Poisson’s ratio, linear compressibility, shear modulus, and Young’s modulus in three dimensions. Further, the MechElastic package can plot the equation of state (EOS) curves for energy and pressure for a variety of EOS models such as Murnaghan, Birch, Birch-Murnaghan, and Vinet, by reading the inputted energy/pressure vs. volume data obtained via numerical calculations or experiments. This package is particularly useful for the high-throughput analysis of elastic and mechanical properties of materials.</p>
+<p>Currently supports:</p>
+<ol class="arabic simple">
+<li><p>VASP</p></li>
+<li><p>Abinit</p></li>
+<li><p>Quantum Espresso</p></li>
+</ol>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#installing-using-pip">Installing using pip</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-using-conda">Installing using conda</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-using-githutb">Installing using githutb</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installing-using-github">Installing using github</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#dependencies">Dependencies</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">How to cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dftprep.html">DFT Preparation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dftprep.html#vasp">1. VASP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dftprep.html#abinit">2. Abinit</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dftprep.html#quantum-espresso">3. Quantum Espresso</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="standalone.html">Stand-alone Mode</a></li>
+<li class="toctree-l2"><a class="reference internal" href="library.html">Library Mode</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">MechElastic API</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.html">mechelastic package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
@@ -198,11 +223,19 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Sobhit Singh
+        
+        &copy; Copyright 2020, Sobhit Singh, Romero Group
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -213,7 +246,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,9 +1,7 @@
 
 
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -13,27 +11,32 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" /> 
 </head>
@@ -49,7 +52,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> MechElastic
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
           
 
           
@@ -72,6 +75,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -83,6 +87,8 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">How to cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dftprep.html">DFT Preparation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">MechElastic API</a></li>
 </ul>
@@ -90,6 +96,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -128,7 +135,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Index</li>
     
@@ -172,6 +179,8 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.A_cb">A_cb() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+</li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.A_l">A_l() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.A_u">A_u() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
@@ -180,10 +189,12 @@
 </li>
       <li><a href="mechelastic.parsers.html#mechelastic.parsers.abinitparser.AbinitOutput">AbinitOutput (class in mechelastic.parsers.abinitparser)</a>
 </li>
-      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_log_euclidean">anisotropy_log_euclidean() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_Chung_Buessem">anisotropy_Chung_Buessem() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_log_euclidean">anisotropy_log_euclidean() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+</li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_universal">anisotropy_universal() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.anisotropy_zenner">anisotropy_zenner() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
@@ -268,10 +279,14 @@
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.Elastic">Elastic (class in mechelastic.core.ELATE)</a>
 </li>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.elastic_stability">elastic_stability() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
+
+      <ul>
+        <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties_2d.ElasticProperties2D.elastic_stability">(mechelastic.core.elastic_properties_2d.ElasticProperties2D property)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.elastic_stability">elastic_stability() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
-</li>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.ElasticOrtho">ElasticOrtho (class in mechelastic.core.ELATE)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties">ElasticProperties (class in mechelastic.core.elastic_properties)</a>
@@ -352,6 +367,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.lambda_lame_coefficient">lambda_lame_coefficient() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
+      <li><a href="mechelastic.utils.html#mechelastic.utils.crystalutils.lattice_select">lattice_select() (in module mechelastic.utils.crystalutils)</a>
+</li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties_2d.ElasticProperties2D.layer_modulus">layer_modulus() (mechelastic.core.elastic_properties_2d.ElasticProperties2D property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.Elastic.LC">LC() (mechelastic.core.ELATE.Elastic method)</a>
@@ -402,58 +419,224 @@
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.maximize">maximize() (in module mechelastic.core.ELATE)</a>
 </li>
-      <li><a href="mechelastic.html#module-mechelastic">mechelastic (module)</a>
+      <li>
+    mechelastic
+
+      <ul>
+        <li><a href="mechelastic.html#module-mechelastic">module</a>
 </li>
-      <li><a href="mechelastic.html#module-mechelastic.calculate_elastic">mechelastic.calculate_elastic (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.calculate_elastic
+
+      <ul>
+        <li><a href="mechelastic.html#module-mechelastic.calculate_elastic">module</a>
 </li>
-      <li><a href="mechelastic.html#module-mechelastic.calculate_elastic_anisotropy">mechelastic.calculate_elastic_anisotropy (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.calculate_elastic_anisotropy
+
+      <ul>
+        <li><a href="mechelastic.html#module-mechelastic.calculate_elastic_anisotropy">module</a>
 </li>
-      <li><a href="mechelastic.comms.html#module-mechelastic.comms">mechelastic.comms (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.comms
+
+      <ul>
+        <li><a href="mechelastic.comms.html#module-mechelastic.comms">module</a>
 </li>
-      <li><a href="mechelastic.comms.html#module-mechelastic.comms.printer">mechelastic.comms.printer (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.comms.printer
+
+      <ul>
+        <li><a href="mechelastic.comms.html#module-mechelastic.comms.printer">module</a>
 </li>
-      <li><a href="mechelastic.core.html#module-mechelastic.core">mechelastic.core (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.core
+
+      <ul>
+        <li><a href="mechelastic.core.html#module-mechelastic.core">module</a>
 </li>
+      </ul></li>
+      <li>
+    mechelastic.core.elastic_properties
+
+      <ul>
+        <li><a href="mechelastic.core.html#module-mechelastic.core.elastic_properties">module</a>
+</li>
+      </ul></li>
+      <li>
+    mechelastic.core.elastic_properties_2d
+
+      <ul>
+        <li><a href="mechelastic.core.html#module-mechelastic.core.elastic_properties_2d">module</a>
+</li>
+      </ul></li>
+      <li>
+    mechelastic.core.ELATE
+
+      <ul>
+        <li><a href="mechelastic.core.html#module-mechelastic.core.ELATE">module</a>
+</li>
+      </ul></li>
+      <li>
+    mechelastic.core.structure
+
+      <ul>
+        <li><a href="mechelastic.core.html#module-mechelastic.core.structure">module</a>
+</li>
+      </ul></li>
+      <li>
+    mechelastic.parsers
+
+      <ul>
+        <li><a href="mechelastic.parsers.html#module-mechelastic.parsers">module</a>
+</li>
+      </ul></li>
+      <li>
+    mechelastic.parsers.abinitparser
+
+      <ul>
+        <li><a href="mechelastic.parsers.html#module-mechelastic.parsers.abinitparser">module</a>
+</li>
+      </ul></li>
+      <li>
+    mechelastic.parsers.vaspparser
+
+      <ul>
+        <li><a href="mechelastic.parsers.html#module-mechelastic.parsers.vaspparser">module</a>
+</li>
+      </ul></li>
+      <li>
+    mechelastic.tests
+
+      <ul>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests">module</a>
+</li>
+      </ul></li>
+      <li>
+    mechelastic.tests.ductile
+
+      <ul>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests.ductile">module</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="mechelastic.core.html#module-mechelastic.core.elastic_properties">mechelastic.core.elastic_properties (module)</a>
+      <li>
+    mechelastic.tests.eigenvals
+
+      <ul>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests.eigenvals">module</a>
 </li>
-      <li><a href="mechelastic.core.html#module-mechelastic.core.elastic_properties_2d">mechelastic.core.elastic_properties_2d (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.tests.stability
+
+      <ul>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests.stability">module</a>
 </li>
-      <li><a href="mechelastic.core.html#module-mechelastic.core.ELATE">mechelastic.core.ELATE (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.tests.symmetry
+
+      <ul>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests.symmetry">module</a>
 </li>
-      <li><a href="mechelastic.core.html#module-mechelastic.core.structure">mechelastic.core.structure (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.utils
+
+      <ul>
+        <li><a href="mechelastic.utils.html#module-mechelastic.utils">module</a>
 </li>
-      <li><a href="mechelastic.parsers.html#module-mechelastic.parsers">mechelastic.parsers (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.utils.constants
+
+      <ul>
+        <li><a href="mechelastic.utils.html#module-mechelastic.utils.constants">module</a>
 </li>
-      <li><a href="mechelastic.parsers.html#module-mechelastic.parsers.abinitparser">mechelastic.parsers.abinitparser (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.utils.crystalutils
+
+      <ul>
+        <li><a href="mechelastic.utils.html#module-mechelastic.utils.crystalutils">module</a>
 </li>
-      <li><a href="mechelastic.parsers.html#module-mechelastic.parsers.vaspparser">mechelastic.parsers.vaspparser (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.utils.elements
+
+      <ul>
+        <li><a href="mechelastic.utils.html#module-mechelastic.utils.elements">module</a>
 </li>
-      <li><a href="mechelastic.tests.html#module-mechelastic.tests">mechelastic.tests (module)</a>
+      </ul></li>
+      <li>
+    mechelastic.version
+
+      <ul>
+        <li><a href="mechelastic.html#module-mechelastic.version">module</a>
 </li>
-      <li><a href="mechelastic.tests.html#module-mechelastic.tests.ductile">mechelastic.tests.ductile (module)</a>
-</li>
-      <li><a href="mechelastic.tests.html#module-mechelastic.tests.eigenvals">mechelastic.tests.eigenvals (module)</a>
-</li>
-      <li><a href="mechelastic.tests.html#module-mechelastic.tests.stability">mechelastic.tests.stability (module)</a>
-</li>
-      <li><a href="mechelastic.tests.html#module-mechelastic.tests.symmetry">mechelastic.tests.symmetry (module)</a>
-</li>
-      <li><a href="mechelastic.utils.html#module-mechelastic.utils">mechelastic.utils (module)</a>
-</li>
-      <li><a href="mechelastic.utils.html#module-mechelastic.utils.constants">mechelastic.utils.constants (module)</a>
-</li>
-      <li><a href="mechelastic.utils.html#module-mechelastic.utils.crystalutils">mechelastic.utils.crystalutils (module)</a>
-</li>
-      <li><a href="mechelastic.utils.html#module-mechelastic.utils.elements">mechelastic.utils.elements (module)</a>
-</li>
-      <li><a href="mechelastic.html#module-mechelastic.version">mechelastic.version (module)</a>
-</li>
+      </ul></li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.melting_temperature">melting_temperature() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.minimize">minimize() (in module mechelastic.core.ELATE)</a>
 </li>
+      <li>
+    module
+
+      <ul>
+        <li><a href="mechelastic.html#module-mechelastic">mechelastic</a>
+</li>
+        <li><a href="mechelastic.html#module-mechelastic.calculate_elastic">mechelastic.calculate_elastic</a>
+</li>
+        <li><a href="mechelastic.html#module-mechelastic.calculate_elastic_anisotropy">mechelastic.calculate_elastic_anisotropy</a>
+</li>
+        <li><a href="mechelastic.comms.html#module-mechelastic.comms">mechelastic.comms</a>
+</li>
+        <li><a href="mechelastic.comms.html#module-mechelastic.comms.printer">mechelastic.comms.printer</a>
+</li>
+        <li><a href="mechelastic.core.html#module-mechelastic.core">mechelastic.core</a>
+</li>
+        <li><a href="mechelastic.core.html#module-mechelastic.core.elastic_properties">mechelastic.core.elastic_properties</a>
+</li>
+        <li><a href="mechelastic.core.html#module-mechelastic.core.elastic_properties_2d">mechelastic.core.elastic_properties_2d</a>
+</li>
+        <li><a href="mechelastic.core.html#module-mechelastic.core.ELATE">mechelastic.core.ELATE</a>
+</li>
+        <li><a href="mechelastic.core.html#module-mechelastic.core.structure">mechelastic.core.structure</a>
+</li>
+        <li><a href="mechelastic.parsers.html#module-mechelastic.parsers">mechelastic.parsers</a>
+</li>
+        <li><a href="mechelastic.parsers.html#module-mechelastic.parsers.abinitparser">mechelastic.parsers.abinitparser</a>
+</li>
+        <li><a href="mechelastic.parsers.html#module-mechelastic.parsers.vaspparser">mechelastic.parsers.vaspparser</a>
+</li>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests">mechelastic.tests</a>
+</li>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests.ductile">mechelastic.tests.ductile</a>
+</li>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests.eigenvals">mechelastic.tests.eigenvals</a>
+</li>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests.stability">mechelastic.tests.stability</a>
+</li>
+        <li><a href="mechelastic.tests.html#module-mechelastic.tests.symmetry">mechelastic.tests.symmetry</a>
+</li>
+        <li><a href="mechelastic.utils.html#module-mechelastic.utils">mechelastic.utils</a>
+</li>
+        <li><a href="mechelastic.utils.html#module-mechelastic.utils.constants">mechelastic.utils.constants</a>
+</li>
+        <li><a href="mechelastic.utils.html#module-mechelastic.utils.crystalutils">mechelastic.utils.crystalutils</a>
+</li>
+        <li><a href="mechelastic.utils.html#module-mechelastic.utils.elements">mechelastic.utils.elements</a>
+</li>
+        <li><a href="mechelastic.html#module-mechelastic.version">mechelastic.version</a>
+</li>
+      </ul></li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.mu_lame_coefficient">mu_lame_coefficient() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
   </ul></td>
@@ -506,18 +689,22 @@
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.Elastic.poisson3D">poisson3D() (mechelastic.core.ELATE.Elastic method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mechelastic.core.html#mechelastic.core.ELATE.ELATE.POISSON3D">POISSON3D() (mechelastic.core.ELATE.ELATE method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_reuss">poissons_ratio_reuss() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt">poissons_ratio_voigt() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.poissons_ratio_voigt_reuss_hill">poissons_ratio_voigt_reuss_hill() (mechelastic.core.elastic_properties.ElasticProperties property)</a>
 </li>
-      <li><a href="mechelastic.tests.html#mechelastic.tests.eigenvals.positive_evals">positive_evals() (in module mechelastic.tests.eigenvals)</a>
+      <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.positive_evals">positive_evals() (in module mechelastic.core.elastic_properties)</a>
+
+      <ul>
+        <li><a href="mechelastic.tests.html#mechelastic.tests.eigenvals.positive_evals">(in module mechelastic.tests.eigenvals)</a>
 </li>
+      </ul></li>
       <li><a href="mechelastic.comms.html#mechelastic.comms.printer.print_mechelastic">print_mechelastic() (in module mechelastic.comms.printer)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.ElasticProperties.print_properties">print_properties() (mechelastic.core.elastic_properties.ElasticProperties method)</a>
@@ -531,7 +718,11 @@
       <li><a href="mechelastic.comms.html#mechelastic.comms.printer.print_warning_2D">print_warning_2D() (in module mechelastic.comms.printer)</a>
 </li>
       <li><a href="mechelastic.comms.html#mechelastic.comms.printer.printMatrix">printMatrix() (in module mechelastic.comms.printer)</a>
+
+      <ul>
+        <li><a href="mechelastic.core.html#mechelastic.core.elastic_properties.printMatrix">(in module mechelastic.core.elastic_properties)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -567,6 +758,8 @@
       <li><a href="mechelastic.core.html#mechelastic.core.structure.Structure.spglib_cell">spglib_cell() (mechelastic.core.structure.Structure property)</a>
 </li>
       <li><a href="mechelastic.tests.html#mechelastic.tests.stability.stability_test">stability_test() (in module mechelastic.tests.stability)</a>
+</li>
+      <li><a href="mechelastic.tests.html#mechelastic.tests.stability.stability_test_2d">stability_test_2d() (in module mechelastic.tests.stability)</a>
 </li>
       <li><a href="mechelastic.core.html#mechelastic.core.structure.Structure">Structure (class in mechelastic.core.structure)</a>
 </li>
@@ -633,11 +826,19 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Sobhit Singh
+        
+        &copy; Copyright 2020, Sobhit Singh, Romero Group
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -648,7 +849,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

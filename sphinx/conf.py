@@ -18,8 +18,8 @@ sys.path.insert(0, os.path.abspath('..'))
 # -- Project information -----------------------------------------------------
 
 project = 'MechElastic'
-copyright = '2020, Sobhit Singh'
-author = 'Sobhit Singh'
+copyright = '2020, Sobhit Singh, Romero Group'
+author = 'Sobhit Singh, Romero Group'
 
 
 # -- General configuration ---------------------------------------------------
@@ -32,7 +32,9 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
-    'numpydoc'
+    'numpydoc',
+    "sphinx.ext.mathjax", "sphinx.ext.githubpages",
+    "sphinx.ext.napoleon",  'sphinx_copybutton',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

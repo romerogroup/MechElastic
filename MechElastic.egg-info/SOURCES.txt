@@ -17,9 +17,12 @@ mechelastic/comms/__init__.py
 mechelastic/comms/printer.py
 mechelastic/core/ELATE.py
 mechelastic/core/__init__.py
+mechelastic/core/brillouin_zone.py
 mechelastic/core/elastic_properties.py
 mechelastic/core/elastic_properties_2d.py
+mechelastic/core/isosurface.py
 mechelastic/core/structure.py
+mechelastic/core/surface.py
 mechelastic/eos/__init__.py
 mechelastic/eos/eos.py
 mechelastic/parsers/__init__.py
