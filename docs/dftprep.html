@@ -93,9 +93,9 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">DFT Preparation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#vasp">1. VASP</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#abinit">2. Abinit</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#quantum-espresso">3. Quantum Espresso</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#quantum-espresso">3. Quantum Espresso</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a></li>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">MechElastic API</a></li>
 </ul>
@@ -210,14 +210,27 @@
 <p>abinit.out - The output from a SCF calculation
 abinit2.out - The output from the anaddb calculation to retrieve elastic tensors</p>
 </div>
-<div class="section" id="quantum-espresso">
-<h2>3. Quantum Espresso<a class="headerlink" href="#quantum-espresso" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>Required files : scf.out</p></li>
-<li><p>flag           : code=’qe’</p></li>
-</ul>
-<p>Quantum Espresso v6.5+ is supported.</p>
 </div>
+<hr class="docutils" />
+<div class="section" id="quantum-espresso">
+<h1>3. Quantum Espresso<a class="headerlink" href="#quantum-espresso" title="Permalink to this headline">¶</a></h1>
+<p>1 . <strong>QE ElaStic</strong> implementation</p>
+<ul class="simple">
+<li><p>Required files : scf.in , ElaStic_2nd.out</p></li>
+<li><p>flag           : code=’qe_ElaStic’</p></li>
+</ul>
+<p>scf.in - The input file for a SCF calculation from the ElaStic code.</p>
+<p>ElaStic_2nd.out - The output file from the ElaStic code.</p>
+<p>See MechElasticexamplesQE_ElaStic for an example of its use.</p>
+<p>2 . <strong>QE_thermo_pw</strong> implementation</p>
+<ul class="simple">
+<li><p>Required files : si.elastic.in , si.elastic.out</p></li>
+<li><p>flag           : code=’qe_thermo_pw’</p></li>
+</ul>
+<p>si.elastic.in - The input file for a SCF calculation for the qe_thermo_pw code.</p>
+<p>si.elastic.out - The output file for a SCF calculation for the qe_thermo_pw code.</p>
+<p>See MechElasticexamplesQE_thermo_pw for an example of its use.</p>
+<p>Quantum Espresso v6.5+ is supported.</p>
 </div>
 
 

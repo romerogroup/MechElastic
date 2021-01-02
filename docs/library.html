@@ -91,11 +91,13 @@
 <li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
 <li class="toctree-l1"><a class="reference internal" href="cite.html">How to cite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="dftprep.html">DFT Preparation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dftprep.html#quantum-espresso">3. Quantum Espresso</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="standalone.html">Stand-alone Mode</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Library Mode</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#elastic-constants-and-base-functions">Elastic constants and base functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#equation-of-state-eos-analysis">Equation of State (EOS) Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#elate-implementation">ELATE implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -243,6 +245,56 @@ Text file with two columns containing volume and energy (<code class="docutils l
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mechelastic</span> <span class="kn">import</span> <span class="n">EOS</span>
 <span class="n">eos_object</span> <span class="o">=</span> <span class="n">EOS</span><span class="p">(</span><span class="s1">&#39;energyvsvolume.dat&#39;</span><span class="p">,</span> <span class="n">eostype</span><span class="o">=</span><span class="s1">&#39;energy&#39;</span><span class="p">)</span>
 <span class="n">eos_object</span><span class="o">.</span><span class="n">plot_eos</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="elate-implementation">
+<h2>ELATE implementation<a class="headerlink" href="#elate-implementation" title="Permalink to this headline">¶</a></h2>
+<p>With the output of a given DFT code or direct input of an elastic tensor MechElastic can perform ELATE’s anisotropic analysis and produce the same 2d and 3d plots of elastic properties. The original website for ELATE can be found here, &lt;<a class="reference external" href="http://progs.coudert.name/elate">http://progs.coudert.name/elate</a>&gt;.</p>
+<p>Examples of the implementation can be found in MechElasticexamplesELATE.py or MechElasticexamplesmechelastic_w_mpDatabase.py</p>
+<p>Direct output from a DFT code usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
+<span class="c1"># Produce the 2D plots for the Shear modulus</span>
+<span class="c1"># elastic_calc - [&#39;SHEAR&#39;,&#39;POISSON&#39;,&#39;YOUNG&#39;,&#39;LC&#39;]</span>
+<span class="c1"># npoints - number of points to use to make the plot</span>
+<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic_anisotropy</span><span class="p">(</span><span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.out&#39;</span><span class="p">,</span><span class="n">infile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.in&#39;</span><span class="p">,</span>                                                                                                                        <span class="n">code</span><span class="o">=</span><span class="s2">&quot;qe_thermo_pw&quot;</span><span class="p">,</span>                                                                                                                                                             <span class="n">plot</span><span class="o">=</span><span class="s2">&quot;2D&quot;</span><span class="p">,</span>
+                                         <span class="n">elastic_calc</span><span class="o">=</span> <span class="s1">&#39;SHEAR&#39;</span>
+                                         <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="c1"># Produce the 3D plots for the Shear modulus</span>
+<span class="c1"># elastic_calc - [&#39;SHEAR&#39;,&#39;POISSON&#39;,&#39;YOUNG&#39;,&#39;LC&#39;]</span>
+<span class="c1"># npoints - number of points to use to make the plot</span>
+<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic_anisotropy</span><span class="p">(</span><span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.out&#39;</span><span class="p">,</span> <span class="n">infile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.in&#39;</span><span class="p">,</span>
+                                         <span class="n">code</span><span class="o">=</span><span class="s2">&quot;qe_thermo_pw&quot;</span><span class="p">,</span>
+                                         <span class="n">plot</span><span class="o">=</span><span class="s2">&quot;3D&quot;</span><span class="p">,</span>
+                                         <span class="n">elastic_calc</span><span class="o">=</span> <span class="s1">&#39;SHEAR&#39;</span>
+                                         <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="c1"># Just output the ELATE analysis</span>
+<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic_anisotropy</span><span class="p">(</span><span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.out&#39;</span><span class="p">,</span><span class="n">infile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.in&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;qe_thermo_pw&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Direct input of a elastic tensor usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mechelastic.core</span> <span class="kn">import</span> <span class="n">ELATE</span>
+<span class="kn">from</span> <span class="nn">mechelastic.parsers</span> <span class="kn">import</span> <span class="n">QE_thermo_pw_Parser</span>
+
+<span class="n">output</span> <span class="o">=</span> <span class="n">QE_thermo_pw_Parser</span><span class="p">(</span><span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.out&#39;</span><span class="p">,</span>
+                             <span class="n">infile</span> <span class="o">=</span>   <span class="s1">&#39;si.elastic.in&#39;</span> <span class="p">)</span>
+<span class="c1"># This is a 6X6 matrix. Input your tensor here.</span>
+<span class="n">elastic_tensor</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">elastic_tensor</span>
+
+<span class="n">row</span> <span class="o">=</span> <span class="n">elastic_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">col</span> <span class="o">=</span> <span class="n">elastic_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">rowsList</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="n">columnsList</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
+        <span class="n">columnsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">elastic_tensor</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">rowsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">columnsList</span><span class="p">)</span>
+<span class="n">elastic_tensor</span> <span class="o">=</span> <span class="n">ELATE</span><span class="o">.</span><span class="n">ELATE</span><span class="p">(</span><span class="n">rowsList</span><span class="p">)</span>
+
+<span class="n">voigt_shear</span>  <span class="o">=</span> <span class="n">elastic_tensor</span><span class="o">.</span><span class="n">voigtShear</span>
+
+<span class="n">elastic_tensor</span><span class="o">.</span><span class="n">plot3D</span><span class="p">(</span><span class="n">elastic_calc</span><span class="o">=</span><span class="s2">&quot;LC&quot;</span><span class="p">,</span> <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">elastic_tensor</span><span class="o">.</span><span class="n">plot2D</span><span class="p">(</span><span class="n">elastic_calc</span><span class="o">=</span><span class="s2">&quot;LC&quot;</span><span class="p">,</span> <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
