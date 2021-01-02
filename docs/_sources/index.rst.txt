@@ -27,7 +27,7 @@ Currently supports:
 
    modules
 
-	     
+​	     
 
 Indices and tables
 ==================

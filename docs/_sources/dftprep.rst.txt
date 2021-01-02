@@ -18,7 +18,6 @@ In library mode::
     import mechelastic 
     mechelastic.calculate_elastic(code="vasp", dim="3D", infile="OUTCAR-Si_bulk")
 
-
 ========
 1. VASP
 ========
@@ -56,13 +55,36 @@ An example input file (INCAR) for elastic constants calculations in VASP is give
 abinit.out - The output from a SCF calculation
 abinit2.out - The output from the anaddb calculation to retrieve elastic tensors
 
-
 ===================
 3. Quantum Espresso
 ===================
 
-- Required files : scf.out
-- flag           : code='qe'
+
+
+1 . **QE ElaStic** implementation
+
+- Required files : scf.in , ElaStic_2nd.out
+
+- flag           : code='qe_ElaStic'
+
+scf.in - The input file for a SCF calculation from the ElaStic code.
+
+ElaStic_2nd.out - The output file from the ElaStic code.
+
+See \MechElastic\examples\QE_ElaStic for an example of its use.
+
+
+
+2 . **QE_thermo_pw** implementation
+
+- Required files : si.elastic.in , si.elastic.out
+- flag           : code='qe_thermo_pw'
+
+si.elastic.in - The input file for a SCF calculation for the qe_thermo_pw code.
+
+si.elastic.out - The output file for a SCF calculation for the qe_thermo_pw code.
+
+See \MechElastic\examples\QE_thermo_pw for an example of its use.
 
 Quantum Espresso v6.5+ is supported. 
 
