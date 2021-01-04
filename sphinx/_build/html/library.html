@@ -39,7 +39,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="MechElastic API" href="modules.html" />
+    <link rel="next" title="Elastic constants and base functions" href="elasticconstantsandbasefunctions.html" />
     <link rel="prev" title="Stand-alone Mode" href="standalone.html" /> 
 </head>
 
@@ -94,9 +94,9 @@
 <li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="standalone.html">Stand-alone Mode</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">Library Mode</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#elastic-constants-and-base-functions">Elastic constants and base functions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#equation-of-state-eos-analysis">Equation of State (EOS) Analysis</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#elate-implementation">ELATE implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elasticconstantsandbasefunctions.html">Elastic constants and base functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eos.html">Equation of State (EOS) Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="elate.html">ELATE implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -172,130 +172,16 @@
   <div class="section" id="library-mode">
 <h1>Library Mode<a class="headerlink" href="#library-mode" title="Permalink to this headline">¶</a></h1>
 <p>Similar to the Stand-alone mode, MechElastic can be run with the library mode after importing MechElastic from Python.</p>
-<div class="section" id="elastic-constants-and-base-functions">
-<h2>Elastic constants and base functions<a class="headerlink" href="#elastic-constants-and-base-functions" title="Permalink to this headline">¶</a></h2>
-<ol class="arabic">
-<li><p>For bulk Si:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;vasp&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;3D&quot;</span><span class="p">,</span> <span class="n">infile</span><span class="o">=</span><span class="s2">&quot;OUTCAR-Si_bulk&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="elasticconstantsandbasefunctions.html">Elastic constants and base functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eos.html">Equation of State (EOS) Analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="eos.html#plot-eos">plot_eos()</a></li>
+<li class="toctree-l2"><a class="reference internal" href="eos.html#plot-enthalpy-curves">plot_enthalpy_curves()</a></li>
+</ul>
 </li>
-<li><p>For 2D graphene:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;vasp&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;2D&quot;</span><span class="p">,</span> <span class="n">infile</span><span class="o">=</span><span class="s2">&quot;OUTCAR-graphene&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>For 2D BN:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;vasp&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;2D&quot;</span><span class="p">,</span> <span class="n">infile</span><span class="o">=</span><span class="s2">&quot;OUTCAR-BN_mono&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>To provide a crystal type (required for the stability test) manualy, the <code class="docutils literal notranslate"><span class="pre">crystal</span></code> flag can be used. If not provided, MechElatic will determind the crystal symmetry using spglib. The stability test is currently only required for 3D systems:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;vasp&quot;</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="s2">&quot;3D&quot;</span><span class="p">,</span> <span class="n">infile</span><span class="o">=</span><span class="s2">&quot;OUTCAR-Si_bulk&quot;</span><span class="p">,</span> <span class="n">crystal</span><span class="o">=</span><span class="s2">&quot;cubic&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>To run elastic constants calculation for Abinit:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic</span><span class="p">(</span><span class="n">code</span><span class="o">=</span><span class="s2">&quot;abinit&quot;</span><span class="p">,</span> <span class="n">infile</span><span class="o">=</span><span class="s2">&quot;abinit.out&quot;</span><span class="p">,</span> <span class="n">anaddbfile</span><span class="o">=</span><span class="s2">&quot;abinit2.out&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p><code class="docutils literal notranslate"><span class="pre">mechelastic.calculate_elastic()</span></code> calculates the complete set of elastic properties. However, if one wishes to call particular methods that can be also done through the library mode. For example, given a matrix and a crystaltype, the stability can be determined:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
-
-<span class="n">parserclass</span> <span class="o">=</span> <span class="n">mechelastic</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">VaspOutcar</span><span class="p">()</span>
-<span class="n">elastic_tensor</span> <span class="o">=</span> <span class="n">parserclass</span><span class="o">.</span><span class="n">elastic_tensor</span>
-<span class="n">crystaltype</span> <span class="o">=</span> <span class="s2">&quot;cubic&quot;</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">tests</span><span class="o">.</span><span class="n">stability</span><span class="o">.</span><span class="n">stability_test</span><span class="p">(</span><span class="n">elastic_tensor</span><span class="p">,</span> <span class="n">crystaltype</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-<li><p>To determine the crystal symmetry:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
-
-<span class="n">parserclass</span> <span class="o">=</span> <span class="n">mechelastic</span><span class="o">.</span><span class="n">parsers</span><span class="o">.</span><span class="n">VaspOutcar</span><span class="p">()</span>
-<span class="n">elastic_tensor</span> <span class="o">=</span> <span class="n">parserclass</span><span class="o">.</span><span class="n">elastic_tensor</span>
-<span class="n">cell</span> <span class="o">=</span> <span class="n">parserclass</span><span class="o">.</span><span class="n">structure</span><span class="o">.</span><span class="n">spglib_cell</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">crystalutils</span><span class="o">.</span><span class="n">crystal_select</span><span class="p">(</span><span class="n">elastic_tensor</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
-</pre></div>
-</div>
-</li>
-</ol>
-</div>
-<div class="section" id="equation-of-state-eos-analysis">
-<h2>Equation of State (EOS) Analysis<a class="headerlink" href="#equation-of-state-eos-analysis" title="Permalink to this headline">¶</a></h2>
-<p>Provided pressure/energy and volume data, MechElastic can perform EOS analysis using the following models:</p>
-<ol class="arabic simple">
-<li><p>Vinet</p></li>
-<li><p>Birch</p></li>
-<li><p>Murnaghan</p></li>
-<li><p>Birch-Murnaghan</p></li>
-</ol>
-<p><strong>INPUT:</strong>
-Text file with two columns containing volume and energy (<code class="docutils literal notranslate"><span class="pre">eostype='energy'</span></code>) or volume and pressure (<code class="docutils literal notranslate"><span class="pre">eostype='pressure'</span></code>), respectively, should be passed into the MechElastic package.</p>
-<p>With this, an initial second order parabolic polyfit is performed to obtain the initial fitting parameters, <span class="math notranslate nohighlight">\(E_0\)</span> or <span class="math notranslate nohighlight">\(P_0\)</span>, <span class="math notranslate nohighlight">\(B_0\)</span>, <span class="math notranslate nohighlight">\(B_p\)</span> and <span class="math notranslate nohighlight">\(V_0\)</span>. Afterwards, a more accurate fitting for the energy or pressure is performed using the least square method against each EOS model. A central difference scheme is used to obtain the pressure from this fitted energy. If pressure is to be obtained from energy, an integrating scheme is used instead. Finally, a plot of <a href="#id1"><span class="problematic" id="id2">`</span></a>Energy vs Volume’ and <a href="#id3"><span class="problematic" id="id4">`</span></a>Pressure vs Volume’ is obtained comparing the values obtained from the different EOS models with the originally provided raw data. With these plots, an analysis of the phase boundaries could be performed.</p>
-<p>In addition to the fitting, MechElastic also performs a regression analysis for fitting using the Mean-Squared Error (MSE) of the residuals. This allows users to decide the best EOS model to use for their dataset.</p>
-<p>Usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mechelastic</span> <span class="kn">import</span> <span class="n">EOS</span>
-<span class="n">eos_object</span> <span class="o">=</span> <span class="n">EOS</span><span class="p">(</span><span class="s1">&#39;energyvsvolume.dat&#39;</span><span class="p">,</span> <span class="n">eostype</span><span class="o">=</span><span class="s1">&#39;energy&#39;</span><span class="p">)</span>
-<span class="n">eos_object</span><span class="o">.</span><span class="n">plot_eos</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="section" id="elate-implementation">
-<h2>ELATE implementation<a class="headerlink" href="#elate-implementation" title="Permalink to this headline">¶</a></h2>
-<p>With the output of a given DFT code or direct input of an elastic tensor MechElastic can perform ELATE’s anisotropic analysis and produce the same 2d and 3d plots of elastic properties. The original website for ELATE can be found here, &lt;<a class="reference external" href="http://progs.coudert.name/elate">http://progs.coudert.name/elate</a>&gt;.</p>
-<p>Examples of the implementation can be found in MechElasticexamplesELATE.py or MechElasticexamplesmechelastic_w_mpDatabase.py</p>
-<p>Direct output from a DFT code usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
-<span class="c1"># Produce the 2D plots for the Shear modulus</span>
-<span class="c1"># elastic_calc - [&#39;SHEAR&#39;,&#39;POISSON&#39;,&#39;YOUNG&#39;,&#39;LC&#39;]</span>
-<span class="c1"># npoints - number of points to use to make the plot</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic_anisotropy</span><span class="p">(</span><span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.out&#39;</span><span class="p">,</span><span class="n">infile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.in&#39;</span><span class="p">,</span>                                                                                                                        <span class="n">code</span><span class="o">=</span><span class="s2">&quot;qe_thermo_pw&quot;</span><span class="p">,</span>                                                                                                                                                             <span class="n">plot</span><span class="o">=</span><span class="s2">&quot;2D&quot;</span><span class="p">,</span>
-                                         <span class="n">elastic_calc</span><span class="o">=</span> <span class="s1">&#39;SHEAR&#39;</span>
-                                         <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
-<span class="c1"># Produce the 3D plots for the Shear modulus</span>
-<span class="c1"># elastic_calc - [&#39;SHEAR&#39;,&#39;POISSON&#39;,&#39;YOUNG&#39;,&#39;LC&#39;]</span>
-<span class="c1"># npoints - number of points to use to make the plot</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic_anisotropy</span><span class="p">(</span><span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.out&#39;</span><span class="p">,</span> <span class="n">infile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.in&#39;</span><span class="p">,</span>
-                                         <span class="n">code</span><span class="o">=</span><span class="s2">&quot;qe_thermo_pw&quot;</span><span class="p">,</span>
-                                         <span class="n">plot</span><span class="o">=</span><span class="s2">&quot;3D&quot;</span><span class="p">,</span>
-                                         <span class="n">elastic_calc</span><span class="o">=</span> <span class="s1">&#39;SHEAR&#39;</span>
-                                         <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
-<span class="c1"># Just output the ELATE analysis</span>
-<span class="n">mechelastic</span><span class="o">.</span><span class="n">calculate_elastic_anisotropy</span><span class="p">(</span><span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.out&#39;</span><span class="p">,</span><span class="n">infile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.in&#39;</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="s2">&quot;qe_thermo_pw&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-<p>Direct input of a elastic tensor usage:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mechelastic.core</span> <span class="kn">import</span> <span class="n">ELATE</span>
-<span class="kn">from</span> <span class="nn">mechelastic.parsers</span> <span class="kn">import</span> <span class="n">QE_thermo_pw_Parser</span>
-
-<span class="n">output</span> <span class="o">=</span> <span class="n">QE_thermo_pw_Parser</span><span class="p">(</span><span class="n">outfile</span> <span class="o">=</span> <span class="s1">&#39;si.elastic.out&#39;</span><span class="p">,</span>
-                             <span class="n">infile</span> <span class="o">=</span>   <span class="s1">&#39;si.elastic.in&#39;</span> <span class="p">)</span>
-<span class="c1"># This is a 6X6 matrix. Input your tensor here.</span>
-<span class="n">elastic_tensor</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">elastic_tensor</span>
-
-<span class="n">row</span> <span class="o">=</span> <span class="n">elastic_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">col</span> <span class="o">=</span> <span class="n">elastic_tensor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-<span class="n">rowsList</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
-    <span class="n">columnsList</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">col</span><span class="p">):</span>
-        <span class="n">columnsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">elastic_tensor</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">],</span><span class="mi">3</span><span class="p">))</span>
-    <span class="n">rowsList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">columnsList</span><span class="p">)</span>
-<span class="n">elastic_tensor</span> <span class="o">=</span> <span class="n">ELATE</span><span class="o">.</span><span class="n">ELATE</span><span class="p">(</span><span class="n">rowsList</span><span class="p">)</span>
-
-<span class="n">voigt_shear</span>  <span class="o">=</span> <span class="n">elastic_tensor</span><span class="o">.</span><span class="n">voigtShear</span>
-
-<span class="n">elastic_tensor</span><span class="o">.</span><span class="n">plot3D</span><span class="p">(</span><span class="n">elastic_calc</span><span class="o">=</span><span class="s2">&quot;LC&quot;</span><span class="p">,</span> <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">elastic_tensor</span><span class="o">.</span><span class="n">plot2D</span><span class="p">(</span><span class="n">elastic_calc</span><span class="o">=</span><span class="s2">&quot;LC&quot;</span><span class="p">,</span> <span class="n">npoints</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
-</pre></div>
-</div>
+<li class="toctree-l1"><a class="reference internal" href="elate.html">ELATE implementation</a></li>
+</ul>
 </div>
 </div>
 
@@ -307,7 +193,7 @@ Text file with two columns containing volume and energy (<code class="docutils l
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="modules.html" class="btn btn-neutral float-right" title="MechElastic API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="elasticconstantsandbasefunctions.html" class="btn btn-neutral float-right" title="Elastic constants and base functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="standalone.html" class="btn btn-neutral float-left" title="Stand-alone Mode" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

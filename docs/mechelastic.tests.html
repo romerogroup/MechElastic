@@ -103,10 +103,10 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="mechelastic.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#mechelastic-calculate-elastic-module">mechelastic.calculate_elastic module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#mechelastic-calculate-elastic-anisotropy-module">mechelastic.calculate_elastic_anisotropy module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic.calculate_elastic">mechelastic.calculate_elastic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic.calculate_elastic_anisotropy">mechelastic.calculate_elastic_anisotropy module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic.version">mechelastic.version module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
@@ -186,20 +186,53 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="mechelastic-tests-ductile-module">
-<h2>mechelastic.tests.ductile module<a class="headerlink" href="#mechelastic-tests-ductile-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.tests.ductile">
+<span id="mechelastic-tests-ductile-module"></span><h2>mechelastic.tests.ductile module<a class="headerlink" href="#module-mechelastic.tests.ductile" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="mechelastic.tests.ductile.ductile_test">
+<code class="sig-prename descclassname">mechelastic.tests.ductile.</code><code class="sig-name descname">ductile_test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ratio</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/tests/ductile.html#ductile_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.tests.ductile.ductile_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test for ductility.</p>
+</dd></dl>
+
 </div>
-<div class="section" id="mechelastic-tests-eigenvals-module">
-<h2>mechelastic.tests.eigenvals module<a class="headerlink" href="#mechelastic-tests-eigenvals-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.tests.eigenvals">
+<span id="mechelastic-tests-eigenvals-module"></span><h2>mechelastic.tests.eigenvals module<a class="headerlink" href="#module-mechelastic.tests.eigenvals" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="mechelastic.tests.eigenvals.positive_evals">
+<code class="sig-prename descclassname">mechelastic.tests.eigenvals.</code><code class="sig-name descname">positive_evals</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cnew</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/tests/eigenvals.html#positive_evals"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.tests.eigenvals.positive_evals" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks the postivity of the eigenvalues
+of a matrix.</p>
+</dd></dl>
+
 </div>
-<div class="section" id="mechelastic-tests-stability-module">
-<h2>mechelastic.tests.stability module<a class="headerlink" href="#mechelastic-tests-stability-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.tests.stability">
+<span id="mechelastic-tests-stability-module"></span><h2>mechelastic.tests.stability module<a class="headerlink" href="#module-mechelastic.tests.stability" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="mechelastic.tests.stability.stability_test">
+<code class="sig-prename descclassname">mechelastic.tests.stability.</code><code class="sig-name descname">stability_test</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span></em>, <em class="sig-param"><span class="n">crystal_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/tests/stability.html#stability_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.tests.stability.stability_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>This methods tests for the stability of a structure, then returns a boolean if ther structure is stable.</p>
+<p>References
+[1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. Félix Mouhat and François-Xavier Coudert. Phys. Rev. B (2014)
+[2] Crystal Structures and Elastic Properties of Superhard IrN2 and IrN3 from First Principles. Zhi-jian Wu et al. Phys. Rev. B (2007)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="mechelastic.tests.stability.stability_test_2d">
+<code class="sig-prename descclassname">mechelastic.tests.stability.</code><code class="sig-name descname">stability_test_2d</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">matrix</span></em>, <em class="sig-param"><span class="n">lattice_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/tests/stability.html#stability_test_2d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.tests.stability.stability_test_2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="mechelastic-tests-symmetry-module">
-<h2>mechelastic.tests.symmetry module<a class="headerlink" href="#mechelastic-tests-symmetry-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.tests.symmetry">
+<span id="mechelastic-tests-symmetry-module"></span><h2>mechelastic.tests.symmetry module<a class="headerlink" href="#module-mechelastic.tests.symmetry" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="mechelastic.tests.symmetry.check_symmetric">
+<code class="sig-prename descclassname">mechelastic.tests.symmetry.</code><code class="sig-name descname">check_symmetric</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">a</span></em>, <em class="sig-param"><span class="n">tol</span><span class="o">=</span><span class="default_value">1e-08</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/tests/symmetry.html#check_symmetric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.tests.symmetry.check_symmetric" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if a matrix is symmetric.</p>
+</dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.tests">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mechelastic.tests" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

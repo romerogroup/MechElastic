@@ -52,8 +52,8 @@ An example input file (INCAR) for elastic constants calculations in VASP is give
 - Required files : abinit.out, abinit2.out
 - flag           : code='abinit'
 
-abinit.out - The output from a SCF calculation
-abinit2.out - The output from the anaddb calculation to retrieve elastic tensors
+| abinit.out - The output from a SCF calculation 
+| abinit2.out - The output from the anaddb calculation to retrieve elastic tensors
 
 ===================
 3. Quantum Espresso

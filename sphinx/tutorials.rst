@@ -9,7 +9,7 @@ Remember to set the flag ``code`` for the relevant DFT code.
 MechElastic has two modes: stand-alone and library. The library mode is more updated and contains all the features in MechElastic. 
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 4 
 
    standalone
    library

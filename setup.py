@@ -67,7 +67,7 @@ setup(
     url=data["url"],
     download_url=data["download_url"],
     license="LICENSE.txt",
-    install_requires=["numpy", "spglib", "prettytable", "pathlib", "pyvista"],
+    install_requires=["numpy", "spglib", "prettytable", "pathlib", "pyvista","intersect @ git+https://github.com/sukhbinder/intersection.git#egg=intersect-1.0"],
     data_files=[("", ["LICENSE.txt"])],
     package_data={"": ["setup.json"]},
     scripts=["scripts/MechElastic.py"],

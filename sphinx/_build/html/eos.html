@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Equation of State (EOS) Analysis &mdash; MechElastic  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ELATE implementation" href="elate.html" />
+    <link rel="prev" title="Elastic constants and base functions" href="elasticconstantsandbasefunctions.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">How to cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dftprep.html">DFT Preparation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="standalone.html">Stand-alone Mode</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="library.html">Library Mode</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="elasticconstantsandbasefunctions.html">Elastic constants and base functions</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Equation of State (EOS) Analysis</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plot-eos">plot_eos()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plot-enthalpy-curves">plot_enthalpy_curves()</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="elate.html">ELATE implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">MechElastic API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MechElastic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="tutorials.html">Tutorials</a> &raquo;</li>
+        
+          <li><a href="library.html">Library Mode</a> &raquo;</li>
+        
+      <li>Equation of State (EOS) Analysis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/eos.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="equation-of-state-eos-analysis">
+<h1>Equation of State (EOS) Analysis<a class="headerlink" href="#equation-of-state-eos-analysis" title="Permalink to this headline">¶</a></h1>
+<p>Provided pressure/energy and volume data, MechElastic can perform EOS analysis using the following models:</p>
+<ol class="arabic simple">
+<li><p>Vinet</p></li>
+<li><p>Birch</p></li>
+<li><p>Murnaghan</p></li>
+<li><p>Birch-Murnaghan</p></li>
+</ol>
+<p>Please find examples for EOS analysis in the <code class="docutils literal notranslate"><span class="pre">examples/EOS/</span></code> directory.</p>
+<div class="section" id="plot-eos">
+<h2>plot_eos()<a class="headerlink" href="#plot-eos" title="Permalink to this headline">¶</a></h2>
+<p><strong>INPUT:</strong>
+Text file with two columns containing volume (<span class="math notranslate nohighlight">\(Å^3\)</span>) and energy (eV) (<code class="docutils literal notranslate"><span class="pre">eostype='energy'</span></code>) or volume and pressure (GPa) (<code class="docutils literal notranslate"><span class="pre">eostype='pressure'</span></code>), respectively, should be passed into the MechElastic package.</p>
+<p>With this, an initial second order parabolic polyfit is performed to obtain the initial fitting parameters, <span class="math notranslate nohighlight">\(E_0\)</span> or <span class="math notranslate nohighlight">\(P_0\)</span>, <span class="math notranslate nohighlight">\(B_0\)</span>, <span class="math notranslate nohighlight">\(B_p\)</span> and <span class="math notranslate nohighlight">\(V_0\)</span>. Afterwards, a more accurate fitting for the energy or pressure is performed using the least square method against each EOS model. A central difference scheme is used to obtain the pressure from this fitted energy. If pressure is to be obtained from energy, an integrating scheme is used instead. Finally, a plot of <cite>Energy vs Volume’ and `Pressure vs Volume’ is obtained comparing the values obtained from the different EOS models with the originally provided raw data. With these plots, an analysis of the phase boundaries could be performed. The energy or pressure is normalized with the number of atoms in the unit-cell set by ``natoms`</cite>. If the output units are to be in atomic units, set <code class="docutils literal notranslate"><span class="pre">au=True</span></code>.</p>
+<p>In addition to the fitting, MechElastic also performs a regression analysis for fitting using the Mean-Squared Error (MSE) of the residuals. This allows users to decide the best EOS model to use for their dataset.</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mechelastic</span> <span class="kn">import</span> <span class="n">EOS</span>
+<span class="n">eos_object</span> <span class="o">=</span> <span class="n">EOS</span><span class="p">()</span>
+<span class="n">eos_object</span><span class="o">.</span><span class="n">plot_eos</span><span class="p">(</span><span class="n">inputfile</span><span class="o">=</span><span class="s1">&#39;EvsV.dat&#39;</span><span class="p">,</span> <span class="n">eostype</span><span class="o">=</span><span class="s1">&#39;energy&#39;</span><span class="p">,</span> <span class="n">natoms</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">au</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>To set a initial and final value to the volume range use the flag <code class="docutils literal notranslate"><span class="pre">vlim=[v_initial,</span> <span class="pre">v_final]</span></code>. If not set, the minimum and maximum values of the provided dataset would be used.</p>
+</div>
+<div class="section" id="plot-enthalpy-curves">
+<h2>plot_enthalpy_curves()<a class="headerlink" href="#plot-enthalpy-curves" title="Permalink to this headline">¶</a></h2>
+<p>This function plots Enthalpy vs. Pressure curves for multiple datasets of different phases and calculates the phase transition pressures. The pressure is calculated through a central difference scheme similar to <code class="docutils literal notranslate"><span class="pre">plot_eos()</span></code>.</p>
+<p><strong>INPUT:</strong>
+Multiple input files containing two columns of volume (<span class="math notranslate nohighlight">\(Å^3\)</span>) and energy (eV) for each phase.</p>
+<p>Usage:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mechelastic</span> <span class="kn">import</span> <span class="n">EOS</span>
+
+<span class="n">eos_object</span> <span class="o">=</span> <span class="n">EOS</span><span class="p">()</span>
+
+<span class="n">infiles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Rm-3m&quot;</span><span class="p">,</span> <span class="s2">&quot;Pm-3m&quot;</span><span class="p">,</span> <span class="s2">&quot;Im-3m&quot;</span><span class="p">,</span> <span class="s2">&quot;I4_mcm&quot;</span><span class="p">,</span> <span class="s2">&quot;C12:m1&quot;</span><span class="p">]</span>
+<span class="n">natoms</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+<span class="n">eos_object</span><span class="o">.</span><span class="n">plot_enthalpy_curves</span><span class="p">(</span><span class="n">infiles</span><span class="p">,</span> <span class="n">natoms</span><span class="p">,</span> <span class="n">au</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The flags <code class="docutils literal notranslate"><span class="pre">vlim</span></code> and <code class="docutils literal notranslate"><span class="pre">au</span></code> work similar to the <code class="docutils literal notranslate"><span class="pre">plot_eos()</span></code> section.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="elate.html" class="btn btn-neutral float-right" title="ELATE implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="elasticconstantsandbasefunctions.html" class="btn btn-neutral float-left" title="Elastic constants and base functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Sobhit Singh, Romero Group
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -103,10 +103,10 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="mechelastic.html#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#mechelastic-calculate-elastic-module">mechelastic.calculate_elastic module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#mechelastic-calculate-elastic-anisotropy-module">mechelastic.calculate_elastic_anisotropy module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic.calculate_elastic">mechelastic.calculate_elastic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic.calculate_elastic_anisotropy">mechelastic.calculate_elastic_anisotropy module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic.version">mechelastic.version module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mechelastic.html#module-mechelastic">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
@@ -186,17 +186,41 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="mechelastic-utils-constants-module">
-<h2>mechelastic.utils.constants module<a class="headerlink" href="#mechelastic-utils-constants-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.utils.constants">
+<span id="mechelastic-utils-constants-module"></span><h2>mechelastic.utils.constants module<a class="headerlink" href="#module-mechelastic.utils.constants" title="Permalink to this headline">¶</a></h2>
+<p>This file contains physical constants.</p>
 </div>
-<div class="section" id="mechelastic-utils-crystalutils-module">
-<h2>mechelastic.utils.crystalutils module<a class="headerlink" href="#mechelastic-utils-crystalutils-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.utils.crystalutils">
+<span id="mechelastic-utils-crystalutils-module"></span><h2>mechelastic.utils.crystalutils module<a class="headerlink" href="#module-mechelastic.utils.crystalutils" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt id="mechelastic.utils.crystalutils.crystal_select">
+<code class="sig-prename descclassname">mechelastic.utils.crystalutils.</code><code class="sig-name descname">crystal_select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cnew</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cell</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">crystal_type</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/utils/crystalutils.html#crystal_select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.utils.crystalutils.crystal_select" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method selects crystal types.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="mechelastic.utils.crystalutils.lattice_select">
+<code class="sig-prename descclassname">mechelastic.utils.crystalutils.</code><code class="sig-name descname">lattice_select</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cnew</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cell</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">lattice_type</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/utils/crystalutils.html#lattice_select"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.utils.crystalutils.lattice_select" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method selects crystal types.</p>
+</dd></dl>
+
 </div>
-<div class="section" id="mechelastic-utils-elements-module">
-<h2>mechelastic.utils.elements module<a class="headerlink" href="#mechelastic-utils-elements-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.utils.elements">
+<span id="mechelastic-utils-elements-module"></span><h2>mechelastic.utils.elements module<a class="headerlink" href="#module-mechelastic.utils.elements" title="Permalink to this headline">¶</a></h2>
+<p>This file contains a dictionary of periodic elements.</p>
+<dl class="py function">
+<dt id="mechelastic.utils.elements.atomic_mass">
+<code class="sig-prename descclassname">mechelastic.utils.elements.</code><code class="sig-name descname">atomic_mass</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/utils/elements.html#atomic_mass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.utils.elements.atomic_mass" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="mechelastic.utils.elements.atomic_number">
+<code class="sig-prename descclassname">mechelastic.utils.elements.</code><code class="sig-name descname">atomic_number</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">element</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/utils/elements.html#atomic_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.utils.elements.atomic_number" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mechelastic.utils" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

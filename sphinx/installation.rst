@@ -23,3 +23,4 @@ Dependencies
 - spglib
 - pathlib
 - pyvista
+- intersect
