@@ -23,4 +23,4 @@ Dependencies
 - spglib
 - pathlib
 - pyvista
-- intersect
+- intersect (pip install git+https://github.com/sukhbinder/intersection.git)
