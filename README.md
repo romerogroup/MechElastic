@@ -30,6 +30,14 @@ Aldo H. Romero <br />
 
 ## Installation
 
+Pre-requisites:
+
+- numpy
+- spglib
+- pathlib
+- pyvista
+- intersect (pip install git+https://github.com/sukhbinder/intersection.git)
+
 ```
 pip install mechelastic
 ```
