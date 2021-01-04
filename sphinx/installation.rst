@@ -8,6 +8,8 @@ Installing using pip
 
     pip install mechelastic
 
+All the dependencies will be installed automatically.
+
 
 Installing using github
 ------------------------

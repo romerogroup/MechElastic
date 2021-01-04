@@ -4,7 +4,7 @@
 
 # MechElastic
 
-This Python library can be used to calculate some important physical properties such as elastic moduli, melting temperature, Debye temperature, elastic wave velocities, elastic anisotropy, etc. for all crystalline systems using output data from an elastic tensor calculation. It can also be used to test the mechanical stability of any bulk system. MechElastic reads the elastic matrix written in the output files from DFT codes. 
+This Python library can be used to calculate some important physical properties such as elastic moduli, melting temperature, Debye temperature, elastic wave velocities, elastic anisotropy, etc. for all crystalline systems using output data from an elastic tensor calculation. It can also be used to test the mechanical stability of any bulk system. MechElastic reads the elastic matrix written in the output files from DFT codes. Additionally, MechElastic allows performing Equation of State (EOS) analysis provided inputs of Volume and Energy or Volume and Pressure.  
 
 Currently supports:
 
@@ -32,11 +32,11 @@ Aldo H. Romero <br />
 
 Pre-requisites:
 
-- numpy
-- spglib
-- pathlib
-- pyvista
-- intersect (pip install git+https://github.com/sukhbinder/intersection.git)
+numpy <br />
+spglib <br />
+pathlib <br />
+pyvista <br />
+intersect (pip install git+https://github.com/sukhbinder/intersection.git) <br />
 
 ```
 pip install mechelastic

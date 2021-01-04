@@ -25,9 +25,11 @@ Usage::
 
     from mechelastic import EOS
     eos_object = EOS()
-    eos_object.plot_eos(inputfile='EvsV.dat', eostype='energy', natoms=1, au=False)
+    eos_object.plot_eos(inputfile='EvsV.dat', eostype='energy', natoms=1, au=False, model="Birch-Murnaghan")
 
 To set a initial and final value to the volume range use the flag ``vlim=[v_initial, v_final]``. If not set, the minimum and maximum values of the provided dataset would be used.  
+
+If ``model`` is not set it will plot all the models on the same plot along with the raw data points. The options for model are ``Vinet``, ``Birch``, ``Murnaghan`` and ``Birch-Murnaghan``. 
 
 plot_enthalpy_curves()
 ----------------------

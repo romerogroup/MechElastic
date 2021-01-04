@@ -141,7 +141,9 @@ class EOS:
             integrate.cumtrapz(v, P_birch_murnaghan, initial=0) * 6.2415e-03
         )  # eV
 
-    def plot_eos(self, infile=None, eostype="energy", natoms=1, au=False, vlim=None):
+    def plot_eos(
+        self, infile=None, eostype="energy", natoms=1, au=False, vlim=None, model=None
+    ):
         """plot_eos.
 
         This funciton plots the fitted EOS models.
@@ -157,6 +159,7 @@ class EOS:
         self.natoms = natoms
         self.au = au
         self.vlim = vlim
+        self.model = model
 
         if self.eostype == "energy":
 
@@ -245,49 +248,107 @@ class EOS:
 
             # Energy vs Volume plot
 
-            axs.plot(
-                au_converter_v * self.vol_array,
-                au_converter_e
-                * self.eos_vinet(self.eos_vinet_fitted.x, self.vol_array)
-                / self.natoms,
-                "orangered",
-                linewidth=11,
-                label="Vinet",
-            )
+            if self.model is None:
 
-            axs.plot(
-                au_converter_v * self.vol_array,
-                au_converter_e
-                * self.eos_birch(self.eos_birch_fitted.x, self.vol_array)
-                / self.natoms,
-                "lime",
-                linestyle="solid",
-                linewidth=7,
-                label="Birch",
-            )
-
-            axs.plot(
-                au_converter_v * self.vol_array,
-                au_converter_e
-                * self.eos_murnaghan(self.eos_murnaghan_fitted.x, self.vol_array)
-                / self.natoms,
-                color="magenta",
-                linestyle="dashed",
-                linewidth=5,
-                label="Murnaghan",
-            )
-
-            axs.plot(
-                au_converter_v * self.vol_array,
-                au_converter_e
-                * self.eos_birch_murnaghan(
-                    self.eos_birch_murnaghan_fitted.x, self.vol_array
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    au_converter_e
+                    * self.eos_vinet(self.eos_vinet_fitted.x, self.vol_array)
+                    / self.natoms,
+                    "orangered",
+                    linewidth=11,
+                    label="Vinet",
                 )
-                / self.natoms,
-                "k--",
-                linewidth=2,
-                label="Birch-Murnaghan",
-            )
+
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    au_converter_e
+                    * self.eos_birch(self.eos_birch_fitted.x, self.vol_array)
+                    / self.natoms,
+                    "lime",
+                    linestyle="solid",
+                    linewidth=7,
+                    label="Birch",
+                )
+
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    au_converter_e
+                    * self.eos_murnaghan(self.eos_murnaghan_fitted.x, self.vol_array)
+                    / self.natoms,
+                    color="magenta",
+                    linestyle="dashed",
+                    linewidth=5,
+                    label="Murnaghan",
+                )
+
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    au_converter_e
+                    * self.eos_birch_murnaghan(
+                        self.eos_birch_murnaghan_fitted.x, self.vol_array
+                    )
+                    / self.natoms,
+                    "k--",
+                    linewidth=2,
+                    label="Birch-Murnaghan",
+                )
+
+                # axs.scatter(
+                #     au_converter_v * self.volume,
+                #     au_converter_e * self.energy / self.natoms,
+                #     s=600,
+                #     facecolors="none",
+                #     edgecolors="black",
+                #     label="Raw Data",
+                # )
+
+            elif self.model == "Vinet":
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    au_converter_e
+                    * self.eos_vinet(self.eos_vinet_fitted.x, self.vol_array)
+                    / self.natoms,
+                    "r",
+                    linewidth=2,
+                    label="Vinet",
+                )
+
+            elif self.model == "Birch":
+
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    au_converter_e
+                    * self.eos_birch(self.eos_birch_fitted.x, self.vol_array)
+                    / self.natoms,
+                    "r",
+                    linewidth=2,
+                    label="Birch",
+                )
+
+            elif self.model == "Murnaghan":
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    au_converter_e
+                    * self.eos_murnaghan(self.eos_murnaghan_fitted.x, self.vol_array)
+                    / self.natoms,
+                    color="r",
+                    linewidth=2,
+                    label="Murnaghan",
+                )
+
+            elif self.model == "Birch-Murnaghan":
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    au_converter_e
+                    * self.eos_birch_murnaghan(
+                        self.eos_birch_murnaghan_fitted.x, self.vol_array
+                    )
+                    / self.natoms,
+                    "r",
+                    linewidth=2,
+                    label="Birch-Murnaghan",
+                )
 
             axs.scatter(
                 au_converter_v * self.volume,
@@ -313,39 +374,77 @@ class EOS:
             fig = plt.figure(figsize=(13, 9))
             axs2 = fig.add_subplot(111)
 
-            axs2.plot(
-                au_converter_v * self.vol_array,
-                self.P_vinet / self.natoms,
-                "orangered",
-                linewidth=11,
-                label="Vinet",
-            )
+            if self.model is None:
 
-            axs2.plot(
-                au_converter_v * self.vol_array,
-                self.P_birch / self.natoms,
-                "lime",
-                linestyle="solid",
-                linewidth=7,
-                label="Birch",
-            )
+                axs2.plot(
+                    au_converter_v * self.vol_array,
+                    self.P_vinet / self.natoms,
+                    "orangered",
+                    linewidth=11,
+                    label="Vinet",
+                )
 
-            axs2.plot(
-                au_converter_v * self.vol_array,
-                self.P_murnaghan / self.natoms,
-                color="magenta",
-                linestyle="dashed",
-                linewidth=5,
-                label="Murnaghan",
-            )
+                axs2.plot(
+                    au_converter_v * self.vol_array,
+                    self.P_birch / self.natoms,
+                    "lime",
+                    linestyle="solid",
+                    linewidth=7,
+                    label="Birch",
+                )
 
-            axs2.plot(
-                au_converter_v * self.vol_array,
-                self.P_birch_murnaghan / self.natoms,
-                "k--",
-                linewidth=2,
-                label="Birch-Murnaghan",
-            )
+                axs2.plot(
+                    au_converter_v * self.vol_array,
+                    self.P_murnaghan / self.natoms,
+                    color="magenta",
+                    linestyle="dashed",
+                    linewidth=5,
+                    label="Murnaghan",
+                )
+
+                axs2.plot(
+                    au_converter_v * self.vol_array,
+                    self.P_birch_murnaghan / self.natoms,
+                    "k--",
+                    linewidth=2,
+                    label="Birch-Murnaghan",
+                )
+
+            elif self.model == "Vinet":
+                axs2.plot(
+                    au_converter_v * self.vol_array,
+                    self.P_vinet / self.natoms,
+                    "r",
+                    linewidth=2,
+                    label="Vinet",
+                )
+
+            elif self.model == "Birch":
+                axs2.plot(
+                    au_converter_v * self.vol_array,
+                    self.P_birch / self.natoms,
+                    "r",
+                    linewidth=2,
+                    label="Birch",
+                )
+
+            elif self.model == "Murnaghan":
+                axs2.plot(
+                    au_converter_v * self.vol_array,
+                    self.P_murnaghan / self.natoms,
+                    color="r",
+                    linewidth=2,
+                    label="Murnaghan",
+                )
+
+            elif self.model == "Birch-Murnaghan":
+                axs2.plot(
+                    au_converter_v * self.vol_array,
+                    self.P_birch_murnaghan / self.natoms,
+                    "r",
+                    linewidth=2,
+                    label="Birch-Murnaghan",
+                )
 
             if self.au:
                 axs2.set_xlabel("Volume ($Bohr^3$)")
@@ -359,16 +458,41 @@ class EOS:
         elif self.eostype == "pressure":
             # Pressure vs Volume plot
 
-            axs.plot(
-                au_converter_v * self.vol_array,
-                self.eos_birch_murnaghan_pressure(
-                    self.eos_birch_murnaghan_pressure_fitted.x, self.vol_array
+            ## TODO: Add other models
+
+            if self.model is None:
+
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    self.eos_birch_murnaghan_pressure(
+                        self.eos_birch_murnaghan_pressure_fitted.x, self.vol_array
+                    )
+                    / self.natoms,
+                    "r-",
+                    linewidth=2,
+                    label="Birch-Murnaghan",
                 )
-                / self.natoms,
-                "r-",
-                linewidth=2,
-                label="Birch-Murnaghan",
-            )
+
+                # axs.scatter(
+                #     au_converter_v * self.volume,
+                #     self.pressure / self.natoms,
+                #     s=600,
+                #     facecolors="none",
+                #     edgecolors="black",
+                #     label="Raw Data",
+                # )
+
+            elif self.model == "Birch-Murnaghan":
+                axs.plot(
+                    au_converter_v * self.vol_array,
+                    self.eos_birch_murnaghan_pressure(
+                        self.eos_birch_murnaghan_pressure_fitted.x, self.vol_array
+                    )
+                    / self.natoms,
+                    "r-",
+                    linewidth=2,
+                    label="Birch-Murnaghan",
+                )
 
             axs.scatter(
                 au_converter_v * self.volume,
@@ -393,13 +517,24 @@ class EOS:
             fig = plt.figure(figsize=(13, 9))
             axs2 = fig.add_subplot(111)
 
-            axs2.plot(
-                au_converter_v * self.volume,
-                au_converter_e * self.E_birch_murnaghan / self.natoms,
-                "r-",
-                linewidth=2,
-                label="Birch-Murnaghan",
-            )
+            if self.model is None:
+
+                axs2.plot(
+                    au_converter_v * self.volume,
+                    au_converter_e * self.E_birch_murnaghan / self.natoms,
+                    "r-",
+                    linewidth=2,
+                    label="Birch-Murnaghan",
+                )
+
+            elif self.model == "Birch-Murnaghan":
+                axs2.plot(
+                    au_converter_v * self.volume,
+                    au_converter_e * self.E_birch_murnaghan / self.natoms,
+                    "r-",
+                    linewidth=2,
+                    label="Birch-Murnaghan",
+                )
 
             if self.au:
                 axs2.set_ylabel("Energy (Ha)")
