@@ -142,7 +142,14 @@ class EOS:
         )  # eV
 
     def plot_eos(
-        self, infile=None, eostype="energy", natoms=1, au=False, vlim=None, model=None
+        self,
+        infile=None,
+        eostype="energy",
+        natoms=1,
+        au=False,
+        vlim=None,
+        model=None,
+        raw_data=True,
     ):
         """plot_eos.
 
@@ -160,6 +167,7 @@ class EOS:
         self.au = au
         self.vlim = vlim
         self.model = model
+        self.raw_data = raw_data
 
         if self.eostype == "energy":
 
@@ -350,14 +358,15 @@ class EOS:
                     label="Birch-Murnaghan",
                 )
 
-            axs.scatter(
-                au_converter_v * self.volume,
-                au_converter_e * self.energy / self.natoms,
-                s=600,
-                facecolors="none",
-                edgecolors="black",
-                label="Raw Data",
-            )
+            if self.raw_data:
+                axs.scatter(
+                    au_converter_v * self.volume,
+                    au_converter_e * self.energy / self.natoms,
+                    s=600,
+                    facecolors="none",
+                    edgecolors="black",
+                    label="Raw Data",
+                )
 
             if self.au:
                 axs.set_xlabel("Volume ($Bohr^3$)")
@@ -494,14 +503,15 @@ class EOS:
                     label="Birch-Murnaghan",
                 )
 
-            axs.scatter(
-                au_converter_v * self.volume,
-                self.pressure / self.natoms,
-                s=600,
-                facecolors="none",
-                edgecolors="black",
-                label="Raw Data",
-            )
+            if self.raw_data:
+                axs.scatter(
+                    au_converter_v * self.volume,
+                    self.pressure / self.natoms,
+                    s=600,
+                    facecolors="none",
+                    edgecolors="black",
+                    label="Raw Data",
+                )
 
             if self.au:
                 axs.set_xlabel("Volume ($Bohr^3$)")

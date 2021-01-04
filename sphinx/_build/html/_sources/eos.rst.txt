@@ -29,7 +29,7 @@ Usage::
 
 To set a initial and final value to the volume range use the flag ``vlim=[v_initial, v_final]``. If not set, the minimum and maximum values of the provided dataset would be used.  
 
-If ``model`` is not set it will plot all the models on the same plot along with the raw data points. The options for model are ``Vinet``, ``Birch``, ``Murnaghan`` and ``Birch-Murnaghan``. 
+If ``model`` is not set it will plot all the models on the same plot along with the raw data points. If ``raw_data=False`` the plot will omit the raw data points and will only plot the fitted model. The options for model are ``Vinet``, ``Birch``, ``Murnaghan`` and ``Birch-Murnaghan``. 
 
 plot_enthalpy_curves()
 ----------------------
