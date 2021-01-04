@@ -3,4 +3,3 @@ spglib
 prettytable
 pathlib
 pyvista
-intersect@ git+https://github.com/sukhbinder/intersection.git#egg=intersect-1.0
