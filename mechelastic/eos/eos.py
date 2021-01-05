@@ -554,13 +554,17 @@ class EOS:
             plt.legend(loc="best")
             plt.show()
 
-    def plot_enthalpy_curves(self, infiles=None, natoms=1, au=False, vlim=None):
+    def plot_enthalpy_curves(
+        self, infiles=None, natoms=1, au=False, vlim=None, deltaH_index=None
+    ):
         """plot_enthalpy_curves.
 
         Initialize with obtaining fitting parameters
         for provided volume and energy data.
         This function plots Enthalpy vs Pressure curves
         for multiple datasets and calculates the phase transition pressure.
+        Additionally it plots enthalpy differences with respect to a selected
+        phase.
 
         """
 
@@ -569,6 +573,7 @@ class EOS:
         self.natoms = natoms
         self.au = au
         self.vlim = vlim
+        self.deltaH_index = deltaH_index
 
         nfiles = len(self.infiles)
         self.volume = []
@@ -701,6 +706,42 @@ class EOS:
         axs.set_title("Enthalpy vs. Pressure")
         plt.legend(loc="best")
         plt.show()
+
+        # Enthalpy differences with respect to a selected phase
+
+        if self.deltaH_index:
+
+            # Converting human input index to python 0 index
+            self.deltaH_index = int(self.deltaH_index) - 1
+
+            # name of phase
+            phase_name = self.infiles[self.deltaH_index]
+
+            # removing selected phase from infiles list
+            self.infiles.remove(phase_name)
+
+            # Pressure matrix with removed row
+            self.pressure = np.delete(self.pressure, self.deltaH_index, axis=0)
+
+            # Enthalpy matrix with removed row
+            self.deltaH = np.delete(
+                (self.H - self.H[self.deltaH_index]), self.deltaH_index, axis=0
+            )
+
+            fig = plt.figure(figsize=(13, 9))
+            axs2 = fig.add_subplot(111)
+
+            for i, filename in enumerate(self.infiles):
+                axs2.plot(self.pressure[i], self.deltaH[i], label=filename)
+            axs2.set_xlabel("Pressure (GPa)")
+            if self.au:
+                axs2.set_ylabel("$\Delta$H (Ha)/atom")
+            else:
+                axs2.set_ylabel("$\Delta$H (eV)/atom")
+            title_string = "$\Delta$H vs. Pressure wrt " + str(phase_name)
+            axs2.set_title(title_string)
+            plt.legend(loc="best")
+            plt.show()
 
     ############################# FITTING #############################
 
