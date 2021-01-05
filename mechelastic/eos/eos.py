@@ -259,7 +259,7 @@ class EOS:
             if self.model is None:
 
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     au_converter_e
                     * self.eos_vinet(self.eos_vinet_fitted.x, self.vol_array)
                     / self.natoms,
@@ -269,7 +269,7 @@ class EOS:
                 )
 
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     au_converter_e
                     * self.eos_birch(self.eos_birch_fitted.x, self.vol_array)
                     / self.natoms,
@@ -280,7 +280,7 @@ class EOS:
                 )
 
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     au_converter_e
                     * self.eos_murnaghan(self.eos_murnaghan_fitted.x, self.vol_array)
                     / self.natoms,
@@ -291,7 +291,7 @@ class EOS:
                 )
 
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     au_converter_e
                     * self.eos_birch_murnaghan(
                         self.eos_birch_murnaghan_fitted.x, self.vol_array
@@ -313,7 +313,7 @@ class EOS:
 
             elif self.model == "Vinet":
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     au_converter_e
                     * self.eos_vinet(self.eos_vinet_fitted.x, self.vol_array)
                     / self.natoms,
@@ -325,7 +325,7 @@ class EOS:
             elif self.model == "Birch":
 
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     au_converter_e
                     * self.eos_birch(self.eos_birch_fitted.x, self.vol_array)
                     / self.natoms,
@@ -336,7 +336,7 @@ class EOS:
 
             elif self.model == "Murnaghan":
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     au_converter_e
                     * self.eos_murnaghan(self.eos_murnaghan_fitted.x, self.vol_array)
                     / self.natoms,
@@ -347,7 +347,7 @@ class EOS:
 
             elif self.model == "Birch-Murnaghan":
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     au_converter_e
                     * self.eos_birch_murnaghan(
                         self.eos_birch_murnaghan_fitted.x, self.vol_array
@@ -360,7 +360,7 @@ class EOS:
 
             if self.raw_data:
                 axs.scatter(
-                    au_converter_v * self.volume,
+                    au_converter_v * self.volume / self.natoms,
                     au_converter_e * self.energy / self.natoms,
                     s=600,
                     facecolors="none",
@@ -369,11 +369,11 @@ class EOS:
                 )
 
             if self.au:
-                axs.set_xlabel("Volume ($Bohr^3$)")
-                axs.set_ylabel("Energy (Ha)")
+                axs.set_xlabel("Volume ($Bohr^3$)/atom")
+                axs.set_ylabel("Energy (Ha)/atom")
             else:
-                axs.set_xlabel("Volume ($\AA^3$)")
-                axs.set_ylabel("Energy (eV)")
+                axs.set_xlabel("Volume ($\AA^3$)/atom")
+                axs.set_ylabel("Energy (eV)/atom")
             axs.set_title("Energy vs. Volume")
             plt.legend(loc="best")
             plt.show()
@@ -386,16 +386,16 @@ class EOS:
             if self.model is None:
 
                 axs2.plot(
-                    au_converter_v * self.vol_array,
-                    self.P_vinet / self.natoms,
+                    au_converter_v * self.vol_array / self.natoms,
+                    self.P_vinet,
                     "orangered",
                     linewidth=11,
                     label="Vinet",
                 )
 
                 axs2.plot(
-                    au_converter_v * self.vol_array,
-                    self.P_birch / self.natoms,
+                    au_converter_v * self.vol_array / self.natoms,
+                    self.P_birch,
                     "lime",
                     linestyle="solid",
                     linewidth=7,
@@ -403,8 +403,8 @@ class EOS:
                 )
 
                 axs2.plot(
-                    au_converter_v * self.vol_array,
-                    self.P_murnaghan / self.natoms,
+                    au_converter_v * self.vol_array / self.natoms,
+                    self.P_murnaghan,
                     color="magenta",
                     linestyle="dashed",
                     linewidth=5,
@@ -412,8 +412,8 @@ class EOS:
                 )
 
                 axs2.plot(
-                    au_converter_v * self.vol_array,
-                    self.P_birch_murnaghan / self.natoms,
+                    au_converter_v * self.vol_array / self.natoms,
+                    self.P_birch_murnaghan,
                     "k--",
                     linewidth=2,
                     label="Birch-Murnaghan",
@@ -421,8 +421,8 @@ class EOS:
 
             elif self.model == "Vinet":
                 axs2.plot(
-                    au_converter_v * self.vol_array,
-                    self.P_vinet / self.natoms,
+                    au_converter_v * self.vol_array / self.natoms,
+                    self.P_vinet,
                     "r",
                     linewidth=2,
                     label="Vinet",
@@ -430,8 +430,8 @@ class EOS:
 
             elif self.model == "Birch":
                 axs2.plot(
-                    au_converter_v * self.vol_array,
-                    self.P_birch / self.natoms,
+                    au_converter_v * self.vol_array / self.natoms,
+                    self.P_birch,
                     "r",
                     linewidth=2,
                     label="Birch",
@@ -439,8 +439,8 @@ class EOS:
 
             elif self.model == "Murnaghan":
                 axs2.plot(
-                    au_converter_v * self.vol_array,
-                    self.P_murnaghan / self.natoms,
+                    au_converter_v * self.vol_array / self.natoms,
+                    self.P_murnaghan,
                     color="r",
                     linewidth=2,
                     label="Murnaghan",
@@ -448,17 +448,17 @@ class EOS:
 
             elif self.model == "Birch-Murnaghan":
                 axs2.plot(
-                    au_converter_v * self.vol_array,
-                    self.P_birch_murnaghan / self.natoms,
+                    au_converter_v * self.vol_array / self.natoms,
+                    self.P_birch_murnaghan,
                     "r",
                     linewidth=2,
                     label="Birch-Murnaghan",
                 )
 
             if self.au:
-                axs2.set_xlabel("Volume ($Bohr^3$)")
+                axs2.set_xlabel("Volume ($Bohr^3$)/atom")
             else:
-                axs2.set_xlabel("Volume ($\AA^3$)")
+                axs2.set_xlabel("Volume ($\AA^3$)/atom")
             axs2.set_ylabel("Pressure (GPa)")
             axs2.set_title("Pressure vs. Volume")
             plt.legend(loc="best")
@@ -472,11 +472,10 @@ class EOS:
             if self.model is None:
 
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     self.eos_birch_murnaghan_pressure(
                         self.eos_birch_murnaghan_pressure_fitted.x, self.vol_array
-                    )
-                    / self.natoms,
+                    ),
                     "r-",
                     linewidth=2,
                     label="Birch-Murnaghan",
@@ -493,11 +492,10 @@ class EOS:
 
             elif self.model == "Birch-Murnaghan":
                 axs.plot(
-                    au_converter_v * self.vol_array,
+                    au_converter_v * self.vol_array / self.natoms,
                     self.eos_birch_murnaghan_pressure(
                         self.eos_birch_murnaghan_pressure_fitted.x, self.vol_array
-                    )
-                    / self.natoms,
+                    ),
                     "r-",
                     linewidth=2,
                     label="Birch-Murnaghan",
@@ -505,7 +503,7 @@ class EOS:
 
             if self.raw_data:
                 axs.scatter(
-                    au_converter_v * self.volume,
+                    au_converter_v * self.volume / self.natoms,
                     self.pressure / self.natoms,
                     s=600,
                     facecolors="none",
@@ -514,9 +512,9 @@ class EOS:
                 )
 
             if self.au:
-                axs.set_xlabel("Volume ($Bohr^3$)")
+                axs.set_xlabel("Volume ($Bohr^3$)/atom")
             else:
-                axs.set_xlabel("Volume ($\AA^3$)")
+                axs.set_xlabel("Volume ($\AA^3$)/atom")
             axs.set_ylabel("Pressure (GPa)")
             axs.set_title("Pressure vs. Volume")
             plt.legend(loc="best")
@@ -530,7 +528,7 @@ class EOS:
             if self.model is None:
 
                 axs2.plot(
-                    au_converter_v * self.volume,
+                    au_converter_v * self.volume / self.natoms,
                     au_converter_e * self.E_birch_murnaghan / self.natoms,
                     "r-",
                     linewidth=2,
@@ -539,7 +537,7 @@ class EOS:
 
             elif self.model == "Birch-Murnaghan":
                 axs2.plot(
-                    au_converter_v * self.volume,
+                    au_converter_v * self.volume / self.natoms,
                     au_converter_e * self.E_birch_murnaghan / self.natoms,
                     "r-",
                     linewidth=2,
@@ -547,11 +545,11 @@ class EOS:
                 )
 
             if self.au:
-                axs2.set_ylabel("Energy (Ha)")
-                axs2.set_xlabel("Volume ($Bohr^3$)")
+                axs2.set_ylabel("Energy (Ha)/atom")
+                axs2.set_xlabel("Volume ($Bohr^3$)/atom")
             else:
-                axs2.set_ylabel("Energy (eV)")
-                axs2.set_xlabel("Volume ($\AA^3$)")
+                axs2.set_ylabel("Energy (eV)/atom")
+                axs2.set_xlabel("Volume ($\AA^3$)/atom")
             axs2.set_title("Energy vs. Volume")
             plt.legend(loc="best")
             plt.show()
@@ -662,7 +660,7 @@ class EOS:
         # Converting self.H to numpy array
         self.H = np.array(self.H, dtype="float64")
 
-        # Normalize for number of atoms
+        # Normalize H for number of atoms
         for i, iatom in enumerate(self.natoms):
             self.H[i] = self.H[i] / iatom
 
@@ -681,9 +679,6 @@ class EOS:
             for j in range(nfiles):
                 if i < j:
                     print("\n%s and %s:" % (self.infiles[i], self.infiles[j]))
-                    # idx = np.argwhere(np.diff(np.sign(self.H[i] - self.H[j]))).flatten()
-                    # print(self.H[i][idx], self.H[j][idx])
-                    # print(self.pressure[i][idx], self.pressure[j][idx])
                     int_x, int_y = intersection(
                         self.pressure[i], self.H[i], self.pressure[j], self.H[j]
                     )
