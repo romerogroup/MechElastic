@@ -555,7 +555,13 @@ class EOS:
             plt.show()
 
     def plot_enthalpy_curves(
-        self, infiles=None, natoms=1, au=False, vlim=None, deltaH_index=None
+        self,
+        infiles=None,
+        natoms=1,
+        au=False,
+        vlim=None,
+        vlim_list=None,
+        deltaH_index=None,
     ):
         """plot_enthalpy_curves.
 
@@ -573,6 +579,7 @@ class EOS:
         self.natoms = natoms
         self.au = au
         self.vlim = vlim
+        self.vlim_list = vlim_list
         self.deltaH_index = deltaH_index
 
         nfiles = len(self.infiles)
@@ -616,6 +623,10 @@ class EOS:
         for i in range(nfiles):
             if self.vlim:
                 self.vol_array.append(np.linspace(self.vlim[0], self.vlim[1], 1000))
+            elif self.vlim_list:
+                self.vol_array.append(
+                    np.linspace(self.vlim_list[i][0], self.vlim_list[i][1]), 1000
+                )
             else:
                 self.vol_array.append(
                     np.linspace(np.min(self.volume[i]), np.max(self.volume[i]), 1000)
