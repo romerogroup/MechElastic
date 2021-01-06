@@ -28,6 +28,12 @@ Pedram Tavadze <br />
 François-Xavier Coudert <br />
 Aldo H. Romero <br />
 
+Mailing list
+-------------
+Please post your questions on our forum.
+
+https://groups.google.com/d/forum/mechelastic
+
 ## Installation
 
 Pre-requisites:
