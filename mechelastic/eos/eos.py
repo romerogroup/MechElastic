@@ -625,7 +625,7 @@ class EOS:
                 self.vol_array.append(np.linspace(self.vlim[0], self.vlim[1], 1000))
             elif self.vlim_list:
                 self.vol_array.append(
-                    np.linspace(self.vlim_list[i][0], self.vlim_list[i][1]), 1000
+                    np.linspace(self.vlim_list[i][0], self.vlim_list[i][1], 1000)
                 )
             else:
                 self.vol_array.append(
