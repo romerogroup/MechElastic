@@ -3,3 +3,4 @@ spglib
 prettytable
 pathlib
 pyvista
+intersect
