@@ -21,8 +21,7 @@ Clone the repository to your local disk and run::
 Dependencies
 ------------
 
-- numpy
-- spglib
-- pathlib
-- pyvista
-- intersect (pip install git+https://github.com/sukhbinder/intersection.git)
+- `pathlib <https://docs.python.org/3/library/pathlib.html>`_
+- `spglib <https://github.com/spglib/spglib>`_ 
+- `pyvista <https://github.com/pyvista/pyvista>`_
+- `intersect <https://github.com/sukhbinder/intersection.git>`_

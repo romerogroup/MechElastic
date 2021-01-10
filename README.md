@@ -36,14 +36,6 @@ https://groups.google.com/d/forum/mechelastic
 
 ## Installation
 
-Pre-requisites:
-
-numpy <br />
-spglib <br />
-pathlib <br />
-pyvista <br />
-intersect (pip install git+https://github.com/sukhbinder/intersection.git) <br />
-
 ```
 pip install mechelastic
 ```
