@@ -765,6 +765,7 @@ class EOS:
                 axs2.set_ylabel("$\Delta$H (eV)/atom")
             title_string = "$\Delta$H vs. Pressure wrt " + str(phase_name)
             axs2.set_title(title_string)
+            axs2.axhline(color="black", linestyle="--")
             plt.legend(loc="best")
             plt.show()
 
