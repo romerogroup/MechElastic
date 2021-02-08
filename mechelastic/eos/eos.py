@@ -698,11 +698,25 @@ class EOS:
                     int_x, int_y = intersection(
                         self.pressure[i], self.H[i], self.pressure[j], self.H[j]
                     )
-                    if int_x:
-                        if self.au:
-                            print("%.2f GPa at %.2f Ha " % (int_x, int_y))
+
+                    # Check if there are multiple intersection points
+                    if int_x.size:
+                        if int_x.size < 2:
+                            if self.au:
+                                print("%.2f GPa at %.2f Ha " % (int_x, int_y))
+                            else:
+                                print("%.2f GPa at %.2f eV " % (int_x, int_y))
                         else:
-                            print("%.2f GPa at %.2f eV " % (int_x, int_y))
+                            for jj in range(int_x.size):
+                                if self.au:
+                                    print(
+                                        "%.2f GPa at %.2f Ha " % (int_x[jj], int_y[jj])
+                                    )
+                                else:
+                                    print(
+                                        "%.2f GPa at %.2f eV " % (int_x[jj], int_y[jj])
+                                    )
+
                     else:
                         print("NOT FOUND FOR THIS VOLUME RANGE!")
                     # plt.plot(x, y, "*k")
