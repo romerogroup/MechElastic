@@ -109,7 +109,7 @@ class VaspOutcar:
         k = 0
         for i in range(len(iontype)):
             for j in range(iontype[i]):
-                atomic_numbers[k] = ELEMENTS[species[i]]
+                atomic_numbers[k] = ELEMENTS[species[i].strip()]
                 k = k + 1
 
         print("Atomic numbers")
