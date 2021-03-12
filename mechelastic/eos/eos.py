@@ -78,8 +78,6 @@ class EOS:
 
             # Birch-Murnaghan
             e1 = self.eos_birch_murnaghan(self.eos_birch_murnaghan_fitted.x, v1)
-            e2 = self.eos_birch_murnaghan(self.eos_birch_murnaghan_fitted.x, v2)
-            self.P_birch_murnaghan = P(e1, e2, dv) * 1.60217e02  # GPa
 
             # Birch
             e1 = self.eos_birch(self.eos_birch_fitted.x, v1)
@@ -161,7 +159,34 @@ class EOS:
         If eostype=="volume" then it will do similarly for
         pressure.
 
+        Parameters
+        ----------
+            infile : list, optional (default ``None``)
+                List of input files.
+
+            eostype : str, optional (default ``"energy"``)
+                Type of EOS input data; energy or pressure.
+
+            natoms : int, optional (default ``1``)
+                Number of atoms
+
+            au : bool, optional (default ``False``)
+                Output in atomic units.
+
+            vlim : list, optional (default ``None``)
+               Minimum and maximum for volume range.
+
+            model : str, optional (default ``None``)
+                Name of model; Vinet, Birch, Murnaghan, Birch-Murnaghan
+
+            raw_data : bool, optional (default ``True``)
+                Also include the raw input data in the plot.
+
+        Returns
+        -------
+            param : None
         """
+
         self.eostype = eostype
         self.natoms = natoms
         self.au = au
@@ -572,6 +597,30 @@ class EOS:
         Additionally it plots enthalpy differences with respect to a selected
         phase.
 
+
+        Parameters
+        ----------
+            infiles : list, optional (default ``None``)
+                List of input files.
+
+            natoms : int, optional (default ``1``)
+                Number of atoms.
+
+            au : bool, optional (default ``False``)
+                Output in atomic units?
+
+            vlim : list, optional (default ``None``)
+                Minimum and maximum volume.
+
+            vlim_list : list, optional (default ``None``)
+                List of minimum and maximum volumes for each file.
+
+            deltaH_index : int, optional (default ``None``)
+                Index of file to calculate enthalpy difference with respect to.
+
+        Returns
+        -------
+            param : None
         """
 
         self.eostype = "enthalpy"
