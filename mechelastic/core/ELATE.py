@@ -618,7 +618,7 @@ class ELATE:
     ##############################################################################
     # Plotting functions
     #############################################################################
-    def plot_3D(self, elastic_calc="", npoints=100):
+    def plot_3D(self, elastic_calc="", npoints=100,show = True):
         import pyvista as pv
         
 
@@ -629,7 +629,7 @@ class ELATE:
         y = None
         z = None
         r = None
-
+        meshes = []
         if elastic_calc == "POISSON":
             func = self.POISSON3D(npoints=100)
             colors = ["red", "green", "blue"]
@@ -642,6 +642,7 @@ class ELATE:
                     continue
                 else:
                     grid = pv.StructuredGrid(x, y, z)
+                    meshes.append(grid)
                     if ix == 2:
                         plotter.add_mesh(grid, opacity=0.25, color=icolor)
                     else:
@@ -659,6 +660,7 @@ class ELATE:
                     continue
                 else:
                     grid = pv.StructuredGrid(x, y, z)
+                    meshes.append(grid)
                     if ix == 2:
                         plotter.add_mesh(grid, opacity=0.25, color=icolor)
                     else:
@@ -676,6 +678,7 @@ class ELATE:
                     continue
                 else:
                     grid = pv.StructuredGrid(x, y, z)
+                    meshes.append(grid)
                     if ix == 2:
                         plotter.add_mesh(grid, opacity=0.25, color=icolor)
                     else:
@@ -694,16 +697,19 @@ class ELATE:
                     continue
                 else:
                     grid = pv.StructuredGrid(x, y, z)
+                    meshes.append(grid)
                     if ix == 2:
                         plotter.add_mesh(grid, opacity=0.25, color=icolor)
                     else:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
 
         plotter.add_axes()
-        plotter.show()
+        if show:
+            plotter.show()
+        return meshes
         #plotter.show_grid(color = "black")
 
-    def plot_2D(self, elastic_calc="all", npoints=100, apply_to_plot=None):
+    def plot_2D(self, elastic_calc="all", npoints=100, apply_to_plot=None, show= True):
         """
 
 
@@ -898,6 +904,10 @@ class ELATE:
                     )
                 if apply_to_plot is not None:
                     apply_to_plot(fig, ax)
+        if show:
+            plt.show()
+            
+        return fig
 
     def print_properties(self):
         #        print("\n \n Input: compliance matrix(coefficients in GPa) of\n")
