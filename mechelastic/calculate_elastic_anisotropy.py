@@ -84,7 +84,7 @@ def calculate_elastic_anisotropy(
             rowsList.append(columnsList)
 
     print(rowsList)
-    elastic_tensor = ELATE.ELATE(rowsList)
+    elastic_tensor = ELATE(rowsList)
 
     if plot == "2D":
         elastic_tensor.plot_2D(elastic_calc=elastic_calc, npoints = npoints)

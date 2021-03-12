@@ -60,10 +60,10 @@ for i in range(row):
         columnsList.append(round(elastic_tensor[i, j], 3))
     rowsList.append(columnsList)
 
-elate_tensor = ELATE.ELATE(rowsList)
+elate_tensor = ELATE(rowsList)
 
 elate_tensor.print_properties()
 """Properties  to plot elastic_calc = "POISSON" , "SHEAR", "YOUNG" , "LC"
  """
-elate_tensor.plot_2D(elastic_calc="POISSON",npoints = 201)
-# elate_tensor.plot_3D(elastic_calc="POISSON")
+# elate_tensor.plot_2D(elastic_calc="POISSON",npoints = 201)
+elate_tensor.plot_3D(elastic_calc="POISSON")

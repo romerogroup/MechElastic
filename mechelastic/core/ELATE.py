@@ -620,9 +620,9 @@ class ELATE:
     #############################################################################
     def plot_3D(self, elastic_calc="", npoints=100):
         import pyvista as pv
-        from pyvistaqt import BackgroundPlotter
+        
 
-        plotter = BackgroundPlotter()
+        plotter = pv.Plotter()
 
         plotter.set_background(color="white")
         x = None
@@ -699,8 +699,9 @@ class ELATE:
                     else:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
 
-        # plotter.add_axes()
-        # plotter.show_grid(color = "black")
+        plotter.add_axes()
+        plotter.show()
+        #plotter.show_grid(color = "black")
 
     def plot_2D(self, elastic_calc="all", npoints=100, apply_to_plot=None):
         """
