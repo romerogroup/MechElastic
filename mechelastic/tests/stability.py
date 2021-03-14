@@ -23,21 +23,21 @@ def stability_test(matrix, crystal_type):
 
         # check (i)   keep in mind list starts with 0, so c11 is stored as c00
         if c[0][0] - c[0][1] > 0.0:
-            print("Condition (i) satified.")
+            print("Condition (i) satisfied.")
             condition1 = True
         else:
             print("Condition (i) NOT satisfied.")
             condition1 = False
 
         if c[0][0] + 2 * c[0][1] > 0.0:
-            print("Condition (ii) satified.")
+            print("Condition (ii) satisfied.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
             condition2 = False
 
         if c[3][3] > 0.0:
-            print("Condition (iii) satified.")
+            print("Condition (iii) satisfied.")
             condition3 = True
         else:
             print("Condition (iii) NOT satisfied.")
@@ -62,7 +62,7 @@ def stability_test(matrix, crystal_type):
 
         # check (i)   keep in mind list starts with 0, so c11 is stored as c00
         if c[0][0] - c[0][1] > 0.0:
-            print("Condition (i) satified.")
+            print("Condition (i) satisfied.")
             condition1 = True
         else:
             print("Condition (i) NOT satisfied.")
@@ -76,7 +76,7 @@ def stability_test(matrix, crystal_type):
             condition2 = False
 
         if c[3][3] > 0.0:
-            print("Condition (iii) satified.")
+            print("Condition (iii) satisfied.")
             condition3 = True
         else:
             print("Condition (iii) NOT satisfied.")
@@ -98,35 +98,35 @@ def stability_test(matrix, crystal_type):
 
         # check (i)   keep in mind list starts with 0, so c11 is stored as c00
         if c[0][0] - c[0][1] > 0.0:
-            print("Condition (i) is satified.")
+            print("Condition (i) is satisfied.")
             condition1 = True
         else:
             print("Condition (i) is NOT satisfied.")
             condition1 = False
 
         if 2 * (c[0][2] * c[0][2]) < c[2][2] * (c[0][0] + c[0][1]):
-            print("Condition (ii) is satified.")
+            print("Condition (ii) is satisfied.")
             condition2 = True
         else:
             print("Condition (ii) is NOT satisfied.")
             condition2 = False
 
         if c[3][3] > 0.0:
-            print("Condition (iii) is satified.")
+            print("Condition (iii) is satisfied.")
             condition3 = True
         else:
             print("Condition (iii) is NOT satisfied.")
             condition3 = False
 
         if c[5][5] > 0.0:
-            print("Condition (iv) is satified.")
+            print("Condition (iv) is satisfied.")
             condition4 = True
         else:
             print("Condition (iv) is NOT satisfied.")
             condition4 = False
 
         if 2 * c[0][5] * c[0][5] < c[5][5] * (c[0][0] - c[0][1]):
-            print("Condition (v) is satified.")
+            print("Condition (v) is satisfied.")
             condition5 = True
         else:
             print("Condition (v) is NOT satisfied.")
@@ -146,28 +146,28 @@ def stability_test(matrix, crystal_type):
         )
 
         if c[0][0] - c[0][1] > 0.0:
-            print("Condition (i) is satified.")
+            print("Condition (i) is satisfied.")
             condition1 = True
         else:
             print("Condition (i) is NOT satisfied.")
             condition1 = False
 
         if (c[0][2] * c[0][2]) < (0.5) * c[2][2] * (c[0][0] + c[0][1]):
-            print("Condition (ii) is satified.")
+            print("Condition (ii) is satisfied.")
             condition2 = True
         else:
             print("Condition (ii) is NOT satisfied.")
             condition2 = False
 
         if c[0][3] * c[0][3] < 0.5 * c[3][3] * (c[0][0] - c[0][1]):
-            print("Condition (iii) is satified.")
+            print("Condition (iii) is satisfied.")
             condition3 = True
         else:
             print("Condition (iii) is NOT satisfied.")
             condition3 = False
 
         if c[3][3] > 0.0:
-            print("Condition (iv) is satified.")
+            print("Condition (iv) is satisfied.")
             condition4 = True
         else:
             print("Condition (iv) is NOT satisfied.")
@@ -189,14 +189,14 @@ def stability_test(matrix, crystal_type):
         )
 
         if c[0][0] - c[0][1] > 0.0:
-            print("Condition (i) is satified.")
+            print("Condition (i) is satisfied.")
             condition1 = True
         else:
             print("Condition (i) is NOT satisfied.")
             condition1 = False
 
         if c[0][2] * c[0][2] < (0.5) * c[2][2] * (c[0][0] + c[0][1]):
-            print("Condition (ii) is satified.")
+            print("Condition (ii) is satisfied.")
             condition2 = True
         else:
             print("Condition (ii) is NOT satisfied.")
@@ -210,7 +210,7 @@ def stability_test(matrix, crystal_type):
             condition3 = False
 
         if c[3][3] > 0.0:
-            print("Condition (iv) is satified.")
+            print("Condition (iv) is satisfied.")
             condition4 = True
         else:
             print("Condition (iv) is NOT satisfied.")
@@ -233,14 +233,14 @@ def stability_test(matrix, crystal_type):
 
         # check (i)   keep in mind list starts with 0, so c11 is stored as c00
         if c[0][0] > 0.0:
-            print("Condition (i) is satified.")
+            print("Condition (i) is satisfied.")
             condition1 = True
         else:
             print("Condition (i) is NOT satisfied.")
             condition1 = False
 
         if c[0][0] * c[1][1] > c[0][1] * (c[0][1]):
-            print("Condition (ii) is satified.")
+            print("Condition (ii) is satisfied.")
             condition2 = True
         else:
             print("Condition (ii) is NOT satisfied.")
@@ -254,28 +254,28 @@ def stability_test(matrix, crystal_type):
             - c[2][2] * c[0][1] * c[0][1]
             > 0
         ):
-            print("Condition (iii) is satified.")
+            print("Condition (iii) is satisfied.")
             condition3 = True
         else:
             print("Condition (iii) is NOT satisfied.")
             condition3 = False
 
         if c[3][3] > 0.0:
-            print("Condition (iv) is satified.")
+            print("Condition (iv) is satisfied.")
             condition4 = True
         else:
             print("Condition (iv) is NOT satisfied.")
             condition4 = False
 
         if c[4][4] > 0.0:
-            print("Condition (v) is satified.")
+            print("Condition (v) is satisfied.")
             condition5 = True
         else:
             print("Condition (v) is NOT satisfied.")
             condition5 = False
 
         if c[5][5] > 0.0:
-            print("Condition (vi) is satified.")
+            print("Condition (vi) is satisfied.")
             condition6 = True
         else:
             print("Condition (vi) is NOT satisfied.")
@@ -316,45 +316,45 @@ def stability_test(matrix, crystal_type):
         )
 
         if c[0][0] > 0.0:
-            print("Condition (i) is satified.")
+            print("Condition (i) is satisfied.")
             condition1 = True
         else:
-            print("Condition (i) is NOT satified.")
+            print("Condition (i) is NOT satisfied.")
             condition1 = False
 
         if c[1][1] > 0.0:
-            print("Condition (ii) is satified.")
+            print("Condition (ii) is satisfied.")
             condition2 = True
         else:
-            print("Condition (ii) is NOT satified.")
+            print("Condition (ii) is NOT satisfied.")
             condition2 = False
 
         if c[2][2] > 0.0:
-            print("Condition (iii) is satified.")
+            print("Condition (iii) is satisfied.")
             condition3 = True
         else:
-            print("Condition (iii) is NOT satified.")
+            print("Condition (iii) is NOT satisfied.")
             condition3 = False
 
         if c[3][3] > 0.0:
-            print("Condition (iv) is satified.")
+            print("Condition (iv) is satisfied.")
             condition4 = True
         else:
-            print("Condition (iv) is NOT satified.")
+            print("Condition (iv) is NOT satisfied.")
             condition4 = False
 
         if c[4][4] > 0.0:
-            print("Condition (v) is satified.")
+            print("Condition (v) is satisfied.")
             condition5 = True
         else:
-            print("Condition (v) is NOT satified.")
+            print("Condition (v) is NOT satisfied.")
             condition5 = False
 
         if c[5][5] > 0.0:
-            print("Condition (vi) is satified.")
+            print("Condition (vi) is satisfied.")
             condition6 = True
         else:
-            print("Condition (vi) is NOT satified.")
+            print("Condition (vi) is NOT satisfied.")
             condition6 = False
 
         # for i in range(0, 6):
@@ -364,28 +364,28 @@ def stability_test(matrix, crystal_type):
         #        print("Condition (%2d) is NOT satified." % (i+1))
 
         if c[0][0] + c[1][1] + c[2][2] + 2 * (c[0][1] + c[0][2] + c[1][2]) > 0:
-            print("Condition (vii) is satified.")
+            print("Condition (vii) is satisfied.")
             condition7 = True
         else:
             print("Condition (vii) is NOT satisfied.")
             condition7 = False
 
         if c[2][2] * c[4][4] - c[2][4] * c[2][4] > 0:
-            print("Condition (viii) is satified.")
+            print("Condition (viii) is satisfied.")
             condition8 = True
         else:
             print("Condition (viii) is NOT satisfied.")
             condition8 = False
 
         if c[3][3] * c[5][5] - c[3][5] * c[3][5] > 0.0:
-            print("Condition (ix) is satified.")
+            print("Condition (ix) is satisfied.")
             condition9 = True
         else:
             print("Condition (ix) is NOT satisfied.")
             condition9 = False
 
         if c[1][1] + c[2][2] - 2 * c[1][2] > 0.0:
-            print("Condition (x) is satified.")
+            print("Condition (x) is satisfied.")
             condition10 = True
         else:
             print("Condition (x) is NOT satisfied.")
@@ -398,7 +398,7 @@ def stability_test(matrix, crystal_type):
             - c[1][4] * c[1][4] * c[2][2]
             > 0.0
         ):
-            print("Condition (xi) is satified.")
+            print("Condition (xi) is satisfied.")
             condition11 = True
         else:
             print("Condition (xi) is NOT satisfied.")
@@ -430,7 +430,7 @@ def stability_test(matrix, crystal_type):
         #  print 'g = %10.4f' % g
 
         if x > 0.0:
-            print("Condition (xii) is satified.")
+            print("Condition (xii) is satisfied.")
             condition12 = True
         else:
             print("Condition (xii) is NOT satisfied.")
@@ -485,19 +485,19 @@ def stability_test(matrix, crystal_type):
 
 
 def stability_test_2d(matrix, lattice_type):
-    c = np.zeroz(shape = (3,3))
+    c = np.zeros(shape = (3,3))
     
     c[0,0] = matrix[0,0]
     c[0,1] = matrix[0,1]
-    c[0,2] = matrix[0,6]
+    c[0,2] = matrix[0,5]
     
     c[1,0] = matrix[1,0]
     c[1,1] = matrix[1,1]
-    c[1,2] = matrix[1,6]
+    c[1,2] = matrix[1,5]
     
-    c[2,0] = matrix[6,0]
-    c[2,1] = matrix[6,1]
-    c[2,2] = matrix[6,6]
+    c[2,0] = matrix[5,0]
+    c[2,1] = matrix[5,1]
+    c[2,2] = matrix[5,5]
     
     stable = True
     if lattice_type == "hexagonal":
@@ -506,14 +506,14 @@ def stability_test_2d(matrix, lattice_type):
         print("(i) C11 + C12 > 0;    (ii) C11 - C12 > 0;  \n ")
 
         if c[0][0] + c[0][1] > 0.0:
-            print("Condition (i) satified.")
+            print("Condition (i) satisfied.")
             condition1 = True
         else:
             print("Condition (i) NOT satisfied.")
             condition1 = False
 
         if c[0][0] - c[0][1] > 0.0:
-            print("Condition (ii) satified.")
+            print("Condition (ii) satisfied.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
@@ -533,21 +533,21 @@ def stability_test_2d(matrix, lattice_type):
         print("(i) C11 + C12 > 0;    (ii) C11 - C12 > 0;  (iii) C33 > 0     \n ")
 
         if c[0][0] + c[0][1] > 0.0:
-            print("Condition (i) satified.")
+            print("Condition (i) satisfied.")
             condition1 = True
         else:
             print("Condition (i) NOT satisfied.")
             condition1 = False
 
         if c[0][0] - c[0][1] > 0.0:
-            print("Condition (ii) satified.")
+            print("Condition (ii) satisfied.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
             condition2 = False
 
         if c[2][2] > 0.0:
-            print("Condition (iii) satified.")
+            print("Condition (iii) satisfied.")
             condition3 = True
         else:
             print("Condition (iii) NOT satisfied.")
@@ -579,7 +579,7 @@ def stability_test_2d(matrix, lattice_type):
             )
             > 0.0
         ):
-            print("Condition (i) satified.")
+            print("Condition (i) satisfied.")
             condition1 = True
         else:
             print("Condition (i) NOT satisfied.")
@@ -594,14 +594,14 @@ def stability_test_2d(matrix, lattice_type):
             )
             > 0.0
         ):
-            print("Condition (ii) satified.")
+            print("Condition (ii) satisfied.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
             condition2 = False
 
         if c[2][5] > 0.0:
-            print("Condition (iii) satified.")
+            print("Condition (iii) satisfied.")
             condition3 = True
         else:
             print("Condition (iii) NOT satisfied.")
@@ -621,21 +621,21 @@ def stability_test_2d(matrix, lattice_type):
         print("(i) C11 > 0 ;    (ii) C11 *C22 > (C12)*2 ;  (iii) det(Cij) > 0     \n ")
 
         if c[0][0] > 0.0:
-            print("Condition (i) satified.")
+            print("Condition (i) satisfied.")
             condition1 = True
         else:
             print("Condition (i) NOT satisfied.")
             condition1 = False
 
         if c[0][0] * c[1][1] > (c[0][1]) ** 2:
-            print("Condition (ii) satified.")
+            print("Condition (ii) satisfied.")
             condition2 = True
         else:
             print("Condition (ii) NOT satisfied.")
             condition2 = False
 
         if np.linalg.det(c) > 0.0:
-            print("Condition (iii) satified.")
+            print("Condition (iii) satisfied.")
             condition3 = True
         else:
             print("Condition (iii) NOT satisfied.")

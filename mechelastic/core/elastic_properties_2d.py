@@ -32,12 +32,12 @@ class ElasticProperties2D:
         self.lattice_type = lattice_type
         self._c2d()
         
-        if self.structure is not None or self.lattice_type is not None:
-            lattice_select(
-                cnew=self.c2d,
-                cell=None,
-                lattice_type=self.lattice_type,
-            )
+        # if self.structure is not None: #or self.lattice_type is not None:
+        lattice_select(
+            cnew=self.c2d,
+            cell=None,
+            lattice_type=self.lattice_type,
+        )
 
     def _c2d(self):
         for i in range(0, 6):
@@ -49,6 +49,15 @@ class ElasticProperties2D:
         print("\n \n Elastic tensor for two-dimensional system in N/m units \n")
         np.set_printoptions(precision=3, suppress=True)
         printer.printMatrix(self.c2d)
+        
+        # if self.lattice_type is not None or self.structure is not None:
+        #     print(
+        #         "\n------------------------------------------------------------------"
+        #     )
+        #     print("Mechanical Stability Tests")
+        #     print(
+        #         "------------------------------------------------------------------\n")
+        #     self.elastic_stability
 
     # Elastic Properties
 
@@ -203,6 +212,7 @@ class ElasticProperties2D:
         print("2D Poisson ratio v[10]         :   %10.3f " % self.nu10)
         print("2D Poisson ratio v[01]         :   %10.3f " % self.nu01)
         print("-------------------------------------------------------")
+        
         #print(
         #    "Note:  The elastic stabilty test for 2D systems is not yet implemented. "
         #)
