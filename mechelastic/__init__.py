@@ -44,4 +44,5 @@ from mechelastic.utils import constants, elements, crystalutils
 
 from .calculate_elastic_anisotropy import calculate_elastic_anisotropy
 from .calculate_elastic import calculate_elastic
+from .from_mp import from_mp
 
