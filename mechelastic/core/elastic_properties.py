@@ -1025,7 +1025,7 @@ class ElasticProperties:
             DESCRIPTION.
 
         """
-        return self.E_vrh / ((1 + self.Nu_vrh) * (1 - 2 * self.Nu_vrh))
+        return self.E_vrh* self.Nu_vrh/ ((1 + self.Nu_vrh) * (1 - 2 * self.Nu_vrh))
 
     @property
     def mu_lame_coefficient(self):
