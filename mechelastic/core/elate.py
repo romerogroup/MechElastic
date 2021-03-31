@@ -1028,7 +1028,7 @@ class ELATE:
         )
         print(
             "Linear Compression   (TPa^-1)  %9.3f %9.3f || %s "
-            % (minE[1], maxE[1], anisLC)
+            % (minLC[1], maxLC[1], anisLC)
         )
         print(
             "         Min Axis:    %s      \n         Max Axis:    %s "
@@ -1039,7 +1039,7 @@ class ELATE:
         )
         print(
             "Shear Modulus   (GPa)          %9.3f %9.3f || %s "
-            % (minE[1], maxE[1], anisG)
+            % (minG[1], maxG[1], anisG)
         )
         print(
             "         Min Axis:    %s      \n         Max Axis:    %s "
@@ -1054,7 +1054,7 @@ class ELATE:
         )
         print(
             "Poisson's Ratio                 %9.3f %9.3f || %s "
-            % (minE[1], maxE[1], anisNu)
+            % (minNu[1], maxNu[1], anisNu)
         )
         print(
             "         Min Axis:    %s      \n         Max Axis:    %s "
