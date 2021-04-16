@@ -21,7 +21,10 @@ def print_mechelastic():
     print("Version %s created on %s\n" % (__version__, __date__))
     print("Please cite:")
     print(
-        "Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018)."
+        "- Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018)."
+    )
+    print(
+        "- Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert,\n Aldo H. Romero; arXiv:2012.04758 [cond-mat.mtrl-sci] (2020). "
     )
     print("\nDisclaimer:")
     print(
