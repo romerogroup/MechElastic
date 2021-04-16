@@ -6,6 +6,8 @@ from scipy import integrate
 import matplotlib.pyplot as plt
 import sys
 from intersect import intersection
+import networkx as nx
+import matplotlib as mpl
 
 # Setting up plotting class
 plt.rcParams["mathtext.default"] = "regular"
@@ -78,6 +80,8 @@ class EOS:
 
             # Birch-Murnaghan
             e1 = self.eos_birch_murnaghan(self.eos_birch_murnaghan_fitted.x, v1)
+            e2 = self.eos_birch_murnaghan(self.eos_birch_murnaghan_fitted.x, v2)
+            self.P_birch_murnaghan = P(e1, e2, dv) * 1.60217e02  # GPa
 
             # Birch
             e1 = self.eos_birch(self.eos_birch_fitted.x, v1)
@@ -671,14 +675,14 @@ class EOS:
         # Interpolating volume arrays and storing in a 2D self.vol_array
         for i in range(nfiles):
             if self.vlim:
-                self.vol_array.append(np.linspace(self.vlim[0], self.vlim[1], 1000))
+                self.vol_array.append(np.linspace(self.vlim[0], self.vlim[1], 2000))
             elif self.vlim_list:
                 self.vol_array.append(
-                    np.linspace(self.vlim_list[i][0], self.vlim_list[i][1], 1000)
+                    np.linspace(self.vlim_list[i][0], self.vlim_list[i][1], 2000)
                 )
             else:
                 self.vol_array.append(
-                    np.linspace(np.min(self.volume[i]), np.max(self.volume[i]), 1000)
+                    np.linspace(np.min(self.volume[i]), np.max(self.volume[i]), 2000)
                 )
 
         # converting self.vol_array to numpy array
@@ -738,37 +742,233 @@ class EOS:
         fig = plt.figure(figsize=(13, 9))
         axs = fig.add_subplot(111)
 
-        # Intersection points
-        print("\nEquilibrium enthalpy points between phases : ")
-        for i in range(nfiles):
-            for j in range(nfiles):
-                if i < j:
-                    print("\n%s and %s:" % (self.infiles[i], self.infiles[j]))
-                    int_x, int_y = intersection(
-                        self.pressure[i], self.H[i], self.pressure[j], self.H[j]
-                    )
+        # Matrix to store transition information
+        self.trans_mat = []
 
-                    # Check if there are multiple intersection points
-                    if int_x.size:
-                        if int_x.size < 2:
-                            if self.au:
-                                print("%.2f GPa at %.2f Ha " % (int_x, int_y))
-                            else:
-                                print("%.2f GPa at %.2f eV " % (int_x, int_y))
-                        else:
-                            for jj in range(int_x.size):
+        # Intersection points
+        if nfiles > 1:
+            # print("\nEquilibrium enthalpy points between phases : ")
+            for i in range(nfiles):
+                for j in range(nfiles):
+                    if i < j:
+                        # print("\n%s and %s:" % (self.infiles[i], self.infiles[j]))
+                        self.int_x, self.int_y = intersection(
+                            self.pressure[i], self.H[i], self.pressure[j], self.H[j]
+                        )
+
+                        # Check if there are multiple intersection points
+                        if self.int_x.size:
+                            if self.int_x.size < 2:
                                 if self.au:
-                                    print(
-                                        "%.2f GPa at %.2f Ha " % (int_x[jj], int_y[jj])
+                                    # print(
+                                    #     "%.2f GPa at %.2f Ha "
+                                    #     % (self.int_x, self.int_y)
+                                    # )
+                                    self.trans_mat.append(
+                                        [
+                                            self.infiles[i],
+                                            self.infiles[j],
+                                            self.int_x,
+                                            self.int_y,
+                                        ]
                                     )
                                 else:
-                                    print(
-                                        "%.2f GPa at %.2f eV " % (int_x[jj], int_y[jj])
+                                    # print(
+                                    #     "%.2f GPa at %.2f eV "
+                                    #     % (self.int_x, self.int_y)
+                                    # )
+                                    self.trans_mat.append(
+                                        [
+                                            self.infiles[i],
+                                            self.infiles[j],
+                                            self.int_x,
+                                            self.int_y,
+                                        ]
                                     )
 
-                    else:
-                        print("NOT FOUND FOR THIS VOLUME RANGE!")
-                    # plt.plot(x, y, "*k")
+                            else:
+                                for jj in range(self.int_x.size):
+                                    if self.au:
+                                        # print(
+                                        #     "%.2f GPa at %.2f Ha "
+                                        #     % (self.int_x[jj], self.int_y[jj])
+                                        # )
+                                        self.trans_mat.append(
+                                            [
+                                                self.infiles[i],
+                                                self.infiles[j],
+                                                self.int_x,
+                                                self.int_y,
+                                            ]
+                                        )
+
+                                    else:
+                                        # print(
+                                        #     "%.2f GPa at %.2f eV "
+                                        #     % (self.int_x[jj], self.int_y[jj])
+                                        # )
+                                        self.trans_mat.append(
+                                            [
+                                                self.infiles[i],
+                                                self.infiles[j],
+                                                self.int_x,
+                                                self.int_y,
+                                            ]
+                                        )
+
+                        # else:
+                        #     print("NOT FOUND FOR THIS VOLUME RANGE!")
+                        # # plt.plot(x, y, "*k")
+        self.trans_mat = np.array(self.trans_mat, dtype="object")
+
+        # reordered trans_mat to contain minimum enthalpy values for multiple
+        # intersections and their corresponding pressure.
+        self.trans_mat_reordered = np.zeros((self.trans_mat.shape), dtype="object")
+        self.trans_mat_reordered[:, 0:2] = self.trans_mat[:, 0:2]
+        self.trans_mat_reordered[:, 3] = [
+            min(self.trans_mat[i, 3]).item() for i in range(len(self.trans_mat))
+        ]
+        indx_arr = [np.argmin(self.trans_mat[i, 3]) for i in range(len(self.trans_mat))]
+        self.trans_mat_reordered[:, 2] = [
+            self.trans_mat[i, 2][j] for i, j in enumerate(indx_arr)
+        ]
+        self.trans_mat_reordered = self.trans_mat_reordered[
+            np.argsort(self.trans_mat_reordered[:, 3])
+        ]
+        self.trans_mat_reordered_tmp = self.trans_mat_reordered.copy()
+
+        # Find lowest curve of the two intersecting curves for each
+        # row in trans_mat_reordered. c1, c2 are the indexes of the pressure
+        # arrays.
+        for i in range(len(self.trans_mat_reordered)):
+            c1 = np.where(
+                np.isclose(
+                    self.pressure[self.infiles.index(self.trans_mat_reordered[i][0])],
+                    self.trans_mat_reordered[i][2],
+                    1e-03,
+                )
+            )
+            c2 = np.where(
+                np.isclose(
+                    self.pressure[self.infiles.index(self.trans_mat_reordered[i][1])],
+                    self.trans_mat_reordered[i][2],
+                    1e-03,
+                )
+            )
+
+            # corresponding enthalpy values for the two intersecting curves
+            # Adding 500 to see a point a bit down along the interseciton point.
+            h1 = self.H[self.infiles.index(self.trans_mat_reordered[i][0])][
+                c1[0][-1] + 500
+            ]
+            h2 = self.H[self.infiles.index(self.trans_mat_reordered[i][1])][
+                c1[0][-1] + 500
+            ]
+
+            # reorder the phases such that lowest energy phase appears first
+            if h1 > h2:
+                self.trans_mat_reordered_tmp[i][0] = self.trans_mat_reordered[i][1]
+                self.trans_mat_reordered_tmp[i][1] = self.trans_mat_reordered[i][0]
+            else:
+                self.trans_mat_reordered_tmp[i][0] = self.trans_mat_reordered[i][0]
+                self.trans_mat_reordered_tmp[i][1] = self.trans_mat_reordered[i][1]
+
+        # setting to original array
+        self.trans_mat_reordered = self.trans_mat_reordered_tmp
+        # Adding additional phase for testing
+        # tm = np.append(self.trans_mat_reordered, ["Im-3m", "XXX", 8.0, -2.0])
+        # self.trans_mat_reordered = tm.reshape(7, 4)
+
+        print("\nPossible transition paths for the provided volume range:\n")
+        print(
+            "NOTE: Ordered with ascending enthalpy. i.e. topmost transition is the most probable.\n"
+        )
+        selected_array = []
+        selected_array2 = []
+        for i in range(len(self.trans_mat_reordered)):
+            for j in range(len(self.trans_mat_reordered)):
+                if i < j:
+                    if self.trans_mat_reordered[i][1] == self.trans_mat_reordered[j][0]:
+                        selected_array.append(i)
+
+                        print(
+                            "{} -> {} (at {:0.3f} GPa) -> {} (at {:0.3f} GPa)".format(
+                                self.trans_mat_reordered[i][0],
+                                self.trans_mat_reordered[i][1],
+                                self.trans_mat_reordered[i][2],
+                                self.trans_mat_reordered[j][1],
+                                self.trans_mat_reordered[j][2],
+                            ),
+                        )
+
+                        for k in range(len(self.trans_mat_reordered)):
+                            if j < k:
+                                if (
+                                    self.trans_mat_reordered[j][1]
+                                    == self.trans_mat_reordered[k][0]
+                                ):
+                                    selected_array2.append(j)
+
+                        if j in selected_array2:
+                            print(
+                                "-> {} (at {:0.3f} GPa)".format(
+                                    self.trans_mat_reordered[k][1],
+                                    self.trans_mat_reordered[k][2],
+                                ),
+                            )
+
+            if i not in selected_array:
+                print(
+                    "{} -> {} (at {:0.3f} GPa)".format(
+                        self.trans_mat_reordered[i][0],
+                        self.trans_mat_reordered[i][1],
+                        self.trans_mat_reordered[i][2],
+                    ),
+                )
+
+        # print("\nPossible transition paths for the provided volume range:\n")
+        # selected_array = []
+        # selected_array2 = []
+        # for i in range(len(self.trans_mat_reordered)):
+        #     for j in range(len(self.trans_mat_reordered)):
+
+        #         def recursion(i, j):
+        #             if i < j:
+        #                 if (
+        #                     self.trans_mat_reordered[i][1]
+        #                     == self.trans_mat_reordered[j][0]
+        #                 ):
+        #                     selected_array.append([])
+        #                     selected_array.append(i)
+
+        #                     print(
+        #                         "{} -> {} -> {}".format(
+        #                             self.trans_mat_reordered[i][0],
+        #                             self.trans_mat_reordered[i][1],
+        #                             self.trans_mat_reordered[j][1],
+        #                         ),
+        #                         end="\n",
+        #                     )
+
+        #                     for k in range(len(self.trans_mat_reordered)):
+        #                         if j < k:
+        #                             if (
+        #                                 self.trans_mat_reordered[j][1]
+        #                                 == self.trans_mat_reordered[k][0]
+        #                             ):
+        #                                 selected_array2.append(j)
+
+        #                     if j in selected_array:
+        #                         print(
+        #                             "-> {}".format(self.trans_mat_reordered[k][1]),
+        #                         )
+
+        #     if i not in selected_array:
+        #         print(
+        #             "{} -> {}".format(
+        #                 self.trans_mat_reordered[i][0], self.trans_mat_reordered[i][1]
+        #             ),
+        #         )
 
         for i, filename in enumerate(self.infiles):
             axs.plot(self.pressure[i], self.H[i], label=filename)
@@ -781,26 +981,76 @@ class EOS:
         plt.legend(loc="best")
         plt.show()
 
-        # Enthalpy differences with respect to a selected phase
+        # Network map for phase transitions from Pedram
+        cmap = plt.get_cmap("winter")
+        DG = nx.DiGraph()
+        names = np.unique(self.trans_mat_reordered[:, 0:2])
+        DG.add_nodes_from(names)
+        for trans in self.trans_mat_reordered:
+            DG.add_edge(
+                trans[0],
+                trans[1],
+                weight=trans[2],
+            )
+        pos = nx.layout.spring_layout(DG)
 
+        node_sizes = [
+            500
+        ] * DG.number_of_nodes()  # [3 + 10 * i for i in range(len(DG))]
+        M = DG.number_of_edges()
+        edge_colors = self.trans_mat_reordered[:, 3]
+
+        # edge_alphas = transition_matrix[:,2]
+        plt.figure(figsize=(9, 6))
+        nodes = nx.draw_networkx_nodes(DG, pos, node_size=node_sizes, node_color="Gray")
+        edges = nx.draw_networkx_edges(
+            DG,
+            pos,
+            node_size=node_sizes,
+            arrowstyle="->",
+            arrowsize=16,
+            edge_color=edge_colors,
+            edge_cmap=cmap,
+            width=2,
+        )
+
+        nx.draw_networkx_labels(DG, pos, font_size=16)
+
+        pc = mpl.collections.PatchCollection(edges, cmap=cmap)
+        pc.set_array(edge_colors)
+        plt.colorbar(pc)
+        ax = plt.gca()
+        ax.set_axis_off()
+        plt.show()
+
+        # Enthalpy differences with respect to a selected phase
         if self.deltaH_index:
 
             # Converting human input index to python 0 index
-            self.deltaH_index = int(self.deltaH_index) - 1
+            self.deltaH_index = int(self.deltaH_index)
 
             # name of phase
             phase_name = self.infiles[self.deltaH_index]
 
             # removing selected phase from infiles list
-            self.infiles.remove(phase_name)
+            # self.infiles.remove(phase_name)
+
+            # max and min pressure of selected phase
+            self.plim = [
+                min(self.pressure[self.deltaH_index]),
+                max(self.pressure[self.deltaH_index]),
+            ]
 
             # Pressure matrix with removed row
-            self.pressure = np.delete(self.pressure, self.deltaH_index, axis=0)
+            # self.pressure = np.delete(self.pressure, self.deltaH_index, axis=0)
 
             # Enthalpy matrix with removed row
-            self.deltaH = np.delete(
-                (self.H - self.H[self.deltaH_index]), self.deltaH_index, axis=0
-            )
+            # self.deltaH = np.delete(
+            #     (self.H - self.H[self.deltaH_index]), self.deltaH_index, axis=0
+            # )
+
+            # Enthalpy difference
+            self.deltaH = self.H - self.H[self.deltaH_index]
 
             fig = plt.figure(figsize=(13, 9))
             axs2 = fig.add_subplot(111)
@@ -814,7 +1064,8 @@ class EOS:
                 axs2.set_ylabel("$\Delta$H (eV)/atom")
             title_string = "$\Delta$H vs. Pressure wrt " + str(phase_name)
             axs2.set_title(title_string)
-            axs2.axhline(color="black")
+            # axs2.axhline(color="black")
+            axs2.set_xlim(self.plim)
             plt.legend(loc="best")
             plt.show()
 

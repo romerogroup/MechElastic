@@ -6,8 +6,8 @@ import os
 
 
 def get_version_info():
-    """ Retrieve version info from setup.json
-        Method adopted from PyChemia."""
+    """Retrieve version info from setup.json
+    Method adopted from PyChemia."""
 
     basepath = pathlib.Path(__file__).parent.absolute()
     rf = open(str(basepath) + os.sep + "setup.json")
@@ -18,8 +18,8 @@ def get_version_info():
 
 
 def write_version_py(filename="mechelastic/version.py"):
-    """ Write mechelastic/version.py. Adopted from
-        PyChemia."""
+    """Write mechelastic/version.py. Adopted from
+    PyChemia."""
 
     versioninfo_string = """
 # THIS FILE IS GENERATED FROM MECHELASTIC SETUP.PY.
@@ -67,7 +67,15 @@ setup(
     url=data["url"],
     download_url=data["download_url"],
     license="LICENSE.txt",
-    install_requires=["numpy", "spglib", "prettytable", "pathlib", "pyvista","intersect"],
+    install_requires=[
+        "numpy",
+        "spglib",
+        "prettytable",
+        "pathlib",
+        "pyvista",
+        "intersect",
+        "networkx",
+    ],
     data_files=[("", ["LICENSE.txt"])],
     package_data={"": ["setup.json"]},
     scripts=["scripts/MechElastic.py"],
