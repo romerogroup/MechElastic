@@ -14,7 +14,15 @@ TOTAL ELASTIC MODULI (kBar) from VASP
  --------------------------------------------------------------------------------
 
 MechElastic output:
+
+      /\/\   ___  ___| |__   /__\ | __ _ ___| |_(_) ___
+     /    \ / _ \/ __| '_ \ /_\ | |/ _` / __| __| |/ __|
+    / /\/\ \  __/ (__| | | //__ | | (_| \__ \ |_| | (__
+    \/    \/\___|\___|_| |_\__/ |_|\__,_|___/\__|_|\___|
+
+A Python library to calculate elastic properties of materials.
 ...
+
 Born stability criteria for the stability of Rhombohedral-1 class system are: [Ref-$
 
 (i) C11 - C12 > 0;    (ii) C13^2 < (1/2)*C33(C11 + C12);   (iii) C14^2 + C15^2 < (1$
