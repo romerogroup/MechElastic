@@ -37,7 +37,8 @@ class QE_thermo_pw_Parser:
         self.elastic_tensor = None
         self.compaliance_tensor = None
         self.structure = None
-        
+        self.density = None
+                
         self.outText = None
         self.inText  = None
         
@@ -349,7 +350,7 @@ class QE_thermo_pw_Parser:
         volume *= (5.29177249**-11)**3  # from atomic units (bohr)  to meters
         total_mass *= 1.0e-3  # from gram to kg
         density = total_mass / (volume * N_avogadro)
-
+        self.density = density 
         print("\nDensity (in kg/m^3 units ): %10.5f" % density)
 
 
