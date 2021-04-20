@@ -1,7 +1,7 @@
 Material B2Mo mp-2331
 Experimental hardness = 22.0 GPa
 
-MechElastic input (OUTCAR):
+MechElastic Input (VASP OUTCAR):
 ...
 TOTAL ELASTIC MODULI (kBar) from VASP
  Direction    XX          YY          ZZ          XY          YZ          ZX
@@ -13,8 +13,9 @@ TOTAL ELASTIC MODULI (kBar) from VASP
  YZ         173.5257   -173.5256     -0.0000     -0.0000   2256.4372      0.0004
  ZX           0.0001     -0.0000     -0.0000    173.5257      0.0004   2256.4380
  --------------------------------------------------------------------------------
+...
 
-MechElastic output:
+MechElastic Output:
 
       /\/\   ___  ___| |__   /__\ | __ _ ___| |_(_) ___
      /    \ / _ \/ __| '_ \ /_\ | |/ _` / __| __| |/ __|
