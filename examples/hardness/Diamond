@@ -1,7 +1,7 @@
 Material: Diamond mp-66
 Experimental hardness = 96 Gpa
 
-MechElastic Input (OUCAR):
+MechElastic Input (VASP OUCAR):
 ...
  TOTAL ELASTIC MODULI (kBar)
  Direction    XX          YY          ZZ          XY          YZ          ZX
