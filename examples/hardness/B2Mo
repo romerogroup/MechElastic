@@ -1,0 +1,55 @@
+Material B2Mo mp-2331
+
+MechElastic input (OUTCAR):
+...
+TOTAL ELASTIC MODULI (kBar) from VASP
+ Direction    XX          YY          ZZ          XY          YZ          ZX
+ --------------------------------------------------------------------------------
+ XX        5545.1752   1144.8262   1876.8102      0.0011    173.5257      0.0001
+ YY        1144.8262   5545.1717   1876.8096      0.0011   -173.5256     -0.0000
+ ZZ        1876.8102   1876.8096   6091.9104      0.0004     -0.0000     -0.0000
+ XY           0.0011      0.0011      0.0004   2200.1737     -0.0000    173.5257
+ YZ         173.5257   -173.5256     -0.0000     -0.0000   2256.4372      0.0004
+ ZX           0.0001     -0.0000     -0.0000    173.5257      0.0004   2256.4380
+ --------------------------------------------------------------------------------
+
+MechElastic output:
+...
+Born stability criteria for the stability of Rhombohedral-1 class system are: [Ref-$
+
+(i) C11 - C12 > 0;    (ii) C13^2 < (1/2)*C33(C11 + C12);   (iii) C14^2 + C15^2 < (1$
+
+Condition (i) is satified.
+Condition (ii) is satified.
+Condition (iii) is satified.
+Condition (iv) is satified.
+
+                         Voigt     Reuss    Average
+-------------------------------------------------------
+Bulk modulus   (GPa)    300.182   296.964   298.573
+Shear modulus  (GPa)    214.913   212.435   213.674
+Young modulus  (GPa)    520.519   514.598   517.558
+Poisson ratio             0.211     0.211     0.211
+P-wave modulus  (GPa)   586.732   580.210   583.471
+Bulk/Shear ratio          1.397     1.398     1.397 (brittle)
+-------------------------------------------------------
+
+------------------------------------------------------------------
+Hardness analysis from 6 different semi-empirical relationships.
+------------------------------------------------------------------
+Hardness (H1a) = 31.52 GPa   Ref.[1]
+Hardness (H1b) = 31.41 GPa   Ref.[1]
+Hardness (H2)  = 34.90 GPa   Ref.[2]
+Hardness (H3)  = 32.84 GPa   Ref.[3]
+Hardness (H4)  = 23.74 GPa   Ref.[4]
+Hardness (H5)  = 28.18 GPa   Ref.[5]
+
+References:
+[1] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).
+[2] Computational alchemy: the search for new superhard materials. Teter (1998).
+[3] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).
+[4] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).
+[5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).
+
+Thanks! See you later.
+
