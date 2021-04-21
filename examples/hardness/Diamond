@@ -1,0 +1,63 @@
+Material: Diamond mp-66
+Experimental hardness = 96 Gpa
+
+MechElastic Input (VASP OUCAR):
+...
+ TOTAL ELASTIC MODULI (kBar)
+ Direction    XX          YY          ZZ          XY          YZ          ZX
+ --------------------------------------------------------------------------------
+ XX       10510.8390   1237.6112   1237.6112      0.0000      0.0000     -0.0000
+ YY        1237.6112  10510.8390   1237.6112      0.0000      0.0000     -0.0000
+ ZZ        1237.6112   1237.6112  10510.8390     -0.0000      0.0000      0.0000
+ XY           0.0000      0.0000     -0.0000   5599.9790     -0.0000      0.0000
+ YZ           0.0000      0.0000      0.0000     -0.0000   5599.9790     -0.0000
+ ZX          -0.0000     -0.0000      0.0000      0.0000     -0.0000   5599.9790
+ --------------------------------------------------------------------------------
+...
+
+MechElastic Output:
+
+      /\/\   ___  ___| |__   /__\ | __ _ ___| |_(_) ___
+     /    \ / _ \/ __| '_ \ /_\ | |/ _` / __| __| |/ __|
+    / /\/\ \  __/ (__| | | //__ | | (_| \__ \ |_| | (__
+    \/    \/\___|\___|_| |_\__/ |_|\__,_|___/\__|_|\___|
+
+A Python library to calculate elastic properties of materials.
+...
+
+Born stability criteria for the stability of cubic system are: [Ref- Mouhat and Coudert, PRB 90, 224104 (2014)]
+
+(i) C11 - C12 > 0;    (ii) C11 + 2C12 > 0;   (iii) C44 > 0
+
+Condition (i) satified.
+Condition (ii) satified.
+Condition (iii) satified.
+
+                         Voigt     Reuss    Average
+-------------------------------------------------------
+Bulk modulus   (GPa)    432.575   432.575   432.575
+Shear modulus  (GPa)    522.343   517.916   520.130
+Young modulus  (GPa)   1117.307  1110.538  1113.922
+Poisson ratio             0.070     0.072     0.071
+P-wave modulus  (GPa)  1129.033  1123.130  1126.081
+Bulk/Shear ratio          0.828     0.835     0.832 (brittle)
+-------------------------------------------------------
+
+------------------------------------------------------------------
+Hardness analysis from 6 different semi-empirical relationships.
+------------------------------------------------------------------
+Hardness (H1a) = 76.72 GPa   Ref.[1]
+Hardness (H1b) = 67.59 GPa   Ref.[1]
+Hardness (H2)  = 89.11 GPa   Ref.[2]
+Hardness (H3)  = 70.68 GPa   Ref.[3]
+Hardness (H4)  = 57.79 GPa   Ref.[4]
+Hardness (H5)  = 93.30 GPa   Ref.[5]
+
+References:
+[1] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).
+[2] Computational alchemy: the search for new superhard materials. Teter (1998).
+[3] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).
+[4] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).
+[5] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).
+
+Thanks! See you later.

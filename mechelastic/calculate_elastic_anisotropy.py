@@ -36,6 +36,8 @@ def calculate_elastic_anisotropy(
         output = VaspOutcar(infile=infile, adjust_pressure=adjust_pressure)
         elastic_tensor = output.elastic_tensor
         elastic_tensor = output.elastic_tensor
+        density = output.density
+        
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
@@ -48,6 +50,7 @@ def calculate_elastic_anisotropy(
     elif code == "abinit":
         output = AbinitOutput(infile=infile, anaddbfile=anaddbfile)
         elastic_tensor = output.elastic_tensor
+        density = output.density
 
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
@@ -61,7 +64,8 @@ def calculate_elastic_anisotropy(
     elif code == "qe_ElaStic":
         output = QE_ElaStic_Parser(outfile=outfile, infile=infile)
         elastic_tensor = output.elastic_tensor
-
+        density = output.density
+        
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
@@ -74,7 +78,8 @@ def calculate_elastic_anisotropy(
     elif code == "qe_thermo_pw":
         output = QE_thermo_pw_Parser(outfile=outfile, infile=infile)
         elastic_tensor = output.elastic_tensor
-
+        density = output.density
+        
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
@@ -85,10 +90,10 @@ def calculate_elastic_anisotropy(
             rowsList.append(columnsList)
 
     print(rowsList)
-    elastic_tensor = ELATE(rowsList)
+    elastic_tensor = ELATE(rowsList, density)
 
     if plot == "2D":
-        fig = elastic_tensor.plot_2D(elastic_calc=elastic_calc, npoints = npoints,apply_to_plot=None, show=show)
+        fig = elastic_tensor.plot_2D(elastic_calc=elastic_calc, npoints = npoints,apply_to_plot=None ,show=show)
     elif plot == "3D":
         meshes = elastic_tensor.plot_3D(elastic_calc=elastic_calc, npoints = npoints, show=show )
 

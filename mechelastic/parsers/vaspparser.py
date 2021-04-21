@@ -24,6 +24,7 @@ class VaspOutcar:
         self.elastic_tensor = None
         self.compaliance_tensor = None
         self.structure = None
+        self.density = None
         self.text = None
 
         self._parse_outcar()
@@ -132,7 +133,7 @@ class VaspOutcar:
         volume *= 1.0e-30  # from Angstrom to meters
         total_mass *= 1.0e-3  # from gram to kg
         density = total_mass / (volume * N_avogadro)
-
+        self.density = density
         print("\nDensity (in kg/m^3 units ): %10.5f" % density)
         print("External Pressure (in GPa units ): %10.5f" % self.pressure)
 
