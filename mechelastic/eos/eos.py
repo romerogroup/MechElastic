@@ -983,17 +983,18 @@ class EOS:
             axs.plot(self.pressure[i], self.H[i], label=self.labels[i])
         axs.set_xlabel("Pressure (GPa)")
         if self.au:
-            axs.set_ylabel("Enthalpy (Ha)/atom")
+            axs.set_ylabel("Enthalpy (Ha/atom)")
         else:
-            axs.set_ylabel("Enthalpy (eV)/atom")
+            axs.set_ylabel("Enthalpy (eV/atom)")
         axs.set_title("Enthalpy vs. Pressure")
         plt.legend(loc="best")
         plt.savefig("enthalpy.pdf")
+        # plt.grid()
         plt.show()
 
         # Network map for phase transitions
         # Added by Pedram
-        cmap = plt.get_cmap("winter")
+        cmap = plt.get_cmap("nipy_spectral")
         DG = nx.DiGraph()
         names = np.unique(self.trans_mat_reordered[:, 0:2])
 
@@ -1012,7 +1013,9 @@ class EOS:
         ]  # self.tras_mat_reordered[:, 3]
 
         plt.figure(figsize=(13, 9))
-        nodes = nx.draw_networkx_nodes(DG, pos, node_size=node_sizes, node_color="Gray")
+        nodes = nx.draw_networkx_nodes(
+            DG, pos, node_size=node_sizes, node_color="gainsboro"
+        )
         edges = nx.draw_networkx_edges(
             DG,
             pos,
@@ -1021,7 +1024,7 @@ class EOS:
             arrowsize=16,
             edge_color=edge_colors,
             edge_cmap=cmap,
-            width=2,
+            width=4,
         )
 
         nx.draw_networkx_labels(DG, pos, font_size=16)
@@ -1074,9 +1077,9 @@ class EOS:
                 axs2.plot(self.pressure[i], self.deltaH[i], label=self.labels[i])
             axs2.set_xlabel("Pressure (GPa)")
             if self.au:
-                axs2.set_ylabel("$\Delta$H (Ha)/atom")
+                axs2.set_ylabel("$\Delta$H (Ha/atom)")
             else:
-                axs2.set_ylabel("$\Delta$H (eV)/atom")
+                axs2.set_ylabel("$\Delta$H (eV/atom)")
             title_string = "$\Delta$H vs. Pressure wrt " + str(phase_name)
             axs2.set_title(title_string)
             # axs2.axhline(color="black")
