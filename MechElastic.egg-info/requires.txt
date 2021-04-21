@@ -4,3 +4,4 @@ prettytable
 pathlib
 pyvista
 intersect
+networkx

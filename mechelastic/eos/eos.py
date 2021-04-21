@@ -11,7 +11,7 @@ import matplotlib as mpl
 
 # Setting up plotting class
 plt.rcParams["mathtext.default"] = "regular"
-plt.rcParams["font.family"] = "Georgia"
+plt.rcParams["font.family"] = "Arial"
 plt.rc("font", size=22)  # controls default text sizes
 plt.rc("axes", titlesize=22)  # fontsize of the axes title
 plt.rc("axes", labelsize=22)  # fontsize of the x and y labels
@@ -591,6 +591,7 @@ class EOS:
         vlim=None,
         vlim_list=None,
         deltaH_index=None,
+        labels=None,
     ):
         """plot_enthalpy_curves.
 
@@ -609,6 +610,10 @@ class EOS:
 
             natoms : int, optional (default ``1``)
                 Number of atoms.
+
+            labels : str, optional (default ``None``)
+                List of names of phases. Supports Latex.
+                If not provided infiles will be used.
 
             au : bool, optional (default ``False``)
                 Output in atomic units?
@@ -634,6 +639,7 @@ class EOS:
         self.vlim = vlim
         self.vlim_list = vlim_list
         self.deltaH_index = deltaH_index
+        self.labels = labels
 
         nfiles = len(self.infiles)
         self.volume = []
@@ -970,8 +976,11 @@ class EOS:
         #             ),
         #         )
 
+        if self.labels is None:
+            self.labels = self.infiles
+
         for i, filename in enumerate(self.infiles):
-            axs.plot(self.pressure[i], self.H[i], label=filename)
+            axs.plot(self.pressure[i], self.H[i], label=self.labels[i])
         axs.set_xlabel("Pressure (GPa)")
         if self.au:
             axs.set_ylabel("Enthalpy (Ha)/atom")
@@ -979,35 +988,36 @@ class EOS:
             axs.set_ylabel("Enthalpy (eV)/atom")
         axs.set_title("Enthalpy vs. Pressure")
         plt.legend(loc="best")
+        plt.savefig("enthalpy.pdf")
         plt.show()
 
-        # Network map for phase transitions from Pedram
+        # Network map for phase transitions
+        # Added by Pedram
         cmap = plt.get_cmap("winter")
         DG = nx.DiGraph()
         names = np.unique(self.trans_mat_reordered[:, 0:2])
+
         DG.add_nodes_from(names)
         for trans in self.trans_mat_reordered:
             DG.add_edge(
                 trans[0],
                 trans[1],
-                weight=trans[2],
+                weight=trans[3],
             )
         pos = nx.layout.spring_layout(DG)
 
-        node_sizes = [
-            500
-        ] * DG.number_of_nodes()  # [3 + 10 * i for i in range(len(DG))]
-        M = DG.number_of_edges()
-        edge_colors = self.trans_mat_reordered[:, 3]
+        node_sizes = [3500] * DG.number_of_nodes()
+        edge_colors = [
+            DG.get_edge_data(edge[0], edge[1])["weight"] for edge in DG.edges
+        ]  # self.tras_mat_reordered[:, 3]
 
-        # edge_alphas = transition_matrix[:,2]
-        plt.figure(figsize=(9, 6))
+        plt.figure(figsize=(13, 9))
         nodes = nx.draw_networkx_nodes(DG, pos, node_size=node_sizes, node_color="Gray")
         edges = nx.draw_networkx_edges(
             DG,
             pos,
             node_size=node_sizes,
-            arrowstyle="->",
+            # arrowstyle="->",
             arrowsize=16,
             edge_color=edge_colors,
             edge_cmap=cmap,
@@ -1018,9 +1028,14 @@ class EOS:
 
         pc = mpl.collections.PatchCollection(edges, cmap=cmap)
         pc.set_array(edge_colors)
-        plt.colorbar(pc)
+        cb = plt.colorbar(pc, orientation="vertical")
+        if self.au:
+            cb.set_label("Enthalpy (Ha/atom)")
+        else:
+            cb.set_label("Enthalpy (eV/atom)")
         ax = plt.gca()
         ax.set_axis_off()
+        plt.savefig("enthalpy-network.pdf")
         plt.show()
 
         # Enthalpy differences with respect to a selected phase
@@ -1056,7 +1071,7 @@ class EOS:
             axs2 = fig.add_subplot(111)
 
             for i, filename in enumerate(self.infiles):
-                axs2.plot(self.pressure[i], self.deltaH[i], label=filename)
+                axs2.plot(self.pressure[i], self.deltaH[i], label=self.labels[i])
             axs2.set_xlabel("Pressure (GPa)")
             if self.au:
                 axs2.set_ylabel("$\Delta$H (Ha)/atom")
