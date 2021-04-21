@@ -989,7 +989,7 @@ class EOS:
         axs.set_title("Enthalpy vs. Pressure")
         plt.legend(loc="best")
         plt.savefig("enthalpy.pdf")
-        # plt.grid()
+        axs.grid(color="gainsboro", ls="--", lw=0.6)
         plt.show()
 
         # Network map for phase transitions
