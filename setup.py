@@ -70,11 +70,11 @@ setup(
     install_requires=[
         "numpy",
         "spglib",
-        "prettytable",
         "pathlib",
         "pyvista",
         "intersect",
         "networkx",
+        "dicttoxml"
     ],
     data_files=[("", ["LICENSE.txt"])],
     package_data={"": ["setup.json"]},

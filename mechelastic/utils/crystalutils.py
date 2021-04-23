@@ -27,20 +27,27 @@ latticelist = np.array(
     ]
 )
 
-def crystal_select(cnew=None, cell=None, crystal_type=None):
 
+def crystal_select(cnew=None, cell=None, crystal_type=None, verbose=True):
     """This method selects crystal types."""
 
+    to_print = ""
+    to_print += (
+        "\n------------------------------------------------------------------"
+    )
+    to_print += ("Mechanical Stability Tests")
+    to_print += (
+        "------------------------------------------------------------------\n"
+    )
+
     if crystal_type is not None:
-        #print("\n \t \t Mechanical Stability Test \n")
         stability.stability_test(cnew, crystal_type)
 
     else:
-        #print("\n")
-        print(
+        to_print += (
             "WARNING: crystal symmetry class  was not provided by user, it will be taken from the OUTCAR"
         )
-        print(
+        to_print += (
             "One of the following was expected as the second argument: \n 'cubic', 'hexagonal', 'tetragonal', 'rhombohedral-1', 'rhombohedral-2', 'orthorhombic', 'monoclinic'"
         )
         crystal_type = ""
@@ -63,23 +70,27 @@ def crystal_select(cnew=None, cell=None, crystal_type=None):
         if spg >= 195:
             crystal_type = "cubic"
 
-        print("From OUTCAR the crystal type is = ", crystal_type)
-        stability.stability_test(cnew, crystal_type)
-        
-def lattice_select(cnew=None, cell=None, lattice_type=None):
+        to_print += ("From OUTCAR the crystal type is = %s" % crystal_type)
+        if verbose:
+            print(to_print)
+        stability.stability_test(cnew, crystal_type, verbose=verbose)
 
+
+def lattice_select(cnew=None, cell=None, lattice_type=None, verbose=True):
     """This method selects crystal types."""
-
+    to_print = ""
     if lattice_type is not None:
-        print("\n \t \t Mechanical Stability Test \n")
+
+        to_print += ("\n \t \t Mechanical Stability Test \n")
         stability.stability_test_2d(cnew, lattice_type)
 
     else:
-        print("\n")
-        print(
+        to_print += ("\n")
+        to_print += (
             "WARNING: crystal symmetry class  was not provided by user"
         )
-        print(
+        to_print += (
             "One of the following was expected as the second argument: \n 'hexagonal', 'square', 'rectangular', 'rectangular-center', 'oblique'"
         )
-
+    if verbose:
+        print(to_print)

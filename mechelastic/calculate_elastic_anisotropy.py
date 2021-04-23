@@ -15,10 +15,9 @@ def calculate_elastic_anisotropy(
     anaddbfile=None,
     outfile=None,
     adjust_pressure=True,
-    npoints = 100,
-    show = True
+    npoints=100,
+    show=True
 ):
-
     """
     This method calculates the elastic properties
     of a material from a DFT calculation. hi
@@ -37,7 +36,7 @@ def calculate_elastic_anisotropy(
         elastic_tensor = output.elastic_tensor
         elastic_tensor = output.elastic_tensor
         density = output.density
-        
+
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
@@ -65,7 +64,7 @@ def calculate_elastic_anisotropy(
         output = QE_ElaStic_Parser(outfile=outfile, infile=infile)
         elastic_tensor = output.elastic_tensor
         density = output.density
-        
+
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
@@ -79,7 +78,7 @@ def calculate_elastic_anisotropy(
         output = QE_thermo_pw_Parser(outfile=outfile, infile=infile)
         elastic_tensor = output.elastic_tensor
         density = output.density
-        
+
         row = elastic_tensor.shape[0]
         col = elastic_tensor.shape[1]
         rowsList = []
@@ -93,9 +92,11 @@ def calculate_elastic_anisotropy(
     elastic_tensor = ELATE(rowsList, density)
 
     if plot == "2D":
-        fig = elastic_tensor.plot_2D(elastic_calc=elastic_calc, npoints = npoints,apply_to_plot=None ,show=show)
+        fig = elastic_tensor.plot_2D(
+            elastic_calc=elastic_calc, npoints=npoints, apply_to_plot=None, show=show)
     elif plot == "3D":
-        meshes = elastic_tensor.plot_3D(elastic_calc=elastic_calc, npoints = npoints, show=show )
+        meshes = elastic_tensor.plot_3D(
+            elastic_calc=elastic_calc, npoints=npoints, show=show)
 
     elastic_tensor.print_properties()
 
