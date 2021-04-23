@@ -398,11 +398,11 @@ class EOS:
                 )
 
             if self.au:
-                axs.set_xlabel("Volume ($Bohr^3$)/atom")
-                axs.set_ylabel("Energy (Ha)/atom")
+                axs.set_xlabel("Volume ($Bohr^3$/atom)")
+                axs.set_ylabel("Energy (Ha/atom)")
             else:
-                axs.set_xlabel("Volume ($\AA^3$)/atom")
-                axs.set_ylabel("Energy (eV)/atom")
+                axs.set_xlabel("Volume ($\AA^3$/atom)")
+                axs.set_ylabel("Energy (eV/atom)")
             axs.set_title("Energy vs. Volume")
             plt.legend(loc="best")
             plt.show()
@@ -485,9 +485,9 @@ class EOS:
                 )
 
             if self.au:
-                axs2.set_xlabel("Volume ($Bohr^3$)/atom")
+                axs2.set_xlabel("Volume ($Bohr^3$/atom)")
             else:
-                axs2.set_xlabel("Volume ($\AA^3$)/atom")
+                axs2.set_xlabel("Volume ($\AA^3$/atom)")
             axs2.set_ylabel("Pressure (GPa)")
             axs2.set_title("Pressure vs. Volume")
             plt.legend(loc="best")
@@ -541,9 +541,9 @@ class EOS:
                 )
 
             if self.au:
-                axs.set_xlabel("Volume ($Bohr^3$)/atom")
+                axs.set_xlabel("Volume ($Bohr^3$/atom)")
             else:
-                axs.set_xlabel("Volume ($\AA^3$)/atom")
+                axs.set_xlabel("Volume ($\AA^3$/atom)")
             axs.set_ylabel("Pressure (GPa)")
             axs.set_title("Pressure vs. Volume")
             plt.legend(loc="best")
@@ -574,11 +574,11 @@ class EOS:
                 )
 
             if self.au:
-                axs2.set_ylabel("Energy (Ha)/atom")
-                axs2.set_xlabel("Volume ($Bohr^3$)/atom")
+                axs2.set_ylabel("Energy (Ha/atom)")
+                axs2.set_xlabel("Volume ($Bohr^3$/atom)")
             else:
-                axs2.set_ylabel("Energy (eV)/atom")
-                axs2.set_xlabel("Volume ($\AA^3$)/atom")
+                axs2.set_ylabel("Energy (eV/atom)")
+                axs2.set_xlabel("Volume ($\AA^3$/atom)")
             axs2.set_title("Energy vs. Volume")
             plt.legend(loc="best")
             plt.show()
