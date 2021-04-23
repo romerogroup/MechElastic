@@ -56,7 +56,8 @@ def from_mp(mp_id, api_key, crystal=None, lattice_type=None, outfile=None):
     structure = Structure(symbols, positions, lattice)
 
     # elastic constants calculation for 3D materials
-    elastic_properties = ElasticProperties(elastic_tensor, structure, crystal_type,)
+    elastic_properties = ElasticProperties(
+        elastic_tensor, structure, crystal_type,)
     elastic_properties.print_properties()
 
     # other
@@ -66,4 +67,4 @@ def from_mp(mp_id, api_key, crystal=None, lattice_type=None, outfile=None):
     #     )
 
     print("\nThanks! See you later. ")
-    return 
+    return

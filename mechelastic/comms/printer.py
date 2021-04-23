@@ -50,14 +50,7 @@ def print_warning_2D():
     return
 
 
-# def printMatrix(c):
-#     p = PrettyTable()
-#     for row in c:
-#         p.add_row(row)
-#     print(p.get_string(header=False, border=False))
-
-
-def printMatrix(c):
+def print_matrix(c):
     row = c.shape[0]
     col = c.shape[1]
     for i in range(row):
