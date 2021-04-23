@@ -8,6 +8,9 @@ import sys
 from intersect import intersection
 import networkx as nx
 import matplotlib as mpl
+import json
+from dicttoxml import dicttoxml
+from xml.dom.minidom import parseString
 
 # Setting up plotting class
 plt.rcParams["mathtext.default"] = "regular"
@@ -1343,6 +1346,72 @@ class EOS:
             * (1 + 0.75 * (Kp - 4) * (eta ** 2 - 1))
         )
         return P
+
+    # Outputting data to files
+
+    def to_dict(self):
+        if self.eostype == "enthalpy":
+            return {
+                "H": self.H.tolist(),
+                "au": self.au,
+                "coeffs0": self.coeffs0.tolist(),
+                "deltaH_index": self.deltaH_index,
+                "energy": self.energy.tolist(),
+                "eos_birch_fitted_cost": self.eos_birch_fitted["cost"],
+                "eos_birch_murnaghan_fitted_cost": self.eos_birch_murnaghan_fitted[
+                    "cost"
+                ],
+                "eos_murnaghan_fitted_cost": self.eos_murnaghan_fitted["cost"],
+                "eos_vinet_fitted_cost": self.eos_vinet_fitted["cost"],
+                "eostype": self.eostype,
+                "infiles": self.infiles,
+                "labels": self.labels,
+                "model": self.model,
+                "natoms": self.natoms,
+                "pressure": self.pressure.tolist(),
+                "selected_coeffs": [i.tolist() for i in self.selected_coeffs],
+                "trans_mat_reordered": self.trans_mat_reordered.tolist(),
+                "vlim": self.vlim,
+                "vlim_list": self.vlim_list,
+                "vol_array": self.vol_array.tolist(),
+                "volume": self.volume.tolist(),
+            }
+        else:
+            return {
+                "P_birch": self.P_birch.tolist(),
+                "P_birch_murnaghan": self.P_birch_murnaghan.tolist(),
+                "P_murnaghan": self.P_murnaghan.tolist(),
+                "P_vinet": self.P_vinet.tolist(),
+                "au": self.au,
+                "coeffs0": self.coeffs0,
+                "energy": self.energy.tolist(),
+                "eos_birch_fitted_cost": self.eos_birch_fitted["cost"],
+                "eos_birch_murnaghan_fitted_cost": self.eos_birch_murnaghan_fitted[
+                    "cost"
+                ],
+                "eos_murnaghan_fitted_cost": self.eos_murnaghan_fitted["cost"],
+                "eos_vinet_fitted_cost": self.eos_vinet_fitted["cost"],
+                "eostype": self.eostype,
+                "model": self.model,
+                "natoms": self.natoms,
+                "raw_data": self.raw_data,
+                "vlim": self.vlim,
+                "vol_array": self.vol_array.tolist(),
+                "volume": self.volume.tolist(),
+            }
+
+    def to_json(self, outfile="eos.json"):
+
+        wf = open(outfile, "w")
+        json.dump(self.to_dict(), wf, sort_keys=True, indent=4, separators=(",", ": "))
+        wf.close()
+
+    def to_xml(self, outfile="eos.xml"):
+        wf = open(outfile, "w")
+        xml = dicttoxml(self.to_dict())
+        dom = parseString(xml)
+        wf.write(dom.toprettyxml())
+        wf.close()
 
 
 if __name__ == "__main__":
