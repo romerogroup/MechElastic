@@ -6,7 +6,6 @@ This file contains messages outputed to the screen.
 
 from ..version import version as __version__
 from ..version import date as __date__
-from prettytable import PrettyTable
 
 
 def print_mechelastic():

@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Equation of State (EOS) Analysis &mdash; MechElastic  documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -54,7 +57,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+            <a href="index.html" class="icon icon-home"> MechElastic
           
 
           
@@ -146,6 +149,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -161,7 +166,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/eos.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -218,8 +223,10 @@ Multiple input files containing two columns of volume (<span class="math notrans
 <p>The flags <code class="docutils literal notranslate"><span class="pre">vlim</span></code> and <code class="docutils literal notranslate"><span class="pre">au</span></code> work similar to the <code class="docutils literal notranslate"><span class="pre">plot_eos()</span></code> section.
 If the volume ranges are to be set individually to each phase, one can use the <code class="docutils literal notranslate"><span class="pre">vlim_list</span></code> option. This is a list that contains elements of the minimum and maximum value of volume for each phase.
 For instance, to define the volume ranges to each of the five phases here set, <code class="docutils literal notranslate"><span class="pre">vlim_list</span> <span class="pre">=</span> <span class="pre">[</span> <span class="pre">[180,260],</span> <span class="pre">[25,41],</span> <span class="pre">[50,75],</span> <span class="pre">[270,372],</span> <span class="pre">[110,160]</span> <span class="pre">]</span></code>.</p>
-<p>Additionally, one may plot the Enthalpy differences with respect to a certain phase by setting <code class="docutils literal notranslate"><span class="pre">deltaH_index=&lt;phase</span> <span class="pre">index&gt;</span></code> where <cite>&lt;phase index&gt;</cite> is the index of the phase in the infiles list starting from 1.
-For example, in the above list of phases, to plot the Enthalpy with respect to <cite>Im-3m</cite>, one should set <code class="docutils literal notranslate"><span class="pre">deltaH_index=3</span></code>.</p>
+<p>This outputs enthalpy curves and if phase transitions are detected, it will calculate the phase transition pressures and the possible transition paths.</p>
+<p>Additionally, one may plot the Enthalpy differences with respect to a certain phase by setting <code class="docutils literal notranslate"><span class="pre">deltaH_index=&lt;phase</span> <span class="pre">index&gt;</span></code> where <cite>&lt;phase index&gt;</cite> is the index of the phase in the infiles list starting from 0.
+For example, in the above list of phases, to plot the Enthalpy with respect to <cite>Im-3m</cite>, one should set <code class="docutils literal notranslate"><span class="pre">deltaH_index=2</span></code>.</p>
+<p>If the data is required in a .json and .xml format, set <code class="docutils literal notranslate"><span class="pre">export=True</span></code> in either of these two functions.</p>
 </div>
 </div>
 
@@ -228,37 +235,29 @@ For example, in the above list of phases, to plot the Enthalpy with respect to <
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="elate.html" class="btn btn-neutral float-right" title="ELATE implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="elasticconstantsandbasefunctions.html" class="btn btn-neutral float-left" title="Elastic constants and base functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="elate.html" class="btn btn-neutral float-right" title="ELATE implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="elasticconstantsandbasefunctions.html" class="btn btn-neutral float-left" title="Elastic constants and base functions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Sobhit Singh, Romero Group
+        &#169; Copyright 2021, Sobhit Singh, Romero Group.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

@@ -647,7 +647,9 @@ class ElasticProperties:
                CR , which is more appropriate. Clearly, AL  CV , CR   is zero when the crystallite is isotropic.
 
         """
-        return np.sqrt((np.log(self.K_v/self.K_r))**2 + 5 * (np.log(self.G_v/self.G_r))**2)
+        return np.sqrt(
+            (np.log(self.K_v / self.K_r)) ** 2 + 5 * (np.log(self.G_v / self.G_r)) ** 2
+        )
 
     @property
     def anisotropy_log_euclidean(self):
@@ -855,46 +857,48 @@ class ElasticProperties:
             DESCRIPTION.
 
         """
-        return {'anisotropy_Chung_Buessem': self.anisotropy_Chung_Buessem,
-                'anisotropy_log_euclidean': self.anisotropy_log_euclidean,
-                'anisotropy_universal': self.anisotropy_universal,
-                'anisotropy_zenner': self.anisotropy_zenner,
-                'bond_bending_vs_streching': self.bond_bending_vs_streching,
-                'bonding_type': self.bonding_type,
-                'bulk_modulus_reuss': self.bulk_modulus_reuss,
-                'bulk_modulus_voigt': self.bulk_modulus_voigt,
-                'bulk_modulus_voigt_reuss_hill': self.bulk_modulus_voigt_reuss_hill,
-                'bulk_shear_ratio_reuss': self.bulk_shear_ratio_reuss,
-                'bulk_shear_ratio_voigt': self.bulk_shear_ratio_voigt,
-                'bulk_shear_ratio_voigt_reuss_hill': self.bulk_shear_ratio_voigt_reuss_hill,
-                'cauchy_pressure': self.cauchy_pressure,
-                'compaliance_tensor': self.compaliance_tensor.tolist(),
-                'crystal_type': self.crystal_type,
-                'debye_temperature': self.debye_temperature,
-                'ductility': self.ductility,
-                'elastic_stability': self.elastic_stability,
-                'elastic_tensor': self.elastic_tensor.tolist(),
-                'hardness': self.hardness,
-                'kleinman_parameter': self.kleinman_parameter,
-                'lambda_lame_coefficient': self.lambda_lame_coefficient,
-                'melting_temperature': self.melting_temperature,
-                'mu_lame_coefficient': self.mu_lame_coefficient,
-                'p_wave_modulus_reuss': self.p_wave_modulus_reuss,
-                'p_wave_modulus_voigt': self.p_wave_modulus_voigt,
-                'p_wave_modulus_voigt_reuss_hill': self.p_wave_modulus_voigt_reuss_hill,
-                'poissons_ratio_reuss': self.poissons_ratio_reuss,
-                'poissons_ratio_voigt': self.poissons_ratio_voigt,
-                'poissons_ratio_voigt_reuss_hill': self.poissons_ratio_voigt_reuss_hill,
-                'shear_modulus_reuss': self.shear_modulus_reuss,
-                'shear_modulus_voight': self.shear_modulus_voight,
-                'shear_modulus_voight_reuss_hill': self.shear_modulus_voight_reuss_hill,
-                'structure': self.structure.to_dict(symprec),
-                'velocity_average': self.velocity_average,
-                'velocity_logitudinal': self.velocity_logitudinal,
-                'velocity_transverse': self.velocity_transverse,
-                'youngs_modulus_reuss': self.youngs_modulus_reuss,
-                'youngs_modulus_voigt': self.youngs_modulus_voigt,
-                'youngs_modulus_voigt_reuss_hill': self.youngs_modulus_voigt_reuss_hill, }
+        return {
+            "anisotropy_Chung_Buessem": self.anisotropy_Chung_Buessem,
+            "anisotropy_log_euclidean": self.anisotropy_log_euclidean,
+            "anisotropy_universal": self.anisotropy_universal,
+            "anisotropy_zenner": self.anisotropy_zenner,
+            "bond_bending_vs_streching": self.bond_bending_vs_streching,
+            "bonding_type": self.bonding_type,
+            "bulk_modulus_reuss": self.bulk_modulus_reuss,
+            "bulk_modulus_voigt": self.bulk_modulus_voigt,
+            "bulk_modulus_voigt_reuss_hill": self.bulk_modulus_voigt_reuss_hill,
+            "bulk_shear_ratio_reuss": self.bulk_shear_ratio_reuss,
+            "bulk_shear_ratio_voigt": self.bulk_shear_ratio_voigt,
+            "bulk_shear_ratio_voigt_reuss_hill": self.bulk_shear_ratio_voigt_reuss_hill,
+            "cauchy_pressure": self.cauchy_pressure,
+            "compaliance_tensor": self.compaliance_tensor.tolist(),
+            "crystal_type": self.crystal_type,
+            "debye_temperature": self.debye_temperature,
+            "ductility": self.ductility,
+            "elastic_stability": self.elastic_stability,
+            "elastic_tensor": self.elastic_tensor.tolist(),
+            "hardness": self.hardness,
+            "kleinman_parameter": self.kleinman_parameter,
+            "lambda_lame_coefficient": self.lambda_lame_coefficient,
+            "melting_temperature": self.melting_temperature,
+            "mu_lame_coefficient": self.mu_lame_coefficient,
+            "p_wave_modulus_reuss": self.p_wave_modulus_reuss,
+            "p_wave_modulus_voigt": self.p_wave_modulus_voigt,
+            "p_wave_modulus_voigt_reuss_hill": self.p_wave_modulus_voigt_reuss_hill,
+            "poissons_ratio_reuss": self.poissons_ratio_reuss,
+            "poissons_ratio_voigt": self.poissons_ratio_voigt,
+            "poissons_ratio_voigt_reuss_hill": self.poissons_ratio_voigt_reuss_hill,
+            "shear_modulus_reuss": self.shear_modulus_reuss,
+            "shear_modulus_voight": self.shear_modulus_voight,
+            "shear_modulus_voight_reuss_hill": self.shear_modulus_voight_reuss_hill,
+            "structure": self.structure.to_dict(symprec),
+            "velocity_average": self.velocity_average,
+            "velocity_logitudinal": self.velocity_logitudinal,
+            "velocity_transverse": self.velocity_transverse,
+            "youngs_modulus_reuss": self.youngs_modulus_reuss,
+            "youngs_modulus_voigt": self.youngs_modulus_voigt,
+            "youngs_modulus_voigt_reuss_hill": self.youngs_modulus_voigt_reuss_hill,
+        }
 
     def to_json(self, outfile="elastic_properties.json", symprec=1e-5):
         """
@@ -912,9 +916,10 @@ class ElasticProperties:
         None.
 
         """
-        wf = open(outfile, 'w')
-        json.dump(self.to_dict(symprec), wf, sort_keys=True,
-                  indent=4, separators=(',', ': '))
+        wf = open(outfile, "w")
+        json.dump(
+            self.to_dict(symprec), wf, sort_keys=True, indent=4, separators=(",", ": ")
+        )
         wf.close()
 
     def to_xml(self, outfile="elastic_properties.xml", symprec=1e-5):
@@ -933,7 +938,7 @@ class ElasticProperties:
         None.
 
         """
-        wf = open(outfile, 'w')
+        wf = open(outfile, "w")
         xml = dicttoxml(self.to_dict(symprec))
         dom = parseString(xml)
         wf.write(dom.toprettyxml())
@@ -953,7 +958,7 @@ class ElasticProperties:
         None.
 
         """
-        wf = open(outfile, 'w')
+        wf = open(outfile, "w")
         wf.write(self.__str__())
         wf.close()
 
@@ -974,29 +979,36 @@ class ElasticProperties:
 
         ret += "                          Voigt     Reuss    Average\n"
         ret += "-------------------------------------------------------\n"
-        ret += (
-            "Bulk modulus   (GPa)  %9.3f %9.3f %9.3f \n"
-            % (self.K_v, self.K_r, self.K_vrh)
+        ret += "Bulk modulus   (GPa)  %9.3f %9.3f %9.3f \n" % (
+            self.K_v,
+            self.K_r,
+            self.K_vrh,
         )
-        ret += (
-            "Shear modulus  (GPa)  %9.3f %9.3f %9.3f \n"
-            % (self.G_v, self.G_r, self.G_vrh)
+        ret += "Shear modulus  (GPa)  %9.3f %9.3f %9.3f \n" % (
+            self.G_v,
+            self.G_r,
+            self.G_vrh,
         )
-        ret += (
-            "Young's modulus  (GPa)  %9.3f %9.3f %9.3f \n"
-            % (self.E_v, self.E_r, self.E_vrh)
+        ret += "Young's modulus  (GPa)  %9.3f %9.3f %9.3f \n" % (
+            self.E_v,
+            self.E_r,
+            self.E_vrh,
         )
-        ret += (
-            "Poisson's ratio         %9.3f %9.3f %9.3f \n"
-            % (self.Nu_v, self.Nu_r, self.Nu_vrh)
+        ret += "Poisson's ratio         %9.3f %9.3f %9.3f \n" % (
+            self.Nu_v,
+            self.Nu_r,
+            self.Nu_vrh,
         )
-        ret += (
-            "P-wave modulus  (GPa) %9.3f %9.3f %9.3f \n"
-            % (self.M_v, self.M_r, self.M_vrh)
+        ret += "P-wave modulus  (GPa) %9.3f %9.3f %9.3f \n" % (
+            self.M_v,
+            self.M_r,
+            self.M_vrh,
         )
-        ret += (
-            "Bulk/Shear ratio      %9.3f %9.3f %9.3f (%s) \n"
-            % (self.KG_ratio_v, self.KG_ratio_r, self.KG_ratio_vrh, self.ductility)
+        ret += "Bulk/Shear ratio      %9.3f %9.3f %9.3f (%s) \n" % (
+            self.KG_ratio_v,
+            self.KG_ratio_r,
+            self.KG_ratio_vrh,
+            self.ductility,
         )
 
         ret += "\n------------------------------------------------------------------\n"
@@ -1020,7 +1032,7 @@ class ElasticProperties:
         ret += "     CP < 0 (-ve) indicates that covalent bonding dominates\n"
 
         ret += "CP (GPa) =  %10.3f  \n" % self.cauchy_pressure
-        ret += "Bonding is mainly " + self.bonding_type+"\n"
+        ret += "Bonding is mainly " + self.bonding_type + "\n"
 
         ret += "\n------------------------------------------------------------------\n"
         ret += "Elastic Anisotropy\n"
@@ -1050,27 +1062,22 @@ class ElasticProperties:
             % self.velocity_transverse
         )
         ret += (
-            "Average wave velocity (vm) : %10.3f m/s; Ref.[10]\n" % self.velocity_average
+            "Average wave velocity (vm) : %10.3f m/s; Ref.[10]\n"
+            % self.velocity_average
         )
-        ret += (
-            "Debye temperature  : %10.3f K; Ref.[10]\n" % self.debye_temperature)
+        ret += "Debye temperature  : %10.3f K; Ref.[10]\n" % self.debye_temperature
         ret += "\n"
         ret += "WARNING: The  Debye model for the atomic displacement is based on a monoatomic crystal approximation.\n"
         ret += "Here we consider an averaged mass, in case your crystal has several species.\n"
 
-        ret += "\n------------------------------------------------------------------"
+        ret += "\n------------------------------------------------------------------\n"
         ret += "Melting Temperature\n"
         ret += "------------------------------------------------------------------\n\n"
 
-        ret += (
-            "Melting temperature calculated from the empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K); Ref.[11]"
-        )
-        ret += ("Tm =  %10.3f K (plus-minus 555 K) \n" %
-                self.melting_temperature)
+        ret += "Melting temperature calculated from the empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K); Ref.[11]"
+        ret += "Tm =  %10.3f K (plus-minus 555 K) \n" % self.melting_temperature
         ret += "\n\n"
-        ret += (
-            "WARNING: This is a crude approximation and its validity needs to be checked! \n"
-        )
+        ret += "WARNING: This is a crude approximation and its validity needs to be checked! \n"
 
         ret += "\n------------------------------------------------------------------\n"
         ret += "Hardness Analysis\n"
@@ -1084,8 +1091,7 @@ class ElasticProperties:
         ret += "Hardness (H4)  = {:.2f} GPa;  Ref.[15]\n".format(H4)
         ret += "Hardness (H5)  = {:.2f} GPa;  Ref.[16]\n".format(H5)
         ret += "\n"
-        ret += (
-            """Hardness recommendation model:
+        ret += """Hardness recommendation model:
 ********************************************************************
              Cubic  Hexagonal  Orthorhombic  Rhombohedral  General
 ********************************************************************
@@ -1096,59 +1102,26 @@ Metal          H1a     H4           H4            H4          H4
 Insulator     : bandgap > 2 eV
 Semiconductor : bandgap < 2 eV
 Metal         : bandgap = 0 """
-        )
 
         ret += "\n------------------------------------------------------------------\n"
         ret += "References\n"
         ret += "------------------------------------------------------------------\n\n"
-        ret += (
-            "[1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. Félix Mouhat and François-Xavier Coudert. Phys. Rev. B (2014)\n"
-        )
-        ret += (
-            "[2] Crystal Structures and Elastic Properties of Superhard IrN2 and IrN3 from First Principles. Zhi-jian Wu et al. Phys. Rev. B (2007)\n"
-        )
-        ret += (
-            "[3]  The rock physics handbook, Cam-bridge university press. G. Mavko, T. Mukerji, J. Dvorkin. Cambridge University Press. (2020)\n"
-        )
-        ret += (
-            "[4]  Deformation potentials in silicon. i. uniaxial strain. Leonard Kleinman. Phys.Rev. 128. (1962)\n"
-        )
-        ret += (
-            "[5] Electronic Structure and the Properties of Solids: The Physics of the Chemical Bond. Walter A. Harrison.  (2012)\n"
-        )
-        ret += (
-            "[6] Elasticity and Anelasticity of Metals. Clarence M. Zener et al. The Journal of Physical Chemistry. (1949)\n"
-        )
-        ret += (
-            "[7] The Elastic Anisotropy of Crystals. D. H. Chung and W. R. Buessem. Journal of Applied Physics (1967)\n"
-        )
-        ret += (
-            "[8] Universal Elastic Anisotropy Index. Shivakumar I. Ranganathan et al. Phys. Rev. Lett. (2008)\n"
-        )
-        ret += (
-            "[9] Elastic Anisotropy of Crystals. Christopher M. Kube. AIP Advances. (2016)\n"
-        )
-        ret += (
-            "[10] A Simplified Method for Calculating the Debye Temperature from Elastic Constants. Orson L.Anderson. Journal of Physics and Chemistry of Solids. (1963)\n"
-        )
-        ret += (
-            "[11] Elastic constants versus melting temperature in metals. M.E.Fine et al. Scripta Metallurgica. (1984)\n"
-        )
-        ret += (
-            "[12] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).\n"
-        )
-        ret += (
-            "[13] Computational alchemy: the search for new superhard materials. Teter (1998).\n"
-        )
-        ret += (
-            "[14] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).\n"
-        )
-        ret += (
-            "[15] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).\n"
-        )
-        ret += (
-            "[16] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).\n"
-        )
+        ret += "[1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. Félix Mouhat and François-Xavier Coudert. Phys. Rev. B (2014)\n"
+        ret += "[2] Crystal Structures and Elastic Properties of Superhard IrN2 and IrN3 from First Principles. Zhi-jian Wu et al. Phys. Rev. B (2007)\n"
+        ret += "[3]  The rock physics handbook, Cam-bridge university press. G. Mavko, T. Mukerji, J. Dvorkin. Cambridge University Press. (2020)\n"
+        ret += "[4]  Deformation potentials in silicon. i. uniaxial strain. Leonard Kleinman. Phys.Rev. 128. (1962)\n"
+        ret += "[5] Electronic Structure and the Properties of Solids: The Physics of the Chemical Bond. Walter A. Harrison.  (2012)\n"
+        ret += "[6] Elasticity and Anelasticity of Metals. Clarence M. Zener et al. The Journal of Physical Chemistry. (1949)\n"
+        ret += "[7] The Elastic Anisotropy of Crystals. D. H. Chung and W. R. Buessem. Journal of Applied Physics (1967)\n"
+        ret += "[8] Universal Elastic Anisotropy Index. Shivakumar I. Ranganathan et al. Phys. Rev. Lett. (2008)\n"
+        ret += "[9] Elastic Anisotropy of Crystals. Christopher M. Kube. AIP Advances. (2016)\n"
+        ret += "[10] A Simplified Method for Calculating the Debye Temperature from Elastic Constants. Orson L.Anderson. Journal of Physics and Chemistry of Solids. (1963)\n"
+        ret += "[11] Elastic constants versus melting temperature in metals. M.E.Fine et al. Scripta Metallurgica. (1984)\n"
+        ret += "[12] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).\n"
+        ret += "[13] Computational alchemy: the search for new superhard materials. Teter (1998).\n"
+        ret += "[14] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).\n"
+        ret += "[15] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).\n"
+        ret += "[16] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).\n"
         return ret
 
     @property

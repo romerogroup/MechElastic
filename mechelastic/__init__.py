@@ -1,4 +1,4 @@
-# Copyright (C) 2020 Sobhit Singh
+# Copyright (C) 2021 Sobhit Singh, Romero Group
 #
 # This file is part of MechElastic.
 #
@@ -25,24 +25,31 @@ from .version import date as __date__
 
 import re
 import sys
-
 import matplotlib.pyplot as plt
 import numpy as np
-
 import pyvista
-import prettytable
 import spglib
+import networkx
+import dicttoxml
+import intersect
+import pathlib
 
 from mechelastic.parsers import VaspOutcar
 from mechelastic.parsers import AbinitOutput
 from mechelastic.eos import EOS
 from mechelastic.comms import printer
-from mechelastic.core import Structure, ElasticProperties, ElasticProperties2D, ELATE, Surface, Isosurface, BrillouinZone
+from mechelastic.core import (
+    Structure,
+    ElasticProperties,
+    ElasticProperties2D,
+    ELATE,
+    Surface,
+    Isosurface,
+    BrillouinZone,
+)
 from mechelastic.tests import ductile, eigenvals, stability, symmetry
 from mechelastic.utils import constants, elements, crystalutils
-
 
 from .calculate_elastic_anisotropy import calculate_elastic_anisotropy
 from .calculate_elastic import calculate_elastic
 from .from_mp import from_mp
-

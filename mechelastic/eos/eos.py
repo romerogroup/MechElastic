@@ -155,6 +155,7 @@ class EOS:
         vlim=None,
         model=None,
         raw_data=True,
+        export=False,
     ):
         """plot_eos.
 
@@ -189,6 +190,9 @@ class EOS:
             raw_data : bool, optional (default ``True``)
                 Also include the raw input data in the plot.
 
+            export : bool, optional (default ``False``)
+                Export data as .json and .xml.
+
         Returns
         -------
             param : None
@@ -200,6 +204,7 @@ class EOS:
         self.vlim = vlim
         self.model = model
         self.raw_data = raw_data
+        self.export = export
 
         if self.eostype == "energy":
 
@@ -586,6 +591,11 @@ class EOS:
             plt.legend(loc="best")
             plt.show()
 
+        # Saving as .json and .xml
+        if self.export:
+            self.to_json()
+            self.to_xml()
+
     def plot_enthalpy_curves(
         self,
         infiles=None,
@@ -595,6 +605,7 @@ class EOS:
         vlim_list=None,
         deltaH_index=None,
         labels=None,
+        export=False,
     ):
         """plot_enthalpy_curves.
 
@@ -630,6 +641,9 @@ class EOS:
             deltaH_index : int, optional (default ``None``)
                 Index of file to calculate enthalpy difference with respect to.
 
+            export : bool, optional (default ``False``)
+                Export data as .json and .xml.
+
         Returns
         -------
             param : None
@@ -643,6 +657,7 @@ class EOS:
         self.vlim_list = vlim_list
         self.deltaH_index = deltaH_index
         self.labels = labels
+        self.export = export
 
         nfiles = len(self.infiles)
         self.volume = []
@@ -1090,6 +1105,11 @@ class EOS:
             plt.legend(loc="best")
             plt.show()
 
+        # Saving as .json and .xml
+        if self.export:
+            self.to_json()
+            self.to_xml()
+
     ############################# FITTING #############################
 
     def fitting(self):
@@ -1282,7 +1302,7 @@ class EOS:
 
     ####################### EOS MODELS for Energy ##############################
 
-    # Murnaghan equation of state
+    # Murnaghan
     def eos_murnaghan(self, coeffs, vol):
         "Ref: Phys. Rev. B 28, 5480 (1983)"
         E0, B0, Bp, V0 = coeffs
@@ -1293,7 +1313,7 @@ class EOS:
         )
         return E
 
-    # Birch-Murnaghan equation of state
+    # Birch-Murnaghan
     def eos_birch_murnaghan(self, coeffs, vol):
         "Ref: Phys. Rev. B 70, 224107"
         E0, B0, Bp, V0 = coeffs
@@ -1303,7 +1323,7 @@ class EOS:
         )
         return E
 
-    # Birch equation of state
+    # Birch
     def eos_birch(self, coeffs, vol):
         """
         Ref: Michael J. Mehl; Barry M. Klein; Dimitris A. Papaconstantopoulos. First-Principles Calculation of Elastic Properties. In Intermetallic Compounds; John Wiley & Sons Ltd, 1994; Vol. 1.
@@ -1317,7 +1337,7 @@ class EOS:
         )
         return E
 
-    # Vinet equation of state
+    # Vinet
     def eos_vinet(self, coeffs, vol):
         "Ref: Phys. Rev. B 70, 224107"
         E0, B0, Bp, V0 = coeffs
@@ -1412,8 +1432,3 @@ class EOS:
         dom = parseString(xml)
         wf.write(dom.toprettyxml())
         wf.close()
-
-
-if __name__ == "__main__":
-    eos = EOS(infile=["EvsV.dat", "EvsV2.dat"], eostype="phase_transition_pressure")
-    eos.plot_eos()

@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>mechelastic.tests.stability &mdash; MechElastic  documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -32,7 +35,6 @@
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/clipboard.min.js"></script>
         <script src="../../../_static/copybutton.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -52,7 +54,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+            <a href="../../../index.html" class="icon icon-home"> MechElastic
           
 
           
@@ -131,6 +133,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -160,8 +164,8 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linalg</span> <span class="k">as</span> <span class="n">LA</span>
 
-<div class="viewcode-block" id="stability_test"><a class="viewcode-back" href="../../../mechelastic.tests.html#mechelastic.tests.stability.stability_test">[docs]</a><span class="k">def</span> <span class="nf">stability_test</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">crystal_type</span><span class="p">):</span>
 
+<div class="viewcode-block" id="stability_test"><a class="viewcode-back" href="../../../mechelastic.tests.html#mechelastic.tests.stability.stability_test">[docs]</a><span class="k">def</span> <span class="nf">stability_test</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">crystal_type</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This methods tests for the stability of a structure, then returns a boolean if ther structure is stable.</span>
 
 <span class="sd">        References</span>
@@ -171,33 +175,34 @@
 
     <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">matrix</span><span class="p">)</span>
     <span class="n">stable</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">to_print</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="k">if</span> <span class="n">crystal_type</span> <span class="o">==</span> <span class="s2">&quot;cubic&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cubic crystal system </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Cubic crystal system </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;Born stability criteria for the stability of cubic system are: Ref.[1]  </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(i) C11 - C12 &gt; 0;    (ii) C11 + 2C12 &gt; 0;   (iii) C44 &gt; 0 </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;(i) C11 - C12 &gt; 0;    (ii) C11 + 2C12 &gt; 0;   (iii) C44 &gt; 0 </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
 
         <span class="c1"># check (i)   keep in mind list starts with 0, so c11 is stored as c00</span>
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">,</span> <span class="n">condition3</span><span class="p">)</span>
@@ -209,34 +214,34 @@
         <span class="k">return</span> <span class="n">stable</span>
 
     <span class="k">if</span> <span class="n">crystal_type</span> <span class="o">==</span> <span class="s2">&quot;hexagonal&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hexagonal crystal system </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Hexagonal crystal system </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;Born stability criteria for the stability of hexagonal system are: Ref.[1]  </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;(i) C11 - C12 &gt; 0;    (ii) 2*C13^2 &lt; C33(C11 + C12);   (iii) C44 &gt; 0 </span><span class="se">\n</span><span class="s2"> &quot;</span>
         <span class="p">)</span>
 
         <span class="c1"># check (i)   keep in mind list starts with 0, so c11 is stored as c00</span>
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) satified.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">,</span> <span class="n">condition3</span><span class="p">)</span>
 
@@ -245,89 +250,90 @@
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">if</span> <span class="n">crystal_type</span> <span class="o">==</span> <span class="s2">&quot;tetragonal&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Tetragonal crystal system </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Tetragonal crystal system </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;Born stability criteria for the stability of Tetragonal system are: Ref.[1]  </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;(i) C11 - C12 &gt; 0;    (ii) 2*C13^2 &lt; C33(C11 + C12);   (iii) C44 &gt; 0; </span><span class="se">\n</span><span class="s2">(iv) C66 &gt; 0;    (v) 2C16^2 &lt; C66*(C11-C12) </span><span class="se">\n</span><span class="s2"> &quot;</span>
         <span class="p">)</span>
 
         <span class="c1"># check (i)   keep in mind list starts with 0, so c11 is stored as c00</span>
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">c</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (v) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (v) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition5</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (v) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (v) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition5</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">,</span> <span class="n">condition3</span><span class="p">,</span> <span class="n">condition4</span><span class="p">,</span> <span class="n">condition5</span><span class="p">)</span>
+        <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">,</span>
+                      <span class="n">condition3</span><span class="p">,</span> <span class="n">condition4</span><span class="p">,</span> <span class="n">condition5</span><span class="p">)</span>
 
         <span class="k">for</span> <span class="n">condition</span> <span class="ow">in</span> <span class="n">conditions</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">condition</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">if</span> <span class="n">crystal_type</span> <span class="o">==</span> <span class="s2">&quot;rhombohedral-1&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rhombohedral (class-1): point group: 3m, -3m and 32 </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Born stability criteria for this class are: Ref.[1]  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Rhombohedral (class-1): point group: 3m, -3m and 32 </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Born stability criteria for this class are: Ref.[1]  </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;(i) C11 - C12 &gt; 0;    (ii) C13^2 &lt; (1/2)*C33(C11 + C12);   (iii) C14^2 &lt; (1/2)*C44*(C11-C12) = C44*C66; </span><span class="se">\n</span><span class="s2">(iv)  C44 &gt; 0; </span><span class="se">\n</span><span class="s2"> &quot;</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">,</span> <span class="n">condition3</span><span class="p">,</span> <span class="n">condition4</span><span class="p">)</span>
@@ -337,40 +343,40 @@
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">if</span> <span class="n">crystal_type</span> <span class="o">==</span> <span class="s2">&quot;rhombohedral-2&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rhombohedral (class-2): i.e structures with point group: 3, -3 </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Rhombohedral (class-2): i.e structures with point group: 3, -3 </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;Born stability criteria for the stability of Rhombohedral-1 class system are: Ref.[1]  </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;(i) C11 - C12 &gt; 0;    (ii) C13^2 &lt; (1/2)*C33(C11 + C12);   (iii) C14^2 + C15^2 &lt; (1/2)*C44*(C11-C12) = C44*C66; </span><span class="se">\n</span><span class="s2">(iv)  C44 &gt; 0;  Note: C15 is added.. </span><span class="se">\n</span><span class="s2"> &quot;</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">)</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is satified.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">,</span> <span class="n">condition3</span><span class="p">,</span> <span class="n">condition4</span><span class="p">)</span>
@@ -380,27 +386,27 @@
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">if</span> <span class="n">crystal_type</span> <span class="o">==</span> <span class="s2">&quot;orthorhombic&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Orthorhombic crystal system.... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Orthorhombic crystal system.... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;Born stability criteria for the stability of Orthorhombic systems are: Ref.[1]  </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;(i) C11 &gt; 0;   (ii) C11*C22 &gt; C12^2;   (iii) C11*C22*C33 + 2C12*C13*C23 - C11*C23^2 - C22*C13^2 - C33*C12^2 &gt; 0; </span><span class="se">\n</span><span class="s2">(iv)  C44 &gt; 0;   (v)  C55 &gt; 0 ;   (vi)  C66 &gt; 0 </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
 
         <span class="c1"># check (i)   keep in mind list starts with 0, so c11 is stored as c00</span>
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="p">(</span>
@@ -411,31 +417,31 @@
             <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
             <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (v) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (v) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition5</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (v) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (v) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition5</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (vi) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (vi) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition6</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (vi) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (vi) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition6</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span>
@@ -452,100 +458,100 @@
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="k">if</span> <span class="n">crystal_type</span> <span class="o">==</span> <span class="s2">&quot;monoclinic&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Monoclinic crystal system.... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Monoclinic crystal system.... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;Born stability criteria for the stability of monoclinic systems are: Ref.[1,2]  </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;(i) C11 &gt; 0;  (ii)  C22 &gt; 0; (iii)  C33 &gt; 0; </span><span class="se">\n</span><span class="s2">(iv)  C44 &gt; 0;   (v)  C55 &gt; 0 ;   (vi)  C66 &gt; 0  &quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot; (vii) [C11 + C22 + C33 + 2*(C12 + C13 + C23)] &gt; 0;    (viii)  C33*C55 - C35^2 &gt; 0; </span><span class="se">\n</span><span class="s2">(ix)  C44*C66 - C46^2 &gt; 0;   (x) C22 + C33 - 2*C23  &gt; 0 &quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot; (xi) C22*(C33*C55 - C35^2) + 2*C23*C25*C35 - (C23^2)*C55 - (C25^2)*C33   &gt; 0  &quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot; (xii)  2*[C15*C25*(C33*C12 - C13*C23) + C15*C35*(C22*C13 - C12*C23) + C25*C35*(C11*C23 - C12*C13)] - [C15*C15*(C22*C33 - C23^2) + C25*C25*(C11*C33 - C13^2) + C35*C35*(C11*C22 - C12^2)] + C55*g &gt; 0  &quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;          where, g = [C11*C22*C33 - C11*C23*C23 - C22*C13*C13 - C33*C12*C12 + 2*C12*C13*C23 ] &quot;</span>
         <span class="p">)</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iv) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition4</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (v) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (v) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition5</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (v) is NOT satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (v) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition5</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (vi) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (vi) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition6</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (vi) is NOT satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (vi) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition6</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="c1"># for i in range(0, 6):</span>
         <span class="c1">#    if(c[i][i]  &gt; 0.0):</span>
-        <span class="c1">#        print(&quot;Condition (%2d) is satified.&quot; % (i+1))</span>
+        <span class="c1">#        to_print += (&quot;Condition (%2d) is satified.&quot; % (i+1))</span>
         <span class="c1">#    else:</span>
-        <span class="c1">#        print(&quot;Condition (%2d) is NOT satified.&quot; % (i+1))</span>
+        <span class="c1">#        to_print += (&quot;Condition (%2d) is NOT satified.&quot; % (i+1))</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (vii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (vii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition7</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (vii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (vii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition7</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (viii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (viii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition8</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (viii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (viii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition8</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">5</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ix) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ix) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition9</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ix) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ix) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition9</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (x) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (x) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition10</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (x) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (x) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition10</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="p">(</span>
@@ -555,10 +561,10 @@
             <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
             <span class="o">&gt;</span> <span class="mf">0.0</span>
         <span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (xi) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (xi) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition11</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (xi) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (xi) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition11</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">g</span> <span class="o">=</span> <span class="p">(</span>
@@ -583,14 +589,14 @@
 
         <span class="n">x</span> <span class="o">=</span> <span class="n">h1</span> <span class="o">-</span> <span class="n">h2</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">4</span><span class="p">][</span><span class="mi">4</span><span class="p">]</span> <span class="o">*</span> <span class="n">g</span>
 
-        <span class="c1">#  print &#39;x = %10.4f&#39; % x</span>
-        <span class="c1">#  print &#39;g = %10.4f&#39; % g</span>
+        <span class="c1">#  to_print +=  &#39;x = %10.4f&#39; % x</span>
+        <span class="c1">#  to_print +=  &#39;g = %10.4f&#39; % g</span>
 
         <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (xii) is satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (xii) is satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition12</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (xii) is NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (xii) is NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition12</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span>
             <span class="n">condition1</span><span class="p">,</span>
@@ -611,16 +617,14 @@
             <span class="k">if</span> <span class="n">condition</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
-
-
     <span class="k">if</span> <span class="n">crystal_type</span> <span class="o">==</span> <span class="s2">&quot;triclinic&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Triclinic crystal system.... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Triclinic crystal system.... </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;Triclinic systems only criteria for stability are positive eigen values of the elastic tensor  </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
         <span class="n">evals</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">LA</span><span class="o">.</span><span class="n">eigvals</span><span class="p">(</span><span class="n">c</span><span class="p">))</span>
-        <span class="n">evalsPrint</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">evals</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">evalsPrint</span><span class="p">)</span>
+        <span class="n">evals_print</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">evals</span><span class="p">),</span> <span class="mi">3</span><span class="p">))</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">evals_print</span><span class="p">)</span>
         <span class="n">check</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">evals</span><span class="p">)):</span>
             <span class="k">if</span> <span class="n">evals</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
@@ -630,50 +634,45 @@
                 <span class="n">check</span> <span class="o">=</span> <span class="mi">1</span>
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
-
-
-
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">to_print</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">stable</span></div>
 
 
+<div class="viewcode-block" id="stability_test_2d"><a class="viewcode-back" href="../../../mechelastic.tests.html#mechelastic.tests.stability.stability_test_2d">[docs]</a><span class="k">def</span> <span class="nf">stability_test_2d</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">lattice_type</span><span class="p">,</span> <span class="n">verbose</span><span class="p">):</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
 
+    <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 
+    <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 
+    <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
 
-
-<div class="viewcode-block" id="stability_test_2d"><a class="viewcode-back" href="../../../mechelastic.tests.html#mechelastic.tests.stability.stability_test_2d">[docs]</a><span class="k">def</span> <span class="nf">stability_test_2d</span><span class="p">(</span><span class="n">matrix</span><span class="p">,</span> <span class="n">lattice_type</span><span class="p">):</span>
-    <span class="n">c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeroz</span><span class="p">(</span><span class="n">shape</span> <span class="o">=</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-    
-    <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
-    
-    <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
-    
-    <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">matrix</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
-    
     <span class="n">stable</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">to_print</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
     <span class="k">if</span> <span class="n">lattice_type</span> <span class="o">==</span> <span class="s2">&quot;hexagonal&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hexagonal lattice </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stability criteria for the stability of hexagonal system are: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(i) C11 + C12 &gt; 0;    (ii) C11 - C12 &gt; 0;  </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Hexagonal lattice </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Stability criteria for the stability of hexagonal system are: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;(i) C11 + C12 &gt; 0;    (ii) C11 - C12 &gt; 0;  </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">)</span>
@@ -682,32 +681,30 @@
             <span class="k">if</span> <span class="n">condition</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="k">return</span> <span class="n">stable</span>
-
-    <span class="k">if</span> <span class="n">lattice_type</span> <span class="o">==</span> <span class="s2">&quot;square&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Square lattice </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stability criteria for the stability of square system are: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(i) C11 + C12 &gt; 0;    (ii) C11 - C12 &gt; 0;  (iii) C33 &gt; 0     </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">lattice_type</span> <span class="o">==</span> <span class="s2">&quot;square&quot;</span><span class="p">:</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Square lattice </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Stability criteria for the stability of square system are: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;(i) C11 + C12 &gt; 0;    (ii) C11 - C12 &gt; 0;  (iii) C33 &gt; 0     </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">,</span> <span class="n">condition3</span><span class="p">)</span>
@@ -716,14 +713,12 @@
             <span class="k">if</span> <span class="n">condition</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="k">return</span> <span class="n">stable</span>
-
-    <span class="k">if</span> <span class="n">lattice_type</span> <span class="o">==</span> <span class="s2">&quot;rectangular&quot;</span> <span class="ow">or</span> <span class="n">lattice_type</span> <span class="o">==</span> <span class="s2">&quot;rectangular-center&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Rectangular lattice or Rectangular Center lattice </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+    <span class="k">elif</span> <span class="n">lattice_type</span> <span class="o">==</span> <span class="s2">&quot;rectangular&quot;</span> <span class="ow">or</span> <span class="n">lattice_type</span> <span class="o">==</span> <span class="s2">&quot;rectangular-center&quot;</span><span class="p">:</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Rectangular lattice or Rectangular Center lattice </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;Stability criteria for the stability of rectangular lattice or rectangular Center lattic are: </span><span class="se">\n</span><span class="s2">&quot;</span>
         <span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span>
             <span class="s2">&quot;(i) 1/2*(C11 + C22 + (4(C12)**2 - (C11 -C22))**0.5)&gt; 0;    (ii) 1/2*(C11 + C22 - (4(C12)**2 - (C11 -C22))**0.5)&gt; 0 ;  (iii) C33 &gt; 0     </span><span class="se">\n</span><span class="s2"> &quot;</span>
         <span class="p">)</span>
 
@@ -736,10 +731,10 @@
             <span class="p">)</span>
             <span class="o">&gt;</span> <span class="mf">0.0</span>
         <span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="p">(</span>
@@ -751,17 +746,17 @@
             <span class="p">)</span>
             <span class="o">&gt;</span> <span class="mf">0.0</span>
         <span class="p">):</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">5</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">,</span> <span class="n">condition3</span><span class="p">)</span>
@@ -770,32 +765,30 @@
             <span class="k">if</span> <span class="n">condition</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
 
-        <span class="k">return</span> <span class="n">stable</span>
-
-    <span class="k">if</span> <span class="n">lattice_type</span> <span class="o">==</span> <span class="s2">&quot;oblique&quot;</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Oblique lattice </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stability criteria for the stability of oblique lattice are: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;(i) C11 &gt; 0 ;    (ii) C11 *C22 &gt; (C12)*2 ;  (iii) det(Cij) &gt; 0     </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">lattice_type</span> <span class="o">==</span> <span class="s2">&quot;oblique&quot;</span><span class="p">:</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Oblique lattice </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Stability criteria for the stability of oblique lattice are: </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;(i) C11 &gt; 0 ;    (ii) C11 *C22 &gt; (C12)*2 ;  (iii) det(Cij) &gt; 0     </span><span class="se">\n</span><span class="s2"> &quot;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (i) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition1</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">c</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (ii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition2</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) satified.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
+            <span class="n">to_print</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;Condition (iii) NOT satisfied.&quot;</span><span class="p">)</span>
             <span class="n">condition3</span> <span class="o">=</span> <span class="kc">False</span>
 
         <span class="n">conditions</span> <span class="o">=</span> <span class="p">(</span><span class="n">condition1</span><span class="p">,</span> <span class="n">condition2</span><span class="p">,</span> <span class="n">condition3</span><span class="p">)</span>
@@ -803,36 +796,37 @@
         <span class="k">for</span> <span class="n">condition</span> <span class="ow">in</span> <span class="n">conditions</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">condition</span> <span class="o">==</span> <span class="kc">False</span><span class="p">:</span>
                 <span class="n">stable</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">NameError</span><span class="p">(</span><span class="s2">&quot;lattice type </span><span class="si">%s</span><span class="s2"> not in recognized&quot;</span> <span class="o">%</span> <span class="n">lattice_type</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">stable</span></div>
+    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">to_print</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">stable</span></div>
 </pre></div>
 
            </div>
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Sobhit Singh, Romero Group
+        &#169; Copyright 2021, Sobhit Singh, Romero Group.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

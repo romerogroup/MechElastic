@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>mechelastic.core.elastic_properties_2d &mdash; MechElastic  documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -32,7 +35,6 @@
         <script src="../../../_static/doctools.js"></script>
         <script src="../../../_static/clipboard.min.js"></script>
         <script src="../../../_static/copybutton.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../../_static/js/theme.js"></script>
 
@@ -52,7 +54,7 @@
           
 
           
-            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+            <a href="../../../index.html" class="icon icon-home"> MechElastic
           
 
           
@@ -131,6 +133,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -189,12 +193,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">lattice_type</span> <span class="o">=</span> <span class="n">lattice_type</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_c2d</span><span class="p">()</span>
         
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">structure</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">lattice_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">lattice_select</span><span class="p">(</span>
-                <span class="n">cnew</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c2d</span><span class="p">,</span>
-                <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                <span class="n">lattice_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice_type</span><span class="p">,</span>
-            <span class="p">)</span>
+        <span class="c1"># if self.structure is not None: #or self.lattice_type is not None:</span>
+        <span class="n">lattice_select</span><span class="p">(</span>
+            <span class="n">cnew</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">c2d</span><span class="p">,</span>
+            <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">lattice_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">lattice_type</span><span class="p">,</span>
+        <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_c2d</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">):</span>
@@ -206,6 +210,15 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2"> </span><span class="se">\n</span><span class="s2"> Elastic tensor for two-dimensional system in N/m units </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
         <span class="n">np</span><span class="o">.</span><span class="n">set_printoptions</span><span class="p">(</span><span class="n">precision</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">suppress</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">printer</span><span class="o">.</span><span class="n">printMatrix</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">c2d</span><span class="p">)</span>
+        
+        <span class="c1"># if self.lattice_type is not None or self.structure is not None:</span>
+        <span class="c1">#     print(</span>
+        <span class="c1">#         &quot;\n------------------------------------------------------------------&quot;</span>
+        <span class="c1">#     )</span>
+        <span class="c1">#     print(&quot;Mechanical Stability Tests&quot;)</span>
+        <span class="c1">#     print(</span>
+        <span class="c1">#         &quot;------------------------------------------------------------------\n&quot;)</span>
+        <span class="c1">#     self.elastic_stability</span>
 
     <span class="c1"># Elastic Properties</span>
 
@@ -360,6 +373,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2D Poisson ratio v[10]         :   </span><span class="si">%10.3f</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu10</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;2D Poisson ratio v[01]         :   </span><span class="si">%10.3f</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">nu01</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-------------------------------------------------------&quot;</span><span class="p">)</span></div></div>
+        
         <span class="c1">#print(</span>
         <span class="c1">#    &quot;Note:  The elastic stabilty test for 2D systems is not yet implemented. &quot;</span>
         <span class="c1">#)</span>
@@ -371,28 +385,25 @@
            
           </div>
           <footer>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Sobhit Singh, Romero Group
+        &#169; Copyright 2021, Sobhit Singh, Romero Group.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

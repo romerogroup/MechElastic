@@ -1,14 +1,16 @@
 #!/usr/bin/env python
 
-"""This script reads elastic constants from OUTCAR, calculates elastic moduli, and performs mechanical stability test:
-   Authors: Sobhit Singh (1,2) and Aldo Romero (2)
+"""This script reads elastic constants from DFT output files, calculates elastic moduli, and performs mechanical stability test:
+   Authors: Sobhit Singh (1,2) Logan Lang (2), Viviana Dovale-Farelo (2), Uthpala Herath(2), Pedram Tavadze(2), François-Xavier Coudert(3), Aldo Romero (2)
    Email: smsingh@mix.wvu.edu, alromero@mail.wvu.edu
    (1) Rutgers University, Piscataway, NJ, USA
    (2) West Virginia University, Morgantown, WV, USA
+   (3) Chimie ParisTech, PSL University, CNRS, Institut de Recherche de Chimie Paris, 75005, Paris, France
 Version: 12.2019   #Dec. 2019
 
 Please cite the below paper if you use this code for your research:
-     Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018).
+    - Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018).
+    - Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert, Aldo H. Romero; arXiv:2012.04758 [cond-mat.mtrl-sci].
 
 
 To RUN this code for a 3D system assuming you know the crystal type before hand:
@@ -43,23 +45,28 @@ parser.add_argument(
     "--input",
     type=str,
     help="Output file of the DFT calculation.",
-    default="OUTCAR",
+    default=None,
 )
 parser.add_argument(
     "-anaddb",
     "--anaddbfile",
     type=str,
-    help="Output of the Abinit anaddb calculation.",
+    help="DDB file of the Abinit anaddb calculation.",
     default=None,
 )
-
+parser.add_argument(
+    "-qe_outfile",
+    type=str,
+    help="Quantum Espresso output file.",
+    default=None,
+)
 
 parser.add_argument(
     "-c",
     "--crystal",
     type=str,
     default=None,
-    help="Provide the crystal type. Otherwise it would be determined from the DFT output.",
+    help="Provide the crystal family. Otherwise it would be determined from the DFT output.",
 )
 parser.add_argument(
     "-d",
@@ -74,7 +81,7 @@ parser.add_argument(
     type=str,
     help="DFT code",
     default="vasp",
-    choices=["vasp", "abinit"],
+    choices=["vasp", "abinit", "qe"],
 )
 parser.add_argument(
     "-ap",
@@ -83,6 +90,13 @@ parser.add_argument(
     type=int,
     help="Flag to adjust pressure in Elastic Tensor (VASP). Default: 1 (True)",
     choices=[1, 0],
+)
+
+parser.add_argument(
+    "-v",
+    "--verbose",
+    action="store_true",
+    help="Enable verbosity.",
 )
 args = parser.parse_args()
 
@@ -110,6 +124,8 @@ def main():
         crystal=args.crystal,
         anaddbfile=args.anaddbfile,
         adjust_pressure=args.adjust_pressure,
+        qe_outfile=args.qe_outfile,
+        verbose=args.verbose,
     )
 
 

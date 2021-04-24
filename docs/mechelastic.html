@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>mechelastic package &mdash; MechElastic  documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -32,7 +35,6 @@
         <script src="_static/doctools.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -54,7 +56,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> MechElastic
+            <a href="index.html" class="icon icon-home"> MechElastic
           
 
           
@@ -152,6 +154,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -165,7 +169,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/mechelastic.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -235,9 +239,44 @@
 <span id="mechelastic-calculate-elastic-module"></span><h2>mechelastic.calculate_elastic module<a class="headerlink" href="#module-mechelastic.calculate_elastic" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="mechelastic.calculate_elastic.calculate_elastic">
-<code class="sig-prename descclassname">mechelastic.calculate_elastic.</code><code class="sig-name descname">calculate_elastic</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">infile</span><span class="o">=</span><span class="default_value">'OUTCAR'</span></em>, <em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">'3D'</span></em>, <em class="sig-param"><span class="n">crystal</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">lattice_type</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">code</span><span class="o">=</span><span class="default_value">'vasp'</span></em>, <em class="sig-param"><span class="n">anaddbfile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">outfile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">adjust_pressure</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic.html#calculate_elastic"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.calculate_elastic.calculate_elastic" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method calculates the elastic properties
-of a material from a DFT calculation.</p>
+<code class="sig-prename descclassname"><span class="pre">mechelastic.calculate_elastic.</span></code><code class="sig-name descname"><span class="pre">calculate_elastic</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'OUTCAR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'3D'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elastic_tensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crystal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vasp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anaddbfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qe_outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_pressure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'elastic_properties.txt'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic.html#calculate_elastic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mechelastic.calculate_elastic.calculate_elastic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the elastic properties of a material from a DFT calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>infile</strong><span class="classifier">str, optional</span></dt><dd><p>Path to the input file which is a DFT calculation outputfile. The default is “OUTCAR”.</p>
+</dd>
+<dt><strong>dim</strong><span class="classifier">str, optional</span></dt><dd><p>Dimension of the structure. The default is “3D”.</p>
+</dd>
+<dt><strong>crystal</strong><span class="classifier">str, optional</span></dt><dd><p>Crystal family (only used in 3D). The default is None.</p>
+</dd>
+<dt><strong>elastic_tensor</strong><span class="classifier">float, optional</span></dt><dd><p>The elastic tensor. This option is useful if one does not want to use a DFT output.
+The default is None.</p>
+</dd>
+<dt><strong>lattice_type</strong><span class="classifier">TYPE, optional</span></dt><dd><p>2D lattice type. The default is None.</p>
+</dd>
+<dt><strong>code</strong><span class="classifier">str, optional</span></dt><dd><p>DFT code used to generate the outputs. The default is “vasp”.</p>
+</dd>
+<dt><strong>anaddbfile</strong><span class="classifier">str, optional</span></dt><dd><p>Path to the DDB file (applicable only in abinit). The default is None.</p>
+</dd>
+<dt><strong>qe_outfile</strong><span class="classifier">str, optional</span></dt><dd><p>Path to the Quantum Espresso output file. The default is None.</p>
+</dd>
+<dt><strong>adjust_pressure</strong><span class="classifier">bool, optional</span></dt><dd><p>To adjust the cell pressure according to the output file. The default is True.</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">str, optional</span></dt><dd><p>To print the progress of the elastic calculations. The default is True.</p>
+</dd>
+<dt><strong>outfile</strong><span class="classifier">TYPE, optional</span></dt><dd><p>Path to the desired output file. Acceptable files are JSON, XML, TXT.
+The default is “elastic_properties.txt”.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>elastic_properties</strong><span class="classifier">TYPE</span></dt><dd><p>DESCRIPTION.</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -245,7 +284,7 @@ of a material from a DFT calculation.</p>
 <span id="mechelastic-calculate-elastic-anisotropy-module"></span><h2>mechelastic.calculate_elastic_anisotropy module<a class="headerlink" href="#module-mechelastic.calculate_elastic_anisotropy" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="mechelastic.calculate_elastic_anisotropy.calculate_elastic_anisotropy">
-<code class="sig-prename descclassname">mechelastic.calculate_elastic_anisotropy.</code><code class="sig-name descname">calculate_elastic_anisotropy</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">infile</span><span class="o">=</span><span class="default_value">'OUTCAR'</span></em>, <em class="sig-param"><span class="n">code</span><span class="o">=</span><span class="default_value">'vasp'</span></em>, <em class="sig-param"><span class="n">plot</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">elastic_calc</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">anaddbfile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">outfile</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">adjust_pressure</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">npoints</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic_anisotropy.html#calculate_elastic_anisotropy"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#mechelastic.calculate_elastic_anisotropy.calculate_elastic_anisotropy" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname"><span class="pre">mechelastic.calculate_elastic_anisotropy.</span></code><code class="sig-name descname"><span class="pre">calculate_elastic_anisotropy</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'OUTCAR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vasp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elastic_calc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anaddbfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_pressure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">npoints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic_anisotropy.html#calculate_elastic_anisotropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mechelastic.calculate_elastic_anisotropy.calculate_elastic_anisotropy" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method calculates the elastic properties
 of a material from a DFT calculation. hi</p>
 </dd></dl>
@@ -264,37 +303,29 @@ of a material from a DFT calculation. hi</p>
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="mechelastic.comms.html" class="btn btn-neutral float-right" title="mechelastic.comms package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="modules.html" class="btn btn-neutral float-left" title="MechElastic API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="mechelastic.comms.html" class="btn btn-neutral float-right" title="mechelastic.comms package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modules.html" class="btn btn-neutral float-left" title="MechElastic API" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Sobhit Singh, Romero Group
+        &#169; Copyright 2021, Sobhit Singh, Romero Group.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

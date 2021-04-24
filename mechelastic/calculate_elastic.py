@@ -21,7 +21,7 @@ def calculate_elastic(
     qe_outfile=None,
     adjust_pressure=True,
     verbose=True,
-    outfile="elastic_properties.txt"
+    outfile="elastic_properties.txt",
 ):
     """
     Calculate the elastic properties of a material from a DFT calculation.
@@ -35,16 +35,16 @@ def calculate_elastic(
     crystal : str, optional
         Crystal family (only used in 3D). The default is None.
     elastic_tensor : float, optional
-        The elastic tensor. This option is useful if one does not want to use a DFT output. 
+        The elastic tensor. This option is useful if one does not want to use a DFT output.
         The default is None.
     lattice_type : TYPE, optional
         2D lattice type. The default is None.
     code : str, optional
         DFT code used to generate the outputs. The default is "vasp".
     anaddbfile : str, optional
-        Path to the AnandDB file (appllicable only in abinit). The default is None.
+        Path to the DDB file (applicable only in abinit). The default is None.
     qe_outfile : str, optional
-        Path to the Quantum Esspresso output file. The default is None.
+        Path to the Quantum Espresso output file. The default is None.
     adjust_pressure : bool, optional
         To adjust the cell pressure according to the output file. The default is True.
     verbose : str, optional
@@ -73,7 +73,8 @@ def calculate_elastic(
     # calling parser
     if code == "vasp" and elastic_tensor is None:
         output = VaspOutcar(
-            infile=infile, adjust_pressure=adjust_pressure, verbose=verbose)
+            infile=infile, adjust_pressure=adjust_pressure, verbose=verbose
+        )
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant
@@ -99,7 +100,8 @@ def calculate_elastic(
     # elastic constants calculation for 3D materials
     if dim == "3D":
         elastic_properties = ElasticProperties(
-            elastic_tensor, structure, crystal_type, verbose=verbose)
+            elastic_tensor, structure, crystal_type, verbose=verbose
+        )
         if verbose:
             print(elastic_properties)
         if "json" in outfile:
@@ -112,7 +114,8 @@ def calculate_elastic(
     # elastic constants calculation for 2D materials
     elif dim == "2D":
         elastic_properties = ElasticProperties2D(
-            elastic_tensor, lattice_constant, lattice_type=lattice_type)
+            elastic_tensor, lattice_constant, lattice_type=lattice_type
+        )
         elastic_properties.print_properties()
 
     if verbose:
