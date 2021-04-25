@@ -1,7 +1,7 @@
 numpy
 spglib
-prettytable
 pathlib
 pyvista
 intersect
 networkx
+dicttoxml

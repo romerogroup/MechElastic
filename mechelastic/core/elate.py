@@ -614,7 +614,7 @@ class ELATE:
         )
 
         return data
-    
+
     def COMPRESSION_SPEED2D(self, npoints):
         data1 = makePolarPlot2(
             lambda x: self.elas.compressionSpeed2D([np.pi / 2, x],density = self.density),
@@ -632,7 +632,7 @@ class ELATE:
             npoints=npoints,
         )
         return (data1, data2, data3)
-    
+
     def COMPRESSION_SPEED3D(self, npoints):
 
         if self.elas.isOrthorhombic():
@@ -645,7 +645,7 @@ class ELATE:
         )
 
         return data
-    
+
     def SHEAR_SPEED2D(self, npoints):
         data1 = makePolarPlot2(
             lambda x: self.elas.shearSpeed2D([np.pi / 2, x],density = self.density),
@@ -663,7 +663,7 @@ class ELATE:
             npoints=npoints,
         )
         return (data1, data2, data3)
-    
+
     def SHEAR_SPEED3D(self, npoints):
 
         if self.elas.isOrthorhombic():
@@ -675,7 +675,7 @@ class ELATE:
             npoints=npoints,
         )
         return data
-    
+
     def RATIO_COMPRESSIONAL_SHEAR2D(self, npoints):
         data1 = makePolarPlot2(
             lambda x: self.elas. ratio_compressional_shear2D([np.pi / 2, x],density = self.density),
@@ -693,7 +693,7 @@ class ELATE:
             npoints=npoints,
         )
         return (data1, data2, data3)
-        
+
     def RATIO_COMPRESSIONAL_SHEAR3D(self, npoints):
 
         if self.elas.isOrthorhombic():
@@ -705,7 +705,7 @@ class ELATE:
             npoints=npoints,
         )
         return data
-    
+
     def DEBYE_SPEED2D(self, npoints):
         data1 = makePolarPlot2(
             lambda x: self.elas.debyeSpeed2D([np.pi / 2, x],density = self.density),
@@ -723,7 +723,7 @@ class ELATE:
             npoints=npoints,
         )
         return (data1, data2, data3)
-    
+
     def DEBYE_SPEED3D(self, npoints):
 
         if self.elas.isOrthorhombic():
@@ -742,7 +742,7 @@ class ELATE:
     #############################################################################
     def plot_3D(self, elastic_calc="", npoints=100,show = True):
         import pyvista as pv
-        
+
 
         plotter = pv.Plotter()
 
@@ -824,8 +824,8 @@ class ELATE:
                         plotter.add_mesh(grid, opacity=0.25, color=icolor)
                     else:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
-                        
-        if self.density != None:    
+
+        if self.density != None:
             if elastic_calc == "COMPRESSION_SPEED":
                 func = self.COMPRESSION_SPEED3D(npoints=100)
                 colors = ["green", "blue"]
@@ -843,7 +843,7 @@ class ELATE:
                             plotter.add_mesh(grid, opacity=0.25, color=icolor)
                         else:
                             plotter.add_mesh(grid, opacity=0.50, color=icolor)
-            
+
             elif elastic_calc == "SHEAR_SPEED":
                 func = self.SHEAR_SPEED3D(npoints=100)
                 colors = ["green", "blue"]
@@ -861,7 +861,7 @@ class ELATE:
                             plotter.add_mesh(grid, opacity=0.25, color=icolor)
                         else:
                             plotter.add_mesh(grid, opacity=0.50, color=icolor)
-                            
+
             elif elastic_calc == "RATIO_COMPRESSIONAL_SHEAR":
                 func = self.RATIO_COMPRESSIONAL_SHEAR3D(npoints=100)
                 colors = ["green", "blue"]
@@ -879,7 +879,7 @@ class ELATE:
                             plotter.add_mesh(grid, opacity=0.25, color=icolor)
                         else:
                             plotter.add_mesh(grid, opacity=0.50, color=icolor)
-                            
+
             elif elastic_calc == "DEBYE_SPEED":
                 func = self.DEBYE_SPEED3D(npoints=100)
                 colors = ["green", "blue"]
@@ -897,7 +897,7 @@ class ELATE:
                             plotter.add_mesh(grid, opacity=0.25, color=icolor)
                         else:
                             plotter.add_mesh(grid, opacity=0.50, color=icolor)
-                            
+
         if elastic_calc in ['DEBYE_SPEED', 'SHEAR_SPEED', 'COMPRESSIONAL_SPEED', 'RATIO_COMPRESSIONAL_SHEAR'] and self.density == None:
             print("You must specify density in kg/m^3 to produce DEBYE_SPEED, SHEAR_SPEED, COMPRESSIONAL_SPEED, and RATIO_COMPRESSIONAL_SHEAR")
 
@@ -1102,17 +1102,17 @@ class ELATE:
                     )
                 if apply_to_plot is not None:
                     apply_to_plot(fig, ax)
-                    
+
         if density != None :
-            
+
             if elastic_calc == "COMPRESSION_SPEED":
                 func = self.COMPRESSION_SPEED2D(npoints=npoints)
                 colors = ["green", "blue"]
                 labels = ["Compression speed - Max", "Compression speed -"]
                 fig.suptitle("Compression speed")
-              
+
                 for iplane, title in zip(range(len(func)), subTitles):
-    
+
                     ax = fig.add_subplot(1, 3, iplane + 1)
                     ax.set_title(title)
                     ax.get_yaxis().set_visible(False)
@@ -1126,7 +1126,7 @@ class ELATE:
                 labels = ["Shear speed - Max", "Shear speed -"]
                 fig.suptitle("Shear speed")
                 for iplane, title in zip(range(len(func)), subTitles):
-    
+
                     ax = fig.add_subplot(1, 3, iplane + 1)
                     ax.set_title(title)
                     ax.get_yaxis().set_visible(False)
@@ -1140,7 +1140,7 @@ class ELATE:
                 labels = ["Ratio compression/shear - Max", "Ratio compression/shear -"]
                 fig.suptitle("Ratio compression/shear")
                 for iplane, title in zip(range(len(func)), subTitles):
-    
+
                     ax = fig.add_subplot(1, 3, iplane + 1)
                     ax.set_title(title)
                     ax.get_yaxis().set_visible(False)
@@ -1154,7 +1154,7 @@ class ELATE:
                 labels = ["Debye speed - Max", "Debye speed -"]
                 fig.suptitle("Debye speed")
                 for iplane, title in zip(range(len(func)), subTitles):
-    
+
                     ax = fig.add_subplot(1, 3, iplane + 1)
                     ax.set_title(title)
                     ax.get_yaxis().set_visible(False)
@@ -1165,12 +1165,12 @@ class ELATE:
         if elastic_calc in ['DEBYE_SPEED', 'SHEAR_SPEED', 'COMPRESSIONAL_SPEED', 'RATIO_COMPRESSIONAL_SHEAR'] and density == None:
             print("You must specify density in kg/m^3 to produce DEBYE_SPEED, SHEAR_SPEED, COMPRESSIONAL_SPEED, and RATIO_COMPRESSIONAL_SHEAR")
 
-            
-            
-            
+
+
+
         if show:
             plt.show()
-            
+
         return fig
 
     def print_properties(self):
@@ -1705,8 +1705,8 @@ class Elastic:
             float(r1.x),
             float(r2.x),
         )
-    
-    
+
+
     def compressionSpeed2D(self, x, density = None):
         ftol = 0.001
         xtol = 0.01
@@ -1736,7 +1736,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun))
 
-    
+
     def compressionSpeed3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0, density = None):
         tol = 0.005
 
@@ -1754,7 +1754,7 @@ class Elastic:
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
-    
+
     def shearSpeed2D(self, x, density = None):
         ftol = 0.001
         xtol = 0.01
@@ -1781,7 +1781,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun))
 
-    
+
     def shearSpeed3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0, density=None):
         tol = 0.005
 
@@ -1799,8 +1799,8 @@ class Elastic:
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
-    
-    
+
+
     def ratio_compressional_shear2D(self, x, density = None):
         ftol = 0.001
         xtol = 0.01
@@ -1810,8 +1810,8 @@ class Elastic:
 
         def v_s(z):
             return ((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
-        
-        
+
+
         def func1(z):
             return (v_p(z) /v_s(z))**2
 
@@ -1835,7 +1835,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun))
 
-    
+
     def ratio_compressional_shear3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0,density = None):
         tol = 0.005
 
@@ -1845,8 +1845,8 @@ class Elastic:
 
         def v_s(z):
             return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
-        
-        
+
+
         def func1(z):
             return (v_p(z) /v_s(z))**2
 
@@ -1861,8 +1861,8 @@ class Elastic:
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
-    
-    
+
+
     def debyeSpeed2D(self, x,density = None):
         ftol = 0.001
         xtol = 0.01
@@ -1872,7 +1872,7 @@ class Elastic:
 
         def v_s(z):
             return ((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
-        
+
         def func1(z):
             return v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
         r1 = optimize.minimize(
@@ -1895,16 +1895,16 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun))
 
-    
+
     def debyeSpeed3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0,density= None):
         tol = 0.005
-        
+
         def v_p(z):
             return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x, y, z]))/(2*density*(1+self.Poisson([x, y, z]))))**0.5
 
         def v_s(z):
             return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
-        
+
         def func1(z):
             return v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
 
@@ -2097,3 +2097,4 @@ class ElasticOrtho(Elastic):
 # SHEAR3D : visualize Shear modulus in 3D
 # POISSON3D : visualize Poisson ratio in 3D
 ################################################################################################
+
