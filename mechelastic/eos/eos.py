@@ -155,7 +155,8 @@ class EOS:
         vlim=None,
         model=None,
         raw_data=True,
-        export=False,
+        export=True,
+        savefig=False,
     ):
         """plot_eos.
 
@@ -190,8 +191,12 @@ class EOS:
             raw_data : bool, optional (default ``True``)
                 Also include the raw input data in the plot.
 
-            export : bool, optional (default ``False``)
+            export : bool, optional (default ``True``)
                 Export data as .json and .xml.
+
+            savefig : bool, optional (default ``False``)
+                Save figures in the pdf format.
+
 
         Returns
         -------
@@ -205,6 +210,7 @@ class EOS:
         self.model = model
         self.raw_data = raw_data
         self.export = export
+        self.savefig = savefig
 
         if self.eostype == "energy":
 
@@ -413,6 +419,8 @@ class EOS:
                 axs.set_ylabel("Energy (eV/atom)")
             axs.set_title("Energy vs. Volume")
             plt.legend(loc="best")
+            if self.savefig:
+                plt.savefig("EvsV.pdf")
             plt.show()
 
             # Pressure vs Volume
@@ -499,6 +507,8 @@ class EOS:
             axs2.set_ylabel("Pressure (GPa)")
             axs2.set_title("Pressure vs. Volume")
             plt.legend(loc="best")
+            if self.savefig:
+                plt.savefig("PvsV.pdf")
             plt.show()
 
         elif self.eostype == "pressure":
@@ -555,6 +565,8 @@ class EOS:
             axs.set_ylabel("Pressure (GPa)")
             axs.set_title("Pressure vs. Volume")
             plt.legend(loc="best")
+            if self.savefig:
+                plt.savefig("PvsV.pdf")
             plt.show()
 
             # Energy vs Volume
@@ -589,6 +601,8 @@ class EOS:
                 axs2.set_xlabel("Volume ($\AA^3$/atom)")
             axs2.set_title("Energy vs. Volume")
             plt.legend(loc="best")
+            if self.savefig:
+                plt.savefig("EvsV.pdf")
             plt.show()
 
         # Saving as .json and .xml
@@ -605,7 +619,8 @@ class EOS:
         vlim_list=None,
         deltaH_index=None,
         labels=None,
-        export=False,
+        export=True,
+        savefig=False,
     ):
         """plot_enthalpy_curves.
 
@@ -641,8 +656,11 @@ class EOS:
             deltaH_index : int, optional (default ``None``)
                 Index of file to calculate enthalpy difference with respect to.
 
-            export : bool, optional (default ``False``)
+            export : bool, optional (default ``True``)
                 Export data as .json and .xml.
+
+            savefig : bool, optional (default ``False``)
+                Save figures in the pdf format.
 
         Returns
         -------
@@ -658,6 +676,7 @@ class EOS:
         self.deltaH_index = deltaH_index
         self.labels = labels
         self.export = export
+        self.savefig = savefig
 
         nfiles = len(self.infiles)
         self.volume = []
@@ -1007,7 +1026,8 @@ class EOS:
         axs.set_title("Enthalpy vs. Pressure")
         plt.legend(loc="best")
         axs.grid(color="gainsboro", ls="--", lw=0.6)
-        plt.savefig("enthalpy.pdf")
+        if self.savefig:
+            plt.savefig("Enthalpy.pdf")
         plt.show()
 
         # Network map for phase transitions
@@ -1056,7 +1076,8 @@ class EOS:
             cb.set_label("Enthalpy (eV/atom)")
         ax = plt.gca()
         ax.set_axis_off()
-        plt.savefig("enthalpy-network.pdf")
+        if self.savefig:
+            plt.savefig("Enthalpy-network.pdf")
         plt.show()
 
         # Enthalpy differences with respect to a selected phase
@@ -1103,6 +1124,8 @@ class EOS:
             # axs2.axhline(color="black")
             axs2.set_xlim(self.plim)
             plt.legend(loc="best")
+            if self.savefig:
+                plt.save("Enthalpy-difference.pdf")
             plt.show()
 
         # Saving as .json and .xml
@@ -1396,7 +1419,7 @@ class EOS:
                 "vol_array": self.vol_array.tolist(),
                 "volume": self.volume.tolist(),
             }
-        else:
+        elif self.eostype == "energy":
             return {
                 "P_birch": self.P_birch.tolist(),
                 "P_birch_murnaghan": self.P_birch_murnaghan.tolist(),
@@ -1411,6 +1434,23 @@ class EOS:
                 ],
                 "eos_murnaghan_fitted_cost": self.eos_murnaghan_fitted["cost"],
                 "eos_vinet_fitted_cost": self.eos_vinet_fitted["cost"],
+                "eostype": self.eostype,
+                "model": self.model,
+                "natoms": self.natoms,
+                "raw_data": self.raw_data,
+                "vlim": self.vlim,
+                "vol_array": self.vol_array.tolist(),
+                "volume": self.volume.tolist(),
+            }
+        else:
+            return {
+                "E_birch_murnaghan": self.E_birch_murnaghan.tolist(),
+                "au": self.au,
+                "coeffs0": self.coeffs0,
+                # "energy": self.energy.tolist(),
+                "eos_birch_murnaghan_fitted_cost": self.eos_birch_murnaghan_pressure_fitted[
+                    "cost"
+                ],
                 "eostype": self.eostype,
                 "model": self.model,
                 "natoms": self.natoms,
