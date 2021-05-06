@@ -39,18 +39,17 @@ class ElasticProperties:
         # if verbose:
         #     print_matrix(self.elastic_tensor) alredy printed
 
-        eigenvals.positive_evals(self.elastic_tensor, verbose)
+        eigenvals.positive_evals(self.elastic_tensor, self.verbose)
 
         if crystal_type is not None or structure is not None:
-
             crystal_select(
                 cnew=self.elastic_tensor,
                 cell=self.structure.spglib_cell,
                 crystal_type=self.crystal_type,
-                verbose=verbose,
+                verbose=self.verbose,
             )
-        if verbose:
-            print(self.__str__)
+        # if self.verbose:
+        #     print(self.__str__)
 
     @property
     def K_v(self):

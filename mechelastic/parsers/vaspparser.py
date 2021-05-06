@@ -60,11 +60,9 @@ class VaspOutcar:
         rf.close()
         data = self.text
         self.mass = np.array(
-            [float(x)
-             for x in re.findall("POMASS\s*=\s*([0-9.]*);\s*ZVAL", data)]
+            [float(x) for x in re.findall("POMASS\s*=\s*([0-9.]*);\s*ZVAL", data)]
         )
-        self.volume = float(re.findall(
-            "volume of cell\s*:\s*([0-9.]*)", data)[-1])
+        self.volume = float(re.findall("volume of cell\s*:\s*([0-9.]*)", data)[-1])
         self.nions = int(re.findall("NIONS\s*=\s*([0-9]*)", data)[0])
         self.natoms = np.array(
             [
@@ -92,7 +90,7 @@ class VaspOutcar:
                 for x in re.findall(
                     "position of ions in fractional coordinates.*\n([-+0-9.\s\n]*)",
                     data,
-                )[-1].split("\n")[:self.nions]
+                )[-1].split("\n")[: self.nions]
             ]
         ).astype(float)
         self.iontype = [
@@ -191,27 +189,21 @@ class VaspOutcar:
             # Subtract P in the diagonal and add P in C12, C21, C13, C31, C23, C32.
             if verbose:
                 print(
-                    "\nAdjusted for pressure since non-zero hydrostatic pressure exists.")
+                    "\nAdjusted for pressure since non-zero hydrostatic pressure exists."
+                )
                 print("External Pressure : %10.5f GPa" % self.pressure)
                 print(
                     "Set flag adjust_pressure=False to disable. -ap 0 in stand-alone mode."
                 )
 
             for i in range(0, 6):
-                self.elastic_tensor[i,
-                                    i] = self.elastic_tensor[i, i] - self.pressure
-            self.elastic_tensor[0,
-                                1] = self.elastic_tensor[0, 1] + self.pressure
-            self.elastic_tensor[1,
-                                0] = self.elastic_tensor[1, 0] + self.pressure
-            self.elastic_tensor[0,
-                                2] = self.elastic_tensor[0, 2] + self.pressure
-            self.elastic_tensor[2,
-                                0] = self.elastic_tensor[2, 0] + self.pressure
-            self.elastic_tensor[1,
-                                2] = self.elastic_tensor[1, 2] + self.pressure
-            self.elastic_tensor[2,
-                                1] = self.elastic_tensor[2, 1] + self.pressure
+                self.elastic_tensor[i, i] = self.elastic_tensor[i, i] - self.pressure
+            self.elastic_tensor[0, 1] = self.elastic_tensor[0, 1] + self.pressure
+            self.elastic_tensor[1, 0] = self.elastic_tensor[1, 0] + self.pressure
+            self.elastic_tensor[0, 2] = self.elastic_tensor[0, 2] + self.pressure
+            self.elastic_tensor[2, 0] = self.elastic_tensor[2, 0] + self.pressure
+            self.elastic_tensor[1, 2] = self.elastic_tensor[1, 2] + self.pressure
+            self.elastic_tensor[2, 1] = self.elastic_tensor[2, 1] + self.pressure
             if verbose:
                 print("\nPressure adjusted Elastic Tensor in GPa units:\n")
                 np.set_printoptions(precision=3, suppress=True)
@@ -222,7 +214,7 @@ class VaspOutcar:
         if verbose:
             print(
                 (
-                    "\n Checking if the modified Elastic Tensor is symmetric: i.e. Cij = Cji:  %10s"
+                    "\nChecking if the modified Elastic Tensor is symmetric: i.e. Cij = Cji:  %10s\n"
                     % symmetry.check_symmetric(self.elastic_tensor)
                 )
             )
@@ -242,11 +234,14 @@ class VaspOutcar:
             % (A, B, C)
         )
 
-        ret += ("Mass of atoms (in g/mol units): \n" +
-                "  ".join(["%s " for x in np.array(self.mass)]) % tuple(self.mass))
-        ret += ("Number of atoms: %d\n" % sum(self.natoms))
-        ret += ("Total mass (in g/mol): %10.4f \n" % self.total_mass)
-        ret += ("Volume of the cell (in Ang^3 units): %10.4f \n" % self.volume)
-        ret += ("\nDensity (in kg/m^3 units ): %10.5f" % self.density)
-        ret += ("External Pressure (in GPa units ): %10.5f" % self.pressure)
+        ret += "Mass of atoms (in g/mol units): " + "  ".join(
+            ["%s " for x in np.array(self.mass)]
+        ) % tuple(self.mass)
+        ret += "\nNumber of atoms: %d\n" % sum(self.natoms)
+        ret += "Total mass (in g/mol): %10.4f \n" % self.total_mass
+        ret += "Volume of the cell (in Ang^3 units): %10.5f \n" % float(
+            self.volume / 1.0e-30
+        )
+        ret += "Density (in kg/m^3 units ): %10.5f \n" % self.density
+        ret += "External Pressure (in GPa units ): %10.5f" % self.pressure
         return ret
