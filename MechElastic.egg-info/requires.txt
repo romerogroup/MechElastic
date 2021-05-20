@@ -5,3 +5,6 @@ pyvista
 intersect
 networkx
 dicttoxml
+trimesh
+scikit-image
+requests

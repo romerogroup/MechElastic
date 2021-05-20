@@ -1,6 +1,7 @@
 LICENSE.txt
 MANIFEST.in
 README.md
+requirements.txt
 setup.cfg
 setup.json
 setup.py
@@ -41,4 +42,4 @@ mechelastic/utils/__init__.py
 mechelastic/utils/constants.py
 mechelastic/utils/crystalutils.py
 mechelastic/utils/elements.py
-scripts/MechElastic.py
+scripts/mechelastic
