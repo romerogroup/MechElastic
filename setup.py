@@ -75,9 +75,12 @@ setup(
         "intersect",
         "networkx",
         "dicttoxml",
+        "trimesh",
+        "scikit-image",
+        "requests",
     ],
     data_files=[("", ["LICENSE.txt"])],
     package_data={"": ["setup.json"]},
-    scripts=["scripts/MechElastic.py"],
+    scripts=["scripts/mechelastic"],
     packages=find_packages(exclude=["scripts", "examples"]),
 )

@@ -8,6 +8,7 @@ from .parsers import QE_ElaStic_Parser
 from .parsers import QE_thermo_pw_Parser
 from .core import ElasticProperties
 from .core import ElasticProperties2D
+import os, sys
 
 
 def calculate_elastic(
@@ -59,6 +60,10 @@ def calculate_elastic(
         DESCRIPTION.
 
     """
+    # Check if infile is present
+    if not os.path.exists(infile):
+        print("%s doesn't exist. Exiting." % infile)
+        sys.exit()
 
     # welcome message
     if verbose:

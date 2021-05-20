@@ -98,6 +98,15 @@ parser.add_argument(
     action="store_true",
     help="Enable verbosity.",
 )
+parser.add_argument(
+    "-o",
+    "--outfile",
+    type=str,
+    default="elastic_properties.txt",
+    help="Name of output file. Could be in .txt, .json or .xml formats.",
+)
+
+
 args = parser.parse_args()
 
 print("-----------------------------")
@@ -126,6 +135,7 @@ def main():
         adjust_pressure=args.adjust_pressure,
         qe_outfile=args.qe_outfile,
         verbose=args.verbose,
+        outfile=args.outfile,
     )
 
 
