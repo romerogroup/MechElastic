@@ -1,6 +1,10 @@
 numpy
 spglib
-prettytable
 pathlib
 pyvista
 intersect
+networkx
+dicttoxml
+trimesh
+scikit-image
+requests

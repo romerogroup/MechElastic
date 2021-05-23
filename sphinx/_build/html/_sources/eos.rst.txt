@@ -50,8 +50,12 @@ Usage::
     eos_object.plot_enthalpy_curves(infiles, natoms, au=True)
 
 The flags ``vlim`` and ``au`` work similar to the ``plot_eos()`` section.
-If the volume ranges are to be set individually to each phase, one can use the ``vlim_list`` option. This is a list that contains elements of the minimum and maximum value of volume for each phase. 
-For instance, to define the volume ranges to each of the five phases here set, ``vlim_list = [ [180,260], [25,41], [50,75], [270,372], [110,160] ]``. 
+If the volume ranges are to be set individually to each phase, one can use the ``vlim_list`` option. This is a list that contains elements of the minimum and maximum value of volume for each phase.
+For instance, to define the volume ranges to each of the five phases here set, ``vlim_list = [ [180,260], [25,41], [50,75], [270,372], [110,160] ]``.
 
-Additionally, one may plot the Enthalpy differences with respect to a certain phase by setting ``deltaH_index=<phase index>`` where `<phase index>` is the index of the phase in the infiles list starting from 1.
-For example, in the above list of phases, to plot the Enthalpy with respect to `Im-3m`, one should set ``deltaH_index=3``.
+This outputs enthalpy curves and if phase transitions are detected, it will calculate the phase transition pressures and the possible transition paths.
+
+Additionally, one may plot the Enthalpy differences with respect to a certain phase by setting ``deltaH_index=<phase index>`` where `<phase index>` is the index of the phase in the infiles list starting from 0.
+For example, in the above list of phases, to plot the Enthalpy with respect to `Im-3m`, one should set ``deltaH_index=2``.
+
+If the data is required in a .json and .xml format, set ``export=True`` in either of these two functions.
