@@ -907,7 +907,7 @@ class ELATE:
         return meshes
         #plotter.show_grid(color = "black")
 
-    def plot_2D(self, elastic_calc="all", npoints=100, apply_to_plot=None, density= None, show= True, ):
+    def plot_2D(self, elastic_calc="all", npoints=100, apply_to_plot=None, show= True, ):
         """
 
 
@@ -1103,8 +1103,7 @@ class ELATE:
                 if apply_to_plot is not None:
                     apply_to_plot(fig, ax)
                     
-        if density != None :
-            
+        if self.density != None :
             if elastic_calc == "COMPRESSION_SPEED":
                 func = self.COMPRESSION_SPEED2D(npoints=npoints)
                 colors = ["green", "blue"]
@@ -1162,7 +1161,7 @@ class ELATE:
                         plt.plot(
                             func[iplane][iplot][0], func[iplane][iplot][1], color=color
                         )
-        if elastic_calc in ['DEBYE_SPEED', 'SHEAR_SPEED', 'COMPRESSIONAL_SPEED', 'RATIO_COMPRESSIONAL_SHEAR'] and density == None:
+        if elastic_calc in ['DEBYE_SPEED', 'SHEAR_SPEED', 'COMPRESSIONAL_SPEED', 'RATIO_COMPRESSIONAL_SHEAR'] and self.density == None:
             print("You must specify density in kg/m^3 to produce DEBYE_SPEED, SHEAR_SPEED, COMPRESSIONAL_SPEED, and RATIO_COMPRESSIONAL_SHEAR")
 
             
