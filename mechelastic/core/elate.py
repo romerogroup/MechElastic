@@ -440,19 +440,19 @@ class ELATE:
         minNu = minimize(self.elas.Poisson, 3)
         maxNu = maximize(self.elas.Poisson, 3)
     
-
-        self.voigtE = self.elas.averages()[0][0]
-        self.reussE = self.elas.averages()[1][0]
-        self.hillE = self.elas.averages()[2][0]
+        self.voigtK = self.elas.averages()[0][0]
+        self.reussK = self.elas.averages()[0][0]
+        self.hillK = self.elas.averages()[0][0]
+        
+        self.voigtE = self.elas.averages()[0][1]
+        self.reussE = self.elas.averages()[1][1]
+        self.hillE = self.elas.averages()[2][1]
         self.max_E = maxE[1]
         self.min_E = minE[1]
         self.min_axis_E = tuple(dirVec(*minE[0]))
         self.max_axis_E = tuple(dirVec(*maxE[0]))
         self.anis_E = maxE[1] / minE[1]
 
-        self.voigtLC = self.elas.averages()[0][1]
-        self.reussLC = self.elas.averages()[1][1]
-        self.hillLC = self.elas.averages()[2][1]
         self.max_LC = maxLC[1]
         self.min_LC = minLC[1]
         self.min_axis_LC = tuple(dirVec(*minLC[0]))
@@ -502,9 +502,9 @@ class ELATE:
             minDebyeSpeed = minimize(self.elas.Debye_Speed, 3)
             maxDebyeSpeed = maximize(self.elas.Debye_Speed, 3) 
            
-            self.voigtCompressionSpeed = (3*self.elas.averages()[0][0]*(10**9)*(1-self.elas.averages()[0][3])/(2*self.density*(1+self.elas.averages()[0][3])))**0.5
-            self.reussCompressionSpeed = (3*self.elas.averages()[1][0]*(10**9)*(1-self.elas.averages()[1][3])/(2*self.density*(1+self.elas.averages()[1][3])))**0.5
-            self.hillCompressionSpeed  = (3*self.elas.averages()[2][0]*(10**9)*(1-self.elas.averages()[2][3])/(2*self.density*(1+self.elas.averages()[2][3])))**0.5
+            self.voigtCompressionSpeed = ((10**9)*(self.elas.averages()[0][0]+(4/3)*self.elas.averages()[0][2])/self.density)**0.5
+            self.reussCompressionSpeed = ((10**9)*(self.elas.averages()[1][0]+(4/3)*self.elas.averages()[1][2])/self.density)**0.5
+            self.hillCompressionSpeed  = ((10**9)*(self.elas.averages()[2][0]+(4/3)*self.elas.averages()[2][2])/self.density)**0.5
             self.max_CompressionSpeed  = maxVc[1]
             self.min_CompressionSpeed  = minVc[1]
             self.min_axis_CompressionSpeed = tuple(dirVec1(*minVc[0]))
@@ -807,6 +807,11 @@ class ELATE:
         """
         
         tmp_dict =  {
+                   'bulk_modulus_voigt':self.voigtK,
+                   'bulk_modulus_reuss':self.reussK,
+                   'bulk_modulus_hill':self.hillK,
+            
+            
                    'youngs_modulus_voigt':self.voigtE,
                    'youngs_modulus_reuss':self.reussE,
                    'youngs_modulus_hill':self.hillE,
@@ -816,10 +821,7 @@ class ELATE:
                    'youngs_max_axis':self.max_axis_E,
                    'youngs_anisotropy':self.anis_E,
 
-            
-                   'linearCompression_modulus_voigt':self.voigtLC, 
-                   'linearCompression_modulus_reuss':self.reussLC, 
-                   'linearCompression_modulus_hill':self.hillLC,
+
                    'linearCompression_max':self.max_LC,
                    'linearCompression_min':self.min_LC,
                    'linearCompression_min_axis':self.min_axis_LC,
@@ -1351,17 +1353,17 @@ class ELATE:
         print(
             "Shear modulus  (GPa)  %9.3f %9.3f %9.3f "
             % (
-                self.elas.averages()[0][1],
-                self.elas.averages()[1][1],
-                self.elas.averages()[2][1],
+                self.elas.averages()[0][2],
+                self.elas.averages()[1][2],
+                self.elas.averages()[2][2],
             )
         )
         print(
             "Young's modulus  (GPa)  %9.3f %9.3f %9.3f "
             % (
-                self.elas.averages()[0][2],
-                self.elas.averages()[1][2],
-                self.elas.averages()[2][2],
+                self.elas.averages()[0][1],
+                self.elas.averages()[1][1],
+                self.elas.averages()[2][1],
             )
         )
         print(
@@ -1935,13 +1937,13 @@ class Elastic:
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
 
     def Compression_Speed(self,x):
-        return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson(x))/(2*self.density*(1+self.Poisson(x))))**0.5
+        return ((10**9)*(self.averages()[2][0]+(4/3)*self.shear(x))/self.density)**0.5
     
     def Shear_Speed(self,x):
         return (self.shear(x)*(10**9) /self.density)**0.5
     
     def Ratio_Compression_Shear(self,x):
-        return (self.Compression_Speed(x)/self.Shear_Speed(x))
+        return (self.Compression_Speed(x)/self.Shear_Speed(x))**2
     
     def Debye_Speed(self,x):
         return self.Compression_Speed(x)*self.Shear_Speed(x)/(2*self.Shear_Speed(x)**3 +self.Compression_Speed(x)**3)**(1/3)
@@ -2002,7 +2004,7 @@ class Elastic:
         xtol = 0.01
 
         def func1(z):
-            return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x[0], x[1], z]))/(2*density*(1+self.Poisson([x[0], x[1], z]))))**0.5
+            return self.Compression_Speed(x[0],x[1],z)
 
 
         r1 = optimize.minimize(
@@ -2014,7 +2016,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -(3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x[0], x[1], z]))/(2*density*(1+self.Poisson([x[0], x[1], z]))))**0.5
+            return -self.Compression_Speed(x[0],x[1],z)
 
 
         r2 = optimize.minimize(
@@ -2030,14 +2032,14 @@ class Elastic:
         tol = 0.005
 
         def func1(z):
-            return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x, y, z]))/(2*density*(1+self.Poisson([x, y, z]))))**0.5
+            return self.Compression_Speed(x,y,z)
 
         r1 = optimize.minimize(
             func1, guess1, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -(3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x, y, z]))/(2*density*(1+self.Poisson([x, y, z]))))**0.5
+            return -self.Compression_Speed(x,y,z)
 
         r2 = optimize.minimize(
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
@@ -2049,7 +2051,7 @@ class Elastic:
         xtol = 0.01
 
         def func1(z):
-            return ((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
+            return self.Shear_Speed(x[0],x[1],z)
         r1 = optimize.minimize(
             func1,
             np.pi / 2.0,
@@ -2059,7 +2061,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
+            return -self.Shear_Speed(x[0],x[1],z)
 
         r2 = optimize.minimize(
             func2,
@@ -2074,14 +2076,14 @@ class Elastic:
         tol = 0.005
 
         def func1(z):
-            return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
+            return self.Shear_Speed(x,y,z)
 
         r1 = optimize.minimize(
             func1, guess1, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
+            return -self.Shear_Speed(x,y,z)
 
         r2 = optimize.minimize(
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
@@ -2091,16 +2093,9 @@ class Elastic:
     def ratio_compressional_shear2D(self, x, density = None):
         ftol = 0.001
         xtol = 0.01
-
-        def v_p(z):
-            return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x[0], x[1], z]))/(2*density*(1+self.Poisson([x[0], x[1], z]))))**0.5
-
-        def v_s(z):
-            return ((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
-        
         
         def func1(z):
-            return (v_p(z) /v_s(z))**2
+            return self.Ratio_Compression_Shear(x[0],x[1],z)
 
         r1 = optimize.minimize(
             func1,
@@ -2111,7 +2106,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -(v_p(z) /v_s(z))**2
+            return -self.Ratio_Compression_Shear(x[0],x[1],z)
 
         r2 = optimize.minimize(
             func2,
@@ -2125,23 +2120,15 @@ class Elastic:
     def ratio_compressional_shear3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0,density = None):
         tol = 0.005
 
-
-        def v_p(z):
-            return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x, y, z]))/(2*density*(1+self.Poisson([x, y, z]))))**0.5
-
-        def v_s(z):
-            return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
-        
-        
         def func1(z):
-            return (v_p(z) /v_s(z))**2
+            return self.Ratio_Compression_Shear(x,y,z)
 
         r1 = optimize.minimize(
             func1, guess1, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -(v_p(z) /v_s(z))**2
+            return -self.Ratio_Compression_Shear(x,y,z)
 
         r2 = optimize.minimize(
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
@@ -2159,7 +2146,7 @@ class Elastic:
             return ((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
         
         def func1(z):
-            return v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
+            return self.Debye_Speed(x[0],x[1],z)
         r1 = optimize.minimize(
             func1,
             np.pi / 2.0,
@@ -2169,7 +2156,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
+            return -self.Debye_Speed(x[0],x[1],z)
 
         r2 = optimize.minimize(
             func2,
@@ -2190,14 +2177,14 @@ class Elastic:
             return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
         
         def func1(z):
-            return v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
+            return self.Debye_Speed(x,y,z)
 
         r1 = optimize.minimize(
             func1, guess1, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
+            return -self.Debye_Speed(x,y,z)
 
         r2 = optimize.minimize(
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}

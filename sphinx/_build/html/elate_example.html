@@ -1,0 +1,341 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>ELATE Example &mdash; MechElastic  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="ELATE implementation" href="plotting_2D.html" />
+    <link rel="prev" title="Quick ELATE example" href="elate.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> MechElastic
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cite.html">How to cite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dftprep.html">DFT Preparation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="tutorials.html">Tutorials</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="standalone.html">Stand-alone Mode</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="library.html">Library Mode</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="elasticconstantsandbasefunctions.html">Elastic constants and base functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eos.html">Equation of State (EOS) Analysis</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="elate.html">Quick ELATE example</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">ELATE Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plotting_2D.html">ELATE implementation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">MechElastic API</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MechElastic</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="tutorials.html">Tutorials</a> &raquo;</li>
+        
+          <li><a href="library.html">Library Mode</a> &raquo;</li>
+        
+          <li><a href="elate.html">Quick ELATE example</a> &raquo;</li>
+        
+      <li>ELATE Example</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/elate_example.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="elate-example">
+<h1>ELATE Example<a class="headerlink" href="#elate-example" title="Permalink to this headline">¶</a></h1>
+<p>In the previous page there were quick snippits of code to start getting results quickly. Here, we will do a step by step example to explain all the features the ELATE implementation has to offer. The original website for ELATE can be found here, &lt;<a class="reference external" href="http://progs.coudert.name/elate">http://progs.coudert.name/elate</a>&gt;.</p>
+<div class="section" id="initialization-of-the-elate-object">
+<h2>Initialization of the ELATE object<a class="headerlink" href="#initialization-of-the-elate-object" title="Permalink to this headline">¶</a></h2>
+<p>To start off, we need to import the necessary packages that we will use in the example. We will use the ELATE object class from mechelastic.core, which can be thought of as a container for all the calculations for the ELATE code. We will also use pyvista to demonstrate how one can easily access the 3D meshes directly to customize as they please. Finally, we will use a direct elastic tensor for this example. This elastic tensor was calculated with VASP on bulk silicon and can be found in the examples folder. For direct elastic tensor input, the proper format is a list of lists containing the elastic constants. We also have the density of this structure because this will allow us to display thermal properties. The density must be in units kg/m^3</p>
+<p>Importing ELATE object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">mechelastic.core</span> <span class="kn">import</span> <span class="n">ELATE</span>
+<span class="kn">import</span> <span class="nn">pyvista</span> <span class="k">as</span> <span class="nn">pv</span>
+<span class="n">elastic_tensor</span> <span class="o">=</span><span class="p">[</span>
+  <span class="p">[</span><span class="mf">153.1305</span><span class="p">,</span> <span class="mf">56.7932</span>  <span class="p">,</span> <span class="mf">56.7932</span>  <span class="p">,</span>  <span class="mf">0.0000</span>  <span class="p">,</span> <span class="mf">0.0000</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span>   <span class="p">],</span>
+  <span class="p">[</span><span class="mf">56.7932</span> <span class="p">,</span> <span class="mf">153.1305</span> <span class="p">,</span> <span class="mf">56.7932</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span>   <span class="p">],</span>
+  <span class="p">[</span><span class="mf">56.7932</span> <span class="p">,</span> <span class="mf">56.7932</span>  <span class="p">,</span> <span class="mf">153.1305</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span>  <span class="p">,</span> <span class="mf">0.0000</span>  <span class="p">,</span> <span class="mf">0.0000</span>   <span class="p">],</span>
+  <span class="p">[</span><span class="mf">0.0000</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span>  <span class="p">,</span> <span class="mf">74.7184</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span> <span class="p">,</span> <span class="mf">0.0000</span>   <span class="p">],</span>
+  <span class="p">[</span><span class="mf">0.0000</span>  <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span>  <span class="p">,</span> <span class="mf">0.0000</span>   <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span>  <span class="p">,</span> <span class="mf">74.7184</span> <span class="p">,</span> <span class="mf">0.0000</span>   <span class="p">],</span>
+  <span class="p">[</span><span class="o">-</span><span class="mf">0.0000</span> <span class="p">,</span> <span class="o">-</span><span class="mf">0.0000</span>  <span class="p">,</span> <span class="mf">0.0000</span>   <span class="p">,</span> <span class="mf">0.0000</span>   <span class="p">,</span> <span class="mf">0.0000</span>  <span class="p">,</span> <span class="mf">74.7184</span> <span class="p">],</span>
+                <span class="p">]</span>
+<span class="n">density</span> <span class="o">=</span> <span class="mf">2281.05840</span> <span class="c1"># in kg/m^3</span>
+</pre></div>
+</div>
+<p>We may initialize the ELATE object with the elastic tensor and the density. The density is not required and may be set to None if one does not have density information.</p>
+<p>Initialization of ELATE object:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">elate</span> <span class="o">=</span> <span class="n">ELATE</span><span class="p">(</span><span class="n">s</span> <span class="o">=</span> <span class="n">elastic_tensor</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="n">density</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>From this object we can access the entrie ELATE code by calling the class methods and attributes. We will first start by calling the print_properties() method to view a summary of the ELATE analysis to see which quantities we can access.</p>
+<p>Print summary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>elate.print_properties()
+
+Average properties
+
+
+                     Voigt     Reuss    Hill
+-------------------------------------------------------
+Bulk modulus   (GPa)     88.906    88.906    88.906
+Shear modulus  (GPa)    155.036   149.376   152.218
+Young`s modulus  (GPa)     64.099    61.221    62.660
+Poisson`s ratio             0.209     0.220     0.215
+Compression Speed  (m/s)        6182.342  6113.945  6148.239
+Shear Speed  (m/s)           5300.975  5180.616  5241.141
+Ratio Vc/Vs            1.360     1.393     1.376
+Debye Speed (m/s)         4038.963  3973.205  4006.306
+-------------------------------------------------------
+
+
+Eigenvalues of compliance matrix
+
+
+   lamda_1  lamda_2  lamda_3  lamda_4  lamda_5  lamda_6
+---------------------------------------------------------------
+   74.718    74.718    74.718    96.337    96.337   266.717
+--------------------------------------------------------------
+
+
+Variations of the elastic moduli
+
+
+                              Min       Max   ||   Anisotropy
+-------------------------------------------------------------------- --------------------
+Young&#39;s Modulus     (GPa)        122.401   175.102 ||    1.431
+     Min Axis:    (0.0, 0.0, 1.0)
+     Max Axis:    (-0.577, 0.577, 0.577)
+--------------------------------------------------------------------  --------------------
+Linear Compression   (TPa^-1)      3.749     3.749 ||    1.000
+     Min Axis:    (-0.99, 0.055, 0.131)
+     Max Axis:    (0.0, 0.0, 1.0)
+----------------------------------------------------------------------------------------
+Shear Modulus   (GPa)             48.169    74.718 ||    1.551
+     Min Axis:    (0.707, 0.0, -0.707)
+     Max Axis:    (0.0, 0.0, 1.0)
+     Second Min Axis:    (-0.707, -0.0, -0.707)
+     Second Max Axis:    (-0.707, -0.0, -0.707)
+----------------------------------------------------------------------------------------
+Poisson&#39;s Ratio                     0.058     0.349 ||    6.037
+     Min Axis:    (0.707, -0.0, -0.707)
+     Max Axis:    (-0.707, 0.0, 0.707)
+     Second Min Axis:    (-0.707, 0.0, -0.707)
+     Second Max Axis:    (-0.0, -1.0, 0.0)
+----------------------------------------------------------------------------------------
+Compression Speed                  5309.097  7215.712 ||    1.359
+     Min Axis:    (-0.707, 0.0, 0.707)
+     Max Axis:    (0.707, -0.0, -0.707)
+     Second Min Axis:    (-0.0, -1.0, 0.0)
+     Second Max Axis:    (-0.707, 0.0, -0.707)
+----------------------------------------------------------------------------------------
+Shear Speed                  4595.302  5723.288 ||    1.245
+     Min Axis:    (0.707, 0.0, -0.707)
+     Max Axis:    (0.0, 0.0, 1.0)
+     Second Min Axis:    (-0.0, -1.0, 0.0)
+     Second Max Axis:    (-0.707, 0.0, -0.707)
+----------------------------------------------------------------------------------------
+Ratio Compression Shear Speed                     0.928     1.570 ||    1.693
+     Min Axis:    (-0.707, -0.0, 0.707)
+     Max Axis:    (0.707, -0.0, -0.707)
+     Second Min Axis:    (0.0, -1.0, 0.0)
+     Second Max Axis:    (-0.707, 0.0, -0.707)
+----------------------------------------------------------------------------------------
+Debye Speed                  3767.557  4023.386 ||    1.068
+     Min Axis:    (0.707, -0.0, 0.707)
+     Max Axis:    (0.381, -0.0, 0.925)
+     Second Min Axis:    (0.0, 1.0, 0.0)
+     Second Max Axis:    (0.925, -0.001, -0.381)
+</pre></div>
+</div>
+<p>There are two ways to access any given quantity in the print summary, either call the wanted quantity as an attirbute or through the to_dict() method</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="plotting_2D.html" class="btn btn-neutral float-right" title="ELATE implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="elate.html" class="btn btn-neutral float-left" title="Quick ELATE example" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Sobhit Singh, Romero Group.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,16 +1,9 @@
-ELATE implementation 
+Quick ELATE example 
 ====================
 
 With the output of a given DFT code or direct input of an elastic tensor MechElastic can perform ELATE's anisotropic analysis and produce the same 2d and 3d plots of elastic properties. The original website for ELATE can be found here, <http://progs.coudert.name/elate>.
 
 Examples of the implementation can be found in \MechElastic\examples\ELATE.py or \MechElastic\examples\mechelastic_w_mpDatabase.py
-
-
-
-Inputs
-----------
-
-To start using  MechElastic, one has to decide to use the output of DFT codes or to work directly with a elastic tensor. Below are example methods  how to in each cas
 
 
 
@@ -65,5 +58,5 @@ Direct input of a elastic tensor usage::
 .. toctree::
    :maxdepth: 4 
 
-   plotting_3D
+   elate_example
    plotting_2D

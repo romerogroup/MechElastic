@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>ELATE implementation &mdash; MechElastic  documentation</title>
+  <title>Quick ELATE example &mdash; MechElastic  documentation</title>
   
 
   
@@ -42,7 +42,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="ELATE implementation" href="plotting_3D.html" />
+    <link rel="next" title="ELATE Example" href="elate_example.html" />
     <link rel="prev" title="Equation of State (EOS) Analysis" href="eos.html" /> 
 </head>
 
@@ -99,8 +99,9 @@
 <li class="toctree-l2 current"><a class="reference internal" href="library.html">Library Mode</a><ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="elasticconstantsandbasefunctions.html">Elastic constants and base functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="eos.html">Equation of State (EOS) Analysis</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">ELATE implementation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#inputs">Inputs</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Quick ELATE example</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="elate_example.html">ELATE Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="plotting_2D.html">ELATE implementation</a></li>
 </ul>
 </li>
 </ul>
@@ -160,7 +161,7 @@
         
           <li><a href="library.html">Library Mode</a> &raquo;</li>
         
-      <li>ELATE implementation</li>
+      <li>Quick ELATE example</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -179,13 +180,10 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="elate-implementation">
-<h1>ELATE implementation<a class="headerlink" href="#elate-implementation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="quick-elate-example">
+<h1>Quick ELATE example<a class="headerlink" href="#quick-elate-example" title="Permalink to this headline">¶</a></h1>
 <p>With the output of a given DFT code or direct input of an elastic tensor MechElastic can perform ELATE’s anisotropic analysis and produce the same 2d and 3d plots of elastic properties. The original website for ELATE can be found here, &lt;<a class="reference external" href="http://progs.coudert.name/elate">http://progs.coudert.name/elate</a>&gt;.</p>
 <p>Examples of the implementation can be found in MechElasticexamplesELATE.py or MechElasticexamplesmechelastic_w_mpDatabase.py</p>
-<div class="section" id="inputs">
-<h2>Inputs<a class="headerlink" href="#inputs" title="Permalink to this headline">¶</a></h2>
-<p>To start using  MechElastic, one has to decide to use the output of DFT codes or to work directly with a elastic tensor. Below are example methods  how to in each cas</p>
 <p>Direct output from a DFT code usage:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mechelastic</span>
 <span class="c1"># Produce the 2D plots for the Shear modulus</span>
@@ -233,10 +231,12 @@
 </div>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="plotting_3D.html">ELATE implementation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="elate_example.html">ELATE Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="elate_example.html#initialization-of-the-elate-object">Initialization of the ELATE object</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="plotting_2D.html">ELATE implementation</a></li>
 </ul>
-</div>
 </div>
 </div>
 
@@ -246,7 +246,7 @@
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-        <a href="plotting_3D.html" class="btn btn-neutral float-right" title="ELATE implementation" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="elate_example.html" class="btn btn-neutral float-right" title="ELATE Example" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
         <a href="eos.html" class="btn btn-neutral float-left" title="Equation of State (EOS) Analysis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 

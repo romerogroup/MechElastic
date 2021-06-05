@@ -1,0 +1,114 @@
+ELATE Example 
+====================
+
+In the previous page there were quick snippits of code to start getting results quickly. Here, we will do a step by step example to explain all the features the ELATE implementation has to offer. The original website for ELATE can be found here, <http://progs.coudert.name/elate>.
+
+Initialization of the ELATE object
+--------------------------------------------------------------------------
+
+To start off, we need to import the necessary packages that we will use in the example. We will use the ELATE object class from mechelastic.core, which can be thought of as a container for all the calculations for the ELATE code. We will also use pyvista to demonstrate how one can easily access the 3D meshes directly to customize as they please. Finally, we will use a direct elastic tensor for this example. This elastic tensor was calculated with VASP on bulk silicon and can be found in the examples folder. For direct elastic tensor input, the proper format is a list of lists containing the elastic constants. We also have the density of this structure because this will allow us to display thermal properties. The density must be in units kg/m^3
+
+Importing ELATE object::
+
+    from mechelastic.core import ELATE
+    import pyvista as pv
+    elastic_tensor =[
+      [153.1305, 56.7932  , 56.7932  ,  0.0000  , 0.0000  , -0.0000   ],
+      [56.7932 , 153.1305 , 56.7932  , -0.0000  , -0.0000 , -0.0000   ],
+      [56.7932 , 56.7932  , 153.1305 , -0.0000  , 0.0000  , 0.0000   ],
+      [0.0000  , -0.0000  , -0.0000  , 74.7184  , -0.0000 , 0.0000   ],
+      [0.0000  , -0.0000  , 0.0000   , -0.0000  , 74.7184 , 0.0000   ],
+      [-0.0000 , -0.0000  , 0.0000   , 0.0000   , 0.0000  , 74.7184 ],
+                    ]
+    density = 2281.05840 # in kg/m^3   
+
+We may initialize the ELATE object with the elastic tensor and the density. The density is not required and may be set to None if one does not have density information.
+
+Initialization of ELATE object::
+
+    elate = ELATE(s = elastic_tensor, density = density)
+
+Interacting with the ELATE object
+---------------------------------------------------
+From this object we can access the entrie ELATE code by calling the class methods and attributes. We will first start by calling the print_properties() method to view a summary of the ELATE analysis to see which quantities we can access.
+
+Print summary::
+
+    elate.print_properties()
+    
+    Average properties
+
+ 
+                         Voigt     Reuss    Hill
+    -------------------------------------------------------
+    Bulk modulus   (GPa)     88.906    88.906    88.906 
+    Shear modulus  (GPa)    155.036   149.376   152.218 
+    Young`s modulus  (GPa)     64.099    61.221    62.660 
+    Poisson`s ratio             0.209     0.220     0.215 
+    Compression Speed  (m/s)        6182.342  6113.945  6148.239 
+    Shear Speed  (m/s)           5300.975  5180.616  5241.141 
+    Ratio Vc/Vs            1.360     1.393     1.376 
+    Debye Speed (m/s)         4038.963  3973.205  4006.306 
+    -------------------------------------------------------
+    
+    
+    Eigenvalues of compliance matrix
+    
+ 
+       lamda_1  lamda_2  lamda_3  lamda_4  lamda_5  lamda_6
+    ---------------------------------------------------------------
+       74.718    74.718    74.718    96.337    96.337   266.717
+    --------------------------------------------------------------
+    
+    
+    Variations of the elastic moduli
+    
+     
+                                  Min       Max   ||   Anisotropy
+    -------------------------------------------------------------------- --------------------
+    Young's Modulus     (GPa)        122.401   175.102 ||    1.431 
+         Min Axis:    (0.0, 0.0, 1.0)      
+         Max Axis:    (-0.577, 0.577, 0.577) 
+    --------------------------------------------------------------------  --------------------
+    Linear Compression   (TPa^-1)      3.749     3.749 ||    1.000 
+         Min Axis:    (-0.99, 0.055, 0.131)      
+         Max Axis:    (0.0, 0.0, 1.0) 
+    ----------------------------------------------------------------------------------------
+    Shear Modulus   (GPa)             48.169    74.718 ||    1.551 
+         Min Axis:    (0.707, 0.0, -0.707)      
+         Max Axis:    (0.0, 0.0, 1.0) 
+         Second Min Axis:    (-0.707, -0.0, -0.707)      
+         Second Max Axis:    (-0.707, -0.0, -0.707) 
+    ----------------------------------------------------------------------------------------
+    Poisson's Ratio                     0.058     0.349 ||    6.037 
+         Min Axis:    (0.707, -0.0, -0.707)      
+         Max Axis:    (-0.707, 0.0, 0.707) 
+         Second Min Axis:    (-0.707, 0.0, -0.707)      
+         Second Max Axis:    (-0.0, -1.0, 0.0) 
+    ----------------------------------------------------------------------------------------
+    Compression Speed                  5309.097  7215.712 ||    1.359 
+         Min Axis:    (-0.707, 0.0, 0.707)      
+         Max Axis:    (0.707, -0.0, -0.707) 
+         Second Min Axis:    (-0.0, -1.0, 0.0)      
+         Second Max Axis:    (-0.707, 0.0, -0.707) 
+    ----------------------------------------------------------------------------------------
+    Shear Speed                  4595.302  5723.288 ||    1.245 
+         Min Axis:    (0.707, 0.0, -0.707)      
+         Max Axis:    (0.0, 0.0, 1.0) 
+         Second Min Axis:    (-0.0, -1.0, 0.0)      
+         Second Max Axis:    (-0.707, 0.0, -0.707) 
+    ----------------------------------------------------------------------------------------
+    Ratio Compression Shear Speed                     0.928     1.570 ||    1.693 
+         Min Axis:    (-0.707, -0.0, 0.707)      
+         Max Axis:    (0.707, -0.0, -0.707) 
+         Second Min Axis:    (0.0, -1.0, 0.0)      
+         Second Max Axis:    (-0.707, 0.0, -0.707) 
+    ----------------------------------------------------------------------------------------
+    Debye Speed                  3767.557  4023.386 ||    1.068 
+         Min Axis:    (0.707, -0.0, 0.707)      
+         Max Axis:    (0.381, -0.0, 0.925) 
+         Second Min Axis:    (0.0, 1.0, 0.0)      
+         Second Max Axis:    (0.925, -0.001, -0.381) 
+
+
+There are two ways to access any given quantity in the print summary, either call the wanted quantity as an attirbute or through the to_dict() method

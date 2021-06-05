@@ -58,5 +58,5 @@ Direct input of a elastic tensor usage::
 .. toctree::
    :maxdepth: 4 
 
-   elate_object_structure
+   elate_example
    plotting_2D
