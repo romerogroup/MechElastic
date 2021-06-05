@@ -5,6 +5,15 @@ With the output of a given DFT code or direct input of an elastic tensor MechEla
 
 Examples of the implementation can be found in \MechElastic\examples\ELATE.py or \MechElastic\examples\mechelastic_w_mpDatabase.py
 
+
+
+Inputs
+----------
+
+To start using  MechElastic, one has to decide to use the output of DFT codes or to work directly with a elastic tensor. Below are example methods  how to in each cas
+
+
+
 Direct output from a DFT code usage::
 
     import mechelastic
@@ -51,3 +60,10 @@ Direct input of a elastic tensor usage::
     
     elastic_tensor.plot3D(elastic_calc="LC", npoints = 100)
     elastic_tensor.plot2D(elastic_calc="LC", npoints = 100)
+
+
+.. toctree::
+   :maxdepth: 4 
+
+   plotting_3D
+   plotting_2D
