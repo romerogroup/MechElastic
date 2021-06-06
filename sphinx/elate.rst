@@ -1,4 +1,4 @@
-Quick ELATE example 
+ELATE
 ====================
 
 With the output of a given DFT code or direct input of an elastic tensor MechElastic can perform ELATE's anisotropic analysis and produce the same 2d and 3d plots of elastic properties. The original website for ELATE can be found here, <http://progs.coudert.name/elate>.
@@ -59,4 +59,3 @@ Direct input of a elastic tensor usage::
    :maxdepth: 4 
 
    elate_example
-   plotting_2D
