@@ -48,7 +48,7 @@ Once installed, use the ``-h`` flag to see a list of options for the stand-alone
 mechelastic -h
 ```
 
-E.g.-
+For example: 
 
 ```
 mechelastic -d=3D -i OUTCAR-Si_bulk 
@@ -56,14 +56,14 @@ mechelastic -d=3D -i OUTCAR-Si_bulk
 
 For more information please refer to the documentation. 
 
-Citing information
+Citations
 ------------------
 
 Please cite the following articles if you use MechElastic for your research: 
 
 - [Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018).](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.97.054108)
 
-- [Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert, Aldo H. Romero; arXiv:2012.04758 [cond-mat.mtrl-sci].](https://arxiv.org/abs/2012.04758)
+- [Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert, and Aldo H. Romero; Computer Physics Communications 267, 108068 (2021).] (https://doi.org/10.1016/j.cpc.2021.108068)
 
 BibTeX:
 
@@ -83,13 +83,19 @@ BibTeX:
   url = {https://link.aps.org/doi/10.1103/PhysRevB.97.054108}
 }
 
-@misc{singh2020mechelastic,
-      title={MechElastic: A Python Library for Analysis of Mechanical and Elastic Properties of Bulk and 2D Materials}, 
-      author={Sobhit Singh and Logan Lang and Viviana Dovale-Farelo and Uthpala Herath and Pedram Tavadze and François-Xavier Coudert and Aldo H. Romero},
-      year={2020},
-      eprint={2012.04758},
-      archivePrefix={arXiv},
-      primaryClass={cond-mat.mtrl-sci}
+@article{singh2021mechelastic,
+	Author = {Sobhit Singh and Logan Lang and Viviana Dovale-Farelo and Uthpala Herath and Pedram Tavadze and Fran{\c c}ois-Xavier Coudert and Aldo H. Romero},
+	Doi = {https://doi.org/10.1016/j.cpc.2021.108068},
+	Issn = {0010-4655},
+	Journal = {Computer Physics Communications},
+	Keywords = {Elastic properties, Mechanical stability, Elastic wave velocities, Elastic anisotropy, 2D materials, High-throughput, DFT, Equation of state},
+	Pages = {108068},
+	Title = {MechElastic: A Python library for analysis of mechanical and elastic properties of bulk and 2D materials},
+	Url = {https://www.sciencedirect.com/science/article/pii/S0010465521001806},
+	Volume = {267},
+	Year = {2021},
+	Bdsk-Url-1 = {https://www.sciencedirect.com/science/article/pii/S0010465521001806},
+	Bdsk-Url-2 = {https://doi.org/10.1016/j.cpc.2021.108068}}
 }
 
 ```
