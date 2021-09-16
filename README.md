@@ -63,7 +63,7 @@ Please cite the following articles if you use MechElastic for your research:
 
 - [Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018).](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.97.054108)
 
-- [Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert, and Aldo H. Romero; Computer Physics Communications 267, 108068 (2021).] (https://doi.org/10.1016/j.cpc.2021.108068)
+- [Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert, and Aldo H. Romero; Computer Physics Communications 267, 108068 (2021).](https://doi.org/10.1016/j.cpc.2021.108068)
 
 BibTeX:
 
