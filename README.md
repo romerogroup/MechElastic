@@ -68,7 +68,7 @@ Please cite the following articles if you use MechElastic for your research:
 BibTeX:
 
 ```
-@article{PhysRevB.97.054108,
+@article{singh2018mechelastic,
   title = {Elastic, mechanical, and thermodynamic properties of Bi-Sb binaries: Effect of spin-orbit coupling},
   author = {Singh, Sobhit and Valencia-Jaime, Irais and Pavlic, Olivia and Romero, Aldo H.},
   journal = {Phys. Rev. B},
