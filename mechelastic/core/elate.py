@@ -23,8 +23,28 @@ __author__ = "Romain Gaillac and François-Xavier Coudert"
 __version__ = "2019.01.09"
 __license__ = "MIT"
 
+###############################################################################
+# 3D plotting functions 
+###############################################################################
 
 def make3DPlot(func, legend="", npoints=100):
+    """
+        Generates meshgrids to be plotted.
+        
+        Parameters
+        ----------
+        func : callable
+            The is should be an attribute of the Elasitc class
+        legend : str, optional
+            string to be used in the legend. The default is "".
+        npoints : int, optional
+            The number of points in the meshgrids. The default is 100.
+            
+        Returns
+        -------
+        Returns : A tuple of list of lists of coordinate points. Simialr to numpy meshgrid.
+
+    """
 
     str1 = legend.split("'")[0]
     str2 = legend.split("'")[1]
@@ -63,9 +83,26 @@ def make3DPlot(func, legend="", npoints=100):
             count = count + 1
     return (dataX, dataY, dataZ, dataR)
 
-
 def make3DPlotPosNeg(func, legend="", npoints=100):
+    """
+        Generates positive and negative meshgrids to be plotted.
+        
+        Parameters
+        ----------
+        func : callable
+            The is should be an attribute of the Elasitc class
+        legend : str, optional
+            string to be used in the legend. The default is "".
+        npoints : int, optional
+            The number of points in the meshgrids. The default is 100.
+            
+        Returns
+        -------
+        Returns : A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+        The first index is for the positive value mesh. 
+        The second index is for the negative value mesh
 
+    """
     u = np.linspace(0, np.pi, npoints)
     v = np.linspace(0, 2 * np.pi, 2 * npoints)
 
@@ -131,9 +168,27 @@ def make3DPlotPosNeg(func, legend="", npoints=100):
 
     return ((dataX1, dataY1, dataZ1, dataR1), (dataX2, dataY2, dataZ2, dataR2))
 
-
 def make3DPlot2(func, legend="", npoints=200):
 
+    """
+        Generates meshgrids for positive value and maximum values to be plotted.
+        
+        Parameters
+        ----------
+        func : callable
+            The is should be an attribute of the Elasitc class
+        legend : str, optional
+            string to be used in the legend. The default is "".
+        npoints : int, optional
+            The number of points in the meshgrids. The default is 100.
+            
+        Returns
+        -------
+        Returns : A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+        The first index is for the positive value mesh. 
+        The second index is for the maximum value mesh.
+
+    """
     u = np.linspace(0, np.pi, npoints)
     v = np.linspace(0, np.pi, npoints)
     w = [v[i] + np.pi for i in range(1, len(v))]
@@ -207,9 +262,28 @@ def make3DPlot2(func, legend="", npoints=200):
     i = random.randint(0, 100000)
     return ((dataX1, dataY1, dataZ1, dataR1), (dataX2, dataY2, dataZ2, dataR2))
 
-
 def make3DPlot3(func, legend="", width=600, height=600, npoints=100):
+    """
+        Generates positive, negative, and maximum vlaue meshgrids to be plotted.
+        
+        Parameters
+        ----------
+        func : callable
+            The is should be an attribute of the Elasitc class
+        legend : str, optional
+            string to be used in the legend. The default is "".
+        npoints : int, optional
+            The number of points in the meshgrids. The default is 100.
+            
+        Returns
+        -------
+        Retruns : A size 3 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+        The first index is for the negative value mesh. 
+        The second index is for the positive value mesh.
+        The thrid index is for the maximum value mesh.
 
+    """
+    
     str1 = legend.split("'")[0]
     str2 = legend.split("'")[1]
 
@@ -299,12 +373,32 @@ def make3DPlot3(func, legend="", width=600, height=600, npoints=100):
         (dataX3, dataY3, dataZ3, dataR3),
     )
 
-
+###############################################################################
 # Polar plot functions
-################################################################################################
-
+###############################################################################
 
 def makePolarPlot(func, legend="", p="xy", npoints=200):
+    """
+        Generates coordinates points to be plotted.
+        
+        Parameters
+        ----------
+        func : callable
+            The is should be an attribute of the Elasitc class
+        legend : str, optional
+            string to be used in the legend. The default is "".
+        p : str, optional
+            String to indicate what cross section to calculate. The default is "xy".
+        npoints : int, optional
+            The number of coordinate points. The default is 100.
+            
+        Returns
+        -------
+        Returns : A size 2 tuple of array of coordinate points
+
+    """
+    
+    
     u = np.linspace(0, 2 * np.pi, npoints)
     r = list(map(func, u))
     if p == "xy":
@@ -316,9 +410,30 @@ def makePolarPlot(func, legend="", p="xy", npoints=200):
 
     return (x, y)
 
-
 def makePolarPlotPosNeg(func, legend="", p="xy", npoints=200):
+    """
+    Generates coordinates points for positive and negative values to be plotted.
+    
+    Parameters
+    ----------
+    func : callable
+        The is should be an attribute of the Elasitc class
+    legend : str, optional
+        string to be used in the legend. The default is "".
+    p : str, optional
+        String to indicate what cross section to calculate. The default is "xy".
+    npoints : int, optional
+        The number of coordinate points. The default is 100.
+        
+    Returns
+    -------
+    Returns : A size 2 tuple of tuples containing coordinate point arrays.
+    The first index cooresponds to the positive value.
+    The second index cooresponds to the negative value.
 
+    """
+    
+    
     u = np.linspace(0, 2 * np.pi, npoints)
     r = list(map(lambda x: max(0, func(x)), u))
     if p == "xy":
@@ -337,9 +452,30 @@ def makePolarPlotPosNeg(func, legend="", p="xy", npoints=200):
 
     return ((x1, y1), (x2, y2))
 
-
 def makePolarPlot2(func, legend="", p="xy", npoints=200):
+    """
+    Generates coordinates points for positive and maximum values to be plotted.
+    
+    Parameters
+    ----------
+    func : callable
+        The is should be an attribute of the Elasitc class
+    legend : str, optional
+        string to be used in the legend. The default is "".
+    p : str, optional
+        String to indicate what cross section to calculate. The default is "xy".
+    npoints : int, optional
+        The number of coordinate points. The default is 100.
+        
+    Returns
+    -------
+    Returns : A size 2 tuple of tuples containing coordinate point arrays
+    The first index cooresponds to the positive value.
+    The second index cooresponds to the maximum value.
 
+    """
+    
+    
     u = np.linspace(0, 2 * np.pi, npoints)
     r = list(map(func, u))
 
@@ -356,9 +492,29 @@ def makePolarPlot2(func, legend="", p="xy", npoints=200):
 
     return ((x1, y1), (x2, y2))
 
-
 def makePolarPlot3(func, legend="", p="xy", npoints=200):
+    """
+    Generates coordinates points for positive, negative, and maximum values to be plotted.
+    
+    Parameters
+    ----------
+    func : callable
+        The is should be an attribute of the Elasitc class
+    legend : str, optional
+        string to be used in the legend. The default is "".
+    p : str, optional
+        String to indicate what cross section to calculate. The default is "xy".
+    npoints : int, optional
+        The number of coordinate points. The default is 100.
+        
+    Returns
+    -------
+    Returns : A size 3 tuple of tuples containing coordinate point arrays
+    The first index cooresponds to the negative value.
+    The second index cooresponds to the positive value.
+    The third index cooresponds to the maximum value.
 
+    """
     u = np.linspace(0, 2 * np.pi, npoints)
     r = list(map(func, u))
 
@@ -380,10 +536,25 @@ def makePolarPlot3(func, legend="", p="xy", npoints=200):
     return ((x1, y1), (x2, y2), (x3, y3))
 
 
-########################################################################################################
+###############################################################################
 
 
 def dirVec(theta, phi):
+    """
+        Generates a directional vector given spherical angles
+        
+        Parameters
+        ----------
+        theta : float
+            Angle with the z axis
+        phi : float, optional
+            Angle with the x axis axis
+
+        Returns
+        -------
+        Returns : Size 3 list representing direction vector
+
+    """
     return [
         math.sin(theta) * math.cos(phi),
         math.sin(theta) * math.sin(phi),
@@ -392,6 +563,21 @@ def dirVec(theta, phi):
 
 
 def dirVec1(theta, phi, chi):
+    """
+        Generates a directional vector given spherical angles
+        
+        Parameters
+        ----------
+        theta : float
+            Angle with the z axis
+        phi : float, optional
+            Angle with the x axis
+
+        Returns
+        -------
+        Returns : Size 3 list representing direction vector
+
+    """
     return [
         math.sin(theta) * math.cos(phi),
         math.sin(theta) * math.sin(phi),
@@ -400,6 +586,23 @@ def dirVec1(theta, phi, chi):
 
 
 def dirVec2(theta, phi, chi):
+    """
+        Generates a directional vector given euler rotation angles
+        
+        Parameters
+        ----------
+        theta : float
+            Angle with the z axis
+        phi : float, optional
+            Angle with the x axis
+        chi : float, optional
+            Angle with the y axis
+
+        Returns
+        -------
+        Returns : Size 3 list representing direction vector
+
+    """
     return [
         math.cos(theta) * math.cos(phi) * math.cos(chi) - math.sin(phi) * math.sin(chi),
         math.cos(theta) * math.sin(phi) * math.cos(chi) + math.cos(phi) * math.sin(chi),
@@ -409,18 +612,48 @@ def dirVec2(theta, phi, chi):
 
 # Functions to minimize/maximize
 def minimize(func, dim):
+    """
+        Finds the spherical angles corresponding to a minimum value
+        
+        Parameters
+        ----------
+        func : callable
+            The is should be an attribute of the Elasitc class
+        dim : int
+            The dimension of the property
+
+        Returns
+        -------
+        Returns : Tuple of spherical angles of the minimal direction
+
+    """
     if dim == 2:
         r = ((0, np.pi), (0, np.pi))
         n = 25
     elif dim == 3:
         r = ((0, np.pi), (0, np.pi), (0, np.pi))
         n = 10
-
+    
     # TODO -- try basin hopping or annealing
     return optimize.brute(func, r, Ns=n, full_output=True, finish=optimize.fmin)[0:2]
 
 
 def maximize(func, dim):
+    """
+        Finds the spherical angles corresponding to a maximum value
+        
+        Parameters
+        ----------
+        func : callable
+            The is should be an attribute of the Elasitc class
+        dim : int
+            The dimension of the property
+
+        Returns
+        -------
+        Returns : Tuple of spherical angles of the minimal direction
+
+    """
     res = minimize(lambda x: -func(x), dim)
     return (res[0], -res[1])
 
@@ -439,10 +672,12 @@ class ELATE:
         maxG = maximize(self.elas.shear, 3)
         minNu = minimize(self.elas.Poisson, 3)
         maxNu = maximize(self.elas.Poisson, 3)
+        minPugh = minimize(self.elas.Pugh_ratio, 3)
+        maxPugh = maximize(self.elas.Pugh_ratio, 3)
     
         self.voigtK = self.elas.averages()[0][0]
-        self.reussK = self.elas.averages()[0][0]
-        self.hillK = self.elas.averages()[0][0]
+        self.reussK = self.elas.averages()[1][0]
+        self.hillK = self.elas.averages()[2][0]
         
         self.voigtE = self.elas.averages()[0][1]
         self.reussE = self.elas.averages()[1][1]
@@ -486,6 +721,17 @@ class ELATE:
             self.anis_Poisson = maxNu[1] / minNu[1]
         else:
             self.anis_Poisson = "&infin;"
+            
+        self.voigtPugh = self.elas.averages()[0][0]/self.elas.averages()[0][2]
+        self.reussPugh = self.elas.averages()[1][0]/self.elas.averages()[1][2]
+        self.hillPugh = self.elas.averages()[2][0]/self.elas.averages()[2][2]
+        self.max_Pugh = maxPugh[1]
+        self.min_Pugh = minPugh[1]
+        self.min_axis_Pugh = tuple(dirVec1(*minPugh[0]))
+        self.max_axis_Pugh = tuple(dirVec1(*maxPugh[0]))
+        self.mix_2nd_axis_Pugh = tuple(dirVec2(*minPugh[0]))
+        self.max_2nd_axis_Pugh = tuple(dirVec2(*maxPugh[0]))
+        self.anis_Pugh = maxPugh[1] / minPugh[1]
             
             
         if self.density != None:
@@ -539,7 +785,38 @@ class ELATE:
             self.anis_DebyeSpeed = maxDebyeSpeed[1] / minDebyeSpeed[1]
 
 
+    """
+        The container class object of the ELATE Analysis.
+        
+        Parameters
+        ----------
+        s : List of lists
+            This is a list of rows of the elastic tensor
+        density : float, optional
+            The density of a material in units of kg/m^3
+
+    """
+
+
+
     def YOUNG2D(self, npoints):
+        """
+        Generates a cross sectional data for the young's modulus
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections. 
+            Each cross section is a size 2 tuple of array of coordinate points.
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+
+        """
         data1 = makePolarPlot(
             lambda x: self.elas.Young([np.pi / 2, x]),
             "Young's modulus in (xy) plane",
@@ -561,7 +838,19 @@ class ELATE:
         return (data1, data2, data3)
 
     def YOUNG3D(self, npoints):
+        """
+        Generates a meshgrid for the young's modulus
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
 
+        Returns
+        -------
+        Returns : A tuple of list of lists of coordinate points. Simialr to numpy meshgrid.
+
+        """
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
 
@@ -572,6 +861,27 @@ class ELATE:
         return data
 
     def LC2D(self, npoints):
+        """
+        Generates a cross sectional data for the Linear Compression
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+            
+            Each cross section is a size 2 tuple of tuples containing coordinate point arrays.
+            The first index cooresponds to the positive value.
+            The second index cooresponds to the negative value.
+
+
+        """
         data1 = makePolarPlotPosNeg(
             lambda x: self.elas.LC([np.pi / 2, x]),
             "linear compressibility in (xy) plane",
@@ -593,6 +903,21 @@ class ELATE:
         return (data1, data2, data3)
 
     def LC3D(self, npoints):
+        """
+        Generates a meshgrid for the Linear Compression
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+            The first index is for the positive value mesh. 
+            The second index is for the negative value mesh
+
+        """
 
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
@@ -604,6 +929,25 @@ class ELATE:
         return data
 
     def SHEAR2D(self, npoints):
+        """
+        Generates a cross sectional data for the Shear modulus
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+            
+            Each cross section is a size 2 tuple of tuples containing coordinate point arrays
+            The first index cooresponds to the positive value.
+            The second index cooresponds to the maximum value.
+        """
         data1 = makePolarPlot2(
             lambda x: self.elas.shear2D([np.pi / 2, x]),
             "Shear modulus in (xy) plane",
@@ -622,6 +966,21 @@ class ELATE:
         return (data1, data2, data3)
 
     def SHEAR3D(self, npoints):
+        """
+        Generates a meshgrid for the Shear Modulus
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns :  A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+            The first index is for the positive value mesh. 
+            The second index is for the maximum value mesh.
+
+        """
 
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
@@ -635,6 +994,27 @@ class ELATE:
         return data
 
     def POISSON2D(self, npoints):
+        """
+        Generates a cross sectional data for the Poisson's Ratio
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections.
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+        
+            Each cross section is a size 3 tuple of tuples containing coordinate point arrays
+            The first index cooresponds to the negative value.
+            The second index cooresponds to the positive value.
+            The third index cooresponds to the maximum value.
+
+        """
         data1 = makePolarPlot3(
             lambda x: self.elas.Poisson2D([np.pi / 2, x]),
             "Poisson's ratio in (xy) plane",
@@ -656,6 +1036,21 @@ class ELATE:
         return (data1, data2, data3)
 
     def POISSON3D(self, npoints):
+        """
+        Generates a meshgrid for the Poisson's Ratio
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns :  A size 3 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+            The first index is for the negative value mesh. 
+            The second index is for the positive value mesh.
+            The thrid index is for the maximum value mesh.
+        """
 
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
@@ -668,7 +1063,91 @@ class ELATE:
 
         return data
     
+    def PUGH_RATIO2D(self, npoints):
+        """
+        Generates a cross sectional data for the Pugh's Ratio
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+            
+            Each cross section is a size 2 tuple of tuples containing coordinate point arrays
+            The first index cooresponds to the positive value.
+            The second index cooresponds to the maximum value.
+        """
+        data1 = makePolarPlot2(
+            lambda x: self.elas.pugh_ratio2D([np.pi / 2, x]),
+            "Pugh's Ratio in (xy) plane",
+            "xy",
+            npoints=npoints,
+        )
+        data2 = makePolarPlot2(
+            lambda x: self.elas.pugh_ratio2D([x, 0]), "Pugh's Ratio in (xz) plane", "xz"
+        )
+        data3 = makePolarPlot2(
+            lambda x: self.elas.pugh_ratio2D([x, np.pi / 2]),
+            "Pugh's Ratio in (yz) plane",
+            "yz",
+            npoints=npoints,
+        )
+        return (data1, data2, data3)
+    
+    def PUGH_RATIO3D(self, npoints):
+        """
+        Generates a meshgrid for the Pugh Ratio
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns :  A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+            The first index is for the positive value mesh. 
+            The second index is for the maximum value mesh.
+
+        """
+
+        if self.elas.isOrthorhombic():
+            self.elas = ElasticOrtho(self.elas)
+
+        data = make3DPlot2(
+            lambda x, y, g1, g2: self.elas.pugh_ratio3D(x, y, g1, g2),
+            "Pugh's Ratio",
+            npoints=npoints,
+        )
+        return data
+    
     def COMPRESSION_SPEED2D(self, npoints):
+        """
+        Generates a cross sectional data for the Compression Speed
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+            
+            Each cross section is a size 2 tuple of tuples containing coordinate point arrays
+            The first index cooresponds to the positive value.
+            The second index cooresponds to the maximum value.
+
+        """
         data1 = makePolarPlot2(
             lambda x: self.elas.compressionSpeed2D([np.pi / 2, x],density = self.density),
             "Compression Speed in (xy) plane",
@@ -687,7 +1166,21 @@ class ELATE:
         return (data1, data2, data3)
     
     def COMPRESSION_SPEED3D(self, npoints):
+        """
+        Generates a meshgrid for the Compression speed
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
 
+        Returns
+        -------
+        Returns :  A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+            The first index is for the positive value mesh. 
+            The second index is for the maximum value mesh.
+
+        """
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
 
@@ -700,6 +1193,26 @@ class ELATE:
         return data
     
     def SHEAR_SPEED2D(self, npoints):
+        """
+        Generates a cross sectional data for the Shear Speed
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+            
+            Each cross section is a size 2 tuple of tuples containing coordinate point arrays
+            The first index cooresponds to the positive value.
+            The second index cooresponds to the maximum value.
+
+        """
         data1 = makePolarPlot2(
             lambda x: self.elas.shearSpeed2D([np.pi / 2, x],density = self.density),
             "Shear speed in (xy) plane",
@@ -718,7 +1231,21 @@ class ELATE:
         return (data1, data2, data3)
     
     def SHEAR_SPEED3D(self, npoints):
+        """
+        Generates a meshgrid for the Shear Speed
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
 
+        Returns
+        -------
+        Returns :  A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+            The first index is for the positive value mesh. 
+            The second index is for the maximum value mesh.
+
+        """
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
 
@@ -730,6 +1257,27 @@ class ELATE:
         return data
     
     def RATIO_COMPRESSIONAL_SHEAR2D(self, npoints):
+        """
+        Generates a cross sectional data for the Ratio of the Compression Speed 
+        to the Shear Speed
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+            
+            Each cross section is a size 2 tuple of tuples containing coordinate point arrays
+            The first index cooresponds to the positive value.
+            The second index cooresponds to the maximum value.
+
+        """
         data1 = makePolarPlot2(
             lambda x: self.elas. ratio_compressional_shear2D([np.pi / 2, x],density = self.density),
             "Ratio compressional/shear in (xy) plane",
@@ -748,7 +1296,21 @@ class ELATE:
         return (data1, data2, data3)
         
     def RATIO_COMPRESSIONAL_SHEAR3D(self, npoints):
+        """
+        Generates a meshgrid for the Ratio of the compressional to shear speed
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
 
+        Returns
+        -------
+        Returns :  A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+            The first index is for the positive value mesh. 
+            The second index is for the maximum value mesh.
+
+        """
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
 
@@ -760,6 +1322,26 @@ class ELATE:
         return data
     
     def DEBYE_SPEED2D(self, npoints):
+        """
+        Generates a cross sectional data for the Debye Speed
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+            
+            Each cross section is a size 2 tuple of tuples containing coordinate point arrays
+            The first index cooresponds to the positive value.
+            The second index cooresponds to the maximum value.
+
+        """
         data1 = makePolarPlot2(
             lambda x: self.elas.debyeSpeed2D([np.pi / 2, x],density = self.density),
             "Debye speed in (xy) plane",
@@ -778,6 +1360,21 @@ class ELATE:
         return (data1, data2, data3)
     
     def DEBYE_SPEED3D(self, npoints):
+        """
+        Generates a meshgrid for the Debye Speed
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns :  A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+            The first index is for the positive value mesh. 
+            The second index is for the maximum value mesh.
+
+        """
 
         if self.elas.isOrthorhombic():
             self.elas = ElasticOrtho(self.elas)
@@ -792,17 +1389,12 @@ class ELATE:
     
     def to_dict(self):
         """
-
-
-        Parameters
-        ----------
-        symprec : float
-            Precision used in calculating the space group in angstroms. The default is 1e-5.
+        Generates a dictionary of all the ELATE analysis values
+        
 
         Returns
         -------
-        dict
-            DESCRIPTION.
+        Returns :  dict
 
         """
         
@@ -851,6 +1443,17 @@ class ELATE:
                    'poisson_min_axis_2':self.min_2nd_axis_Poisson,
                    'poisson_max_axis_2':self.max_2nd_axis_Poisson,
                    'poisson_anisotropy':self.anis_Poisson,
+                   
+                   'pugh_ratio_voigt':self.voigtPugh,
+                   'pugh_ratio_reuss':self.reussPugh,
+                   'pugh_ratio_hill':self.hillPugh,
+                   'pugh_ratio_max':self.max_Pugh,
+                   'pugh_ratio_min':self.min_Pugh,
+                   'pugh_ratio_min_axis':self.min_axis_Pugh,
+                   'pugh_ratio_max_axis':self.max_axis_Pugh,
+                   'pugh_ratio_min_axis_2':self.mix_2nd_axis_Pugh,
+                   'pugh_ratio_max_axis_2':self.max_2nd_axis_Pugh,
+                   'pugh_ratio_anisotropy':self.anis_Pugh,
                    }
         if self.density != None: 
             tmp_dict.update({  'compressionSpeed_voigt':self.voigtCompressionSpeed, 
@@ -900,6 +1503,24 @@ class ELATE:
     # Plotting functions
     #############################################################################
     def plot_3D(self, elastic_calc="", npoints=100,show = True):
+        
+        """
+        3D plotting function
+        
+        Parameters
+        ----------
+        elastic_calc : str
+            This is a string indicating which elastic property to plot
+        npoints : int
+            The number of coordinate points. The default is 100.
+        show : boolean
+            This flag indicates if you want to show display the plot. Deafult show = True.
+
+        Returns
+        -------
+        Returns : A PyvVista StructuredGrid object
+
+        """
         import pyvista as pv
         
 
@@ -975,6 +1596,24 @@ class ELATE:
                 z = np.array(func[2])
                 r = np.array(func[3])
                 if np.all((func[0] == 0)):
+                    continue
+                else:
+                    grid = pv.StructuredGrid(x, y, z)
+                    meshes.append(grid)
+                    if ix == 2:
+                        plotter.add_mesh(grid, opacity=0.25, color=icolor)
+                    else:
+                        plotter.add_mesh(grid, opacity=0.50, color=icolor)
+                        
+        elif elastic_calc == "PUGH_RATIO":
+            func = self.PUGH_RATIO3D(npoints=100)
+            colors = ["green", "blue"]
+            for ix, icolor in zip(range(len(func)), colors):
+                x = np.array(func[ix][0])
+                y = np.array(func[ix][1])
+                z = np.array(func[ix][2])
+                r = np.array(func[ix][3])
+                if np.all((func[ix][0] == 0)):
                     continue
                 else:
                     grid = pv.StructuredGrid(x, y, z)
@@ -1061,21 +1700,263 @@ class ELATE:
             print("You must specify density in kg/m^3 to produce DEBYE_SPEED, SHEAR_SPEED, COMPRESSIONAL_SPEED, and RATIO_COMPRESSIONAL_SHEAR")
 
         plotter.add_axes()
+        plotter.show_grid(color = "black")
         if show:
             plotter.show()
         return meshes
-        #plotter.show_grid(color = "black")
+     
+    def plot_3D_slice(self, elastic_calc="", npoints=100, normal = (1,0,0), show = True):
+        
+        """
+        3D plotting function
+        
+        Parameters
+        ----------
+        elastic_calc : str
+            This is a string indicating which elastic property to plot
+        npoints : int
+            The number of coordinate points. The default is 100.
+        show : boolean
+            This flag indicates if you want to show display the plot. Deafult show = True.
 
+        Returns
+        -------
+        Returns : A PyvVista StructuredGrid object
+
+        """
+        import pyvista as pv
+        # Definition of colors in rgba
+        blue = np.array([0, 0, 1, 0.50])
+        green = np.array([0, 1, 0, 0.50])
+        red = np.array([1, 0, 0, 0.50])
+        
+       
+        plotter = pv.Plotter()
+
+        plotter.set_background(color="white")
+        x = None
+        y = None
+        z = None
+        r = None
+        meshes = []
+        if elastic_calc == "POISSON":
+            func = self.POISSON3D(npoints=100)
+            colors = ["red", "green", "blue"]
+            for ix, color in zip(range(len(func)), colors):
+                x = np.array(func[ix][0])
+                y = np.array(func[ix][1])
+                z = np.array(func[ix][2])
+                r = np.array(func[ix][3])
+                if np.all((func[ix][0] == 0)):
+                    continue
+                else:
+                    grid = pv.StructuredGrid(x, y, z)
+                    if color == "blue":
+                        grid["colors"] = [blue]*len(grid.points)
+                    elif color == "green":
+                        grid["colors"] = [green]*len(grid.points)
+                    elif color == "red":
+                        grid["colors"] = [red]*len(grid.points)
+                                     
+                    meshes.append(grid)
+
+        elif elastic_calc == "SHEAR":
+            func = self.SHEAR3D(npoints=100)
+            colors = ["green", "blue"]
+            for ix, color in zip(range(len(func)), colors):
+                x = np.array(func[ix][0])
+                y = np.array(func[ix][1])
+                z = np.array(func[ix][2])
+                r = np.array(func[ix][3])
+                if np.all((func[ix][0] == 0)):
+                    continue
+                else:
+                    grid = pv.StructuredGrid(x, y, z)
+                    if color == "blue":
+                        grid["colors"] = [blue]*len(grid.points)
+                    elif color == "green":
+                        grid["colors"] = [green]*len(grid.points)
+                    elif color == "red":
+                        grid["colors"] = [red]*len(grid.points)
+                                     
+                    meshes.append(grid)
+
+        elif elastic_calc == "LC":
+            func = self.LC3D(npoints=100)
+            colors = ["green", "red"]
+            for ix, color in zip(range(len(func)), colors):
+                x = np.array(func[ix][0])
+                y = np.array(func[ix][1])
+                z = np.array(func[ix][2])
+                r = np.array(func[ix][3])
+                if np.all((func[ix][0] == 0)):
+                    continue
+                else:
+                    grid = pv.StructuredGrid(x, y, z)
+                    if color == "blue":
+                        grid["colors"] = [blue]*len(grid.points)
+                    elif color == "green":
+                        grid["colors"] = [green]*len(grid.points)
+                    elif color == "red":
+                        grid["colors"] = [red]*len(grid.points)
+                                     
+                    meshes.append(grid)
+
+        elif elastic_calc == "YOUNG":
+            func = self.YOUNG3D(npoints=100)
+            colors = ["green"]
+            for ix, color in zip(range(len(func)), colors):
+
+                x = np.array(func[0])
+                y = np.array(func[1])
+                z = np.array(func[2])
+                r = np.array(func[3])
+                if np.all((func[0] == 0)):
+                    continue
+                else:
+                    grid = pv.StructuredGrid(x, y, z)
+                    if color == "blue":
+                        grid["colors"] = [blue]*len(grid.points)
+                    elif color == "green":
+                        grid["colors"] = [green]*len(grid.points)
+                    elif color == "red":
+                        grid["colors"] = [red]*len(grid.points)
+                                     
+                    meshes.append(grid)
+                        
+        elif elastic_calc == "PUGH_RATIO":
+            func = self.PUGH_RATIO3D(npoints=100)
+            colors = ["green", "blue"]
+            for ix, color in zip(range(len(func)), colors):
+                x = np.array(func[ix][0])
+                y = np.array(func[ix][1])
+                z = np.array(func[ix][2])
+                r = np.array(func[ix][3])
+                if np.all((func[ix][0] == 0)):
+                    continue
+                else:
+                    grid = pv.StructuredGrid(x, y, z)
+                    if color == "blue":
+                        grid["colors"] = [blue]*len(grid.points)
+                    elif color == "green":
+                        grid["colors"] = [green]*len(grid.points)
+                    elif color == "red":
+                        grid["colors"] = [red]*len(grid.points)
+                                     
+                    meshes.append(grid)
+
+                 
+        if self.density != None:    
+            if elastic_calc == "COMPRESSION_SPEED":
+                func = self.COMPRESSION_SPEED3D(npoints=100)
+                colors = ["green", "blue"]
+                for ix, color in zip(range(len(func)), colors):
+                    x = np.array(func[ix][0])
+                    y = np.array(func[ix][1])
+                    z = np.array(func[ix][2])
+                    r = np.array(func[ix][3])
+                    if np.all((func[ix][0] == 0)):
+                        continue
+                    else:
+                        grid = pv.StructuredGrid(x, y, z)
+                        if color == "blue":
+                            grid["colors"] = [blue]*len(grid.points)
+                        elif color == "green":
+                            grid["colors"] = [green]*len(grid.points)
+                        elif color == "red":
+                            grid["colors"] = [red]*len(grid.points)
+                                         
+                        meshes.append(grid)
+            
+            elif elastic_calc == "SHEAR_SPEED":
+                func = self.SHEAR_SPEED3D(npoints=100)
+                colors = ["green", "blue"]
+                for ix, color in zip(range(len(func)), colors):
+                    x = np.array(func[ix][0])
+                    y = np.array(func[ix][1])
+                    z = np.array(func[ix][2])
+                    r = np.array(func[ix][3])
+                    if np.all((func[ix][0] == 0)):
+                        continue
+                    else:
+                        grid = pv.StructuredGrid(x, y, z)
+                        if color == "blue":
+                            grid["colors"] = [blue]*len(grid.points)
+                        elif color == "green":
+                            grid["colors"] = [green]*len(grid.points)
+                        elif color == "red":
+                            grid["colors"] = [red]*len(grid.points)
+                                         
+                        meshes.append(grid)
+                            
+            elif elastic_calc == "RATIO_COMPRESSIONAL_SHEAR":
+                func = self.RATIO_COMPRESSIONAL_SHEAR3D(npoints=100)
+                colors = ["green", "blue"]
+                for ix, color in zip(range(len(func)), colors):
+                    x = np.array(func[ix][0])
+                    y = np.array(func[ix][1])
+                    z = np.array(func[ix][2])
+                    r = np.array(func[ix][3])
+                    if np.all((func[ix][0] == 0)):
+                        continue
+                    else:
+                        grid = pv.StructuredGrid(x, y, z)
+                        if color == "blue":
+                            grid["colors"] = [blue]*len(grid.points)
+                        elif color == "green":
+                            grid["colors"] = [green]*len(grid.points)
+                        elif color == "red":
+                            grid["colors"] = [red]*len(grid.points)
+                                         
+                        meshes.append(grid)
+                            
+            elif elastic_calc == "DEBYE_SPEED":
+                func = self.DEBYE_SPEED3D(npoints=100)
+                colors = ["green", "blue"]
+                for ix, color in zip(range(len(func)), colors):
+                    x = np.array(func[ix][0])
+                    y = np.array(func[ix][1])
+                    z = np.array(func[ix][2])
+                    r = np.array(func[ix][3])
+                    if np.all((func[ix][0] == 0)):
+                        continue
+                    else:
+                        grid = pv.StructuredGrid(x, y, z)
+                        if color == "blue":
+                            grid["colors"] = [blue]*len(grid.points)
+                        elif color == "green":
+                            grid["colors"] = [green]*len(grid.points)
+                        elif color == "red":
+                            grid["colors"] = [red]*len(grid.points)
+                                         
+                        meshes.append(grid)
+                            
+        if elastic_calc in ['DEBYE_SPEED', 'SHEAR_SPEED', 'COMPRESSIONAL_SPEED', 'RATIO_COMPRESSIONAL_SHEAR'] and self.density == None:
+            print("You must specify density in kg/m^3 to produce DEBYE_SPEED, SHEAR_SPEED, COMPRESSIONAL_SPEED, and RATIO_COMPRESSIONAL_SHEAR")
+       
+        # plotter.add_mesh(mesh, rgb = True)
+        final_mesh = None
+        for imesh,mesh in enumerate(meshes):
+            if imesh == 0:
+                final_mesh = mesh
+            else:
+                final_mesh = final_mesh + mesh
+
+        plotter.add_mesh_slice(final_mesh, normal = normal, rgb=True)
+        plotter.add_axes()
+        plotter.show_grid(color = "black")
+        if show:
+            plotter.show()
+        return meshes
+    
     def plot_2D(self, elastic_calc="all", npoints=100, apply_to_plot=None, show= True, ):
         """
-
-
         Parameters
         ----------
         elastic_calc : str, optional
             The property to be plotted. The default is "all".
         npoints : TYPE, optional
-            DESCRIPTION. The default is 100.
+            The number of coordinate points. The default is 100.
         apply_to_plot : function, optional
             A python function to be applied to each plot. The default is None.
             The following example will create axis that go through origin
@@ -1112,10 +1993,12 @@ class ELATE:
                 ax.tick_params(
                     which="major", axis="x", direction="inout", width=1, length=5, rotation=0
                 )
+        show : boolean
+            This flag indicates if you want to show display the plot. Deafult show = True.
 
         Returns
         -------
-        None.
+        Returns : matplotlib figure object
 
         """
 
@@ -1180,7 +2063,22 @@ class ELATE:
                 ax.set_title(title)
                 ax.get_yaxis().set_visible(False)
                 plt.plot(func[iplane][0], func[iplane][1], color=color, label=label)
+                
+        elif elastic_calc == "PUGH_RATIO":
+            func = self.PUGH_RATIO2D(npoints=npoints)
+            colors = ["green", "blue"]
+            labels = ["Pugh's Ratio - Max", "Pugh's Ratio -"]
+            fig.suptitle("Pugh's Ratio")
+            for iplane, title in zip(range(len(func)), subTitles):
 
+                ax = fig.add_subplot(1, 3, iplane + 1)
+                ax.set_title(title)
+                ax.get_yaxis().set_visible(False)
+                for iplot, color in zip(range(len(func[0])), colors):
+                    plt.plot(
+                        func[iplane][iplot][0], func[iplane][iplot][1], color=color
+                    )
+                    
         elif elastic_calc == "all":
             func = self.YOUNG2D(npoints=npoints)
             color = "green"
@@ -1332,10 +2230,18 @@ class ELATE:
         return fig
 
     def print_properties(self):
-        #        print("\n \n Input: compliance matrix(coefficients in GPa) of\n")
-        #        for x in self.elasList:
-        #            print(str(x))
+        """
+        Print summary method
+        
+        Parameters
+        ----------
+        None
+        
+        Returns
+        -------
+        Returns : None
 
+        """
         print("\n")
         print("\n")
         print("Average properties")
@@ -1343,7 +2249,7 @@ class ELATE:
         print("\n \n                         Voigt     Reuss    Hill")
         print("-------------------------------------------------------")
         print(
-            "Bulk modulus   (GPa)  %9.3f %9.3f %9.3f "
+            "Bulk modulus       (GPa)   %9.3f %9.3f %9.3f "
             % (
                 self.elas.averages()[0][0],
                 self.elas.averages()[1][0],
@@ -1351,7 +2257,7 @@ class ELATE:
             )
         )
         print(
-            "Shear modulus  (GPa)  %9.3f %9.3f %9.3f "
+            "Shear modulus      (GPa)   %9.3f %9.3f %9.3f "
             % (
                 self.elas.averages()[0][2],
                 self.elas.averages()[1][2],
@@ -1359,7 +2265,7 @@ class ELATE:
             )
         )
         print(
-            "Young's modulus  (GPa)  %9.3f %9.3f %9.3f "
+            "Young's modulus    (GPa)    %9.3f %9.3f %9.3f "
             % (
                 self.elas.averages()[0][1],
                 self.elas.averages()[1][1],
@@ -1367,17 +2273,25 @@ class ELATE:
             )
         )
         print(
-            "Poisson's ratio         %9.3f %9.3f %9.3f "
+            "Poisson's ratio           %9.3f %9.3f %9.3f "
             % (
                 self.elas.averages()[0][3],
                 self.elas.averages()[1][3],
                 self.elas.averages()[2][3],
             )
         )
+        print(
+            "Pugh's Ratio              %9.3f %9.3f %9.3f "
+            % (
+                self.voigtPugh,
+                self.reussPugh,
+                self.hillPugh,
+            )
+        )
         if self.density != None:
             
             print(
-                "Compression Speed  (m/s)       %9.3f %9.3f %9.3f "
+                "Compression Speed  (m/s)     %9.3f %9.3f %9.3f "
                 % (
                      self.voigtCompressionSpeed,
                      self.reussCompressionSpeed,
@@ -1385,7 +2299,7 @@ class ELATE:
                 )
             )
             print(
-                "Shear Speed  (m/s)          %9.3f %9.3f %9.3f "
+                "Shear Speed        (m/s)     %9.3f %9.3f %9.3f "
                 % (
                     self.voigtShearSpeed,
                     self.reussShearSpeed,
@@ -1393,7 +2307,7 @@ class ELATE:
                 )
             )
             print(
-                "Ratio Vc/Vs        %9.3f %9.3f %9.3f "
+                "Ratio Vc/Vs               %9.3f %9.3f %9.3f "
                 % (
                      self.voigtRatioCompressionShearSpeed,
                      self.reussRatioCompressionShearSpeed,
@@ -1401,7 +2315,7 @@ class ELATE:
                 )
             )
             print(
-                "Debye Speed (m/s)        %9.3f %9.3f %9.3f "
+                "Debye Speed        (m/s)     %9.3f %9.3f %9.3f "
                 % (
                     self.voigtDebyeSpeed,
                     self.reussDebyeSpeed,
@@ -1435,8 +2349,8 @@ class ELATE:
         maxG = maximize(self.elas.shear, 3)
         minNu = minimize(self.elas.Poisson, 3)
         maxNu = maximize(self.elas.Poisson, 3)
-        # print(type((minE,maxE,minLC,maxLC,minG,maxG,minNu,maxNu)))
-        # print("%9.3f GPa  %9.3f GPa  %9.3f TPa^-1   %9.3f TPa^-1    %9.3f GPa  %9.3f GPa  %9.3f  %9.3f" % (minE[1],maxE[1],minLC[1],maxLC[1],minG[1],maxG[1],minNu[1],maxNu[1]))
+        minPugh = minimize(self.elas.Pugh_ratio, 3)
+        maxPugh = maximize(self.elas.Pugh_ratio, 3)
 
         anisE = "%8.3f" % (maxE[1] / minE[1])
         anisLC = ("%8.3f" % (maxLC[1] / minLC[1])) if minLC[1] > 0 else "&infin;"
@@ -1444,9 +2358,8 @@ class ELATE:
         anisNu = (
             ("%8.3f" % (maxNu[1] / minNu[1])) if minNu[1] * maxNu[1] > 0 else "&infin;"
         )
+        anisPugh = "%8.3f" % (maxPugh[1] / minPugh[1])
 
-        # print("       %s                     %s                                %s                         %s" % (anisE,anisLC,anisG,anisNu))
-        # print(dirVec1(*minG[0]))
 
         minEaxis = list(np.around(np.array(dirVec(*minE[0])), 3))
         maxEaxis = list(np.around(np.array(dirVec(*maxE[0])), 3))
@@ -1462,6 +2375,11 @@ class ELATE:
         maxNUaxis = list(np.around(np.array(dirVec1(*maxNu[0])), 3))
         minNU2ndaxis = list(np.around(np.array(dirVec2(*minNu[0])), 3))
         maxNU2ndaxis = list(np.around(np.array(dirVec2(*maxNu[0])), 3))
+        
+        minPughaxis = list(np.around(np.array(dirVec1(*minPugh[0])), 3))
+        maxPughaxis = list(np.around(np.array(dirVec1(*maxPugh[0])), 3))
+        minPugh2ndaxis = list(np.around(np.array(dirVec2(*minPugh[0])), 3))
+        maxPugh2ndaxis = list(np.around(np.array(dirVec2(*maxPugh[0])), 3))
 
         print("\n \n                                  Min       Max   ||   Anisotropy")
         print(
@@ -1520,6 +2438,22 @@ class ELATE:
             "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
             % (str(tuple(minNU2ndaxis)), str(tuple(maxNU2ndaxis)))
         )
+        print(
+            "----------------------------------------------------------------------------------------"
+        )
+        print(
+            "Pugh's Ratio                %9.3f %9.3f || %s "
+            % (minPugh[1], maxPugh[1], anisPugh)
+        )
+        print(
+            "         Min Axis:    %s      \n         Max Axis:    %s "
+            % (str(tuple(minPughaxis)), str(tuple(maxPughaxis)))
+        )
+        print(
+            "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
+            % (str(tuple(minPugh2ndaxis)), str(tuple(minPugh2ndaxis)))
+        )
+
         
         if self.density != None:
             
@@ -1628,7 +2562,17 @@ class ELATE:
 
 
 class Elastic:
-    """An elastic tensor, along with methods to access it"""
+    """
+    Elastic tensor obejct
+    
+    Parameters
+    ----------
+    s : str
+        This is a list of list that contains the row of the elastic tensor.
+    desnity : float, optional
+        The density of the material in kg/m^3
+
+    """
 
     def __init__(self, s ,density = None):
         """Initialize the elastic tensor from a string"""
@@ -1720,7 +2664,21 @@ class Elastic:
         ]
         return
 
+
     def isOrthorhombic(self):
+        """
+        A method to determine if the structure is Orthohombic
+        
+        Parameters
+        ----------
+        None
+            
+        Returns
+        -------
+        Returns : bool
+    
+        """
+
         def iszero(x):
             return abs(x) < 1.0e-3
 
@@ -1740,6 +2698,18 @@ class Elastic:
         )
 
     def isCubic(self):
+        """
+        A method to determine if the structure is Cubic
+        
+        Parameters
+        ----------
+        None
+            
+        Returns
+        -------
+        Returns : bool
+    
+        """
         def iszero(x):
             return abs(x) < 1.0e-3
 
@@ -1767,6 +2737,20 @@ class Elastic:
         )
 
     def Young(self, x):
+        """
+        A method to calculate the Young's Modulus
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         a = dirVec(x[0], x[1])
         r = sum(
             [
@@ -1780,6 +2764,21 @@ class Elastic:
         return 1 / r
 
     def Young_2(self, x, y):
+        """
+        Another method to calculate the Young's Modulus
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta angle
+        y : float
+                Represents the spherical phi angle
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         a = dirVec(x, y)
         r = sum(
             [
@@ -1793,6 +2792,20 @@ class Elastic:
         return 1 / r
 
     def LC(self, x):
+        """
+        A method to calculate the Linear compression
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         a = dirVec(x[0], x[1])
         r = sum(
             [
@@ -1805,6 +2818,21 @@ class Elastic:
         return 1000 * r
 
     def LC_2(self, x, y):
+        """
+        Another method to calculate the Young's Modulus
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta angle
+        y : float
+                Represents the spherical phi angle
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         a = dirVec(x, y)
         r = sum(
             [
@@ -1817,6 +2845,21 @@ class Elastic:
         return 1000 * r
 
     def shear(self, x):
+        """
+        A method to calculate the Young's Modulus
+        
+        Parameters
+        ----------
+        x : Size 3 tuple of the euler angles to calculate the value
+            The first index is theta
+            The second index is phi
+            The second index is chi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         a = dirVec(x[0], x[1])
         b = dirVec2(x[0], x[1], x[2])
         r = sum(
@@ -1831,6 +2874,21 @@ class Elastic:
         return 1 / (4 * r)
 
     def Poisson(self, x):
+        """
+        A method to calculate the Young's Modulus
+        
+        Parameters
+        ----------
+        x : Size 3 tuple of the euler angles to calculate the value
+            The first index is theta
+            The second index is phi
+            The second index is chi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         a = dirVec(x[0], x[1])
         b = dirVec2(x[0], x[1], x[2])
         r1 = sum(
@@ -1854,6 +2912,27 @@ class Elastic:
         return -r1 / r2
 
     def averages(self):
+        """
+        A method to calculate Voigt, Reuss, and Hill averages of the elastic moduli
+        
+        Parameters
+        ----------
+        None
+            
+        Returns
+        -------
+        Returns : A size 3 list of list containing the elastic moduli
+            The first index of the outer list is Voigt averages
+            The second index of the outer list is Reuss averages
+            The first index of the outer list is Hill averages
+            
+            The corresponding indicex on the inner lists are
+                The first index is the bulk modulus
+                The first index is the young's modulus
+                The first index is the shear modulus
+                The first index is the poisson's ratio
+    
+        """
         A = (self.CVoigt[0][0] + self.CVoigt[1][1] + self.CVoigt[2][2]) / 3
         B = (self.CVoigt[1][2] + self.CVoigt[0][2] + self.CVoigt[0][1]) / 3
         C = (self.CVoigt[3][3] + self.CVoigt[4][4] + self.CVoigt[5][5]) / 3
@@ -1892,6 +2971,23 @@ class Elastic:
         ]
 
     def shear2D(self, x):
+        """
+        A method to calculate the Shear modulus in a plane
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+            
+        Returns
+        -------
+        Returns : size 2 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+    
+        """
+        
         ftol = 0.001
         xtol = 0.01
 
@@ -1919,6 +3015,29 @@ class Elastic:
         return (float(r1.fun), -float(r2.fun))
 
     def shear3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0):
+        """
+        A method to calculate the Shear modulus in 3D
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta value 
+        y : float
+            Represents the spherical phi value 
+        guess1 : float
+            A starting guess in the minimization scheme to determine the positive value. Default is pi/2.
+        guess1 : float
+            A second guess in the minimization scheme to determine the maximum value. Default is pi/2.
+            
+        Returns
+        -------
+        Returns : size 4 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+            The third index is the solutions of the optimization of the positive value
+            The fourth index is thesolutions of the optimization of the maximum value
+    
+        """
         tol = 0.005
 
         def func1(z):
@@ -1936,19 +3055,114 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
 
+    def Pugh_ratio(self,x):
+        """
+        A method to calculate the Pugh's Ratio
+        
+        Parameters
+        ----------
+        x : Size 3 tuple of the euler angles to calculate the value
+            The first index is theta
+            The second index is phi
+            The second index is chi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
+        return self.averages()[2][0]/self.shear(x)
+
     def Compression_Speed(self,x):
+        """
+        A method to calculate the Compression Speed
+        
+        Parameters
+        ----------
+        x : Size 3 tuple of the euler angles to calculate the value
+            The first index is theta
+            The second index is phi
+            The second index is chi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         return ((10**9)*(self.averages()[2][0]+(4/3)*self.shear(x))/self.density)**0.5
     
     def Shear_Speed(self,x):
+        """
+        A method to calculate the Shear Speed
+        
+        Parameters
+        ----------
+        x : Size 3 tuple of the euler angles to calculate the value
+            The first index is theta
+            The second index is phi
+            The second index is chi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         return (self.shear(x)*(10**9) /self.density)**0.5
     
     def Ratio_Compression_Shear(self,x):
+        """
+        A method to calculate the Compression Speed
+        
+        Parameters
+        ----------
+        x : Size 3 tuple of the euler angles to calculate the value
+            The first index is theta
+            The second index is phi
+            The second index is chi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         return (self.Compression_Speed(x)/self.Shear_Speed(x))**2
     
     def Debye_Speed(self,x):
+        """
+        A method to calculate the Debye Speed
+        
+        Parameters
+        ----------
+        x : Size 3 tuple of the euler angles to calculate the value
+            The first index is theta
+            The second index is phi
+            The second index is chi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
         return self.Compression_Speed(x)*self.Shear_Speed(x)/(2*self.Shear_Speed(x)**3 +self.Compression_Speed(x)**3)**(1/3)
         
     def Poisson2D(self, x):
+        """
+        A method to calculate the Poisson's Ratio in a plane
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+            
+        Returns
+        -------
+        Returns : size 3 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+            The second index is the negativem value
+    
+        """
         ftol = 0.001
         xtol = 0.01
 
@@ -1976,6 +3190,31 @@ class Elastic:
         return (min(0, float(r1.fun)), max(0, float(r1.fun)), -float(r2.fun))
 
     def poisson3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0):
+        """
+        A method to calculate the Shear modulus in 3D
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta value 
+        y : float
+            Represents the spherical phi value 
+        guess1 : float
+            A starting guess in the minimization scheme to determine the positive value. Default is pi/2.
+        guess1 : float
+            A second guess in the minimization scheme to determine the maximum value. Default is pi/2.
+            
+        Returns
+        -------
+        Returns : size 5 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+            The third index is the maximum value
+            The fourth index is the solutions of the optimization of the positive value
+            The fifth index is thesolutions of the optimization of the maximum value
+    
+        """
+        
         tol = 0.005
 
         def func1(z):
@@ -1999,7 +3238,107 @@ class Elastic:
             float(r2.x),
         )
     
+    def pugh_ratio2D(self, x):
+        """
+        A method to calculate the Pugh's Ratio in a plane
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+            
+        Returns
+        -------
+        Returns : size 2 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+        """
+        ftol = 0.001
+        xtol = 0.01
+
+        def func1(z):
+            return self.Pugh_ratio([x[0], x[1], z])
+
+        r1 = optimize.minimize(
+            func1,
+            np.pi / 2.0,
+            args=(),
+            method="Powell",
+            options={"xtol": xtol, "ftol": ftol},
+        )  # , bounds=[(0.0,np.pi)])
+
+        def func2(z):
+            return -self.Pugh_ratio([x[0], x[1], z])
+
+        r2 = optimize.minimize(
+            func2,
+            np.pi / 2.0,
+            args=(),
+            method="Powell",
+            options={"xtol": xtol, "ftol": ftol},
+        )  # , bounds=[(0.0,np.pi)])
+        return (float(r1.fun), -float(r2.fun))
+
+    def pugh_ratio3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0):
+        """
+        A method to calculate the Shear modulus in 3D
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta value 
+        y : float
+            Represents the spherical phi value 
+        guess1 : float
+            A starting guess in the minimization scheme to determine the positive value. Default is pi/2.
+        guess1 : float
+            A second guess in the minimization scheme to determine the maximum value. Default is pi/2.
+            
+        Returns
+        -------
+        Returns : size 4 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+            The third index is the solutions of the optimization of the positive value
+            The fourth index is thesolutions of the optimization of the maximum value
+    
+        """
+        tol = 0.005
+
+        def func1(z):
+            return self.Pugh_ratio([x, y, z])
+
+        r1 = optimize.minimize(
+            func1, guess1, args=(), method="COBYLA", options={"tol": tol}
+        )  # , bounds=[(0.0,np.pi)])
+
+        def func2(z):
+            return -self.Pugh_ratio([x, y, z])
+
+        r2 = optimize.minimize(
+            func2, guess2, args=(), method="COBYLA", options={"tol": tol}
+        )  # , bounds=[(0.0,np.pi)])
+        return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
+    
     def compressionSpeed2D(self, x, density = None):
+        """
+        A method to calculate the Compression Speed in a plane
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+        density : float
+            This is the desnity of the structure if it is provided. The units should be in kg/m^3. The Default is None
+            
+        Returns
+        -------
+        Returns : size 2 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+        """
         ftol = 0.001
         xtol = 0.01
 
@@ -2029,24 +3368,66 @@ class Elastic:
         return (float(r1.fun), -float(r2.fun))
  
     def compressionSpeed3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0, density = None):
+        """
+        A method to calculate the Compression in 3D
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta value 
+        y : float
+            Represents the spherical phi value 
+        guess1 : float
+            A starting guess in the minimization scheme to determine the positive value. Default is pi/2.
+        guess1 : float
+            A second guess in the minimization scheme to determine the maximum value. Default is pi/2.
+        density : float
+            This is the desnity of the structure if it is provided. The units should be in kg/m^3. The Default is None
+            
+        Returns
+        -------
+        Returns : size 4 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+            The third index is the solutions of the optimization of the positive value
+            The fourth index is thesolutions of the optimization of the maximum value
+    
+        """
         tol = 0.005
 
         def func1(z):
             return self.Compression_Speed(x,y,z)
-
+    
         r1 = optimize.minimize(
             func1, guess1, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
-
+    
         def func2(z):
             return -self.Compression_Speed(x,y,z)
-
+    
         r2 = optimize.minimize(
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
     
     def shearSpeed2D(self, x, density = None):
+        """
+        A method to calculate the Shear Speed in a plane
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+        density : float
+            This is the desnity of the structure if it is provided. The units should be in kg/m^3. The Default is None
+            
+        Returns
+        -------
+        Returns : size 2 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+        """
         ftol = 0.001
         xtol = 0.01
 
@@ -2073,6 +3454,31 @@ class Elastic:
         return (float(r1.fun), -float(r2.fun))
 
     def shearSpeed3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0, density=None):
+        """
+        A method to calculate the Shear Speed in 3D
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta value 
+        y : float
+            Represents the spherical phi value 
+        guess1 : float
+            A starting guess in the minimization scheme to determine the positive value. Default is pi/2.
+        guess1 : float
+            A second guess in the minimization scheme to determine the maximum value. Default is pi/2.
+        density : float
+            This is the desnity of the structure if it is provided. The units should be in kg/m^3. The Default is None
+            
+        Returns
+        -------
+        Returns : size 4 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+            The third index is the solutions of the optimization of the positive value
+            The fourth index is thesolutions of the optimization of the maximum value
+    
+        """
         tol = 0.005
 
         def func1(z):
@@ -2091,6 +3497,23 @@ class Elastic:
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
     
     def ratio_compressional_shear2D(self, x, density = None):
+        """
+        A method to calculate the ratio of the compression speed to the shear speed in a plane
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+        density : float
+            This is the desnity of the structure if it is provided. The units should be in kg/m^3. The Default is None
+            
+        Returns
+        -------
+        Returns : size 2 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+        """
         ftol = 0.001
         xtol = 0.01
         
@@ -2118,6 +3541,31 @@ class Elastic:
         return (float(r1.fun), -float(r2.fun))
     
     def ratio_compressional_shear3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0,density = None):
+        """
+        A method to calculate the ratio of the compression speed to the shear speed in 3D
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta value 
+        y : float
+            Represents the spherical phi value 
+        guess1 : float
+            A starting guess in the minimization scheme to determine the positive value. Default is pi/2.
+        guess1 : float
+            A second guess in the minimization scheme to determine the maximum value. Default is pi/2.
+        density : float
+            This is the desnity of the structure if it is provided. The units should be in kg/m^3. The Default is None
+            
+        Returns
+        -------
+        Returns : size 4 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+            The third index is the solutions of the optimization of the positive value
+            The fourth index is thesolutions of the optimization of the maximum value
+    
+        """
         tol = 0.005
 
         def func1(z):
@@ -2136,6 +3584,22 @@ class Elastic:
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
      
     def debyeSpeed2D(self, x,density = None):
+        """
+        A method to calculate the Debye speed in a plane
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+        density : float
+            This is the desnity of the structure if it is provided. The units should be in kg/m^3. The Default is None
+        Returns
+        -------
+        Returns : size 2 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+        """
         ftol = 0.001
         xtol = 0.01
 
@@ -2168,6 +3632,31 @@ class Elastic:
         return (float(r1.fun), -float(r2.fun))
 
     def debyeSpeed3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0,density= None):
+        """
+        A method to calculate the ratio of the Debye speed in 3D
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta value 
+        y : float
+            Represents the spherical phi value 
+        guess1 : float
+            A starting guess in the minimization scheme to determine the positive value. Default is pi/2.
+        guess1 : float
+            A second guess in the minimization scheme to determine the maximum value. Default is pi/2.
+        density : float
+            This is the desnity of the structure if it is provided. The units should be in kg/m^3. The Default is None
+            
+        Returns
+        -------
+        Returns : size 4 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+            The third index is the solutions of the optimization of the positive value
+            The fourth index is thesolutions of the optimization of the maximum value
+    
+        """
         tol = 0.005
         
         def v_p(z):
@@ -2203,6 +3692,7 @@ class ElasticOrtho(Elastic):
             self.CVoigt = arg.CVoigt
             self.SVoigt = arg.SVoigt
             self.Smat = arg.Smat
+            self.density = arg.density
         else:
             raise TypeError(
                 "ElasticOrtho constructor argument should be string or Elastic object"
