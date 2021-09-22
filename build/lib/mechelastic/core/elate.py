@@ -428,7 +428,7 @@ def maximize(func, dim):
 class ELATE:
     def __init__(self, s,density = None):
 
-        self.elas = Elastic(s)
+        self.elas = Elastic(s, density = density)
         self.elasList = s
         self.density = density
         minE = minimize(self.elas.Young, 2)
@@ -439,19 +439,20 @@ class ELATE:
         maxG = maximize(self.elas.shear, 3)
         minNu = minimize(self.elas.Poisson, 3)
         maxNu = maximize(self.elas.Poisson, 3)
-
-        self.voigtE = self.elas.averages()[0][0]
-        self.reussE = self.elas.averages()[1][0]
-        self.hillE = self.elas.averages()[2][0]
+    
+        self.voigtK = self.elas.averages()[0][0]
+        self.reussK = self.elas.averages()[0][0]
+        self.hillK = self.elas.averages()[0][0]
+        
+        self.voigtE = self.elas.averages()[0][1]
+        self.reussE = self.elas.averages()[1][1]
+        self.hillE = self.elas.averages()[2][1]
         self.max_E = maxE[1]
         self.min_E = minE[1]
         self.min_axis_E = tuple(dirVec(*minE[0]))
         self.max_axis_E = tuple(dirVec(*maxE[0]))
         self.anis_E = maxE[1] / minE[1]
 
-        self.voigtLC = self.elas.averages()[0][1]
-        self.reussLC = self.elas.averages()[1][1]
-        self.hillLC = self.elas.averages()[2][1]
         self.max_LC = maxLC[1]
         self.min_LC = minLC[1]
         self.min_axis_LC = tuple(dirVec(*minLC[0]))
@@ -484,7 +485,59 @@ class ELATE:
         if minNu[1] * maxNu[1] > 0:
             self.anis_Poisson = maxNu[1] / minNu[1]
         else:
-            self.anix_Poisson = "&infin;"
+            self.anis_Poisson = "&infin;"
+            
+            
+        if self.density != None:
+            # print(type(self.elas.Compression_Speed()))
+            minVc = minimize(self.elas.Compression_Speed, 3)
+            maxVc = maximize(self.elas.Compression_Speed, 3)
+            
+            minVs = minimize(self.elas.Shear_Speed, 3)
+            maxVs = maximize(self.elas.Shear_Speed, 3)
+            
+            minRatio = minimize(self.elas.Ratio_Compression_Shear, 3)
+            maxRatio = maximize(self.elas.Ratio_Compression_Shear , 3)
+            
+            minDebyeSpeed = minimize(self.elas.Debye_Speed, 3)
+            maxDebyeSpeed = maximize(self.elas.Debye_Speed, 3) 
+           
+            self.voigtCompressionSpeed = ((10**9)*(self.elas.averages()[0][0]+(4/3)*self.elas.averages()[0][2])/self.density)**0.5
+            self.reussCompressionSpeed = ((10**9)*(self.elas.averages()[1][0]+(4/3)*self.elas.averages()[1][2])/self.density)**0.5
+            self.hillCompressionSpeed  = ((10**9)*(self.elas.averages()[2][0]+(4/3)*self.elas.averages()[2][2])/self.density)**0.5
+            self.max_CompressionSpeed  = maxVc[1]
+            self.min_CompressionSpeed  = minVc[1]
+            self.min_axis_CompressionSpeed = tuple(dirVec1(*minVc[0]))
+            self.max_axis_CompressionSpeed = tuple(dirVec1(*maxVc[0]))
+            self.anis_CompressionSpeed = maxVc[1] / minVc[1]
+            
+            self.voigtShearSpeed = ((self.elas.averages()[0][2]*(10**9))/self.density)**0.5
+            self.reussShearSpeed = ((self.elas.averages()[1][2]*(10**9))/self.density)**0.5
+            self.hillShearSpeed =  ((self.elas.averages()[2][2]*(10**9))/self.density)**0.5
+            self.max_ShearSpeed = maxVs[1]
+            self.min_ShearSpeed = minVs[1]
+            self.min_axis_ShearSpeed = tuple(dirVec1(*minVs[0]))
+            self.max_axis_ShearSpeed = tuple(dirVec1(*maxVs[0]))
+            self.anis_ShearSpeed = maxVs[1] / minVs[1]
+            
+            self.voigtRatioCompressionShearSpeed = (self.voigtCompressionSpeed /self.voigtShearSpeed )**2
+            self.reussRatioCompressionShearSpeed = (self.reussCompressionSpeed /self.reussShearSpeed )**2
+            self.hillRatioCompressionShearSpeed =  (self.hillCompressionSpeed /self.hillShearSpeed )**2
+            self.max_RatioCompressionShearSpeed = maxRatio[1]
+            self.min_RatioCompressionShearSpeed = minRatio[1]
+            self.min_axis_RatioCompressionShearSpeed = tuple(dirVec1(*minRatio[0]))
+            self.max_axis_RatioCompressionShearSpeed = tuple(dirVec1(*maxRatio[0]))
+            self.anis_RatioCompressionShearSpeed = maxRatio[1] / minRatio[1]
+            
+            self.voigtDebyeSpeed = self.voigtCompressionSpeed* self.voigtShearSpeed/(2* self.voigtShearSpeed**3 + self.voigtCompressionSpeed**3)**(1/3)
+            self.reussDebyeSpeed = self.reussCompressionSpeed* self.reussShearSpeed/(2* self.reussShearSpeed**3 + self.reussCompressionSpeed**3)**(1/3)
+            self.hillDebyeSpeed =  self.hillCompressionSpeed* self.hillShearSpeed/(2* self.hillShearSpeed**3 + self.hillCompressionSpeed**3)**(1/3)
+            self.max_DebyeSpeed = maxDebyeSpeed[1]
+            self.min_DebyeSpeed = minDebyeSpeed[1]
+            self.min_axis_DebyeSpeed = tuple(dirVec1(*minDebyeSpeed[0]))
+            self.max_axis_DebyeSpeed = tuple(dirVec1(*maxDebyeSpeed[0]))
+            self.anis_DebyeSpeed = maxDebyeSpeed[1] / minDebyeSpeed[1]
+
 
     def YOUNG2D(self, npoints):
         data1 = makePolarPlot(
@@ -614,7 +667,7 @@ class ELATE:
         )
 
         return data
-
+    
     def COMPRESSION_SPEED2D(self, npoints):
         data1 = makePolarPlot2(
             lambda x: self.elas.compressionSpeed2D([np.pi / 2, x],density = self.density),
@@ -632,7 +685,7 @@ class ELATE:
             npoints=npoints,
         )
         return (data1, data2, data3)
-
+    
     def COMPRESSION_SPEED3D(self, npoints):
 
         if self.elas.isOrthorhombic():
@@ -645,7 +698,7 @@ class ELATE:
         )
 
         return data
-
+    
     def SHEAR_SPEED2D(self, npoints):
         data1 = makePolarPlot2(
             lambda x: self.elas.shearSpeed2D([np.pi / 2, x],density = self.density),
@@ -663,7 +716,7 @@ class ELATE:
             npoints=npoints,
         )
         return (data1, data2, data3)
-
+    
     def SHEAR_SPEED3D(self, npoints):
 
         if self.elas.isOrthorhombic():
@@ -675,7 +728,7 @@ class ELATE:
             npoints=npoints,
         )
         return data
-
+    
     def RATIO_COMPRESSIONAL_SHEAR2D(self, npoints):
         data1 = makePolarPlot2(
             lambda x: self.elas. ratio_compressional_shear2D([np.pi / 2, x],density = self.density),
@@ -693,7 +746,7 @@ class ELATE:
             npoints=npoints,
         )
         return (data1, data2, data3)
-
+        
     def RATIO_COMPRESSIONAL_SHEAR3D(self, npoints):
 
         if self.elas.isOrthorhombic():
@@ -705,7 +758,7 @@ class ELATE:
             npoints=npoints,
         )
         return data
-
+    
     def DEBYE_SPEED2D(self, npoints):
         data1 = makePolarPlot2(
             lambda x: self.elas.debyeSpeed2D([np.pi / 2, x],density = self.density),
@@ -723,7 +776,7 @@ class ELATE:
             npoints=npoints,
         )
         return (data1, data2, data3)
-
+    
     def DEBYE_SPEED3D(self, npoints):
 
         if self.elas.isOrthorhombic():
@@ -736,13 +789,119 @@ class ELATE:
         )
 
         return data
+    
+    def to_dict(self):
+        """
 
+
+        Parameters
+        ----------
+        symprec : float
+            Precision used in calculating the space group in angstroms. The default is 1e-5.
+
+        Returns
+        -------
+        dict
+            DESCRIPTION.
+
+        """
+        
+        tmp_dict =  {
+                   'bulk_modulus_voigt':self.voigtK,
+                   'bulk_modulus_reuss':self.reussK,
+                   'bulk_modulus_hill':self.hillK,
+            
+            
+                   'youngs_modulus_voigt':self.voigtE,
+                   'youngs_modulus_reuss':self.reussE,
+                   'youngs_modulus_hill':self.hillE,
+                   'youngs_max':self.max_E,
+                   'youngs_min':self.min_E,
+                   'youngs_min_axis':self.min_axis_E, 
+                   'youngs_max_axis':self.max_axis_E,
+                   'youngs_anisotropy':self.anis_E,
+
+
+                   'linearCompression_max':self.max_LC,
+                   'linearCompression_min':self.min_LC,
+                   'linearCompression_min_axis':self.min_axis_LC,
+                   'linearCompression_max_axis':self.max_axis_LC,
+                   'linearCompression_anisotropy':self.anis_LC,
+
+            
+                   'shear_modulus_voigt':self.voigtShear,
+                   'shear_modulus_reuss':self.reussShear,
+                   'shear_modulus_hill':self.hillShear,
+                   'shear_max':self.max_Shear,
+                   'shear_min':self.min_Shear,
+                   'shear_min_axis':self.min_axis_Shear,
+                   'shear_max_axis':self.max_axis_Shear,
+                   'shear_min_axis_2':self.mix_2nd_axis_Shear,
+                   'shear_max_axis_2':self.max_2nd_axis_Shear,
+                   'shear_anisotropy':self.anis_Shear,
+
+            
+                   'poisson_modulus_voigt':self.voigtPoisson,
+                   'poisson_modulus_reuss':self.reussPoisson,
+                   'poisson_modulus_hill':self.hillPoisson,
+                   'poisson_max':self.max_Poisson,
+                   'poisson_min':self.min_Poisson,
+                   'poisson_min_axis':self.min_axis_Poisson,
+                   'poisson_max_axis':self.max_axis_Poisson,
+                   'poisson_min_axis_2':self.min_2nd_axis_Poisson,
+                   'poisson_max_axis_2':self.max_2nd_axis_Poisson,
+                   'poisson_anisotropy':self.anis_Poisson,
+                   }
+        if self.density != None: 
+            tmp_dict.update({  'compressionSpeed_voigt':self.voigtCompressionSpeed, 
+                               'compressionSpeed_reuss':self.reussCompressionSpeed, 
+                               'compressionSpeed_hill':self.hillCompressionSpeed,
+                               'compressionSpeed_max':self.max_CompressionSpeed,
+                               'compressionSpeed_min':self.min_CompressionSpeed,
+                               'compressionSpeed_min_axis':self.min_axis_CompressionSpeed,
+                               'compressionSpeed_max_axis':self.max_axis_CompressionSpeed,
+                               'compressionSpeed_anisotropy':self.anis_CompressionSpeed,
+
+                               
+                                'shearSpeed_voigt':self.voigtShearSpeed, 
+                                'shearSpeed_reuss':self.reussShearSpeed, 
+                                'shearSpeed_hill':self.hillShearSpeed,
+                                'shearSpeed_max':self.max_ShearSpeed,
+                                'shearSpeed_min':self.min_ShearSpeed,
+                                'shearSpeed_min_axis':self.min_axis_ShearSpeed,
+                                'shearSpeed_max_axis':self.max_axis_ShearSpeed,
+                                'shearSpeed_anisotropy':self.anis_ShearSpeed,
+
+                               
+                                'ratioCompressionShearSpeed_voigt':self.voigtRatioCompressionShearSpeed, 
+                                'ratioCompressionShearSpeed_reuss':self.reussRatioCompressionShearSpeed, 
+                                'ratioCompressionShearSpeed_hill':self.hillRatioCompressionShearSpeed,
+                                'ratioCompressionShearSpeed_max':self.max_RatioCompressionShearSpeed,
+                                'ratioCompressionShearSpeed_min':self.min_RatioCompressionShearSpeed,
+                                'ratioCompressionShearSpeed_min_axis':self.min_axis_RatioCompressionShearSpeed,
+                                'ratioCompressionShearSpeed_max_axis':self.max_axis_RatioCompressionShearSpeed,
+                                'ratioCompressionShearSpeed_anisotropy':self.anis_RatioCompressionShearSpeed,
+
+                               
+                                'debyeSpeed_voigt':self.voigtDebyeSpeed, 
+                                'debyeSpeed_reuss':self.reussDebyeSpeed, 
+                                'debyeSpeed_hill':self.hillDebyeSpeed,
+                                'debyeSpeed_max':self.max_DebyeSpeed,
+                                'debyeSpeed_min':self.min_DebyeSpeed,
+                                'debyeSpeed_min_axis':self.min_axis_DebyeSpeed,
+                                'debyeSpeed_max_axis':self.max_axis_DebyeSpeed,
+                                'debyeSpeed_anisotropy':self.anis_DebyeSpeed,
+                               })
+           
+        return tmp_dict
+        
+  
     ##############################################################################
     # Plotting functions
     #############################################################################
     def plot_3D(self, elastic_calc="", npoints=100,show = True):
         import pyvista as pv
-
+        
 
         plotter = pv.Plotter()
 
@@ -824,8 +983,8 @@ class ELATE:
                         plotter.add_mesh(grid, opacity=0.25, color=icolor)
                     else:
                         plotter.add_mesh(grid, opacity=0.50, color=icolor)
-
-        if self.density != None:
+                        
+        if self.density != None:    
             if elastic_calc == "COMPRESSION_SPEED":
                 func = self.COMPRESSION_SPEED3D(npoints=100)
                 colors = ["green", "blue"]
@@ -843,7 +1002,7 @@ class ELATE:
                             plotter.add_mesh(grid, opacity=0.25, color=icolor)
                         else:
                             plotter.add_mesh(grid, opacity=0.50, color=icolor)
-
+            
             elif elastic_calc == "SHEAR_SPEED":
                 func = self.SHEAR_SPEED3D(npoints=100)
                 colors = ["green", "blue"]
@@ -861,7 +1020,7 @@ class ELATE:
                             plotter.add_mesh(grid, opacity=0.25, color=icolor)
                         else:
                             plotter.add_mesh(grid, opacity=0.50, color=icolor)
-
+                            
             elif elastic_calc == "RATIO_COMPRESSIONAL_SHEAR":
                 func = self.RATIO_COMPRESSIONAL_SHEAR3D(npoints=100)
                 colors = ["green", "blue"]
@@ -879,7 +1038,7 @@ class ELATE:
                             plotter.add_mesh(grid, opacity=0.25, color=icolor)
                         else:
                             plotter.add_mesh(grid, opacity=0.50, color=icolor)
-
+                            
             elif elastic_calc == "DEBYE_SPEED":
                 func = self.DEBYE_SPEED3D(npoints=100)
                 colors = ["green", "blue"]
@@ -897,7 +1056,7 @@ class ELATE:
                             plotter.add_mesh(grid, opacity=0.25, color=icolor)
                         else:
                             plotter.add_mesh(grid, opacity=0.50, color=icolor)
-
+                            
         if elastic_calc in ['DEBYE_SPEED', 'SHEAR_SPEED', 'COMPRESSIONAL_SPEED', 'RATIO_COMPRESSIONAL_SHEAR'] and self.density == None:
             print("You must specify density in kg/m^3 to produce DEBYE_SPEED, SHEAR_SPEED, COMPRESSIONAL_SPEED, and RATIO_COMPRESSIONAL_SHEAR")
 
@@ -907,7 +1066,7 @@ class ELATE:
         return meshes
         #plotter.show_grid(color = "black")
 
-    def plot_2D(self, elastic_calc="all", npoints=100, apply_to_plot=None, density= None, show= True, ):
+    def plot_2D(self, elastic_calc="all", npoints=100, apply_to_plot=None, show= True, ):
         """
 
 
@@ -1102,17 +1261,16 @@ class ELATE:
                     )
                 if apply_to_plot is not None:
                     apply_to_plot(fig, ax)
-
-        if density != None :
-
+                    
+        if self.density != None :
             if elastic_calc == "COMPRESSION_SPEED":
                 func = self.COMPRESSION_SPEED2D(npoints=npoints)
                 colors = ["green", "blue"]
                 labels = ["Compression speed - Max", "Compression speed -"]
                 fig.suptitle("Compression speed")
-
+              
                 for iplane, title in zip(range(len(func)), subTitles):
-
+    
                     ax = fig.add_subplot(1, 3, iplane + 1)
                     ax.set_title(title)
                     ax.get_yaxis().set_visible(False)
@@ -1126,7 +1284,7 @@ class ELATE:
                 labels = ["Shear speed - Max", "Shear speed -"]
                 fig.suptitle("Shear speed")
                 for iplane, title in zip(range(len(func)), subTitles):
-
+    
                     ax = fig.add_subplot(1, 3, iplane + 1)
                     ax.set_title(title)
                     ax.get_yaxis().set_visible(False)
@@ -1140,7 +1298,7 @@ class ELATE:
                 labels = ["Ratio compression/shear - Max", "Ratio compression/shear -"]
                 fig.suptitle("Ratio compression/shear")
                 for iplane, title in zip(range(len(func)), subTitles):
-
+    
                     ax = fig.add_subplot(1, 3, iplane + 1)
                     ax.set_title(title)
                     ax.get_yaxis().set_visible(False)
@@ -1154,7 +1312,7 @@ class ELATE:
                 labels = ["Debye speed - Max", "Debye speed -"]
                 fig.suptitle("Debye speed")
                 for iplane, title in zip(range(len(func)), subTitles):
-
+    
                     ax = fig.add_subplot(1, 3, iplane + 1)
                     ax.set_title(title)
                     ax.get_yaxis().set_visible(False)
@@ -1162,15 +1320,15 @@ class ELATE:
                         plt.plot(
                             func[iplane][iplot][0], func[iplane][iplot][1], color=color
                         )
-        if elastic_calc in ['DEBYE_SPEED', 'SHEAR_SPEED', 'COMPRESSIONAL_SPEED', 'RATIO_COMPRESSIONAL_SHEAR'] and density == None:
+        if elastic_calc in ['DEBYE_SPEED', 'SHEAR_SPEED', 'COMPRESSIONAL_SPEED', 'RATIO_COMPRESSIONAL_SHEAR'] and self.density == None:
             print("You must specify density in kg/m^3 to produce DEBYE_SPEED, SHEAR_SPEED, COMPRESSIONAL_SPEED, and RATIO_COMPRESSIONAL_SHEAR")
 
-
-
-
+            
+            
+            
         if show:
             plt.show()
-
+            
         return fig
 
     def print_properties(self):
@@ -1195,17 +1353,17 @@ class ELATE:
         print(
             "Shear modulus  (GPa)  %9.3f %9.3f %9.3f "
             % (
-                self.elas.averages()[0][1],
-                self.elas.averages()[1][1],
-                self.elas.averages()[2][1],
+                self.elas.averages()[0][2],
+                self.elas.averages()[1][2],
+                self.elas.averages()[2][2],
             )
         )
         print(
             "Young's modulus  (GPa)  %9.3f %9.3f %9.3f "
             % (
-                self.elas.averages()[0][2],
-                self.elas.averages()[1][2],
-                self.elas.averages()[2][2],
+                self.elas.averages()[0][1],
+                self.elas.averages()[1][1],
+                self.elas.averages()[2][1],
             )
         )
         print(
@@ -1216,6 +1374,40 @@ class ELATE:
                 self.elas.averages()[2][3],
             )
         )
+        if self.density != None:
+            
+            print(
+                "Compression Speed  (m/s)       %9.3f %9.3f %9.3f "
+                % (
+                     self.voigtCompressionSpeed,
+                     self.reussCompressionSpeed,
+                     self.hillCompressionSpeed,
+                )
+            )
+            print(
+                "Shear Speed  (m/s)          %9.3f %9.3f %9.3f "
+                % (
+                    self.voigtShearSpeed,
+                    self.reussShearSpeed,
+                    self.hillShearSpeed,
+                )
+            )
+            print(
+                "Ratio Vc/Vs        %9.3f %9.3f %9.3f "
+                % (
+                     self.voigtRatioCompressionShearSpeed,
+                     self.reussRatioCompressionShearSpeed,
+                     self.hillRatioCompressionShearSpeed,
+                )
+            )
+            print(
+                "Debye Speed (m/s)        %9.3f %9.3f %9.3f "
+                % (
+                    self.voigtDebyeSpeed,
+                    self.reussDebyeSpeed,
+                    self.hillDebyeSpeed,
+                )
+            )
 
         print("-------------------------------------------------------")
         # printer.printMatix(elastic_rowsList)
@@ -1328,31 +1520,120 @@ class ELATE:
             "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
             % (str(tuple(minNU2ndaxis)), str(tuple(maxNU2ndaxis)))
         )
+        
+        if self.density != None:
+            
+            minVc = minimize(self.elas.Compression_Speed, 3)
+            maxVc = maximize(self.elas.Compression_Speed, 3)
+            
+            minVs = minimize(self.elas.Shear_Speed, 3)
+            maxVs = maximize(self.elas.Shear_Speed, 3)
+            
+            minRatio = minimize(self.elas.Ratio_Compression_Shear, 3)
+            maxRatio = maximize(self.elas.Ratio_Compression_Shear , 3)
+            
+            minDebyeSpeed = minimize(self.elas.Debye_Speed, 3)
+            maxDebyeSpeed = maximize(self.elas.Debye_Speed, 3) 
+            
+            anisVc = "%8.3f" % (maxVc[1] / minVc[1])
+            anisVs = "%8.3f" % (maxVs[1] / minVs[1])
+            anisRatio = "%8.3f" % (maxRatio[1] / minRatio[1])
+            anisDebyeSpeed = "%8.3f" % (maxDebyeSpeed[1] / minDebyeSpeed[1])
+            
+            
+            minVcaxis = list(np.around(np.array(dirVec1(*minVc[0])), 3))
+            maxVcaxis = list(np.around(np.array(dirVec1(*maxVc[0])), 3))
+            minVc2ndaxis = list(np.around(np.array(dirVec2(*minVc[0])), 3))
+            maxVc2ndaxis = list(np.around(np.array(dirVec2(*maxVc[0])), 3))
+            
+            minVsaxis = list(np.around(np.array(dirVec1(*minVs[0])), 3))
+            maxVsaxis = list(np.around(np.array(dirVec1(*maxVs[0])), 3))
+            minVs2ndaxis = list(np.around(np.array(dirVec2(*minVs[0])), 3))
+            maxVs2ndaxis = list(np.around(np.array(dirVec2(*maxVs[0])), 3))
+            
+            minRatioaxis = list(np.around(np.array(dirVec1(*minRatio[0])), 3))
+            maxRatioaxis = list(np.around(np.array(dirVec1(*maxRatio[0])), 3))
+            minRatio2ndaxis = list(np.around(np.array(dirVec2(*minRatio[0])), 3))
+            maxRatio2ndaxis = list(np.around(np.array(dirVec2(*maxRatio[0])), 3))
+    
+            minDebyeSpeedaxis = list(np.around(np.array(dirVec1(*minDebyeSpeed[0])), 3))
+            maxDebyeSpeedaxis = list(np.around(np.array(dirVec1(*maxDebyeSpeed[0])), 3))
+            minDebyeSpeed2ndaxis = list(np.around(np.array(dirVec2(*minDebyeSpeed[0])), 3))
+            maxDebyeSpeed2ndaxis = list(np.around(np.array(dirVec2(*maxDebyeSpeed[0])), 3))
+            
+            print(
+            "----------------------------------------------------------------------------------------"
+            )
+            print(
+                "Compression Speed                 %9.3f %9.3f || %s "
+                % (minVc[1], maxVc[1], anisVc)
+            )
+            print(
+                "         Min Axis:    %s      \n         Max Axis:    %s "
+                % (str(tuple(minVcaxis)), str(tuple(maxVcaxis)))
+            )
+            print(
+            "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
+            % (str(tuple(minVc2ndaxis)), str(tuple(maxVc2ndaxis)))
+            )
+            
+            print(
+            "----------------------------------------------------------------------------------------"
+            )
+            print(
+                "Shear Speed                 %9.3f %9.3f || %s "
+                % (minVs[1], maxVs[1], anisVs)
+            )
+            print(
+                "         Min Axis:    %s      \n         Max Axis:    %s "
+                % (str(tuple(minVsaxis)), str(tuple(maxVsaxis)))
+            )
+            print(
+            "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
+            % (str(tuple(minVc2ndaxis)), str(tuple(maxVc2ndaxis)))
+            )
+            
+            print(
+            "----------------------------------------------------------------------------------------"
+            )
+            print(
+                "Ratio Compression Shear Speed                 %9.3f %9.3f || %s "
+                % (minRatio[1], maxRatio[1], anisRatio)
+            )
+            print(
+                "         Min Axis:    %s      \n         Max Axis:    %s "
+                % (str(tuple(minRatioaxis)), str(tuple(maxRatioaxis)))
+            )
+            print(
+            "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
+            % (str(tuple(minRatio2ndaxis)), str(tuple(maxRatio2ndaxis)))
+            )
+            
+            print(
+            "----------------------------------------------------------------------------------------"
+            )
+            print(
+                "Debye Speed                 %9.3f %9.3f || %s "
+                % (minDebyeSpeed[1], maxDebyeSpeed[1], anisDebyeSpeed)
+            )
+            print(
+                "         Min Axis:    %s      \n         Max Axis:    %s "
+                % (str(tuple(minDebyeSpeedaxis)), str(tuple(maxDebyeSpeedaxis)))
+            )
+            print(
+            "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
+            % (str(tuple(minDebyeSpeed2ndaxis)), str(tuple(maxDebyeSpeed2ndaxis)))
+            )
 
-
-#        print(
-#            "Shear modulus  (GPa)  %9.3f %9.3f %9.3f "
-#            % (self.elas.averages()[0][1], self.elas.averages()[1][1], self.elas.averages()[2][1])
-#        )
-#        print(
-#            "Young modulus  (GPa)  %9.3f %9.3f %9.3f "
-#            % (self.elas.averages()[0][2], self.elas.averages()[1][2], self.elas.averages()[2][2])
-#        )
-#        print(
-#            "Poisson ratio         %9.3f %9.3f %9.3f "
-#            % (self.elas.averages()[0][3], self.elas.averages()[2][3], self.elas.averages()[2][3]))
-#
-#        print("-------------------------------------------------------")
-#        print("%9.3f %9.3f %9.3f %9.3f %9.3f %9.3f %9.3f %9.3f" % tuple(dirVec(*minE[0])) + tuple(dirVec(*maxE[0])) + tuple(dirVec(*minLC[0])) + tuple(dirVec(*maxLC[0])) + tuple(dirVec1(*minG[0])) +  tuple(dirVec1(*maxG[0])) + tuple(dirVec1(*minNu[0])) + tuple(dirVec1(*maxNu[0])))
-#        print("%9.3f %9.3f %9.3f %9.3f %9.3f %9.3f %9.3f %9.3f" % tuple(dirVec2(*minG[0])) + tuple(dirVec2(*maxG[0])) + tuple(dirVec2(*minNu[0])) + tuple(dirVec2(*maxNu[0])))
 
 
 class Elastic:
     """An elastic tensor, along with methods to access it"""
 
-    def __init__(self, s ):
+    def __init__(self, s ,density = None):
         """Initialize the elastic tensor from a string"""
-
+        self.density = density
+        
         if not s:
             raise ValueError("no matrix was provided")
 
@@ -1655,6 +1936,18 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
 
+    def Compression_Speed(self,x):
+        return ((10**9)*(self.averages()[2][0]+(4/3)*self.shear(x))/self.density)**0.5
+    
+    def Shear_Speed(self,x):
+        return (self.shear(x)*(10**9) /self.density)**0.5
+    
+    def Ratio_Compression_Shear(self,x):
+        return (self.Compression_Speed(x)/self.Shear_Speed(x))**2
+    
+    def Debye_Speed(self,x):
+        return self.Compression_Speed(x)*self.Shear_Speed(x)/(2*self.Shear_Speed(x)**3 +self.Compression_Speed(x)**3)**(1/3)
+        
     def Poisson2D(self, x):
         ftol = 0.001
         xtol = 0.01
@@ -1705,14 +1998,13 @@ class Elastic:
             float(r1.x),
             float(r2.x),
         )
-
-
+    
     def compressionSpeed2D(self, x, density = None):
         ftol = 0.001
         xtol = 0.01
 
         def func1(z):
-            return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x[0], x[1], z]))/(2*density*(1+self.Poisson([x[0], x[1], z]))))**0.5
+            return self.Compression_Speed(x[0],x[1],z)
 
 
         r1 = optimize.minimize(
@@ -1724,7 +2016,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -(3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x[0], x[1], z]))/(2*density*(1+self.Poisson([x[0], x[1], z]))))**0.5
+            return -self.Compression_Speed(x[0],x[1],z)
 
 
         r2 = optimize.minimize(
@@ -1735,32 +2027,31 @@ class Elastic:
             options={"xtol": xtol, "ftol": ftol},
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun))
-
-
+ 
     def compressionSpeed3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0, density = None):
         tol = 0.005
 
         def func1(z):
-            return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x, y, z]))/(2*density*(1+self.Poisson([x, y, z]))))**0.5
+            return self.Compression_Speed(x,y,z)
 
         r1 = optimize.minimize(
             func1, guess1, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -(3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x, y, z]))/(2*density*(1+self.Poisson([x, y, z]))))**0.5
+            return -self.Compression_Speed(x,y,z)
 
         r2 = optimize.minimize(
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
-
+    
     def shearSpeed2D(self, x, density = None):
         ftol = 0.001
         xtol = 0.01
 
         def func1(z):
-            return ((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
+            return self.Shear_Speed(x[0],x[1],z)
         r1 = optimize.minimize(
             func1,
             np.pi / 2.0,
@@ -1770,7 +2061,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
+            return -self.Shear_Speed(x[0],x[1],z)
 
         r2 = optimize.minimize(
             func2,
@@ -1780,40 +2071,31 @@ class Elastic:
             options={"xtol": xtol, "ftol": ftol},
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun))
-
 
     def shearSpeed3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0, density=None):
         tol = 0.005
 
         def func1(z):
-            return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
+            return self.Shear_Speed(x,y,z)
 
         r1 = optimize.minimize(
             func1, guess1, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
+            return -self.Shear_Speed(x,y,z)
 
         r2 = optimize.minimize(
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
-
-
+    
     def ratio_compressional_shear2D(self, x, density = None):
         ftol = 0.001
         xtol = 0.01
-
-        def v_p(z):
-            return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x[0], x[1], z]))/(2*density*(1+self.Poisson([x[0], x[1], z]))))**0.5
-
-        def v_s(z):
-            return ((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
-
-
+        
         def func1(z):
-            return (v_p(z) /v_s(z))**2
+            return self.Ratio_Compression_Shear(x[0],x[1],z)
 
         r1 = optimize.minimize(
             func1,
@@ -1824,7 +2106,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -(v_p(z) /v_s(z))**2
+            return -self.Ratio_Compression_Shear(x[0],x[1],z)
 
         r2 = optimize.minimize(
             func2,
@@ -1834,35 +2116,25 @@ class Elastic:
             options={"xtol": xtol, "ftol": ftol},
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun))
-
-
+    
     def ratio_compressional_shear3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0,density = None):
         tol = 0.005
 
-
-        def v_p(z):
-            return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x, y, z]))/(2*density*(1+self.Poisson([x, y, z]))))**0.5
-
-        def v_s(z):
-            return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
-
-
         def func1(z):
-            return (v_p(z) /v_s(z))**2
+            return self.Ratio_Compression_Shear(x,y,z)
 
         r1 = optimize.minimize(
             func1, guess1, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -(v_p(z) /v_s(z))**2
+            return -self.Ratio_Compression_Shear(x,y,z)
 
         r2 = optimize.minimize(
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
-
-
+     
     def debyeSpeed2D(self, x,density = None):
         ftol = 0.001
         xtol = 0.01
@@ -1872,9 +2144,9 @@ class Elastic:
 
         def v_s(z):
             return ((1/density)*(10**9)*self.shear([x[0], x[1], z]))**0.5
-
+        
         def func1(z):
-            return v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
+            return self.Debye_Speed(x[0],x[1],z)
         r1 = optimize.minimize(
             func1,
             np.pi / 2.0,
@@ -1884,7 +2156,7 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
+            return -self.Debye_Speed(x[0],x[1],z)
 
         r2 = optimize.minimize(
             func2,
@@ -1895,25 +2167,24 @@ class Elastic:
         )  # , bounds=[(0.0,np.pi)])
         return (float(r1.fun), -float(r2.fun))
 
-
     def debyeSpeed3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0,density= None):
         tol = 0.005
-
+        
         def v_p(z):
             return (3*self.averages()[2][0]*(10**9)*(1-self.Poisson([x, y, z]))/(2*density*(1+self.Poisson([x, y, z]))))**0.5
 
         def v_s(z):
             return ((1/density)*(10**9)*self.shear([x, y, z]))**0.5
-
+        
         def func1(z):
-            return v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
+            return self.Debye_Speed(x,y,z)
 
         r1 = optimize.minimize(
             func1, guess1, args=(), method="COBYLA", options={"tol": tol}
         )  # , bounds=[(0.0,np.pi)])
 
         def func2(z):
-            return -v_p(z)*v_s(z)/(2*v_s(z)**3 +v_p(z)**3)**(1/3)
+            return -self.Debye_Speed(x,y,z)
 
         r2 = optimize.minimize(
             func2, guess2, args=(), method="COBYLA", options={"tol": tol}
@@ -2087,14 +2358,4 @@ class ElasticOrtho(Elastic):
             + s22 * sf ** 4 * st2 * st2
         )
 
-
-#########################################################################################
-# Data genertaation
-################################################################################################
-# ELATE : basic usage of the tool, only 2D plots
-# YOUNG3D : visualize Young's modulus in 3D
-# LC3D : visualize Linear compressiblity in 3D
-# SHEAR3D : visualize Shear modulus in 3D
-# POISSON3D : visualize Poisson ratio in 3D
-################################################################################################
 

@@ -3,14 +3,14 @@
 Elastic Moduli
 ------------------------------------------------------------------
 
-                          Voigt     Reuss    Average
+                              Voigt     Reuss    Average
 -------------------------------------------------------
-Bulk modulus   (GPa)     88.906    88.906    88.906 
-Shear modulus  (GPa)     64.098    61.220    62.659 
-Young's modulus  (GPa)    155.035   149.374   152.204 
-Poisson's ratio             0.209     0.220     0.215 
-P-wave modulus  (GPa)   174.369   170.532   172.451 
-Bulk/Shear ratio          1.387     1.452     1.419 (brittle) 
+Bulk modulus   (GPa)          88.906    88.906    88.906 
+Shear modulus  (GPa)          64.098    61.220    62.659 
+Young's modulus  (GPa)        155.035   149.374   152.204 
+Poisson's ratio               0.209     0.220     0.215 
+P-wave modulus  (GPa)         174.369   170.532   172.451 
+Bulk/Shear (Pugh's) ratio     1.387     1.452     1.419 (brittle) 
 
 ------------------------------------------------------------------
 Elastic parameters

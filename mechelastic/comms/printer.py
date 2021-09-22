@@ -23,7 +23,7 @@ def print_mechelastic():
         "- Sobhit Singh, Irais Valencia-Jaime, Olivia Pavlic, and Aldo H. Romero; Phys. Rev. B 97, 054108 (2018)."
     )
     print(
-        "- Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert,\n Aldo H. Romero; arXiv:2012.04758 [cond-mat.mtrl-sci] (2020). "
+        "- Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert,\n and Aldo H. Romero; Computer Physics Communications 267, 108068 (2021)."
     )
     print("\nDisclaimer:")
     print(

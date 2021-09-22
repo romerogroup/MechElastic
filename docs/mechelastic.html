@@ -13,6 +13,8 @@
   
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
 
   
@@ -30,12 +32,12 @@
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -88,7 +90,7 @@
               
             
             
-              <p class="caption"><span class="caption-text">Contents:</span></p>
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributors.html">Contributors</a></li>
@@ -106,10 +108,10 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mechelastic-calculate-elastic-module">mechelastic.calculate_elastic module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#mechelastic-calculate-elastic-anisotropy-module">mechelastic.calculate_elastic_anisotropy module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mechelastic.calculate_elastic">mechelastic.calculate_elastic module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mechelastic.calculate_elastic_anisotropy">mechelastic.calculate_elastic_anisotropy module</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-mechelastic.version">mechelastic.version module</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#module-contents">Module contents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-mechelastic">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">setup module</a></li>
@@ -192,42 +194,42 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="mechelastic.comms.html">mechelastic.comms package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.comms.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.comms.html#mechelastic-comms-printer-module">mechelastic.comms.printer module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.comms.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.comms.html#module-mechelastic.comms.printer">mechelastic.comms.printer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.comms.html#module-mechelastic.comms">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mechelastic.core.html">mechelastic.core package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#mechelastic-core-elate-module">mechelastic.core.ELATE module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#mechelastic-core-elastic-properties-module">mechelastic.core.elastic_properties module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#mechelastic-core-elastic-properties-2d-module">mechelastic.core.elastic_properties_2d module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#mechelastic-core-structure-module">mechelastic.core.structure module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#module-mechelastic.core.ELATE">mechelastic.core.ELATE module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#module-mechelastic.core.elastic_properties">mechelastic.core.elastic_properties module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#module-mechelastic.core.elastic_properties_2d">mechelastic.core.elastic_properties_2d module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#module-mechelastic.core.structure">mechelastic.core.structure module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.core.html#module-mechelastic.core">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mechelastic.parsers.html">mechelastic.parsers package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#mechelastic-parsers-abinitparser-module">mechelastic.parsers.abinitparser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#module-mechelastic.parsers.abinitparser">mechelastic.parsers.abinitparser module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#mechelastic-parsers-qeparser-module">mechelastic.parsers.qeparser module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#mechelastic-parsers-vaspparser-module">mechelastic.parsers.vaspparser module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#module-mechelastic.parsers.vaspparser">mechelastic.parsers.vaspparser module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.parsers.html#module-mechelastic.parsers">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mechelastic.tests.html">mechelastic.tests package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#mechelastic-tests-ductile-module">mechelastic.tests.ductile module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#mechelastic-tests-eigenvals-module">mechelastic.tests.eigenvals module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#mechelastic-tests-stability-module">mechelastic.tests.stability module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#mechelastic-tests-symmetry-module">mechelastic.tests.symmetry module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#module-mechelastic.tests.ductile">mechelastic.tests.ductile module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#module-mechelastic.tests.eigenvals">mechelastic.tests.eigenvals module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#module-mechelastic.tests.stability">mechelastic.tests.stability module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#module-mechelastic.tests.symmetry">mechelastic.tests.symmetry module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.tests.html#module-mechelastic.tests">Module contents</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="mechelastic.utils.html">mechelastic.utils package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="mechelastic.utils.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.utils.html#mechelastic-utils-constants-module">mechelastic.utils.constants module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.utils.html#mechelastic-utils-crystalutils-module">mechelastic.utils.crystalutils module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.utils.html#mechelastic-utils-elements-module">mechelastic.utils.elements module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="mechelastic.utils.html#module-contents">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.utils.html#module-mechelastic.utils.constants">mechelastic.utils.constants module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.utils.html#module-mechelastic.utils.crystalutils">mechelastic.utils.crystalutils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.utils.html#module-mechelastic.utils.elements">mechelastic.utils.elements module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="mechelastic.utils.html#module-mechelastic.utils">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -236,17 +238,66 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="mechelastic-calculate-elastic-module">
-<h2>mechelastic.calculate_elastic module<a class="headerlink" href="#mechelastic-calculate-elastic-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.calculate_elastic">
+<span id="mechelastic-calculate-elastic-module"></span><h2>mechelastic.calculate_elastic module<a class="headerlink" href="#module-mechelastic.calculate_elastic" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mechelastic.calculate_elastic.calculate_elastic">
+<span class="sig-prename descclassname"><span class="pre">mechelastic.calculate_elastic.</span></span><span class="sig-name descname"><span class="pre">calculate_elastic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'OUTCAR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'3D'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elastic_tensor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crystal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lattice_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vasp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anaddbfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qe_outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_pressure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'elastic_properties.txt'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic.html#calculate_elastic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mechelastic.calculate_elastic.calculate_elastic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the elastic properties of a material from a DFT calculation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>infile</strong><span class="classifier">str, optional</span></dt><dd><p>Path to the input file which is a DFT calculation outputfile. The default is “OUTCAR”.</p>
+</dd>
+<dt><strong>dim</strong><span class="classifier">str, optional</span></dt><dd><p>Dimension of the structure. The default is “3D”.</p>
+</dd>
+<dt><strong>crystal</strong><span class="classifier">str, optional</span></dt><dd><p>Crystal family (only used in 3D). The default is None.</p>
+</dd>
+<dt><strong>elastic_tensor</strong><span class="classifier">float, optional</span></dt><dd><p>The elastic tensor. This option is useful if one does not want to use a DFT output.
+The default is None.</p>
+</dd>
+<dt><strong>lattice_type</strong><span class="classifier">TYPE, optional</span></dt><dd><p>2D lattice type. The default is None.</p>
+</dd>
+<dt><strong>code</strong><span class="classifier">str, optional</span></dt><dd><p>DFT code used to generate the outputs. The default is “vasp”.</p>
+</dd>
+<dt><strong>anaddbfile</strong><span class="classifier">str, optional</span></dt><dd><p>Path to the DDB file (applicable only in abinit). The default is None.</p>
+</dd>
+<dt><strong>qe_outfile</strong><span class="classifier">str, optional</span></dt><dd><p>Path to the Quantum Espresso output file. The default is None.</p>
+</dd>
+<dt><strong>adjust_pressure</strong><span class="classifier">bool, optional</span></dt><dd><p>To adjust the cell pressure according to the output file. The default is True.</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">str, optional</span></dt><dd><p>To print the progress of the elastic calculations. The default is True.</p>
+</dd>
+<dt><strong>outfile</strong><span class="classifier">TYPE, optional</span></dt><dd><p>Path to the desired output file. Acceptable files are JSON, XML, TXT.
+The default is “elastic_properties.txt”.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>elastic_properties</strong><span class="classifier">TYPE</span></dt><dd><p>DESCRIPTION.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
-<div class="section" id="mechelastic-calculate-elastic-anisotropy-module">
-<h2>mechelastic.calculate_elastic_anisotropy module<a class="headerlink" href="#mechelastic-calculate-elastic-anisotropy-module" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic.calculate_elastic_anisotropy">
+<span id="mechelastic-calculate-elastic-anisotropy-module"></span><h2>mechelastic.calculate_elastic_anisotropy module<a class="headerlink" href="#module-mechelastic.calculate_elastic_anisotropy" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mechelastic.calculate_elastic_anisotropy.calculate_elastic_anisotropy">
+<span class="sig-prename descclassname"><span class="pre">mechelastic.calculate_elastic_anisotropy.</span></span><span class="sig-name descname"><span class="pre">calculate_elastic_anisotropy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">infile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'OUTCAR'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">code</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vasp'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elastic_calc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">anaddbfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outfile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adjust_pressure</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">npoints</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(1,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">origin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0,</span> <span class="pre">0,</span> <span class="pre">0)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mechelastic/calculate_elastic_anisotropy.html#calculate_elastic_anisotropy"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#mechelastic.calculate_elastic_anisotropy.calculate_elastic_anisotropy" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculates the elastic properties
+of a material from a DFT calculation.</p>
+</dd></dl>
+
 </div>
 <div class="section" id="module-mechelastic.version">
 <span id="mechelastic-version-module"></span><h2>mechelastic.version module<a class="headerlink" href="#module-mechelastic.version" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="module-mechelastic">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mechelastic" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 

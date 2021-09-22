@@ -48,7 +48,7 @@ class ElasticProperties2D:
 
         print("\n \n Elastic tensor for two-dimensional system in N/m units \n")
         np.set_printoptions(precision=3, suppress=True)
-        printer.printMatrix(self.c2d)
+        printer.print_matrix(self.c2d)
         
         # if self.lattice_type is not None or self.structure is not None:
         #     print(
