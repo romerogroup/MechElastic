@@ -1,0 +1,108 @@
+
+------------------------------------------------------------------
+Elastic Moduli
+------------------------------------------------------------------
+
+                              Voigt     Reuss    Average
+-------------------------------------------------------
+Bulk modulus   (GPa)          93.142    93.142    93.142 
+Shear modulus  (GPa)          66.135    63.014    64.574 
+Young's modulus  (GPa)        160.433   154.255   157.344 
+Poisson's ratio               0.213     0.224     0.218 
+P-wave modulus  (GPa)         181.322   177.161   179.241 
+Bulk/Shear (Pugh's) ratio     1.408     1.478     1.442 (brittle) 
+
+------------------------------------------------------------------
+Elastic parameters
+------------------------------------------------------------------
+
+Lame's first and second parameter; Ref.[3]
+Lambda (GPa)  =      50.097  
+Mu (GPa)  =      64.567  
+
+------------------------------------------------------------------
+Bonding information
+------------------------------------------------------------------
+ 
+Kleinman’s parameter; Ref.[4,5]
+NOTE: K = 0 (1) bending (stretching) would dominate
+K =     0.64651  
+
+Cauchy's Pressure calculated from the relation : CP = C_12 - C_44
+     CP > 0 (+ve) indicates that ionic bonding dominates
+     CP < 0 (-ve) indicates that covalent bonding dominates
+CP (GPa) =     -17.083  
+Bonding is mainly covalent
+
+------------------------------------------------------------------
+Elastic Anisotropy
+------------------------------------------------------------------
+
+Zener's anisotropy (true for cubic crystals only); Az =  1.569; Ref.[6]
+Chung-Buessem's anisotropy (true for cubic crystals only); Acb =  0.024; Ref.[7]
+Universal anisotropy index; Au =  0.248; Ref.[8]
+Log-Euclidean's anisotropy; AL =  0.108; Ref.[9]
+
+------------------------------------------------------------------
+Elastic Wave Velocities and Debye Temperature
+------------------------------------------------------------------
+
+Longitudinal wave velocity (vl) :   8691.818 m/s; Ref.[10]
+Transverse wave velocity (vt) :   5217.008 m/s; Ref.[10]
+Average wave velocity (vm) :   5771.071 m/s; Ref.[10]
+Debye temperature  :    636.642 K; Ref.[10]
+
+WARNING: The  Debye model for the atomic displacement is based on a monoatomic crystal approximation.
+Here we consider an averaged mass, in case your crystal has several species.
+
+------------------------------------------------------------------
+Melting Temperature
+------------------------------------------------------------------
+
+Melting temperature calculated from the empirical relation: Tm = 607 + 9.3*Kvrh \pm 555 (in K); Ref.[11]Tm =    1473.224 K (plus-minus 555 K) 
+
+
+WARNING: This is a crude approximation and its validity needs to be checked! 
+
+------------------------------------------------------------------
+Hardness Analysis
+------------------------------------------------------------------
+
+Hardness (H1a) = 9.52 GPa;  Ref.[12]
+Hardness (H1b) = 9.55 GPa;  Ref.[12]
+Hardness (H2)  = 8.52 GPa;  Ref.[13]
+Hardness (H3)  = 9.98 GPa;  Ref.[14]
+Hardness (H4)  = 7.17 GPa;  Ref.[15]
+Hardness (H5)  = 11.92 GPa;  Ref.[16]
+
+Hardness recommendation model:
+********************************************************************
+             Cubic  Hexagonal  Orthorhombic  Rhombohedral  General
+********************************************************************
+Insulator      H2      H1b          H2            H2          H2
+Semiconductor  H5    H1b, H3                      H2          H5
+Metal          H1a     H4           H4            H4          H4
+********************************************************************
+Insulator     : bandgap > 2 eV
+Semiconductor : bandgap < 2 eV
+Metal         : bandgap = 0 
+------------------------------------------------------------------
+References
+------------------------------------------------------------------
+
+[1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. Félix Mouhat and François-Xavier Coudert. Phys. Rev. B (2014)
+[2] Crystal Structures and Elastic Properties of Superhard IrN2 and IrN3 from First Principles. Zhi-jian Wu et al. Phys. Rev. B (2007)
+[3] The rock physics handbook, Cam-bridge university press. G. Mavko, T. Mukerji, J. Dvorkin. Cambridge University Press. (2020)
+[4] Deformation potentials in silicon. i. uniaxial strain. Leonard Kleinman. Phys.Rev. 128. (1962)
+[5] Electronic Structure and the Properties of Solids: The Physics of the Chemical Bond. Walter A. Harrison.  (2012)
+[6] Elasticity and Anelasticity of Metals. Clarence M. Zener et al. The Journal of Physical Chemistry. (1949)
+[7] The Elastic Anisotropy of Crystals. D. H. Chung and W. R. Buessem. Journal of Applied Physics (1967)
+[8] Universal Elastic Anisotropy Index. Shivakumar I. Ranganathan et al. Phys. Rev. Lett. (2008)
+[9] Elastic Anisotropy of Crystals. Christopher M. Kube. AIP Advances. (2016)
+[10] A Simplified Method for Calculating the Debye Temperature from Elastic Constants. Orson L.Anderson. Journal of Physics and Chemistry of Solids. (1963)
+[11] Elastic constants versus melting temperature in metals. M.E.Fine et al. Scripta Metallurgica. (1984)
+[12] Correlation between hardness and elastic moduli of the covalent crystals. Jiang, et al. (2011).
+[13] Computational alchemy: the search for new superhard materials. Teter (1998).
+[14] Mechanical and electronic properties of B12-based ternary crystals of orthorhombic phase. Jiang et al. (2010).
+[15] Theoretical investigation on the transition-metal borides with Ta3B4-type structure: A class of hard and refractory materials. Miao et al. (2011).
+[16] Modeling hardness of polycrystalline materials and bulk metallic glasses. Chen et al. (2011).

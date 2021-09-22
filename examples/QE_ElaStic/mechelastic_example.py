@@ -9,7 +9,7 @@ from mechelastic.parsers import QE_ElaStic_Parser
 from mechelastic import calculate_elastic
 from mechelastic.core import ElasticProperties
 
-calculate_elastic(outfile = "ElaStic_2nd.out" ,infile = "scf.in", crystal = 'cubic', code = "qe_ElaStic")
+calculate_elastic(qe_outfile = "ElaStic_2nd.out" ,qe_infile = "scf.in", crystal = 'cubic', code = "qe_ElaStic")
 
 
 parser = QE_ElaStic_Parser(outfile = "ElaStic_2nd.out" , infile = "scf.in")
