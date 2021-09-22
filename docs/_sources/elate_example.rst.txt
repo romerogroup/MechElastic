@@ -28,11 +28,11 @@ Initialization of ELATE object:
 
 >>> elate = ELATE(s = elastic_tensor, density = density)
 
-.. note:: If one wants to use a DFT code output for this example. They need to use the appropiate parser from ``mechelastic.parsers`` to get the density and the elastic tensor
+.. note:: If one wants to use a DFT code output for this example. They need to use the appropriate parser from ``mechelastic.parsers`` to get the density and the elastic tensor
 
 1.2 Interacting with the ELATE object
 ---------------------------------------------------
-From this object we can access the entrie ELATE code by calling the class methods and attributes. We will first start by calling the print_properties() method to view a summary of the ELATE analysis to see which quantities we can access.
+From this object we can access the entire ELATE code by calling the class methods and attributes. We will first start by calling the print_properties() method to view a summary of the ELATE analysis to see which quantities we can access.
 
 1.2.1 Print Summary
 ~~~~~~~~~~~~~~~~
@@ -42,83 +42,98 @@ Usage :
 
 Output ::
 
-    Average properties
+		Average properties
 
- 
 
                          Voigt     Reuss    Hill
-    -------------------------------------------------------
-    Bulk modulus   (GPa)     88.906    88.906    88.906 
-    Shear modulus  (GPa)    155.036   149.376   152.218 
-    Young`s modulus  (GPa)     64.099    61.221    62.660 
-    Poisson`s ratio             0.209     0.220     0.215 
-    Compression Speed  (m/s)        6182.342  6113.945  6148.239 
-    Shear Speed  (m/s)           5300.975  5180.616  5241.141 
-    Ratio Vc/Vs            1.360     1.393     1.376 
-    Debye Speed (m/s)         4038.963  3973.205  4006.306 
-    -------------------------------------------------------
-    Eigenvalues of compliance matrix
+        -------------------------------------------------------
+        Bulk modulus       (GPa)      88.906    88.906    88.906
+        Shear modulus      (GPa)      64.097    61.220    62.659
+        Young's modulus    (GPa)      155.034   149.374   152.216
+        Poisson's ratio               0.209     0.220     0.215
+        Pugh's Ratio                  1.387     1.452     1.419
+        Compression Speed  (m/s)      8743.125  8646.400  8694.897
+        Shear Speed        (m/s)      5300.929  5180.575  5241.098
+        Ratio Vc/Vs                   2.720     2.786     2.752
+        Debye Speed        (m/s)      4688.006  4598.120  4643.367
+        -------------------------------------------------------
 
- 
 
-       lamda_1  lamda_2  lamda_3  lamda_4  lamda_5  lamda_6
-    ---------------------------------------------------------------
-       74.718    74.718    74.718    96.337    96.337   266.717
-    --------------------------------------------------------------
-    Variations of the elastic moduli
-    
-                                  Min       Max   ||   Anisotropy
-    -------------------------------------------------------------------- --------------------
-    Young's Modulus     (GPa)        122.401   175.102 ||    1.431 
-         Min Axis:    (0.0, 0.0, 1.0)      
-         Max Axis:    (-0.577, 0.577, 0.577) 
-    --------------------------------------------------------------------  --------------------
-    Linear Compression   (TPa^-1)      3.749     3.749 ||    1.000 
-         Min Axis:    (-0.99, 0.055, 0.131)      
-         Max Axis:    (0.0, 0.0, 1.0) 
-    ----------------------------------------------------------------------------------------
-    Shear Modulus   (GPa)             48.169    74.718 ||    1.551 
-         Min Axis:    (0.707, 0.0, -0.707)      
-         Max Axis:    (0.0, 0.0, 1.0) 
-         Second Min Axis:    (-0.707, -0.0, -0.707)      
-         Second Max Axis:    (-0.707, -0.0, -0.707) 
-    ----------------------------------------------------------------------------------------
-    Poisson's Ratio                     0.058     0.349 ||    6.037 
-         Min Axis:    (0.707, -0.0, -0.707)      
-         Max Axis:    (-0.707, 0.0, 0.707) 
-         Second Min Axis:    (-0.707, 0.0, -0.707)      
-         Second Max Axis:    (-0.0, -1.0, 0.0) 
-    ----------------------------------------------------------------------------------------
-    Compression Speed                  5309.097  7215.712 ||    1.359 
-         Min Axis:    (-0.707, 0.0, 0.707)      
-         Max Axis:    (0.707, -0.0, -0.707) 
-         Second Min Axis:    (-0.0, -1.0, 0.0)      
-         Second Max Axis:    (-0.707, 0.0, -0.707) 
-    ----------------------------------------------------------------------------------------
-    Shear Speed                  4595.302  5723.288 ||    1.245 
-         Min Axis:    (0.707, 0.0, -0.707)      
-         Max Axis:    (0.0, 0.0, 1.0) 
-         Second Min Axis:    (-0.0, -1.0, 0.0)      
-         Second Max Axis:    (-0.707, 0.0, -0.707) 
-    ----------------------------------------------------------------------------------------
-    Ratio Compression Shear Speed                     0.928     1.570 ||    1.693 
-         Min Axis:    (-0.707, -0.0, 0.707)      
-         Max Axis:    (0.707, -0.0, -0.707) 
-         Second Min Axis:    (0.0, -1.0, 0.0)      
-         Second Max Axis:    (-0.707, 0.0, -0.707) 
-    ----------------------------------------------------------------------------------------
-    Debye Speed                  3767.557  4023.386 ||    1.068 
-         Min Axis:    (0.707, -0.0, 0.707)      
-         Max Axis:    (0.381, -0.0, 0.925) 
-         Second Min Axis:    (0.0, 1.0, 0.0)      
-         Second Max Axis:    (0.925, -0.001, -0.381) 
+        Eigenvalues of compliance matrix
 
+
+           lamda_1  lamda_2  lamda_3  lamda_4  lamda_5  lamda_6
+        ---------------------------------------------------------------
+           74.717    74.717    74.717    96.336    96.336   266.718
+        --------------------------------------------------------------
+
+
+        Variations of the elastic moduli
+
+
+                                          Min       Max   ||   Anisotropy
+        ----------------------------------------------------------------------------------------
+        Young's Modulus     (GPa)        122.399   175.100 ||    1.431
+                 Min Axis:    (0.0, 0.0, 1.0)
+                 Max Axis:    (0.577, 0.577, -0.577)
+        ----------------------------------------------------------------------------------------
+        Linear Compression   (TPa^-1)      3.749     3.749 ||    1.000
+                 Min Axis:    (0.958, 0.126, 0.259)
+                 Max Axis:    (0.5, 0.5, 0.707)
+        ----------------------------------------------------------------------------------------
+        Bulk Modulus   (GPa,Experimental)             38.418   223.191 ||    5.810
+                 Min Axis:    (0.707, -0.0, 0.707)
+                 Max Axis:    (0.707, -0.001, 0.707)
+                 Second Min Axis:    (0.707, -0.001, -0.707)
+                 Second Max Axis:    (0.707, -0.001, -0.707)
+        ----------------------------------------------------------------------------------------
+        Shear Modulus   (GPa)             48.168    74.717 ||    1.551
+                 Min Axis:    (0.707, -0.0, 0.707)
+                 Max Axis:    (0.0, 0.0, 1.0)
+                 Second Min Axis:    (0.707, -0.001, -0.707)
+                 Second Max Axis:    (0.707, -0.001, -0.707)
+        ----------------------------------------------------------------------------------------
+        Poisson's Ratio                     0.058     0.349 ||    6.037
+                 Min Axis:    (0.707, -0.0, 0.707)
+                 Max Axis:    (0.707, -0.001, 0.707)
+                 Second Min Axis:    (0.707, -0.001, -0.707)
+                 Second Max Axis:    (0.0, 1.0, 0.0)
+        ----------------------------------------------------------------------------------------
+        Pugh's Ratio                    1.190     1.846 ||    1.551
+                 Min Axis:    (0.0, 0.0, 1.0)
+                 Max Axis:    (0.707, -0.0, 0.707)
+                 Second Min Axis:    (0.174, 0.985, -0.0)
+                 Second Max Axis:    (0.174, 0.985, -0.0)
+        ----------------------------------------------------------------------------------------
+        Compression Speed                  8193.358  9091.185 ||    1.110
+                 Min Axis:    (0.707, -0.0, 0.707)
+                 Max Axis:    (0.0, 0.0, 1.0)
+                 Second Min Axis:    (0.707, -0.001, -0.707)
+                 Second Max Axis:    (1.0, 0.0, -0.0)
+        ----------------------------------------------------------------------------------------
+        Shear Speed                  4595.271  5723.234 ||    1.245
+                 Min Axis:    (0.707, -0.0, 0.707)
+                 Max Axis:    (0.0, 0.0, 1.0)
+                 Second Min Axis:    (0.707, -0.001, -0.707)
+                 Second Max Axis:    (1.0, 0.0, -0.0)
+        ----------------------------------------------------------------------------------------
+        Ratio Compression Shear Speed                     2.523     3.179 ||    1.260
+                 Min Axis:    (0.0, 0.0, 1.0)
+                 Max Axis:    (0.707, -0.0, 0.707)
+                 Second Min Axis:    (0.174, 0.985, -0.0)
+                 Second Max Axis:    (0.707, -0.001, -0.707)
+        ----------------------------------------------------------------------------------------
+        Debye Speed                  4154.917  5000.827 ||    1.204
+                 Min Axis:    (0.707, -0.0, 0.707)
+                 Max Axis:    (0.0, 0.0, 1.0)
+                 Second Min Axis:    (0.707, -0.001, -0.707)
+                 Second Max Axis:    (0.174, 0.985, -0.0)
 
 
 1.2.2 Accessing quantities
 ~~~~~~~~~~~~~~~~
 
-There are two ways to access any given quantity in the print summary, either call the wanted quantity as an attirbute or through the to_dict() method.
+There are two ways to access any given quantity in the print summary, either call the wanted quantity as an attribute or through the to_dict() method.
 
 Attribute Usage:
 
@@ -138,7 +153,7 @@ Output::
     Hill Bulk modulus : 88.90563333333334 GPa
     Anisotropy in Poisson`s Ratio : 6.037439233255422
 
-Above was just an example of the different attirbutes availible, but to see what other attributes are avaible use dir(elate)
+Above was just an example of the different attributes available, but to see what other attributes are available use dir(elate)
 
 
 to_dict() Usage:
@@ -150,8 +165,15 @@ to_dict() Usage:
 Output::
 
     bulk_modulus_voigt: 88.90563333333334
-    bulk_modulus_reuss: 88.90563333333334
-    bulk_modulus_hill: 88.90563333333334
+    bulk_modulus_reuss: 88.90563333333336
+    bulk_modulus_hill: 88.90563333333336
+    bulk_max: 223.18983956287462
+    bulk_min: 38.41779228916066
+    bulk_min_axis: (0.7070890777249003, -3.2660969780252564e-05, -0.7071244834506942)
+    bulk_max_axis: (-0.7071011747765165, -2.7858572302977706e-05, 0.7071123870033463)
+    bulk_min_axis_2: (-0.7071244601718366, 0.00022805942991048573, -0.7070890649809153)
+    bulk_max_axis_2: (3.792727173859518e-05, -0.9999999992796791, -1.4709880630005777e-06)
+    bulk_anisotropy: 5.809543606331753
     youngs_modulus_voigt: 155.03649359718446
     youngs_modulus_reuss: 149.37560549227936
     youngs_modulus_hill: 152.2184138933355
@@ -160,10 +182,10 @@ Output::
     youngs_min_axis: (0.0, 0.0, 1.0)
     youngs_max_axis: (-0.577361569343, 0.5773687973343659, 0.5773204397130386)
     youngs_anisotropy: 1.4305643566525388
-    linearCompression_max: 3.7492937267942157
-    linearCompression_min: 3.7492937267942117
-    linearCompression_min_axis: (-0.9899110156520295, 0.055127980511725946, 0.1305261922200517)
-    linearCompression_max_axis: (0.0, 0.0, 1.0)
+    linearCompression_max: 3.7492937267942166
+    linearCompression_min: 3.749293726794212
+    linearCompression_min_axis: (-0.49500029477676866, 0.8573656603149349, -0.1410632222928697)
+    linearCompression_max_axis: (0.5000000000000001, 0.5000000000000001, 0.7071067811865476)
     linearCompression_anisotropy: 1.000000000000001
     shear_modulus_voigt: 64.09850000000002
     shear_modulus_reuss: 61.22084076167894
@@ -179,20 +201,30 @@ Output::
     poisson_modulus_reuss: 0.21997348969585478
     poisson_modulus_hill: 0.21464422784357595
     poisson_max: 0.3494163383468135
-    poisson_min: 0.05787492425963618
+    poisson_min: 0.057874924259636105
     poisson_min_axis: (0.7070890777249003, -3.2660969780252564e-05, -0.7071244834506942)
     poisson_max_axis: (-0.7070718209701229, 1.3417388323657962e-05, 0.7071417395472906)
     poisson_min_axis_2: (-0.7071244601718366, 0.00022805942991048573, -0.7070890649809153)
     poisson_max_axis_2: (-1.3289480480657114e-05, -0.9999999998955298, 5.685947999088838e-06)
-    poisson_anisotropy: 6.037439233255422
+    poisson_anisotropy: 6.03743923325543
+    pugh_ratio_voigt: 1.387015816802785
+    pugh_ratio_reuss: 1.4522118975697513
+    pugh_ratio_hill: 1.4188653210745192
+    pugh_ratio_max: 1.8457156589893435
+    pugh_ratio_min: 1.1898760323204636
+    pugh_ratio_min_axis: (0.0, 0.0, 1.0)
+    pugh_ratio_max_axis: (0.7070890649809153, 0.0001381629613373221, -0.7071244834506942)
+    pugh_ratio_min_axis_2: (0.17364817766693041, 0.9848077530122079, -0.0)
+    pugh_ratio_max_axis_2: (-0.7071244601718367, -0.00018436062115480075, -0.7070890777249003)
+    pugh_ratio_anisotropy: 1.5511831559375808
     compressionSpeed_voigt: 8743.152534460714
     compressionSpeed_reuss: 8646.424429285951
     compressionSpeed_hill: 8694.9229913841
     compressionSpeed_max: 9091.221174861093
-    compressionSpeed_min: 8193.371557719742
-    compressionSpeed_min_axis: (0.7070890649809153, 0.0001381629613373221, -0.7071244834506942)
+    compressionSpeed_min: 8193.371731108246
+    compressionSpeed_min_axis: (0.7070810029832681, -0.00026317043674738697, 0.7071325094785961)
     compressionSpeed_max_axis: (0.0, 0.0, 1.0)
-    compressionSpeed_anisotropy: 1.1095824363409228
+    compressionSpeed_anisotropy: 1.109582412859889
     shearSpeed_voigt: 5300.974695538509
     shearSpeed_reuss: 5180.616478819788
     shearSpeed_hill: 5241.141088701903
@@ -218,18 +250,18 @@ Output::
     debyeSpeed_max_axis: (0.0, 0.0, 1.0)
     debyeSpeed_anisotropy: 1.2035951064726405
 
-As you can see, one can easily access whatever quantity they need through this mehtod.
+As you can see, one can easily access whatever quantity they need through this method.
 
 1.2.3  Plotting Methods
 ~~~~~~~~~~~~~~
 
-In ELATE's website they rpovide the 2d cross sectional plots and the 3d visualizations of the Young's Modulus, Linear Compression, Shear Modulus, and Poisson's Ratio. This funcationality is still availible in mechelastic, through the plot2D() and thye plot3D() methods. The input of this method is the specific elastic property you want to plot and wether you want show the plot.
+In ELATE's website they provide the 2d cross sectional plots and the 3d visualizations of the Young's Modulus, Linear Compression, Shear Modulus, and Poisson's Ratio. This funcationality is still availible in mechelastic, through the plot_2D() and thye plot_3D() methods. The input of this method is the specific elastic property you want to plot and wether you want show the plot. MechElastic now has a 3d slicing widget which can make 2d cross sectional cuts of the 3D surface through the plot_3D_slice().
 
-The available properties to plot : "POISSON" , "SHEAR", "YOUNG" , "LC". If the density is provided, then one can also plot : "COMPRESSION_SPEED" , "SHEAR_SPEED" , "RATIO_COMPRESSIONAL_SHEAR" , "DEBYE_SPEED"
+The available properties to plot : "BULK", POISSON" , "SHEAR", "YOUNG" , "LC" ,"PUGH_RATIO". If the density is provided, then one can also plot : "COMPRESSION_SPEED" , "SHEAR_SPEED" , "RATIO_COMPRESSIONAL_SHEAR" , "DEBYE_SPEED"
 
 .. note:: If there are any kinks in the plots, this is due to even or odd number of points used. By using the parameter ``npoints`` one can change the number of points used.
 
-plot2D() Usage:
+plot_2D() Usage:
 
 >>> fig = elate.plot_2D(elastic_calc = "POISSON", show = True )
 
@@ -237,10 +269,20 @@ Output:
 
 .. image:: images/mechelastic_2d_poisson.PNG
 
-plot3D() Usage
+plot_3D() Usage
 
 >>> meshes = elate.plot_3D(elastic_calc = "POISSON", show = True)
 
 Output:
 
 .. image:: images/mechelastic_3d_poisson.PNG
+
+plot_3D_slice() Usage
+
+>>> meshes = elate.plot_3D_slice(elastic_calc = "POISSON", normal = (1,0,0), show = True)
+
+Output:
+
+.. image:: images/mechelastic_3d_slice_poisson.PNG
+
+~~~~~~~~~~~~~~

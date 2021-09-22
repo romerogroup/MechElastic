@@ -674,10 +674,10 @@ class ELATE:
         maxNu = maximize(self.elas.Poisson, 3)
         minPugh = minimize(self.elas.Pugh_ratio, 3)
         maxPugh = maximize(self.elas.Pugh_ratio, 3)
+        minK = minimize(self.elas.Bulk, 3)
+        maxK = maximize(self.elas.Bulk, 3)
     
-        self.voigtK = self.elas.averages()[0][0]
-        self.reussK = self.elas.averages()[1][0]
-        self.hillK = self.elas.averages()[2][0]
+
         
         self.voigtE = self.elas.averages()[0][1]
         self.reussE = self.elas.averages()[1][1]
@@ -732,6 +732,18 @@ class ELATE:
         self.mix_2nd_axis_Pugh = tuple(dirVec2(*minPugh[0]))
         self.max_2nd_axis_Pugh = tuple(dirVec2(*maxPugh[0]))
         self.anis_Pugh = maxPugh[1] / minPugh[1]
+        
+        
+        self.voigtK = self.elas.averages()[0][0]
+        self.reussK = self.elas.averages()[1][0]
+        self.hillK = self.elas.averages()[2][0]
+        self.max_K = maxK[1]
+        self.min_K = minK[1]
+        self.min_axis_K = tuple(dirVec1(*minK[0]))
+        self.max_axis_K = tuple(dirVec1(*maxK[0]))
+        self.mix_2nd_axis_K = tuple(dirVec2(*minK[0]))
+        self.max_2nd_axis_K = tuple(dirVec2(*maxK[0]))
+        self.anis_K = maxK[1] / minK[1]
             
             
         if self.density != None:
@@ -927,6 +939,71 @@ class ELATE:
         )
 
         return data
+
+    def BULK3D(self, npoints):
+        """
+        Generates a meshgrid for the Bulk Modulus
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns :  A size 2 tuple of tuples with list of lists of coordinate points. Simialr to numpy meshgrid. 
+            The first index is for the positive value mesh. 
+            The second index is for the maximum value mesh.
+
+        """
+
+        if self.elas.isOrthorhombic():
+            self.elas = ElasticOrtho(self.elas)
+
+        data = make3DPlot2(
+            lambda x, y, g1, g2: self.elas.bulk3D(x, y, g1, g2),
+            "Shear modulus",
+            npoints=npoints,
+        )
+
+        return data
+
+    def BULK2D(self, npoints):
+        """
+        Generates a cross sectional data for the Bulk modulus
+        
+        Parameters
+        ----------
+        npoints : int
+            The number of coordinate points. The default is 100.
+
+        Returns
+        -------
+        Returns : A size 3 tuple containing the xy,xz,yz cross sections
+            The first index is the xy plane.
+            The second index is the xz plane.
+            The third index is the yz plane.
+            
+            Each cross section is a size 2 tuple of tuples containing coordinate point arrays
+            The first index cooresponds to the positive value.
+            The second index cooresponds to the maximum value.
+        """
+        data1 = makePolarPlot2(
+            lambda x: self.elas.bulk2D([np.pi / 2, x]),
+            "Shear modulus in (xy) plane",
+            "xy",
+            npoints=npoints,
+        )
+        data2 = makePolarPlot2(
+            lambda x: self.elas.bulk2D([x, 0]), "Shear modulus in (xz) plane", "xz"
+        )
+        data3 = makePolarPlot2(
+            lambda x: self.elas.bulk2D([x, np.pi / 2]),
+            "Shear modulus in (yz) plane",
+            "yz",
+            npoints=npoints,
+        )
+        return (data1, data2, data3)
 
     def SHEAR2D(self, npoints):
         """
@@ -1402,8 +1479,14 @@ class ELATE:
                    'bulk_modulus_voigt':self.voigtK,
                    'bulk_modulus_reuss':self.reussK,
                    'bulk_modulus_hill':self.hillK,
-            
-            
+                   'bulk_max':self.max_K,
+                   'bulk_min':self.min_K,
+                   'bulk_min_axis':self.min_axis_K,
+                   'bulk_max_axis':self.max_axis_K,
+                   'bulk_min_axis_2':self.mix_2nd_axis_K,
+                   'bulk_max_axis_2':self.max_2nd_axis_K,
+                   'bulk_anisotropy':self.anis_K,
+    
                    'youngs_modulus_voigt':self.voigtE,
                    'youngs_modulus_reuss':self.reussE,
                    'youngs_modulus_hill':self.hillE,
@@ -1607,6 +1690,24 @@ class ELATE:
                         
         elif elastic_calc == "PUGH_RATIO":
             func = self.PUGH_RATIO3D(npoints=100)
+            colors = ["green", "blue"]
+            for ix, icolor in zip(range(len(func)), colors):
+                x = np.array(func[ix][0])
+                y = np.array(func[ix][1])
+                z = np.array(func[ix][2])
+                r = np.array(func[ix][3])
+                if np.all((func[ix][0] == 0)):
+                    continue
+                else:
+                    grid = pv.StructuredGrid(x, y, z)
+                    meshes.append(grid)
+                    if ix == 2:
+                        plotter.add_mesh(grid, opacity=0.25, color=icolor)
+                    else:
+                        plotter.add_mesh(grid, opacity=0.50, color=icolor)
+        
+        elif elastic_calc == "BULK":
+            func = self.BULK3D(npoints=100)
             colors = ["green", "blue"]
             for ix, icolor in zip(range(len(func)), colors):
                 x = np.array(func[ix][0])
@@ -1826,6 +1927,27 @@ class ELATE:
                         
         elif elastic_calc == "PUGH_RATIO":
             func = self.PUGH_RATIO3D(npoints=100)
+            colors = ["green", "blue"]
+            for ix, color in zip(range(len(func)), colors):
+                x = np.array(func[ix][0])
+                y = np.array(func[ix][1])
+                z = np.array(func[ix][2])
+                r = np.array(func[ix][3])
+                if np.all((func[ix][0] == 0)):
+                    continue
+                else:
+                    grid = pv.StructuredGrid(x, y, z)
+                    if color == "blue":
+                        grid["colors"] = [blue]*len(grid.points)
+                    elif color == "green":
+                        grid["colors"] = [green]*len(grid.points)
+                    elif color == "red":
+                        grid["colors"] = [red]*len(grid.points)
+                                     
+                    meshes.append(grid)
+                    
+        elif elastic_calc == "BULK":
+            func = self.BULK3D(npoints=100)
             colors = ["green", "blue"]
             for ix, color in zip(range(len(func)), colors):
                 x = np.array(func[ix][0])
@@ -2067,8 +2189,23 @@ class ELATE:
         elif elastic_calc == "PUGH_RATIO":
             func = self.PUGH_RATIO2D(npoints=npoints)
             colors = ["green", "blue"]
-            labels = ["Pugh's Ratio - Max", "Pugh's Ratio -"]
+            labels = ["Pugh's Ratio - Max", "Pugh's Ratio "]
             fig.suptitle("Pugh's Ratio")
+            for iplane, title in zip(range(len(func)), subTitles):
+
+                ax = fig.add_subplot(1, 3, iplane + 1)
+                ax.set_title(title)
+                ax.get_yaxis().set_visible(False)
+                for iplot, color in zip(range(len(func[0])), colors):
+                    plt.plot(
+                        func[iplane][iplot][0], func[iplane][iplot][1], color=color
+                    )
+                    
+        elif elastic_calc == "BULK":
+            func = self.BULK2D(npoints=npoints)
+            colors = ["green", "blue"]
+            labels = ["Bulk Modulus - Max", "Bulk Modulus "]
+            fig.suptitle("Bulk Modulus")
             for iplane, title in zip(range(len(func)), subTitles):
 
                 ax = fig.add_subplot(1, 3, iplane + 1)
@@ -2347,6 +2484,8 @@ class ELATE:
         maxLC = maximize(self.elas.LC, 2)
         minG = minimize(self.elas.shear, 3)
         maxG = maximize(self.elas.shear, 3)
+        minK = minimize(self.elas.Bulk, 3)
+        maxK = maximize(self.elas.Bulk, 3)
         minNu = minimize(self.elas.Poisson, 3)
         maxNu = maximize(self.elas.Poisson, 3)
         minPugh = minimize(self.elas.Pugh_ratio, 3)
@@ -2355,6 +2494,7 @@ class ELATE:
         anisE = "%8.3f" % (maxE[1] / minE[1])
         anisLC = ("%8.3f" % (maxLC[1] / minLC[1])) if minLC[1] > 0 else "&infin;"
         anisG = "%8.3f" % (maxG[1] / minG[1])
+        anisK = "%8.3f" % (maxK[1] / minK[1])
         anisNu = (
             ("%8.3f" % (maxNu[1] / minNu[1])) if minNu[1] * maxNu[1] > 0 else "&infin;"
         )
@@ -2370,6 +2510,11 @@ class ELATE:
         maxGaxis = list(np.around(np.array(dirVec1(*maxG[0])), 3))
         minG2ndaxis = list(np.around(np.array(dirVec2(*minG[0])), 3))
         maxG2ndaxis = list(np.around(np.array(dirVec2(*maxG[0])), 3))
+        
+        minKaxis = list(np.around(np.array(dirVec1(*minK[0])), 3))
+        maxKaxis = list(np.around(np.array(dirVec1(*maxK[0])), 3))
+        minK2ndaxis = list(np.around(np.array(dirVec2(*minK[0])), 3))
+        maxK2ndaxis = list(np.around(np.array(dirVec2(*maxK[0])), 3))
 
         minNUaxis = list(np.around(np.array(dirVec1(*minNu[0])), 3))
         maxNUaxis = list(np.around(np.array(dirVec1(*maxNu[0])), 3))
@@ -2407,6 +2552,21 @@ class ELATE:
         print(
             "         Min Axis:    %s      \n         Max Axis:    %s "
             % (str(tuple(minLCaxis)), str(tuple(maxLCaxis)))
+        )
+        print(
+            "----------------------------------------------------------------------------------------"
+        )
+        print(
+            "Bulk Modulus   (GPa,Experimental)          %9.3f %9.3f || %s "
+            % (minK[1], maxK[1], anisK)
+        )
+        print(
+            "         Min Axis:    %s      \n         Max Axis:    %s "
+            % (str(tuple(minKaxis)), str(tuple(maxKaxis)))
+        )
+        print(
+            "         Second Min Axis:    %s      \n         Second Max Axis:    %s "
+            % (str(tuple(minK2ndaxis)), str(tuple(minK2ndaxis)))
         )
         print(
             "----------------------------------------------------------------------------------------"
@@ -2772,7 +2932,7 @@ class Elastic:
         x : float
             Represents the spherical theta angle
         y : float
-                Represents the spherical phi angle
+            Represents the spherical phi angle
             
         Returns
         -------
@@ -3072,6 +3232,24 @@ class Elastic:
     
         """
         return self.averages()[2][0]/self.shear(x)
+    
+    def Bulk(self,x):
+        """
+        A method to calculate the Bulk Ratio
+        
+        Parameters
+        ----------
+        x : Size 3 tuple of the euler angles to calculate the value
+            The first index is theta
+            The second index is phi
+            The second index is chi
+            
+        Returns
+        -------
+        Returns : float
+    
+        """
+        return 2*self.shear(x) * (1+ self.Poisson(x)) / (3 * (1  - 2*self.Poisson(x)))
 
     def Compression_Speed(self,x):
         """
@@ -3237,6 +3415,92 @@ class Elastic:
             float(r1.x),
             float(r2.x),
         )
+    
+    def bulk2D(self, x):
+        """
+        A method to calculate the Bulk modulus in a plane
+        
+        Parameters
+        ----------
+        x : Size 2 tuple of the spherical angle to calculate the value
+            The first index is theta
+            The second index is phi
+            
+        Returns
+        -------
+        Returns : size 2 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+    
+        """
+        
+        ftol = 0.001
+        xtol = 0.01
+
+        def func1(z):
+            return self.Bulk([x[0], x[1], z])
+
+        r1 = optimize.minimize(
+            func1,
+            np.pi / 2.0,
+            args=(),
+            method="Powell",
+            options={"xtol": xtol, "ftol": ftol},
+        )  # , bounds=[(0.0,np.pi)])
+
+        def func2(z):
+            return -self.Bulk([x[0], x[1], z])
+
+        r2 = optimize.minimize(
+            func2,
+            np.pi / 2.0,
+            args=(),
+            method="Powell",
+            options={"xtol": xtol, "ftol": ftol},
+        )  # , bounds=[(0.0,np.pi)])
+        return (float(r1.fun), -float(r2.fun))
+
+    def bulk3D(self, x, y, guess1=np.pi / 2.0, guess2=np.pi / 2.0):
+        """
+        A method to calculate the Bulk modulus in 3D
+        
+        Parameters
+        ----------
+        x : float
+            Represents the spherical theta value 
+        y : float
+            Represents the spherical phi value 
+        guess1 : float
+            A starting guess in the minimization scheme to determine the positive value. Default is pi/2.
+        guess1 : float
+            A second guess in the minimization scheme to determine the maximum value. Default is pi/2.
+            
+        Returns
+        -------
+        Returns : size 4 tuple of floats.
+            The first index is the positive value
+            The second index is the maximum value
+            The third index is the solutions of the optimization of the positive value
+            The fourth index is thesolutions of the optimization of the maximum value
+    
+        """
+        tol = 0.005
+
+        def func1(z):
+            return self.Bulk([x, y, z])
+
+        r1 = optimize.minimize(
+            func1, guess1, args=(), method="COBYLA", options={"tol": tol}
+        )  # , bounds=[(0.0,np.pi)])
+
+        def func2(z):
+            return -self.Bulk([x, y, z])
+
+        r2 = optimize.minimize(
+            func2, guess2, args=(), method="COBYLA", options={"tol": tol}
+        )  # , bounds=[(0.0,np.pi)])
+        return (float(r1.fun), -float(r2.fun), float(r1.x), float(r2.x))
+    
     
     def pugh_ratio2D(self, x):
         """
