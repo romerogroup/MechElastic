@@ -1,11 +1,11 @@
 {
   "name": "MechElastic",
-  "version": "1.2.24",
+  "version": "1.2.25",
   "description": "A Python library to calculate elastic properties of materials. ",
   "author": "Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert, Aldo H. Romero",
   "email": "smsingh@mail.wvu.edu",
   "url": "https://github.com/romerogroup/MechElastic",
-  "download_url": "https://github.com/romerogroup/MechElastic/archive/1.2.24.tar.gz",
+  "download_url": "https://github.com/romerogroup/MechElastic/archive/1.2.25.tar.gz",
   "status": "development",
   "copyright": "Copyright 2021",
   "date": "Sep 22nd, 2021"

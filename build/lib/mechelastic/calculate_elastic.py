@@ -20,6 +20,7 @@ def calculate_elastic(
     code="vasp",
     anaddbfile=None,
     qe_outfile=None,
+    qe_infile= None,
     adjust_pressure=True,
     verbose=True,
     outfile="elastic_properties.txt",
@@ -46,6 +47,8 @@ def calculate_elastic(
         Path to the DDB file (applicable only in abinit). The default is None.
     qe_outfile : str, optional
         Path to the Quantum Espresso output file. The default is None.
+    qe_infile : str, optional
+        Path to the Quantum Espresso input file. The default is None.
     adjust_pressure : bool, optional
         To adjust the cell pressure according to the output file. The default is True.
     verbose : str, optional
@@ -61,7 +64,7 @@ def calculate_elastic(
 
     """
     # Check if infile is present
-    if not os.path.exists(infile):
+    if not os.path.exists(infile) and code == "vasp":
         print("%s doesn't exist. Exiting." % infile)
         sys.exit()
 
@@ -91,13 +94,13 @@ def calculate_elastic(
         lattice_constant = output.lattice_constant
 
     elif code == "qe_ElaStic":
-        output = QE_ElaStic_Parser(outfile=qe_outfile, infile=infile)
+        output = QE_ElaStic_Parser(outfile=qe_outfile, infile=qe_infile)
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant
 
     elif code == "qe_thermo_pw":
-        output = QE_thermo_pw_Parser(outfile=qe_outfile, infile=infile)
+        output = QE_thermo_pw_Parser(outfile=qe_outfile, infile=qe_infile)
         elastic_tensor = output.elastic_tensor
         structure = output.structure
         lattice_constant = output.lattice_constant

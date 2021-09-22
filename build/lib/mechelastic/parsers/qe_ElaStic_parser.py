@@ -362,7 +362,7 @@ class QE_ElaStic_Parser:
         print("\nPrinting Cij matrix as read from outfile (GPa)\n")
         self.elastic_tensor = c.copy()
         np.set_printoptions(precision=3, suppress=True)
-        printer.printMatrix(self.elastic_tensor)
+        printer.print_matrix(self.elastic_tensor)
         
         self.compaliance_tensor = np.linalg.inv(self.elastic_tensor)
 
