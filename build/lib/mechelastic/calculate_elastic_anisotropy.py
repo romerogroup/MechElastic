@@ -16,11 +16,16 @@ def calculate_elastic_anisotropy(
     outfile=None,
     adjust_pressure=True,
     npoints=100,
-    show=True
+    show=True,
+    
+    #keywords for plot_3D_slice
+    normal = (1,0,0), 
+    origin =(0,0,0)
+    
 ):
     """
     This method calculates the elastic properties
-    of a material from a DFT calculation. hi
+    of a material from a DFT calculation.
     """
 
     # welcome message
@@ -88,7 +93,7 @@ def calculate_elastic_anisotropy(
                 columnsList.append(round(elastic_tensor[i, j], 3))
             rowsList.append(columnsList)
 
-    print(rowsList)
+    
     elastic_tensor = ELATE(rowsList, density)
 
     if plot == "2D":
@@ -97,6 +102,9 @@ def calculate_elastic_anisotropy(
     elif plot == "3D":
         meshes = elastic_tensor.plot_3D(
             elastic_calc=elastic_calc, npoints=npoints, show=show)
+    elif plot == "3D_slice":
+        meshes = elastic_tensor.plot_3D_slice(
+            elastic_calc=elastic_calc, npoints=npoints, normal = normal, show=show)
 
     elastic_tensor.print_properties()
 

@@ -167,7 +167,7 @@ class AbinitOutput:
 
         print("\nPrinting Cij matrix as read from Abinit DDB output.\n")
         np.set_printoptions(precision=4, suppress=True)
-        printer.printMatrix(c)
+        printer.print_matrix(c)
 
         self.elastic_tensor = c.copy()
 
@@ -182,7 +182,7 @@ class AbinitOutput:
 
         np.set_printoptions(precision=3, suppress=True)
 
-        printer.printMatrix(self.elastic_tensor)
+        printer.print_matrix(self.elastic_tensor)
 
         print(
             (

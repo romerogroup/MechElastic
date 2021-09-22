@@ -166,6 +166,19 @@ class ElasticProperties:
 
         """
         return self.Nu_v
+    
+    @property
+    def pugh_ratio_voigt(self):
+        """
+
+
+        Returns
+        -------
+        float
+            Pugh's Ratio Voigt.
+
+        """
+        return self.K_v/self.G_v
 
     @property
     def M_v(self):
@@ -308,6 +321,19 @@ class ElasticProperties:
 
         """
         return self.Nu_r
+    
+    @property
+    def pugh_ratio_reuss(self):
+        """
+
+
+        Returns
+        -------
+        float
+            Pugh's Ration Reuss.
+
+        """
+        return self.K_r/self.G_r
 
     @property
     def M_r(self):
@@ -438,6 +464,24 @@ class ElasticProperties:
 
         """
         return self.Nu_vrh
+
+    @property
+    def pugh_ratio_voigt_reuss_hill(self):
+        """
+
+
+        Returns
+        -------
+        float
+            Voigt-Reuss-Hill Approximation Pugh's Ratio.
+
+        """
+        return self.K_vrh/self.G_vrh
+
+
+
+
+
 
     @property
     def M_vrh(self):
@@ -887,6 +931,9 @@ class ElasticProperties:
             "poissons_ratio_reuss": self.poissons_ratio_reuss,
             "poissons_ratio_voigt": self.poissons_ratio_voigt,
             "poissons_ratio_voigt_reuss_hill": self.poissons_ratio_voigt_reuss_hill,
+            "pugh_ratio_reuss": self.pugh_ratio_reuss,
+            "pugh_ratio_voigt": self.pugh_ratio_voigt,
+            "pugh_ratio_voigt_reuss_hill": self.pugh_ratio_voigt_reuss_hill,
             "shear_modulus_reuss": self.shear_modulus_reuss,
             "shear_modulus_voight": self.shear_modulus_voight,
             "shear_modulus_voight_reuss_hill": self.shear_modulus_voight_reuss_hill,
@@ -976,34 +1023,34 @@ class ElasticProperties:
         ret += "Elastic Moduli\n"
         ret += "------------------------------------------------------------------\n\n"
 
-        ret += "                          Voigt     Reuss    Average\n"
+        ret += "                              Voigt     Reuss    Average\n"
         ret += "-------------------------------------------------------\n"
-        ret += "Bulk modulus   (GPa)  %9.3f %9.3f %9.3f \n" % (
+        ret += "Bulk modulus   (GPa)       %9.3f %9.3f %9.3f \n" % (
             self.K_v,
             self.K_r,
             self.K_vrh,
         )
-        ret += "Shear modulus  (GPa)  %9.3f %9.3f %9.3f \n" % (
+        ret += "Shear modulus  (GPa)       %9.3f %9.3f %9.3f \n" % (
             self.G_v,
             self.G_r,
             self.G_vrh,
         )
-        ret += "Young's modulus  (GPa)  %9.3f %9.3f %9.3f \n" % (
+        ret += "Young's modulus  (GPa)      %9.3f %9.3f %9.3f \n" % (
             self.E_v,
             self.E_r,
             self.E_vrh,
         )
-        ret += "Poisson's ratio         %9.3f %9.3f %9.3f \n" % (
+        ret += "Poisson's ratio           %9.3f %9.3f %9.3f \n" % (
             self.Nu_v,
             self.Nu_r,
             self.Nu_vrh,
         )
-        ret += "P-wave modulus  (GPa) %9.3f %9.3f %9.3f \n" % (
+        ret += "P-wave modulus  (GPa)       %9.3f %9.3f %9.3f \n" % (
             self.M_v,
             self.M_r,
             self.M_vrh,
         )
-        ret += "Bulk/Shear ratio      %9.3f %9.3f %9.3f (%s) \n" % (
+        ret += "Bulk/Shear (Pugh's) ratio %9.3f %9.3f %9.3f (%s) \n" % (
             self.KG_ratio_v,
             self.KG_ratio_r,
             self.KG_ratio_vrh,
