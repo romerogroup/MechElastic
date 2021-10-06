@@ -20,7 +20,7 @@ def calculate_elastic(
     code="vasp",
     anaddbfile=None,
     qe_outfile=None,
-    qe_infile= None,
+    qe_infile=None,
     adjust_pressure=True,
     verbose=True,
     outfile="elastic_properties.txt",
@@ -71,7 +71,7 @@ def calculate_elastic(
     # welcome message
     if verbose:
         printer.print_mechelastic()
-        if code != None:
+        if code is not None:
             print("\nThis matrix was computed from " + code)
     elastic_tensor = elastic_tensor
     structure = None
@@ -122,7 +122,7 @@ def calculate_elastic(
     # elastic constants calculation for 2D materials
     elif dim == "2D":
         elastic_properties = ElasticProperties2D(
-            elastic_tensor, lattice_constant, lattice_type=lattice_type
+            elastic_tensor, lattice_constant, lattice_type=lattice_type, verbose=verbose
         )
         elastic_properties.print_properties()
 

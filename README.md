@@ -45,13 +45,13 @@ pip install mechelastic
 Once installed, use the ``-h`` flag to see a list of options for the stand-alone mode.
 
 ```
-mechelastic -h
+MechElastic.py -h
 ```
 
 For example: 
 
 ```
-mechelastic -d=3D -i OUTCAR-Si_bulk 
+MechElastic.py -d=3D -i OUTCAR-Si_bulk 
 ```
 
 For more information please refer to the documentation. 

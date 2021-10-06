@@ -81,6 +81,6 @@ setup(
     ],
     data_files=[("", ["LICENSE.txt"])],
     package_data={"": ["setup.json"]},
-    scripts=["scripts/mechelastic"],
+    scripts=["scripts/MechElastic.py"],
     packages=find_packages(exclude=["scripts", "examples"]),
 )

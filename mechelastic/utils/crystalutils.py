@@ -36,11 +36,13 @@ def crystal_select(cnew=None, cell=None, crystal_type=None, verbose=True):
     to_print += "\n------------------------------------------------------------------\n"
 
     if crystal_type is not None:
+        if verbose:
+            print(to_print)
         stability.stability_test(cnew, crystal_type, verbose=verbose)
 
     else:
         to_print += "WARNING: crystal symmetry class  was not provided by user, it will be taken from the OUTCAR.\n"
-        to_print += "One of the following was expected as the second argument: \n 'cubic', 'hexagonal', 'tetragonal', 'rhombohedral-1', 'rhombohedral-2', 'orthorhombic', 'monoclinic'"
+        to_print += "One of the following was expected as the cystal_type argument: \n 'cubic', 'hexagonal', 'tetragonal', 'rhombohedral-1', 'rhombohedral-2', 'orthorhombic', 'monoclinic'"
         crystal_type = ""
         spg = int(spglib.get_spacegroup(cell, symprec=1e-5).split()[1][1:-1])
         if spg >= 1 and spg <= 2:
@@ -72,12 +74,21 @@ def lattice_select(cnew=None, cell=None, lattice_type=None, verbose=True):
     to_print = ""
     if lattice_type is not None:
 
-        to_print += "\n \t \t Mechanical Stability Test \n"
+        to_print = ""
+        to_print += (
+            "\n------------------------------------------------------------------\n"
+        )
+        to_print += "Mechanical Stability Tests"
+        to_print += (
+            "\n------------------------------------------------------------------\n"
+        )
+        if verbose:
+            print(to_print)
         stability.stability_test_2d(cnew, lattice_type, verbose)
 
     else:
         to_print += "\n"
-        to_print += "WARNING: crystal symmetry class  was not provided by user"
-        to_print += "One of the following was expected as the second argument: \n 'hexagonal', 'square', 'rectangular', 'rectangular-center', 'oblique'"
-    if verbose:
-        print(to_print)
+        to_print += "WARNING: crystal symmetry class  was not provided by user.\n"
+        to_print += "One of the following was expected as the lattice_type argument: \n 'hexagonal', 'square', 'rectangular', 'rectangular-center', 'oblique'"
+        if verbose:
+            print(to_print)

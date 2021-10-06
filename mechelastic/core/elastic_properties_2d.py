@@ -9,34 +9,44 @@ from ..utils.crystalutils import *
 from .structure import Structure
 from ..tests import stability
 
+
 class ElasticProperties2D:
     """Convert the units from GPa or N/m2 to N/m for two-dimensional systems
-        1 GPa = 10^9 N/m2
+    1 GPa = 10^9 N/m2
 
-        Here, we use second Piola-Kirchhoff stress method to express the 2D forces per unit length in N/m units.
-        Ref: [Peng et al., Acta Mechanica 223 (2012), 2591-2596; Comput. Mater. Sci. 68, 320 (2013);  Mech. Mater. 64, 135 (2013). ]
-        [Singh et al., Phys. Rev. B 95, 165444 (2017)]
+    Here, we use second Piola-Kirchhoff stress method to express the 2D forces per unit length in N/m units.
+    Ref: [Peng et al., Acta Mechanica 223 (2012), 2591-2596; Comput. Mater. Sci. 68, 320 (2013);  Mech. Mater. 64, 135 (2013). ]
+    [Singh et al., Phys. Rev. B 95, 165444 (2017)]
 
-        We multiply elastic tensor by the thickness of the simulation cell to consider the vacuum thickness.
-        In 2D:  Cij = bulk_Cij * C_latticevector (final units N/m)
+    We multiply elastic tensor by the thickness of the simulation cell to consider the vacuum thickness.
+    In 2D:  Cij = bulk_Cij * C_latticevector (final units N/m)
 
-        For example: if bulk_Cij = 15 GPa and out-of-plane cell parameter c = 10 Angs.
-                  Then  2D_Cij = [15*10^9 N/m2] * [10*10^(-10) m] ; i.e 15*(0.1*c) N/m """
+    For example: if bulk_Cij = 15 GPa and out-of-plane cell parameter c = 10 Angs.
+              Then  2D_Cij = [15*10^9 N/m2] * [10*10^(-10) m] ; i.e 15*(0.1*c) N/m"""
 
-    def __init__(self, elastic_tensor, lattice_constant, structure = None , lattice_type = None):
+    def __init__(
+        self,
+        elastic_tensor,
+        lattice_constant,
+        structure=None,
+        lattice_type=None,
+        verbose=True,
+    ):
         self.elastic_tensor = elastic_tensor
         self.lattice_constant = lattice_constant
         self.c2d = np.zeros((6, 6))
-        
-        self.structure = structure 
+
+        self.structure = structure
         self.lattice_type = lattice_type
+        self.verbose = verbose
         self._c2d()
-        
+
         # if self.structure is not None: #or self.lattice_type is not None:
         lattice_select(
             cnew=self.c2d,
             cell=None,
             lattice_type=self.lattice_type,
+            verbose=self.verbose,
         )
 
     def _c2d(self):
@@ -49,7 +59,7 @@ class ElasticProperties2D:
         print("\n \n Elastic tensor for two-dimensional system in N/m units \n")
         np.set_printoptions(precision=3, suppress=True)
         printer.print_matrix(self.c2d)
-        
+
         # if self.lattice_type is not None or self.structure is not None:
         #     print(
         #         "\n------------------------------------------------------------------"
@@ -190,7 +200,7 @@ class ElasticProperties2D:
         """
 
         return self.G2d
-    
+
     @property
     def elastic_stability(self):
         return stability.stability_test_2d(self.c2d, self.lattice_type)
@@ -212,9 +222,9 @@ class ElasticProperties2D:
         print("2D Poisson ratio v[10]         :   %10.3f " % self.nu10)
         print("2D Poisson ratio v[01]         :   %10.3f " % self.nu01)
         print("-------------------------------------------------------")
-        
-        #print(
-        #    "Note:  The elastic stabilty test for 2D systems is not yet implemented. "
-        #)
 
-        #printer.print_warning_2D()
+        # print(
+        #    "Note:  The elastic stabilty test for 2D systems is not yet implemented. "
+        # )
+
+        # printer.print_warning_2D()

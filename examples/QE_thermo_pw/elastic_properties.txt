@@ -24,7 +24,7 @@ Mu (GPa)  =      64.567
 Bonding information
 ------------------------------------------------------------------
  
-Kleinman’s parameter; Ref.[4,5]
+Kleinmanâ€™s parameter; Ref.[4,5]
 NOTE: K = 0 (1) bending (stretching) would dominate
 K =     0.64651  
 
@@ -90,7 +90,7 @@ Metal         : bandgap = 0
 References
 ------------------------------------------------------------------
 
-[1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. Félix Mouhat and François-Xavier Coudert. Phys. Rev. B (2014)
+[1] Necessary and Sufficient Elastic Stability Conditions in Various Crystal Systems. FÃ©lix Mouhat and FranÃ§ois-Xavier Coudert. Phys. Rev. B (2014)
 [2] Crystal Structures and Elastic Properties of Superhard IrN2 and IrN3 from First Principles. Zhi-jian Wu et al. Phys. Rev. B (2007)
 [3] The rock physics handbook, Cam-bridge university press. G. Mavko, T. Mukerji, J. Dvorkin. Cambridge University Press. (2020)
 [4] Deformation potentials in silicon. i. uniaxial strain. Leonard Kleinman. Phys.Rev. 128. (1962)
