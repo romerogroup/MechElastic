@@ -1,11 +1,11 @@
 Metadata-Version: 1.1
 Name: MechElastic
-Version: 1.2.25
+Version: 1.2.26
 Summary: A Python library to calculate elastic properties of materials. 
 Home-page: https://github.com/romerogroup/MechElastic
 Author: Sobhit Singh, Logan Lang, Viviana Dovale-Farelo, Uthpala Herath, Pedram Tavadze, François-Xavier Coudert, Aldo H. Romero
 Author-email: smsingh@mail.wvu.edu
 License: LICENSE.txt
-Download-URL: https://github.com/romerogroup/MechElastic/archive/1.2.25.tar.gz
+Download-URL: https://github.com/romerogroup/MechElastic/archive/1.2.26.tar.gz
 Description: UNKNOWN
 Platform: UNKNOWN

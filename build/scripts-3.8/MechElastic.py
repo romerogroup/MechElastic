@@ -68,6 +68,15 @@ parser.add_argument(
     default=None,
     help="Provide the crystal family. Otherwise it would be determined from the DFT output.",
 )
+
+parser.add_argument(
+    "-l",
+    "--lattice_type",
+    type=str,
+    default=None,
+    help="Provide the lattice type for 2D materials. This is required to perform 2D stability tests.",
+)
+
 parser.add_argument(
     "-d",
     "--dim",
@@ -98,6 +107,15 @@ parser.add_argument(
     action="store_true",
     help="Enable verbosity.",
 )
+parser.add_argument(
+    "-o",
+    "--outfile",
+    type=str,
+    default="elastic_properties.txt",
+    help="Name of output file. Could be in .txt, .json or .xml formats.",
+)
+
+
 args = parser.parse_args()
 
 print("-----------------------------")
@@ -122,10 +140,12 @@ def main():
         dim=args.dim,
         infile=args.input,
         crystal=args.crystal,
+        lattice_type=args.lattice_type,
         anaddbfile=args.anaddbfile,
         adjust_pressure=args.adjust_pressure,
         qe_outfile=args.qe_outfile,
         verbose=args.verbose,
+        outfile=args.outfile,
     )
 
 
