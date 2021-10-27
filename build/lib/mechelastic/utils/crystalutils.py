@@ -42,7 +42,7 @@ def crystal_select(cnew=None, cell=None, crystal_type=None, verbose=True):
 
     else:
         to_print += "WARNING: crystal symmetry class  was not provided by user, it will be taken from the OUTCAR.\n"
-        to_print += "One of the following was expected as the cystal_type argument: \n 'cubic', 'hexagonal', 'tetragonal', 'rhombohedral-1', 'rhombohedral-2', 'orthorhombic', 'monoclinic'"
+        to_print += "One of the following was expected as the crystal_type argument: \n 'cubic', 'hexagonal', 'tetragonal', 'rhombohedral-1', 'rhombohedral-2', 'orthorhombic', 'monoclinic'"
         crystal_type = ""
         spg = int(spglib.get_spacegroup(cell, symprec=1e-5).split()[1][1:-1])
         if spg >= 1 and spg <= 2:
