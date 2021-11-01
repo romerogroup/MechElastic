@@ -741,6 +741,9 @@ class EOS:
         # Converting PV from GPaA3 -> eV
 
         self.H = []
+        self.E = []
+
+
         for i in range(nfiles):
 
             if self.model[i] == "Vinet":
@@ -749,6 +752,9 @@ class EOS:
                     + np.multiply(self.pressure[i], self.vol_array[i])
                     * (1 / 160.2176621)
                 )
+                self.E.append(
+                    self.eos_vinet(self.selected_coeffs[i], self.vol_array[i])
+                )
 
             elif self.model[i] == "Birch":
                 self.H.append(
@@ -756,34 +762,91 @@ class EOS:
                     + np.multiply(self.pressure[i], self.vol_array[i])
                     * (1 / 160.2176621)
                 )
+                self.E.append(
+                    self.eos_birch(self.selected_coeffs[i], self.vol_array[i])
+                )
+
             elif self.model[i] == "Murnaghan":
                 self.H.append(
                     self.eos_murnaghan(self.selected_coeffs[i], self.vol_array[i])
                     + np.multiply(self.pressure[i], self.vol_array[i])
                     * (1 / 160.2176621)
                 )
+                self.E.append(
+                    self.eos_murnaghan(self.selected_coeffs[i], self.vol_array[i])
+                )
+
             elif self.model[i] == "Birch-Murnaghan":
                 self.H.append(
                     self.eos_birch_murnaghan(self.selected_coeffs[i], self.vol_array[i])
                     + np.multiply(self.pressure[i], self.vol_array[i])
                     * (1 / 160.2176621)
                 )
+                self.E.append(
+                    self.eos_birch_murnaghan(self.selected_coeffs[i], self.vol_array[i])
+                )
 
-        # Converting self.H to numpy array
+
+        # Converting self.H and self.E to numpy array
         self.H = np.array(self.H, dtype="float64")
+        self.E = np.array(self.E, dtype="float64")
 
         # Normalize H for number of atoms
         for i, iatom in enumerate(self.natoms):
             self.H[i] = self.H[i] / iatom
+        # Normalize E,V for number of atoms
+        for i, iatom in enumerate(self.natoms):
+            self.E[i] = self.E[i] / iatom
+            self.vol_array[i] = self.vol_array[i] / iatom
+
 
         # Convert eV to Ha if au=True
         if self.au:
             self.H = 0.0367493 * self.H
+            self.E = 0.0367493 * self.E
 
         # Enthalpy vs Pressure plots
-
         fig = plt.figure(figsize=(13, 9))
         axs = fig.add_subplot(111)
+
+        if self.labels is None:
+            self.labels = self.infiles
+
+        for i, filename in enumerate(self.infiles):
+            axs.plot(self.pressure[i], self.H[i], label=self.labels[i])
+        axs.set_xlabel("Pressure (GPa)")
+        if self.au:
+            axs.set_ylabel("Enthalpy (Ha/atom)")
+        else:
+            axs.set_ylabel("Enthalpy (eV/atom)")
+        axs.set_title("Enthalpy vs. Pressure")
+        plt.legend(loc="best")
+        axs.grid(color="gainsboro", ls="--", lw=0.6)
+        if self.savefig:
+            plt.savefig("Enthalpy.pdf")
+        plt.show()
+
+        # Energy vs. Volume plots
+        fig = plt.figure(figsize=(13, 9))
+        axs = fig.add_subplot(111)
+
+        if self.labels is None:
+            self.labels = self.infiles
+
+        for i, filename in enumerate(self.infiles):
+            axs.plot(self.vol_array[i], self.E[i], label=self.labels[i])
+        axs.set_xlabel("Volume ($\AA^3/atom$)")
+        if self.au:
+            axs.set_ylabel("Energy (Ha/atom)")
+        else:
+            axs.set_ylabel("Energy (eV/atom)")
+        axs.set_title("Energy vs. Volume")
+        plt.legend(loc="best")
+        axs.grid(color="gainsboro", ls="--", lw=0.6)
+        if self.savefig:
+            plt.savefig("Energy.pdf")
+        plt.show()
+
 
         # Matrix to store transition information
         self.trans_mat = []
@@ -888,14 +951,14 @@ class EOS:
                 np.isclose(
                     self.pressure[self.infiles.index(self.trans_mat_reordered[i][0])],
                     self.trans_mat_reordered[i][2],
-                    1e-03,
+                    1e-02,
                 )
             )
             c2 = np.where(
                 np.isclose(
                     self.pressure[self.infiles.index(self.trans_mat_reordered[i][1])],
                     self.trans_mat_reordered[i][2],
-                    1e-03,
+                    1e-02,
                 )
             )
 
@@ -1013,22 +1076,7 @@ class EOS:
         #             ),
         #         )
 
-        if self.labels is None:
-            self.labels = self.infiles
 
-        for i, filename in enumerate(self.infiles):
-            axs.plot(self.pressure[i], self.H[i], label=self.labels[i])
-        axs.set_xlabel("Pressure (GPa)")
-        if self.au:
-            axs.set_ylabel("Enthalpy (Ha/atom)")
-        else:
-            axs.set_ylabel("Enthalpy (eV/atom)")
-        axs.set_title("Enthalpy vs. Pressure")
-        plt.legend(loc="best")
-        axs.grid(color="gainsboro", ls="--", lw=0.6)
-        if self.savefig:
-            plt.savefig("Enthalpy.pdf")
-        plt.show()
 
         # Network map for phase transitions
         # Added by Pedram
@@ -1069,13 +1117,13 @@ class EOS:
 
         pc = mpl.collections.PatchCollection(edges, cmap=cmap)
         pc.set_array(edge_colors)
-        cb = plt.colorbar(pc, orientation="vertical")
+        ax = plt.gca()
+        ax.set_axis_off()
+        cb = plt.colorbar(pc, ax=ax,orientation="vertical")
         if self.au:
             cb.set_label("Enthalpy (Ha/atom)")
         else:
             cb.set_label("Enthalpy (eV/atom)")
-        ax = plt.gca()
-        ax.set_axis_off()
         if self.savefig:
             plt.savefig("Enthalpy-network.pdf")
         plt.show()
