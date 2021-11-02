@@ -621,6 +621,7 @@ class EOS:
         labels=None,
         export=True,
         savefig=False,
+        intersect_tol=1E-03
     ):
         """plot_enthalpy_curves.
 
@@ -662,6 +663,9 @@ class EOS:
             savefig : bool, optional (default ``False``)
                 Save figures in the pdf format.
 
+            intersect_tol : float, optional (default ``1E-03``)
+                Tolerance for finding intersection points between enthalpy curves.
+
         Returns
         -------
             param : None
@@ -677,6 +681,7 @@ class EOS:
         self.labels = labels
         self.export = export
         self.savefig = savefig
+        self.intersect_tol = intersect_tol
 
         nfiles = len(self.infiles)
         self.volume = []
@@ -951,14 +956,14 @@ class EOS:
                 np.isclose(
                     self.pressure[self.infiles.index(self.trans_mat_reordered[i][0])],
                     self.trans_mat_reordered[i][2],
-                    1e-02,
+                    self.intersect_tol,
                 )
             )
             c2 = np.where(
                 np.isclose(
                     self.pressure[self.infiles.index(self.trans_mat_reordered[i][1])],
                     self.trans_mat_reordered[i][2],
-                    1e-02,
+                    self.intersect_tol,
                 )
             )
 
