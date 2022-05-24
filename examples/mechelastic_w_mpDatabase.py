@@ -5,9 +5,10 @@ Created on Mon Aug 24 22:43:48 2020
 @author: lllan
 """
 
-from pymatgen import Structure, MPRester
-from mechelastic.core import ELATE, ElasticProperties, Structure
-import numpy as np
+# from pymatgen.core import Structure
+# from pymatgen.ext.matproj import MPRester
+# from mechelastic.core import ELATE, ElasticProperties, Structure
+# import numpy as np
 
 # "Get the unique apiKey on materials project website"
 # apiKey = "--------------"
@@ -22,6 +23,10 @@ import numpy as np
 # "Trigonal SiO2"
 # # mat_info = a.query(criteria={"task_id": "mp-6930"}, properties=["structure","elasticity"])[0]
 
+# "Diamond C"
+# mat_info = a.query(criteria={"task_id": "mp-66"}, properties=["structure","elasticity"])[0]
+
+
 # s1 = mat_info["structure"]
 # lattice = s1.lattice.matrix
 # species = [specie.symbol for specie in s1.species]
@@ -33,10 +38,11 @@ import numpy as np
 # elastic_tensor = np.array(mat_info["elasticity"]["elastic_tensor"])
 
 
-# "The following uncommented section produces the MechElastic summary and shows how to access properties directly"
+# # "The following uncommented section produces the MechElastic summary and shows how to access properties directly"
 # elastic_properties = ElasticProperties(
 #     elastic_tensor, structure, crystal_type="rhombohedral-2", code="Directly"
 # )
+
 # gV = elastic_properties.G_v
 # # stability = elastic_properties.elastic_stability
 # elastic_properties.print_properties()

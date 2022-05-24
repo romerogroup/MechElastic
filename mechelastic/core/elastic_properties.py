@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-import numpy as np
 import json
 from dicttoxml import dicttoxml
 from xml.dom.minidom import parseString
+
+import numpy as np
+
 from ..comms import printer
 from ..tests import ductile
 from ..tests import eigenvals
@@ -450,7 +452,7 @@ class ElasticProperties:
             Voigt-Reuss-Hill Approximation Poisson's Modulus.
 
         """
-        return (self.Nu_v + self.Nu_r) / 2.0
+        return (3 * self.K_vrh - 2 * self.G_vrh)/(2* (3 * self.K_vrh + self.G_vrh) )
 
     @property
     def poissons_ratio_voigt_reuss_hill(self):
