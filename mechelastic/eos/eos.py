@@ -863,7 +863,7 @@ class EOS:
                 for j in range(nfiles):
                     if i < j:
                         # print("\n%s and %s:" % (self.infiles[i], self.infiles[j]))
-                        self.int_x, self.int_y = intersection(
+                        self.int_x, self.int_y, _, _, = intersection(
                             self.pressure[i], self.H[i], self.pressure[j], self.H[j]
                         )
 
